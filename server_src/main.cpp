@@ -1,6 +1,6 @@
 #include <exception>
 #include <iostream>
-
+#include "../common_src/socket.h"
 //#include "server.h"
 
 int main(int argc, char* argv[]) {
@@ -12,8 +12,9 @@ int main(int argc, char* argv[]) {
             return ret;
         }
 
-        //Server server(argv[1]);
-        //server.run();
+
+        Socket skt(argv[1]);
+        while (std::cin.get() != 'q') {}
 
         ret = 0;
         return ret;

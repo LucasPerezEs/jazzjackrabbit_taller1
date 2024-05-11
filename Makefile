@@ -29,7 +29,7 @@ verbose = si
 ###########################
 
 # Opciones para el compilador C/C++ para tratamiento de errores y warnings.
-CFLAGS += -Wall -Werror -pedantic -pedantic-errors
+CFLAGS += -Wall -Werror -pedantic -pedantic-errors -I/usr/include/SDL2
 
 # Para optimizar el binario resultante lo mejor posible
 CFLAGS += -O0
@@ -38,7 +38,7 @@ CFLAGS += -O0
 CFLAGS += -ggdb -DDEBUG -fno-inline
 
 # Opciones del enlazador.
-#LDFLAGS =
+LDFLAGS += -lSDL2
 
 # Estandar de C a usar
 CSTD = c17

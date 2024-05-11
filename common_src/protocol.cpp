@@ -10,6 +10,9 @@
 
 Protocol::Protocol(Socket peer): socket(std::move(peer)) {}
 
+
+//Pre:
+//Post: Envia un char por medio del socket del protocolo.
 void Protocol::sendUChar(unsigned char c) {
     bool was_closed;
     socket.sendall(&c, CHAR_SIZE, &was_closed);
@@ -19,6 +22,8 @@ void Protocol::sendUChar(unsigned char c) {
     }
 }
 
+//Pre:
+//Post: Recive un char por medio del socket del protocolo.
 unsigned char Protocol::receiveUChar() {
     bool was_closed;
     unsigned char c;
@@ -29,6 +34,8 @@ unsigned char Protocol::receiveUChar() {
     return c;
 }
 
+//Pre:
+//Post: Envia un entero de 16 bits sin signo por el socket del protocolo.
 void Protocol::send16(uint16_t v) {
     bool was_closed;
     uint16_t vn = htons(v);
@@ -38,6 +45,8 @@ void Protocol::send16(uint16_t v) {
     }
 }
 
+//Pre:
+//Post: Recive un entero de 16 bits sin signo por el socket del protocolo.
 uint16_t Protocol::receive16() {
     bool was_closed;
     uint16_t res;
@@ -48,6 +57,8 @@ uint16_t Protocol::receive16() {
     return ntohs(res);
 }
 
+//Pre:
+//Post: Envia un string por el socket del protocolo.
 void Protocol::sendString(const std::string& string) {
     bool was_closed;
     send16(string.size());
@@ -57,6 +68,8 @@ void Protocol::sendString(const std::string& string) {
     }
 }
 
+//Pre:
+//Post: Recive un string por el socket del protocolo.
 std::string Protocol::receiveString() {
     bool was_closed = false;
     uint16_t lenght = receive16();
@@ -68,6 +81,8 @@ std::string Protocol::receiveString() {
     return string;
 }
 
+//Pre:
+//Post: Cierra el socket del protocolo.
 void Protocol::stop() {
     socket.shutdown(SHUT_RDWR);
     socket.close();

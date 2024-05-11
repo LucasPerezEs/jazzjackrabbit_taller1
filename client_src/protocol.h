@@ -13,9 +13,9 @@
 class ClientProtocol: private Protocol {
 private:
 public:
-    ClientProtocol(const char* hostname, const char* servicename);
+    ClientProtocol(const std::string& hostname, const std::string& servicename);
 
-    void send_command(const Command& cmd);
+    void send_command(Command& cmd);
 
     ClientProtocol(const ClientProtocol&) = delete;
     ClientProtocol& operator=(const ClientProtocol&) = delete;
