@@ -17,7 +17,7 @@ int main(int argc, char* argv[]) {
 
         std::ifstream input;
 
-        std::istream* in = (argc == 4) ? &input : &std::cin;
+        //std::istream* in = (argc == 4) ? &input : &std::cin;
 
         //Client client(hostname, servername);
         //client.run(*in);
