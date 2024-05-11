@@ -5,6 +5,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <SDL.h>
 #include "protocol.h"
 
 class ControladorCliente {
@@ -15,7 +16,7 @@ private:
 public:
     ControladorCliente(const std::string& hostname, const std::string& servname);
 
-    bool ejecutar_comando(char& cmd);
+    void jugar();
 
     ControladorCliente(const ControladorCliente&) = delete;
     ControladorCliente& operator=(const ControladorCliente&) = delete;

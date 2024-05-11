@@ -8,44 +8,51 @@ ControladorCliente::ControladorCliente(const std::string& hostname, const std::s
 
 
 // Pre: -
-// Post: -
-bool ControladorCliente::ejecutar_comando(char& cmd) {
+// Post: Se momemento los controles son: W, S, A, D, barra espaciadora y shift.
+void ControladorCliente::jugar() {
 
-    Command::ActionType accion;
-    bool continuar_juego = true;
+    Command cmd;
+    SDL_Event event;
+    bool cliente_conectado = true;
 
-    switch (cmd) {
-        case 'w':
-            accion = Command::UP;
-            std::cout << "Estoy subiendo" << std::endl;
-            break;
-        case 's':
-            accion = Command::DOWN;
-            std::cout << "Estoy bajando" << std::endl;
-            break;
-        case 'a':
-            accion = Command::LEFT;
-            std::cout << "Voy a la izquierda" << std::endl;
-            break;
-        case 'd':
-            accion = Command::RIGHT;
-            std::cout << "Voy a la derecha" << std::endl;
-            break;
-        case ' ':
-            accion = Command::JUMP;
-            std::cout << "Estoy saltando" << std::endl;
-            break;
-        case 'r':
-            accion = Command::RUN;
-            std::cout << "Estoy corriendo" << std::endl;
-            break;
+    while (cliente_conectado) {
+        while (SDL_PollEvent(&event)) {
+
+            if (event.type == SDL_QUIT) {
+                cliente_conectado = false;
+                break;
+
+            } else if (event.type == SDL_KEYDOWN) {
+
+                switch (event.key.keysym.sym) {
+                    case SDLK_w:
+                        std::cout << "Estoy subiendo" << std::endl;
+                        cmd.action = Command::UP;
+                        break;
+                    case SDLK_s:
+                        cmd.action = Command::DOWN;
+                        std::cout << "Estoy bajando" << std::endl;
+                        break;
+                    case SDLK_a:
+                        cmd.action = Command::LEFT;
+                        std::cout << "Voy a la izquierda" << std::endl;
+                        break;
+                    case SDLK_d:
+                        cmd.action = Command::RIGHT;
+                        std::cout << "Voy a la derecha" << std::endl;
+                        break;
+                    case SDLK_SPACE:
+                        cmd.action = Command::JUMP;
+                        std::cout << "Estoy saltando" << std::endl;
+                        break;
+                    case SDLK_LSHIFT: // Suponiendo que SHIFT es el comando para correr
+                        cmd.action = Command::RUN;
+                        std::cout << "Estoy corriendo" << std::endl;
+                        break;
+                }
+
+                protocolo.send_command(cmd);
+            }
+        }
     }
-
-    if(continuar_juego){
-        Command cmd_obj;
-        cmd_obj.action = accion;
-        protocolo.send_command(cmd_obj);
-    }
-
-    return continuar_juego;
 }

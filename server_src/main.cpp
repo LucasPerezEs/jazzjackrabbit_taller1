@@ -1,7 +1,7 @@
+
 #include <exception>
 #include <iostream>
-#include "../common_src/socket.h"
-//#include "server.h"
+#include "game.h"
 
 int main(int argc, char* argv[]) {
     try {
@@ -12,9 +12,8 @@ int main(int argc, char* argv[]) {
             return ret;
         }
 
-
-        Socket skt(argv[1]);
-        while (std::cin.get() != 'q') {}
+        Game juego(argv[1]);
+        juego.init_game();
 
         ret = 0;
         return ret;

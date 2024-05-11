@@ -19,46 +19,12 @@ int main(int argc, char* argv[]) {
         // Crea una ventana de aplicación
         SDL_Window* window = SDL_CreateWindow("Captura de teclas", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 480, 0);
 
-        // El bucle del juego
-        bool cliente_activo = true;
-        SDL_Event event;
-        while (cliente_activo) {
-            while (SDL_PollEvent(&event)) {
+        //controlador.cargar_partida();
+        controlador.jugar();
 
-                if (event.type == SDL_QUIT) {
-                    cliente_activo = false;
-                    break;
-
-                } else if (event.type == SDL_KEYDOWN) {
-                    char cmd;
-                    switch (event.key.keysym.sym) {
-                        case SDLK_UP:
-                            cmd = 'w'; // Suponiendo que 'w' es el comando para mover hacia arriba
-                            break;
-                        case SDLK_DOWN:
-                            cmd = 's'; // Suponiendo que 's' es el comando para mover hacia abajo
-                            break;
-                        case SDLK_LEFT:
-                            cmd = 'a'; // Suponiendo que 'a' es el comando para mover hacia la izquierda
-                            break;
-                        case SDLK_RIGHT:
-                            cmd = 'd'; // Suponiendo que 'd' es el comando para mover hacia la derecha
-                            break;
-                        case SDLK_SPACE:
-                            cmd = ' '; // Suponiendo que ' ' es el comando para saltar
-                            break;
-                        case SDLK_LSHIFT: // Suponiendo que SHIFT es el comando para correr
-                            cmd = 'r';
-                            break;
-                }
-                cliente_activo = controlador.ejecutar_comando(cmd);
-            }
-        }
-    }
-
-    // Limpia y cierra
-    SDL_DestroyWindow(window);
-    SDL_Quit();
+        // Limpia y cierra
+        SDL_DestroyWindow(window);
+        SDL_Quit();
 
     return 0;
 
