@@ -44,8 +44,10 @@ server
 *~
 
 # Pruebas
+.idea/
 casos
 salidas
+tiburoncin
+.idea
 compare_outputs.sh
 run_tests.sh
-
