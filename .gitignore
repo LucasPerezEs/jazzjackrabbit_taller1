@@ -43,6 +43,9 @@ server
 .*.swp
 *~
 
+# VSCode
+.vscode
+
 # Pruebas
 .idea/
 casos

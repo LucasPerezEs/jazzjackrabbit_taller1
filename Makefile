@@ -38,7 +38,7 @@ CFLAGS += -O0
 CFLAGS += -ggdb -DDEBUG -fno-inline
 
 # Opciones del enlazador.
-LDFLAGS += -lSDL2
+LDFLAGS += -lSDL2 -lSDL2_image
 
 # Estandar de C a usar
 CSTD = c17
@@ -99,7 +99,7 @@ COMPILERFLAGS = $(CXXFLAGS)
 endif
 
 # Si no especifica archivos, tomo todos.
-fuentes_client ?= $(wildcard ./client_src/*.$(extension)) $(wildcard ./client_*.$(extension))
+fuentes_client ?= $(wildcard ./client_src/*.$(extension)) $(wildcard ./client_src/sdl_libs/*.$(extension)) $(wildcard ./client_*.$(extension))
 fuentes_server ?= $(wildcard ./server_src/*.$(extension)) $(wildcard ./server_*.$(extension))
 fuentes_common ?= $(wildcard ./common_src/*.$(extension)) $(wildcard ./common_*.$(extension))
 directorios = $(shell find . -type d -regex '.*\w+')
