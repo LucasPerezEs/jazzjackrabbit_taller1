@@ -1,4 +1,4 @@
-#include "protocol.h"
+#include "headers/protocol.h"
 
 #include <iostream>
 
@@ -11,9 +11,7 @@ Command::ActionType ServerProtocol::receive_command() {
     return static_cast<Command::ActionType>(code);
 }
 
-void ServerProtocol::send_state(State::StateType state) {
-    sendUChar(state);
-}
+void ServerProtocol::send_state(State::StateType state) { sendUChar(state); }
 
 void ServerProtocol::stop() { Protocol::stop(); }
 

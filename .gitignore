@@ -54,3 +54,6 @@ tiburoncin
 .idea
 compare_outputs.sh
 run_tests.sh
+
+# Build
+build/

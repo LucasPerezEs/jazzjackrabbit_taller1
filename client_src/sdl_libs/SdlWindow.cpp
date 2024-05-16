@@ -1,4 +1,4 @@
-#include "SdlWindow.h"
+#include "../headers/SdlWindow.h"
 
 #include <iostream>
 
@@ -6,7 +6,7 @@
 #include <SDL2/SDL_render.h>
 #include <SDL2/SDL_video.h>
 
-#include "SdlException.h"
+#include "../headers/SdlException.h"
 
 
 SdlWindow::SdlWindow(int width, int height): width(width), height(height) {

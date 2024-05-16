@@ -1,4 +1,4 @@
-#include "game.h"
+#include "headers/game.h"
 
 Game::Game(const std::string& hostname, const std::string& servname, Player& player,
            SdlWindow& window):

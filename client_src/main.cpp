@@ -4,10 +4,9 @@
 
 #include <SDL.h>
 
-#include "./sdl_libs/SdlTexture.h"
-
-#include "controlador_cliente.h"
-#include "game.h"
+#include "headers/SdlTexture.h"
+#include "headers/controlador_cliente.h"
+#include "headers/game.h"
 
 int main(int argc, char* argv[]) {
     try {
@@ -18,7 +17,7 @@ int main(int argc, char* argv[]) {
         }
 
         SdlWindow window(800, 600);
-        SdlTexture im("client_src/assets/jazz_walking.png", window, Color{0x2C, 0x66, 0x96});
+        SdlTexture im("../client_src/assets/jazz_walking.png", window, Color{0x2C, 0x66, 0x96});
         Player player(im);
 
         Game game(argv[1], argv[2], player, window);

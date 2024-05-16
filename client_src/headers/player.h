@@ -1,8 +1,8 @@
 #ifndef __PLAYER_H__
 #define __PLAYER_H__
 
-#include "./sdl_libs/Animation.h"
-#include "./sdl_libs/Area.h"
+#include "Animation.h"
+#include "Area.h"
 
 class Player {
 public:

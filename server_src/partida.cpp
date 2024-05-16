@@ -1,8 +1,7 @@
 
-#include "partida.h"
+#include "headers/partida.h"
 
-Partida::Partida(bool& server_closed):
-    server_closed(server_closed) {}
+Partida::Partida(bool& server_closed): server_closed(server_closed) {}
 
 // Pre:
 // Post:

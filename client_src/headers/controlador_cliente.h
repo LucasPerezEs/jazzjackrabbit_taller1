@@ -8,7 +8,7 @@
 
 #include <SDL.h>
 
-#include "../common_src/commands.h"
+#include "../../common_src/headers/commands.h"
 
 #include "player.h"
 #include "protocol.h"

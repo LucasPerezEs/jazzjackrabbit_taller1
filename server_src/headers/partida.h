@@ -8,7 +8,8 @@
 #include <thread>
 #include <variant>
 #include <vector>
-#include "../common_src/thread.h"
+
+#include "../../common_src/headers/thread.h"
 
 class Partida: public Thread {
 private:

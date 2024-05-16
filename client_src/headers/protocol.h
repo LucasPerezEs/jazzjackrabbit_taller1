@@ -6,9 +6,9 @@
 #include <string>
 #include <utility>
 
-#include "../common_src/socket.h"
-#include "../common_src/commands.h"
-#include "../common_src/protocol.h"
+#include "../../common_src/headers/commands.h"
+#include "../../common_src/headers/protocol.h"
+#include "../../common_src/headers/socket.h"
 
 class ClientProtocol: private Protocol {
 private:

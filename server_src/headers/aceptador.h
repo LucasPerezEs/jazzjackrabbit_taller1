@@ -6,9 +6,11 @@
 #include <list>
 #include <string>
 #include <utility>
+
+#include "../../common_src/headers/socket.h"
+#include "../../common_src/headers/thread.h"
+
 #include "servidor.h"
-#include "../common_src/socket.h"
-#include "../common_src/thread.h"
 
 class Aceptador: public Thread {
 private:

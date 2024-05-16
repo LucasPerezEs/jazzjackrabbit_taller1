@@ -1,4 +1,4 @@
-#include "protocol.h"
+#include "headers/protocol.h"
 
 ClientProtocol::ClientProtocol(const std::string& hostname, const std::string& servicename):
         Protocol(std::move(Socket(hostname.c_str(), servicename.c_str()))) {}
@@ -9,4 +9,3 @@ void ClientProtocol::send_command(Command& cmd) {
 }
 
 void ClientProtocol::stop() { Protocol::stop(); }
-

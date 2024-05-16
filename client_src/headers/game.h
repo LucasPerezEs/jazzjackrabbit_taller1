@@ -6,8 +6,7 @@
 #include <SDL2/SDL.h>
 #include <unistd.h>
 
-#include "./sdl_libs/SdlWindow.h"
-
+#include "SdlWindow.h"
 #include "controlador_cliente.h"
 #include "player.h"
 

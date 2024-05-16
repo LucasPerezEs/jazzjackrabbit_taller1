@@ -1,10 +1,10 @@
-#include "SdlTexture.h"
+#include "../headers/SdlTexture.h"
 
 #include <string>
 
-#include "Area.h"
-#include "SdlException.h"
-#include "SdlWindow.h"
+#include "../headers/Area.h"
+#include "../headers/SdlException.h"
+#include "../headers/SdlWindow.h"
 
 SdlTexture::SdlTexture(const std::string& filename, const SdlWindow& window):
         renderer(window.getRenderer()) {

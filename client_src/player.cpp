@@ -1,4 +1,4 @@
-#include "player.h"
+#include "headers/player.h"
 
 Player::Player(SdlTexture& texture):
         an(&texture, 8), facingLeft(false), moving(false), x(300), y(300) {}

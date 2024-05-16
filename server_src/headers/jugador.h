@@ -7,8 +7,10 @@
 #include <string>
 #include <utility>
 #include <variant>
+
+#include "../../common_src/headers/socket.h"
+
 #include "protocol.h"
-#include "../common_src/socket.h"
 
 class Jugador {
 private:

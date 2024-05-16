@@ -1,5 +1,4 @@
-
-#include "jugador.h"
+#include "headers/jugador.h"
 
 Jugador::Jugador(Socket&& socket, unsigned int& id_jugador, bool& server_closed):
         protocolo(std::move(socket)),
@@ -22,9 +21,9 @@ bool Jugador::desconectar() {
 // Post: -
 void Jugador::run() {
 
-    while(not server_closed){
+    while (not server_closed) {
         protocolo.receive_command();
-        //Hago algo con el comando
+        // Hago algo con el comando
     }
 
     jugador_online = false;

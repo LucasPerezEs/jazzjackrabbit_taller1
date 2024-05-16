@@ -2,7 +2,7 @@
  * Created by Federico Manuel Gomez Peter
  * Date: 17/05/18.
  */
-#include "Animation.h"
+#include "../headers/Animation.h"
 
 #include <algorithm>
 #include <cassert>
@@ -12,8 +12,8 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
-#include "Area.h"
-#include "SdlTexture.h"
+#include "../headers/Area.h"
+#include "../headers/SdlTexture.h"
 
 Animation::Animation(const SdlTexture* texture, int numFrames):
         texture(texture),

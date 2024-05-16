@@ -3,6 +3,7 @@
 #define GAME_H
 
 #include <string>
+
 #include "aceptador.h"
 #include "partida.h"
 
