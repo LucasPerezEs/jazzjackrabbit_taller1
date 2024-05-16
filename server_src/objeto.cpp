@@ -7,7 +7,6 @@
 Objeto::Objeto(float x, float y, float w, float h): x(x), y(y), width(w), height(h), borrar(false) {}
 
 Ente::Ente(float x, float y, float w, float h, int vida): Objeto(x, y, w, h), vida(vida) { //para la direccion 1 es a la derecha y -1 a la izquierda
-    int direccion = 1;
 }
                                               // hitbox
 Bala::Bala(float x, float y, int d): Objeto(x, y, x+1, y+1) { // se le pasa la direccion a la que va a salir la bala por parametro
