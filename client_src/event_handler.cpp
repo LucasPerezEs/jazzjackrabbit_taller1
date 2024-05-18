@@ -1,74 +1,78 @@
-#include "headers/controlador_cliente.h"
+#include "headers/event_handler.h"
 
 // Pre: -
 // Post: -
-ControladorCliente::ControladorCliente(const std::string& hostname, const std::string& servname):
-        protocolo(hostname, servname) {}
+EventHandler::EventHandler(const std::string& hostname, const std::string& servname):
+        protocolo(hostname, servname), was_closed(false) {}
 
-void ControladorCliente::handle_keydown(Player& player, const SDL_Event& event, Command& cmd) {
+void EventHandler::handle_keydown(const SDL_Event& event, Command& cmd) {
     const SDL_KeyboardEvent& keyEvent = (SDL_KeyboardEvent&)event;
     switch (keyEvent.keysym.sym) {
         case SDLK_w:
-            // std::cout << "Estoy subiendo" << std::endl;
+            std::cout << "Estoy subiendo" << std::endl;
             cmd.action = Command::UP;
             break;
         case SDLK_s:
             cmd.action = Command::DOWN;
-            // std::cout << "Estoy bajando" << std::endl;
+            std::cout << "Estoy bajando" << std::endl;
             break;
         case SDLK_a:
             cmd.action = Command::LEFT;
-            player.moveLeft();
-            // std::cout << "Voy a la izquierda" << std::endl;
+            // player.moveLeft();
+            std::cout << "Voy a la izquierda" << std::endl;
             break;
         case SDLK_d:
             cmd.action = Command::RIGHT;
-            player.moveRigth();
+            std::cout << "Voy a la derecha" << std::endl;
+            // player.moveRigth();
             break;
         case SDLK_SPACE:
             cmd.action = Command::JUMP;
-            // std::cout << "Estoy saltando" << std::endl;
+            std::cout << "Estoy saltando" << std::endl;
             break;
         case SDLK_LSHIFT:  // Suponiendo que SHIFT es el comando para correr
             cmd.action = Command::RUN;
-            // std::cout << "Estoy corriendo" << std::endl;
+            std::cout << "Estoy corriendo" << std::endl;
             break;
     }
 }
 
-void ControladorCliente::handle_keyup(Player& player, const SDL_Event& event) {
+void EventHandler::handle_keyup(const SDL_Event& event) {
     const SDL_KeyboardEvent& keyEvent = (SDL_KeyboardEvent&)event;
     switch (keyEvent.keysym.sym) {
         case SDLK_a:
-            player.stopMoving();
+            // player.stopMoving();
             break;
         case SDLK_d:
-            player.stopMoving();
+            // player.stopMoving();
             break;
     }
 }
 
+bool EventHandler::is_running() { return not was_closed; }
+
 // Pre: -
 // Post: Se momemento los controles son: W, S, A, D, barra espaciadora y shift.
-bool ControladorCliente::handle_events(Player& player) {
+void EventHandler::run() {
 
     Command cmd;
     SDL_Event event;
 
-    while (SDL_PollEvent(&event)) {
+    while (not was_closed) {
+
+        SDL_WaitEvent(&event);
+
         switch (event.type) {
             case SDL_KEYDOWN:
-                this->handle_keydown(player, event, cmd);
-                std::cout << "aprete a" << std::endl;
+                this->handle_keydown(event, cmd);
                 this->protocolo.send_command(cmd);
                 break;
             case SDL_KEYUP:
-                this->handle_keyup(player, event);
+                this->handle_keyup(event);
                 break;
             case SDL_QUIT:
                 std::cout << "Quit :(" << std::endl;
-                return false;
+                this->was_closed = true;
         }
     }
-    return true;
 }

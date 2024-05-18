@@ -7,20 +7,19 @@
 #include <unistd.h>
 
 #include "SdlWindow.h"
-#include "controlador_cliente.h"
+#include "event_handler.h"
 #include "player.h"
 
 #define FRAME_RATE 1000000.0f / 40.0f
 
 class Game {
 private:
-    ControladorCliente controlador_cliente;
-    Player& player;
+    EventHandler event_handler;
+    // Player& player;
     SdlWindow& window;
 
 public:
-    Game(const std::string& hostname, const std::string& servname, Player& player,
-         SdlWindow& window);
+    Game(const std::string& hostname, const std::string& servname, SdlWindow& window);
 
     void run();
 
