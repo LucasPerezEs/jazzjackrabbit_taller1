@@ -8,26 +8,28 @@
 
 #include "SdlWindow.h"
 #include "event_handler.h"
+#include "model_updater.h"
 #include "player.h"
-
-#define FRAME_RATE 1000000.0f / 40.0f
+#include "protocol.h"
 
 class Game {
 private:
+    ClientProtocol protocol;
     EventHandler event_handler;
     // Player& player;
     SdlWindow& window;
+    ModelUpdater updater;
 
 public:
     Game(const std::string& hostname, const std::string& servname, SdlWindow& window);
 
     void run();
 
-    void update(float dt);
-
     void init();
 
     void render();
+
+    void close();
 
     Game(const Game&) = delete;
     Game& operator=(const Game&) = delete;

@@ -10,7 +10,7 @@
 #include "../../common_src/headers/protocol.h"
 #include "../../common_src/headers/socket.h"
 
-class ClientProtocol: private Protocol {
+class ClientProtocol: public Protocol {
 private:
 public:
     ClientProtocol(const std::string& hostname, const std::string& servicename);

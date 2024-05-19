@@ -1,7 +1,7 @@
 #include "headers/game.h"
 
 Game::Game(const std::string& hostname, const std::string& servname, SdlWindow& window):
-        event_handler(hostname, servname), window(window) {}
+        protocol(hostname, servname), event_handler(protocol), window(window), updater(protocol) {}
 
 void Game::run() {
     uint32_t time1 = 0;
@@ -9,21 +9,13 @@ void Game::run() {
 
     // Atrapa los eventos de teclado/mouse del usuario y envia el mensaje adecuado al server
     this->event_handler.start();
+    // Lee mensajes de la queue del server->cliente y actualiza los modelos
+    this->updater.start();
 
-    bool running = true;
-    while (this->event_handler.is_running() and running) {
-
-        // Cada etapa debe correr en un hilo separado, ya que son concurrentes.
-
-        // Lee mensajes de la queue del server->cliente y actualiza los modelos
-        this->update(FRAME_RATE);
+    while (this->event_handler.is_running() and this->updater.is_running()) {
 
         // Render de la pantalla con el modelo actual.
         this->render();
-
-        // Pregunta: todas las partes del event loop (handle-events, update, render) deben correr a
-        // un constant frame loop?
-        //          o solo el renderizado de imagen?
 
         uint32_t time2;
         time2 = SDL_GetTicks();
@@ -33,15 +25,21 @@ void Game::run() {
         usleep(rest);
     }
 
-    this->event_handler.join();
-}
-
-void Game::update(float dt) {
-    // this->player.update(dt);
+    this->close();
 }
 
 void Game::render() {
     this->window.fill();
     // player.render();
     this->window.render();
+}
+
+void Game::close() {
+    this->protocol.stop();
+
+    this->event_handler.close();
+    this->event_handler.join();
+
+    this->updater.close();
+    this->updater.join();
 }

@@ -22,7 +22,7 @@ bool Jugador::desconectar() {
 void Jugador::run() {
 
     while (not server_closed) {
-        protocolo.receive_command();
+        std::cout << "Comando recibido: " << protocolo.receive_command() << std::endl;
         // Hago algo con el comando
     }
 

@@ -1,5 +1,6 @@
 add_library(client_lib
-    controlador_cliente.cpp
+    event_handler.cpp
+    model_updater.cpp
     game.cpp
     player.cpp
     protocol.cpp

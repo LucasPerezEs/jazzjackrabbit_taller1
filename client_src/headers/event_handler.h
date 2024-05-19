@@ -14,10 +14,12 @@
 #include "player.h"
 #include "protocol.h"
 
+#define FRAME_RATE 1000000.0f / 40.0f
+
 class EventHandler: public Thread {
 
 private:
-    ClientProtocol protocolo;
+    ClientProtocol& protocol;
 
     bool was_closed;
 
@@ -26,11 +28,13 @@ private:
     void handle_keyup(const SDL_Event& event);
 
 public:
-    EventHandler(const std::string& hostname, const std::string& servname);
+    explicit EventHandler(ClientProtocol& protocol);
 
     virtual void run() override;
 
     bool is_running();
+
+    void close();
 
     EventHandler(const EventHandler&) = delete;
     EventHandler& operator=(const EventHandler&) = delete;

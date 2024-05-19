@@ -5,6 +5,7 @@
 
 struct Command {
     enum ActionType {
+        NONE = 0x00,
         UP = 0x01,
         DOWN = 0x02,
         LEFT = 0x03,

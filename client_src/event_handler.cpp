@@ -2,8 +2,7 @@
 
 // Pre: -
 // Post: -
-EventHandler::EventHandler(const std::string& hostname, const std::string& servname):
-        protocolo(hostname, servname), was_closed(false) {}
+EventHandler::EventHandler(ClientProtocol& protocol): protocol(protocol), was_closed(false) {}
 
 void EventHandler::handle_keydown(const SDL_Event& event, Command& cmd) {
     const SDL_KeyboardEvent& keyEvent = (SDL_KeyboardEvent&)event;
@@ -34,6 +33,9 @@ void EventHandler::handle_keydown(const SDL_Event& event, Command& cmd) {
             cmd.action = Command::RUN;
             std::cout << "Estoy corriendo" << std::endl;
             break;
+        default:  // Para el caso que toque una tecla no asignada.
+            cmd.action = Command::NONE;
+            break;
     }
 }
 
@@ -59,13 +61,12 @@ void EventHandler::run() {
     SDL_Event event;
 
     while (not was_closed) {
-
         SDL_WaitEvent(&event);
 
         switch (event.type) {
             case SDL_KEYDOWN:
                 this->handle_keydown(event, cmd);
-                this->protocolo.send_command(cmd);
+                this->protocol.send_command(cmd);
                 break;
             case SDL_KEYUP:
                 this->handle_keyup(event);
@@ -76,3 +77,5 @@ void EventHandler::run() {
         }
     }
 }
+
+void EventHandler::close() { this->was_closed = true; }
