@@ -1,14 +1,11 @@
 add_library(server_lib
-    aceptador.cpp
-    enemigo.cpp
+        enemigo.cpp
     game.cpp
-    jugador.cpp
-    mapa.cpp
+        mapa.cpp
     objeto.cpp
     partida.cpp
     personaje.cpp
     protocol.cpp
-    servidor.cpp
         broadcaster.cpp
         client.cpp
         clientReceiver.cpp

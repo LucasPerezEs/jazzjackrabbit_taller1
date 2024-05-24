@@ -12,7 +12,7 @@
 #include "../../common_src/headers/protocol.h"
 #include "../../common_src/headers/thread.h"
 
-
+//AGREGA ID JUGADOR
 class ClientHandler {
 private:
     ServerProtocol serverProtocol;

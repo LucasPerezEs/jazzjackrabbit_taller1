@@ -3,10 +3,11 @@
 ClientSender::ClientSender(ServerProtocol& protocol): serverProtocol(protocol) {}
 
 void ClientSender::run() {
-    //State state;
+    State::StateType state;
     while (_keep_running) {
         try {
-            //state = queueSender.pop();
+            state = queueSender.pop();
+            serverProtocol.send_state(state);
             //enviar estados a todos los clientes
         } catch (ProtocolDesconection& d) {
             break;

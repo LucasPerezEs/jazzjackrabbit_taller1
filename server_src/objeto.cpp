@@ -1,8 +1,4 @@
 #include "headers/objeto.h"
-
-#include <iostream>
-#include <vector>
-
 #include "headers/mapa.h"
 
 

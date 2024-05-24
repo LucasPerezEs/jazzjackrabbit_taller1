@@ -1,8 +1,5 @@
 #include "headers/protocol.h"
 
-#include <iostream>
-
-
 ServerProtocol::ServerProtocol(Socket peer): Protocol(std::move(peer)) {}
 
 
