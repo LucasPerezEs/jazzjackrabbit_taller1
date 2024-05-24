@@ -7,10 +7,10 @@
 
 #include "clientReceiver.h"
 #include "clientSender.h"
-#include "common_socket.h"
-#include "server_game.h"
-#include "server_protocol.h"
-#include "server_thread.h"
+#include "../../common_src/headers/socket.h"
+#include "game.h"
+#include "../../common_src/headers/protocol.h"
+#include "../../common_src/headers/thread.h"
 
 
 class ClientHandler {
@@ -26,7 +26,7 @@ public:
     ClientHandler(Socket peer, Queue<Command::ActionType>& receiverQueue);
     bool is_online();
     void kill();
-    void pushEvent(const EnemyEvent event);
+    void pushState(const State::StateType state);
     void go_online();
     ~ClientHandler();
 };

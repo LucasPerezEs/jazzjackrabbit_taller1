@@ -1,17 +1,13 @@
-#include "server_clientSender.h"
-
-#include "common_liberror.h"
-#include "server_game.h"
+#include "headers/clientSender.h"
 
 ClientSender::ClientSender(ServerProtocol& protocol): serverProtocol(protocol) {}
 
 void ClientSender::run() {
-    EnemyEvent event;
+    //State state;
     while (_keep_running) {
         try {
-            event = queueSender.pop();
-            serverProtocol.send_event(event.enemies_alive_cnt, event.enemies_dead_cnt,
-                                      event.event_type);
+            //state = queueSender.pop();
+            //enviar estados a todos los clientes
         } catch (ProtocolDesconection& d) {
             break;
         } catch (LibError& e) {
@@ -26,4 +22,4 @@ void ClientSender::run() {
 
 void ClientSender::close() { queueSender.close(); }
 
-void ClientSender::pushEvent(const EnemyEvent& event) { queueSender.push(event); }
+void ClientSender::pushState(const State::StateType& state) { queueSender.push(state); }

@@ -1,6 +1,5 @@
-#include "server_acceptor.h"
+#include "headers/acceptor.h"
 
-#include "common_liberror.h"
 
 Acceptor::Acceptor(Socket& socket, std::list<ClientHandler*>& clients,
                    Queue<Command::ActionType>& actionQueue):

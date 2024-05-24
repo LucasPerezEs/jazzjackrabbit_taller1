@@ -1,4 +1,4 @@
-#include "server_client.h"
+#include "headers/client.h"
 
 ClientHandler::ClientHandler(Socket peer, Queue<Command::ActionType>& receiverQueue):
         serverProtocol(std::move(peer)),
@@ -37,6 +37,6 @@ void ClientHandler::go_online() {
     receiverThread.start();
 }
 
-void ClientHandler::pushEvent(const EnemyEvent event) { senderThread.pushEvent(event); }
+void ClientHandler::pushState(const State::StateType state) { senderThread.pushState(state); }
 
 ClientHandler::~ClientHandler() {}

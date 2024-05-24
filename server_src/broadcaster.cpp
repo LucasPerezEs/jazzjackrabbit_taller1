@@ -1,17 +1,18 @@
-#include "server_broadcaster.h"
+#include "headers/broadcaster.h"
 
-Broadcaster::Broadcaster(std::list<ClientHandler*>& clients, Queue<EnemyEvent>& eventQueue):
-        clients(clients), eventQueue(eventQueue) {}
+Broadcaster::Broadcaster(std::list<ClientHandler*>& clients, Queue<State::StateType>& stateQueue):
+        clients(clients), stateQueue(stateQueue) {}
 
 void Broadcaster::run() {
-    EnemyEvent event;
+    State::StateType state;
 
     while (_keep_running) {
 
         try {
-            event = eventQueue.pop();
+            state = stateQueue.pop();
             for (auto& client: clients) {
-                client->pushEvent(event);
+                std::cout << "Pusheo estados" << std::endl;
+                client->pushState(state);
             }
         } catch (const ClosedQueue&) {
             break;

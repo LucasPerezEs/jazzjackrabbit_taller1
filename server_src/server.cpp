@@ -1,4 +1,4 @@
-#include "server_class.h"
+#include "headers/server.h"
 
 Server::Server(const char* servname): srv(servname) {}
 
@@ -7,14 +7,14 @@ void Server::run() {
     int c;
 
     Queue<Command::ActionType> actionQueue;
-    Queue<EnemyEvent> eventQueue;
+    Queue<State::StateType> stateQueue;
 
     std::list<ClientHandler*> clients;
 
 
-    Game game(actionQueue, eventQueue);
+    Game game(actionQueue, stateQueue);
     Acceptor thread_acceptador(srv, clients, actionQueue);
-    Broadcaster br(clients, eventQueue);
+    Broadcaster br(clients, stateQueue);
 
 
     game.start();

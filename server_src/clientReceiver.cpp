@@ -1,6 +1,4 @@
-#include "server_clientReceiver.h"
-
-#include "common_liberror.h"
+#include "headers/clientReceiver.h"
 
 ClientReceiver::ClientReceiver(ServerProtocol& protocol, Queue<Command::ActionType>& receiverQueue):
         serverProtocol(protocol), queueReceiver(receiverQueue) {}
@@ -8,6 +6,7 @@ ClientReceiver::ClientReceiver(ServerProtocol& protocol, Queue<Command::ActionTy
 void ClientReceiver::run() {
     while (_keep_running) {
         try {
+            //recibir comando de un cliente
             Command::ActionType command = serverProtocol.receive_command();
             queueReceiver.push(command);
         } catch (ProtocolDesconection& d) {

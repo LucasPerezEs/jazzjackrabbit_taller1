@@ -4,10 +4,11 @@
 #include <list>
 #include <utility>
 
-#include "common_socket.h"
-#include "server_client.h"
-#include "server_game.h"
-#include "server_thread.h"
+#include "../../common_src/headers/socket.h"
+#include "client.h"
+#include "game.h"
+#include "../../common_src/headers/thread.h"
+#include "../../common_src/headers/liberror.h"
 
 class Acceptor: public Thread {
 private:

@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include "headers/game.h"
+#include "headers/server.h"
 
 int main(int argc, char* argv[]) {
     try {
@@ -12,8 +13,11 @@ int main(int argc, char* argv[]) {
             return ret;
         }
 
-        Game juego(argv[1]);
-        juego.init_game();
+        //Game juego(argv[1]);
+        //juego.init_game();
+
+        Server server(argv[1]);
+        server.run();
 
         ret = 0;
         return ret;

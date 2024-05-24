@@ -9,6 +9,12 @@ add_library(server_lib
     personaje.cpp
     protocol.cpp
     servidor.cpp
+        broadcaster.cpp
+        client.cpp
+        clientReceiver.cpp
+        clientSender.cpp
+        acceptor.cpp
+        server.cpp
     ../common_src/liberror.cpp
     ../common_src/protocol.cpp
     ../common_src/resolver.cpp

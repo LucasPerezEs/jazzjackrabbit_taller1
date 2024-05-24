@@ -3,17 +3,17 @@
 #include <list>
 
 #include "client.h"
-#include "server_game.h"
-#include "server_thread.h"
+#include "game.h"
+#include "../../common_src/headers/thread.h"
 
 class Broadcaster: public Thread {
 private:
     std::list<ClientHandler*>& clients;
-    Queue<EnemyEvent>& eventQueue;
+    Queue<State::StateType>& stateQueue;
 
 
 public:
-    explicit Broadcaster(std::list<ClientHandler*>& clients, Queue<EnemyEvent>& eventQueue);
+    explicit Broadcaster(std::list<ClientHandler*>& clients, Queue<State::StateType>& stateQueue);
     void run() override;
     void stop() override;
 };

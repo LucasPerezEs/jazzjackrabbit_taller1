@@ -8,12 +8,12 @@
 #include <utility>
 #include <vector>
 
-#include "common_protocol_desconection.h"
-#include "common_socket.h"
-#include "server_acceptor.h"
-#include "server_broadcaster.h"
-#include "server_game.h"
-#include "server_protocol.h"
+#include "../../common_src/headers/desconection.h"
+#include "../../common_src/headers/socket.h"
+#include "acceptor.h"
+#include "broadcaster.h"
+#include "game.h"
+#include "../../common_src/headers/protocol.h"
 
 
 class Server {

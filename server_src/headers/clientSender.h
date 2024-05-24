@@ -1,20 +1,22 @@
 #ifndef CLIENTSENDER_H
 #define CLIENTSENDER_H
 
-#include "common_protocol_desconection.h"
-#include "server_game.h"
-#include "server_protocol.h"
-#include "server_queue.h"
-#include "server_thread.h"
+#include "../../common_src/headers/desconection.h"
+#include "game.h"
+#include "protocol.h"
+#include "../../common_src/headers/queue.h"
+#include "../../common_src/headers/thread.h"
+#include "../../common_src/headers/liberror.h"
+#include "game.h"
 
 class ClientSender: public Thread {
 private:
     ServerProtocol& serverProtocol;
-    Queue<EnemyEvent> queueSender;
+    Queue<State::StateType> queueSender;
 
 public:
     explicit ClientSender(ServerProtocol& protocol);
-    void pushEvent(const EnemyEvent& event);
+    void pushState(const State::StateType& state);
     void run() override;
     void close();
 };
