@@ -4,13 +4,20 @@
 #include <map>
 #include <vector>
 
+#include "../../common_src/headers/queue.h"
+
+#include "contenedor.h"
+
 class Enemigo;
 class Personaje;
 class Bala;
 class Mapa;
+class Municion;
+class ListaObjetos;
 
 class Objeto {
 public:
+    int id;
     float x;  // estos atributos es la hitbox del objeto
     float y;
     float width;
@@ -20,39 +27,29 @@ public:
 public:
     Objeto(float x, float y, float w, float h);
 
-    virtual void update(Mapa& m);
+    virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q);
+    virtual void eliminar();
 
     virtual void colision(Objeto& o) = 0;
     virtual void colision(Personaje& o);
     virtual void colision(Enemigo& o);
     virtual void colision(Bala& o);
+    virtual void colision(Municion& m);
+    virtual ~Objeto();
 };
 
 class Ente: public Objeto {  // objetos con vida
 protected:
-    int direccion;  // para donde se mueven
+    int direccion;          // para donde se mueven
+    unsigned int contador;  // se usa para llevar el tiempo de muerte y eso
 public:
     int vida;
 
     Ente(float x, float y, float w, float h, int vida);
     void RecibirDanio(int d);
     bool vivo();
+    virtual void update_vivo(ListaObjetos& objetos, Queue<Contenedor>& q);
 };
 
-class Bala: public Objeto {
-protected:
-    int vel;
-
-public:
-    int danio;
-    Bala(float x, float y, int d);
-    virtual void colision(Objeto& o) override;
-    virtual void update(Mapa& m) override;
-};
-
-class Arma {  // No se si es necesaria esta clase
-public:
-    void disparar(std::map<Objeto*, Objeto*>& objetos, float x, float w, float y, float h, int d);
-};
 
 #endif

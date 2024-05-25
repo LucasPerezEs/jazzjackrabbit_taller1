@@ -15,11 +15,21 @@ public:
     bool colision(float x, float y, float w, float h);
 };
 
+class Diagonal {
+public:
+    float x;
+    float y;
+    float w;
+    float h;
+    Diagonal();
+};
+
 class Mapa {
 public:
     std::vector<Piso*> objetos;
     Mapa();
     bool CheckColision(float x, float y, float w, float h);
+    ~Mapa();
 };
 
 #endif

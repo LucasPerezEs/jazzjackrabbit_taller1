@@ -18,8 +18,8 @@ bool Piso::colision(float posx, float posy, float width, float height) {
 
 Mapa::Mapa() {
     Piso* piso = new Piso(0, -1, 1000, 0);   // piso
-    Piso* piso2 = new Piso(99, 0, 100, 50);  // pared derecha
-    Piso* piso3 = new Piso(0, 0, 1, 50);     // pared izquierda
+    Piso* piso2 = new Piso(99, 0, 110, 50);  // pared derecha
+    Piso* piso3 = new Piso(0, 0, 3, 50);     // pared izquierda
     Piso* piso4 = new Piso(20, 10, 35, 11);  // plataforma
     objetos.push_back(piso);
     objetos.push_back(piso2);
@@ -31,9 +31,16 @@ bool Mapa::CheckColision(
         float x, float y, float w,
         float h) {  // devuelve true si la hitbox que le paso por parametro colisiona con el mapa
     for (auto p: objetos) {
+        // cppcheck-suppress useStlAlgorithm
         if (p->colision(x, y, w, h)) {
             return true;
         }
     }
     return false;
+}
+
+Mapa::~Mapa() {
+    for (auto o: objetos) {
+        delete (o);
+    }
 }

@@ -12,6 +12,9 @@ add_library(server_lib
         clientSender.cpp
         acceptor.cpp
         server.cpp
+        contenedor.cpp
+        lista_objetos.cpp
+        municion.cpp
     ../common_src/liberror.cpp
     ../common_src/protocol.cpp
     ../common_src/resolver.cpp
