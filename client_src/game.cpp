@@ -1,19 +1,18 @@
 #include "headers/game.h"
 
-Game::Game(const std::string& hostname, const std::string& servname, SdlWindow& window):
-        protocol(hostname, servname), event_handler(protocol), window(window), updater(protocol) {}
+Game::Game(Client& client, SdlWindow& window, Player& player):
+        client(client), window(window), player(player) {}
 
 void Game::run() {
     uint32_t time1 = 0;
     time1 = SDL_GetTicks();
 
-    // Atrapa los eventos de teclado/mouse del usuario y envia el mensaje adecuado al server
-    this->event_handler.start();
-    // Lee mensajes de la queue del server->cliente y actualiza los modelos
-    this->updater.start();
+    client.go_online();
 
-    while (this->event_handler.is_running() and this->updater.is_running()) {
+    while (client.is_online()) {
 
+
+        this->update(FRAME_RATE);
         // Render de la pantalla con el modelo actual.
         this->render();
 
@@ -28,18 +27,14 @@ void Game::run() {
     this->close();
 }
 
+void Game::update(float dt) { this->player.update(dt); }
+
 void Game::render() {
     this->window.fill();
-    // player.render();
+    player.render();
     this->window.render();
 }
 
 void Game::close() {
-    this->protocol.stop();
-
-    this->event_handler.close();
-    this->event_handler.join();
-
-    this->updater.close();
-    this->updater.join();
+    client.close();
 }

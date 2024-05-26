@@ -20,15 +20,16 @@ class EventHandler: public Thread {
 
 private:
     ClientProtocol& protocol;
+    Player& player;
 
     bool was_closed;
 
-    void handle_keydown(const SDL_Event& event, Command& cmd);
+    void handle_keydown(const SDL_Event& event, Command& cmd );
 
     void handle_keyup(const SDL_Event& event);
 
 public:
-    explicit EventHandler(ClientProtocol& protocol);
+    explicit EventHandler(ClientProtocol& protocol,Player& player);
 
     virtual void run() override;
 

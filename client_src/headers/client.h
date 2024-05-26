@@ -5,24 +5,33 @@
 #include <map>
 #include <string>
 
-#include "client_protocol.h"
-#include "common_commands.h"
+#include "protocol.h"
+#include "../../common_src/headers/commands.h"
+#include "event_handler.h"
+#include "model_updater.h"
+//#include "SdlWindow.h"
 
-#define COMMAND_PARAMETER_START_INDEX 5
 
 class Client {
 public:
-    Client(const std::string& hostname, const std::string& servername);
-    void run(std::istream& in);
+    Client(const std::string& hostname, const std::string& servername, Player& player);
+
+    void go_online();
+    bool is_online();
+
+
+    void close();
 
 private:
     ClientProtocol client_protocol;
-    static const std::map<std::string, Command::ActionType> actions_map;
+    EventHandler event_handler; //eventos teclado (sender)
+    ModelUpdater updater;//actualizar modelos (receiver)
+    Player& player;
+    bool online;
 
-    void receive_and_print_messages(int n);
-    void sendAttack();
-    void printEvent(EnemyEvent event);
-    void printMessage(const std::string& msg);
+    //SdlWindow& window;
+
+
 };
 
 #endif

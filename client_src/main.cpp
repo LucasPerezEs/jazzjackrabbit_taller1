@@ -16,10 +16,13 @@ int main(int argc, char* argv[]) {
         }
 
         SdlWindow window(800, 600);
-        /*SdlTexture im("../client_src/assets/jazz_walking.png", window, Color{0x2C, 0x66, 0x96});
-        Player player(im);*/
+        SdlTexture player_png("../client_src/assets/jazz_walking.png", window, Color{0x2C, 0x66, 0x96});
 
-        Game game(argv[1], argv[2], window);
+        Player player(player_png);
+
+        Client client(argv[1], argv[2], player);
+
+        Game game(client, window,player);
         game.run();
 
         return 0;

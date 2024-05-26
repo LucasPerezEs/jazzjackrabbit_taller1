@@ -2,7 +2,7 @@
 
 // Pre: -
 // Post: -
-EventHandler::EventHandler(ClientProtocol& protocol): protocol(protocol), was_closed(false) {}
+EventHandler::EventHandler(ClientProtocol& protocol,Player& player): protocol(protocol), player(player),was_closed(false) {}
 
 void EventHandler::handle_keydown(const SDL_Event& event, Command& cmd) {
     const SDL_KeyboardEvent& keyEvent = (SDL_KeyboardEvent&)event;
@@ -17,13 +17,13 @@ void EventHandler::handle_keydown(const SDL_Event& event, Command& cmd) {
             break;
         case SDLK_a:
             cmd.action = Command::LEFT;
-            // player.moveLeft();
+            player.moveLeft();
             std::cout << "Voy a la izquierda" << std::endl;
             break;
         case SDLK_d:
             cmd.action = Command::RIGHT;
             std::cout << "Voy a la derecha" << std::endl;
-            // player.moveRigth();
+            player.moveRigth();
             break;
         case SDLK_SPACE:
             cmd.action = Command::JUMP;
@@ -43,10 +43,10 @@ void EventHandler::handle_keyup(const SDL_Event& event) {
     const SDL_KeyboardEvent& keyEvent = (SDL_KeyboardEvent&)event;
     switch (keyEvent.keysym.sym) {
         case SDLK_a:
-            // player.stopMoving();
+            player.stopMoving();
             break;
         case SDLK_d:
-            // player.stopMoving();
+            player.stopMoving();
             break;
     }
 }

@@ -18,12 +18,12 @@ struct Command {
 };
 
 struct State {
-    enum StateType { INTOXICATED = 0x11, DEATH = 0x12 };
+    enum StateType { INTOXICATED = 0x11, DEATH = 0x12, NONE = 0x00 };
     StateType state;
 };
 
 struct SpecialAction {
-    enum SpecialActionType { PUNCH = 0x21, SHORTKICK = 0x22, SIDEKICK = 0x22 };
+    enum SpecialActionType { PUNCH = 0x21, SHORTKICK = 0x22, SIDEKICK = 0x23, NONE = 0x00 };
     SpecialActionType specialAction;
 };
 

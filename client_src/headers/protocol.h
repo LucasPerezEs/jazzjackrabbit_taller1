@@ -16,6 +16,7 @@ public:
     ClientProtocol(const std::string& hostname, const std::string& servicename);
 
     void send_command(Command& cmd);
+    std::pair<State::StateType, SpecialAction::SpecialActionType> receive_update();
 
     ClientProtocol(const ClientProtocol&) = delete;
     ClientProtocol& operator=(const ClientProtocol&) = delete;

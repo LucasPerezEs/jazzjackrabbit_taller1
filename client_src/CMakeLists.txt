@@ -15,6 +15,7 @@ add_library(client_lib
     sdl_libs/SdlException.cpp
     sdl_libs/SdlTexture.cpp
     sdl_libs/SdlWindow.cpp
+        client.cpp
 )
 
 target_include_directories(client_lib PRIVATE headers/*)

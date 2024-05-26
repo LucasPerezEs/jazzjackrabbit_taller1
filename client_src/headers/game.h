@@ -11,22 +11,22 @@
 #include "model_updater.h"
 #include "player.h"
 #include "protocol.h"
+#include "client.h"
 
 class Game {
 private:
-    ClientProtocol protocol;
-    EventHandler event_handler;
-    // Player& player;
+    Client& client;
     SdlWindow& window;
-    ModelUpdater updater;
+    Player& player;
+
 
 public:
-    Game(const std::string& hostname, const std::string& servname, SdlWindow& window);
+    Game(Client& client, SdlWindow& window, Player& player);
 
     void run();
 
     void init();
-
+void update(float dt);
     void render();
 
     void close();
