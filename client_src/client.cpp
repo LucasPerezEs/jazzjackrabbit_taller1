@@ -1,10 +1,10 @@
 #include "headers/client.h"
 
-Client::Client(const std::string& hostname, const std::string& servername, Player& player):
+Client::Client(const std::string& hostname, const std::string& servername, Player& player,
+               SdlWindow& window):
         client_protocol(hostname.c_str(), servername.c_str()),
         event_handler(client_protocol, player),
-        updater(client_protocol),
-        player(player),
+        updater(client_protocol, window, player),
         online(false) {}
 
 void Client::go_online() {
@@ -13,14 +13,12 @@ void Client::go_online() {
 
     this->event_handler.start();
     this->updater.start();
-
 }
 
 bool Client::is_online() {
     online = event_handler.is_running() && updater.is_running();
     return online;
 }
-
 
 
 void Client::close() {
@@ -32,5 +30,3 @@ void Client::close() {
     this->updater.close();
     this->updater.join();
 }
-
-

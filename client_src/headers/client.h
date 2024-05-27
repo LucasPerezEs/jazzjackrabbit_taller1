@@ -5,16 +5,18 @@
 #include <map>
 #include <string>
 
-#include "protocol.h"
 #include "../../common_src/headers/commands.h"
+
+#include "SdlWindow.h"
 #include "event_handler.h"
 #include "model_updater.h"
-//#include "SdlWindow.h"
+#include "protocol.h"
 
 
 class Client {
 public:
-    Client(const std::string& hostname, const std::string& servername, Player& player);
+    Client(const std::string& hostname, const std::string& servername, Player& player,
+           SdlWindow& window);
 
     void go_online();
     bool is_online();
@@ -24,14 +26,11 @@ public:
 
 private:
     ClientProtocol client_protocol;
-    EventHandler event_handler; //eventos teclado (sender)
-    ModelUpdater updater;//actualizar modelos (receiver)
-    Player& player;
+    EventHandler event_handler;  // eventos teclado (sender)
+    ModelUpdater updater;        // actualizar modelos (receiver)
     bool online;
 
-    //SdlWindow& window;
-
-
+    // SdlWindow& window;
 };
 
 #endif

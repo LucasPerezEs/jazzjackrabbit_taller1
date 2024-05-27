@@ -3,6 +3,7 @@
 
 #include "Animation.h"
 #include "Area.h"
+#include "SdlTexture.h"
 
 class Player {
 public:
@@ -13,6 +14,7 @@ public:
     void moveRigth();
     void moveLeft();
     void stopMoving();
+    void change_animation(SdlTexture* texture, int n_frames);
 
 private:
     Animation an;

@@ -31,4 +31,9 @@ void Player::moveLeft() {
     facingLeft = true;
 }
 
+void Player::change_animation(SdlTexture* texture, int n_frames) {
+    Animation new_animation(texture, n_frames);
+    this->an = new_animation;
+}
+
 void Player::stopMoving() { moving = false; }
