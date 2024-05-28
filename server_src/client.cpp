@@ -37,6 +37,6 @@ void ClientHandler::go_online() {
     receiverThread.start();
 }
 
-void ClientHandler::pushState(const State::StateType state) { senderThread.pushState(state); }
+void ClientHandler::pushState(const Contenedor& c) { senderThread.pushDatosObjeto(c); }
 
 ClientHandler::~ClientHandler() {}

@@ -14,7 +14,7 @@
 #include "player.h"
 #include "protocol.h"
 
-#define FRAME_RATE 1000000.0f / 40.0f
+#define FRAME_RATE 1000000.0f / 60.0f
 
 class EventHandler: public Thread {
 
@@ -24,12 +24,12 @@ private:
 
     bool was_closed;
 
-    void handle_keydown(const SDL_Event& event, Command& cmd );
+    void handle_keydown(const SDL_Event& event, Command& cmd);
 
-    void handle_keyup(const SDL_Event& event);
+    void handle_keyup(const SDL_Event& event, Command& cmd);
 
 public:
-    explicit EventHandler(ClientProtocol& protocol,Player& player);
+    explicit EventHandler(ClientProtocol& protocol, Player& player);
 
     virtual void run() override;
 

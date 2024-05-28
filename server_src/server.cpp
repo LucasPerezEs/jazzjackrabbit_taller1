@@ -7,7 +7,7 @@ void Server::run() {
     int c;
 
     Queue<Command::ActionType> actionQueue;
-    Queue<State::StateType> stateQueue;
+    Queue<Contenedor> stateQueue;
 
     std::list<ClientHandler*> clients;
 

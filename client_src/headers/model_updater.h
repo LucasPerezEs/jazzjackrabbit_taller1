@@ -10,7 +10,7 @@
 
 #include "protocol.h"
 
-#define FRAME_RATE 1000000.0f / 40.0f
+#define FRAME_RATE 1000000.0f / 60.0f
 
 
 class ModelUpdater: public Thread {

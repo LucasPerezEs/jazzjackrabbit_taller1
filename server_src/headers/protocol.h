@@ -9,6 +9,7 @@
 #include "../../common_src/headers/protocol.h"
 #include "../../common_src/headers/socket.h"
 
+#include "contenedor.h"
 
 class ServerProtocol: private Protocol {
 private:
@@ -19,6 +20,7 @@ public:
 
     void send_state(State::StateType state);
 
+    void send_datos_objeto(Contenedor c);
 
     ServerProtocol(const ServerProtocol&) = delete;
     ServerProtocol& operator=(const ServerProtocol&) = delete;

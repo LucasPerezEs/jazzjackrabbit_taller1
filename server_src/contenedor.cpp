@@ -1,6 +1,6 @@
 #include "headers/contenedor.h"
 
-Contenedor::Contenedor(float id, float x, float y, float w, float h, float borrar) {
+Contenedor::Contenedor(int id, float x, float y, float w, float h, bool borrar) {
     vector.push_back(id);
     vector.push_back(x);
     vector.push_back(y);
@@ -9,7 +9,7 @@ Contenedor::Contenedor(float id, float x, float y, float w, float h, float borra
     vector.push_back(borrar);
 }
 
-float Contenedor::id() { return vector[0]; }
+int Contenedor::id() { return vector[0]; }
 
 float Contenedor::posx() { return vector[1]; }
 
@@ -19,4 +19,4 @@ float Contenedor::width() { return vector[3]; }
 
 float Contenedor::height() { return vector[4]; }
 
-float Contenedor::borrar() { return vector[5]; }
+bool Contenedor::borrar() { return vector[5]; }

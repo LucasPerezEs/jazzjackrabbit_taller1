@@ -12,9 +12,30 @@ std::pair<State::StateType, SpecialAction::SpecialActionType> ClientProtocol::re
     unsigned char receivedSpecialAction = receiveUChar();
 
     State::StateType stateType = static_cast<State::StateType>(receivedState);
-    SpecialAction::SpecialActionType actionType = static_cast<SpecialAction::SpecialActionType>(receivedSpecialAction);
+    SpecialAction::SpecialActionType actionType =
+            static_cast<SpecialAction::SpecialActionType>(receivedSpecialAction);
 
     return {stateType, actionType};
+}
+
+
+Contenedor ClientProtocol::receiveDatosObjeto() {
+    int id;
+    float x;
+    float y;
+    float w;
+    float h;
+    bool borrar;
+    bool was_closed = false;
+    socket.recvall(&id, sizeof(id), &was_closed);
+    socket.recvall(&x, sizeof(x), &was_closed);
+    socket.recvall(&y, sizeof(y), &was_closed);
+    socket.recvall(&w, sizeof(w), &was_closed);
+    socket.recvall(&h, sizeof(h), &was_closed);
+    socket.recvall(&borrar, sizeof(borrar), &was_closed);
+
+    Contenedor c(id, x, y, w, h, borrar);
+    return c;
 }
 
 void ClientProtocol::stop() { Protocol::stop(); }
