@@ -17,7 +17,7 @@
 class Client {
 public:
     Client(const std::string& hostname, const std::string& servername, Player& player,
-           Queue<Contenedor>& queue);
+           Queue<Contenedor>& queue, SdlWindow& window);
 
     void go_online();
     bool is_online();
@@ -29,7 +29,7 @@ private:
     ClientProtocol client_protocol;
     ClientReceiver client_receiver;
     EventHandler event_handler;  // eventos teclado (sender)
-    // ModelUpdater updater;//actualizar modelos (receiver)
+    ModelUpdater updater;        // actualizar modelos (receiver)
     Player& player;
     bool online;
 

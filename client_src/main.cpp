@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) {
 
         Queue<Contenedor> receiverQueue;
 
-        Client client(argv[1], argv[2], player, receiverQueue);
+        Client client(argv[1], argv[2], player, receiverQueue, window);
 
         Game game(client, window, player, receiverQueue);
         game.run();
