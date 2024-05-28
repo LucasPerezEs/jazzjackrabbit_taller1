@@ -4,6 +4,7 @@
 #include <iostream>
 #include <map>
 #include <string>
+#include <vector>
 
 #include "../../common_src/headers/commands.h"
 
@@ -17,7 +18,7 @@
 class Client {
 public:
     Client(const std::string& hostname, const std::string& servername, Player& player,
-           Queue<Contenedor>& queue, SdlWindow& window);
+           Queue<Contenedor>& queue, SdlWindow& window, std::vector<std::vector<float>>& objetos);
 
     void go_online();
     bool is_online();

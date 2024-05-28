@@ -2,6 +2,7 @@
 #define GAME_H
 
 #include <string>
+#include <vector>
 
 #include <SDL2/SDL.h>
 #include <unistd.h>
@@ -15,14 +16,15 @@
 
 class Game {
 private:
-    Queue<Contenedor>& receiverQueue;
     Client& client;
     SdlWindow& window;
     Player& player;
+    std::vector<std::vector<float>>& objetos;
 
 
 public:
-    Game(Client& client, SdlWindow& window, Player& player, Queue<Contenedor>& queue);
+    Game(Client& client, SdlWindow& window, Player& player,
+         std::vector<std::vector<float>>& objetos);
 
     void run();
 

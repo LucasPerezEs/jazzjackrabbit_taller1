@@ -23,9 +23,11 @@ int main(int argc, char* argv[]) {
 
         Queue<Contenedor> receiverQueue;
 
-        Client client(argv[1], argv[2], player, receiverQueue, window);
+        std::vector<std::vector<float>> objetos;
 
-        Game game(client, window, player, receiverQueue);
+        Client client(argv[1], argv[2], player, receiverQueue, window, objetos);
+
+        Game game(client, window, player, objetos);
         game.run();
 
         return 0;

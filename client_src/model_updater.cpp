@@ -1,7 +1,9 @@
 #include "headers/model_updater.h"
 
-ModelUpdater::ModelUpdater(ClientProtocol& protocol, SdlWindow& window):
-        protocol(protocol), was_closed(false) {
+ModelUpdater::ModelUpdater(ClientProtocol& protocol, SdlWindow& window,
+                           std::vector<std::vector<float>>& objetos,
+                           Queue<Contenedor>& reciever_queue):
+        protocol(protocol), was_closed(false), objetos(objetos), reciever_queue(reciever_queue) {
     this->init_textures(window);
 }
 
@@ -28,8 +30,39 @@ void ModelUpdater::run() {
 void ModelUpdater::update(float dt) {
 
     try {
+        while (true) {
 
-        std::pair<State::StateType, SpecialAction::SpecialActionType> update =
+            Contenedor c(0, 0, 0, 0, 0, 0);
+            if (!reciever_queue.try_pop(c)) {
+                break;
+            }
+
+            for (long unsigned int i = 0; i <= objetos.size(); i++) {
+                if (i != objetos.size() && (objetos[i])[0] == c.id()) {
+                    (objetos[i])[1] = c.posx();
+                    (objetos[i])[2] = c.posy();
+                    (objetos[i])[3] = c.width();
+                    (objetos[i])[4] = c.height();
+                    (objetos[i])[5] = (float)c.borrar();
+                    break;
+                } else if (i == objetos.size()) {
+                    std::vector<float> vector;
+                    vector.push_back(c.id());
+                    vector.push_back(c.posx());
+                    vector.push_back(c.posy());
+                    vector.push_back(c.width());
+                    vector.push_back(c.height());
+                    vector.push_back((float)c.borrar());
+                    objetos.push_back(vector);
+                    break;
+                }
+            }
+        }
+
+        objetos.erase(std::remove_if(objetos.begin(), objetos.end(),
+                                     [](std::vector<float> o) { return o[5] == 1 ? true : false; }),
+                      objetos.end());
+        /*std::pair<State::StateType, SpecialAction::SpecialActionType> update =
                 protocol.receive_update();
 
         State::StateType stateType = update.first;
@@ -64,7 +97,7 @@ void ModelUpdater::update(float dt) {
                     std::cerr << "Special Action no reconocida: " << std::endl;
                     break;
             }
-        }
+        }*/
 
 
     } catch (const std::exception& e) {
