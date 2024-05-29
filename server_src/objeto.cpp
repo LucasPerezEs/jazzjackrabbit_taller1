@@ -50,7 +50,7 @@ void Ente::update_vivo(ListaObjetos& objetos, Queue<Contenedor>& q) {
             borrar = false;
             objetos.agregar_objeto(this);
             contador = 0;
-            Contenedor c(this->id, this->x, this->y, this->width, this->height, this->borrar);
+            Contenedor c(0, this->id, this->x, this->y, this->width, this->height, this->borrar);
             q.try_push(c);
         }
         contador++;

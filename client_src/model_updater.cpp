@@ -30,38 +30,50 @@ void ModelUpdater::run() {
 void ModelUpdater::update(float dt) {
 
     try {
-        while (true) {
 
-            Contenedor c(0, 0, 0, 0, 0, 0);
-            if (!reciever_queue.try_pop(c)) {
+        Contenedor c = this->reciever_queue.pop();
+
+        switch (c.msg_code()) {
+            case 0:  // Actualiza un objeto, si no existe, lo crea.
+                for (long unsigned int i = 0; i <= objetos.size(); i++) {
+                    if (i != objetos.size() && (objetos[i])[0] == c.id()) {
+                        (objetos[i])[1] = c.posx();
+                        (objetos[i])[2] = c.posy();
+                        (objetos[i])[3] = c.width();
+                        (objetos[i])[4] = c.height();
+                        (objetos[i])[5] = (float)c.borrar();
+                        break;
+                    } else if (i == objetos.size()) {
+                        std::vector<float> vector;
+                        vector.push_back(c.id());
+                        vector.push_back(c.posx());
+                        vector.push_back(c.posy());
+                        vector.push_back(c.width());
+                        vector.push_back(c.height());
+                        vector.push_back((float)c.borrar());
+                        objetos.push_back(vector);
+                        break;
+                    }
+                }
+                break;
+
+            case 1:  // Despawnea un objeto
+            {
+                for (long unsigned int i = 0; i <= objetos.size(); i++) {
+                    // cppcheck-suppress stlOutOfBounds
+                    if ((objetos[i])[0] == c.id()) {
+                        std::vector<std::vector<float>>::iterator it = objetos.begin() + i;
+                        objetos.erase(it);
+                        break;
+                    }
+                }
                 break;
             }
 
-            for (long unsigned int i = 0; i <= objetos.size(); i++) {
-                if (i != objetos.size() && (objetos[i])[0] == c.id()) {
-                    (objetos[i])[1] = c.posx();
-                    (objetos[i])[2] = c.posy();
-                    (objetos[i])[3] = c.width();
-                    (objetos[i])[4] = c.height();
-                    (objetos[i])[5] = (float)c.borrar();
-                    break;
-                } else if (i == objetos.size()) {
-                    std::vector<float> vector;
-                    vector.push_back(c.id());
-                    vector.push_back(c.posx());
-                    vector.push_back(c.posy());
-                    vector.push_back(c.width());
-                    vector.push_back(c.height());
-                    vector.push_back((float)c.borrar());
-                    objetos.push_back(vector);
-                    break;
-                }
-            }
+            default:
+                break;
         }
 
-        objetos.erase(std::remove_if(objetos.begin(), objetos.end(),
-                                     [](std::vector<float> o) { return o[5] == 1 ? true : false; }),
-                      objetos.end());
         /*std::pair<State::StateType, SpecialAction::SpecialActionType> update =
                 protocol.receive_update();
 
@@ -102,10 +114,12 @@ void ModelUpdater::update(float dt) {
 
     } catch (const std::exception& e) {
         std::cerr << "Protocolo cerrado" << e.what() << "\n";
-        this->close();
     }
 }
 
 bool ModelUpdater::is_running() { return not was_closed; }
 
-void ModelUpdater::close() { this->was_closed = true; }
+void ModelUpdater::close() {
+    this->reciever_queue.close();
+    this->was_closed = true;
+}

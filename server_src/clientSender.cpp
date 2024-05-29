@@ -4,10 +4,9 @@
 ClientSender::ClientSender(ServerProtocol& protocol): serverProtocol(protocol) {}
 
 void ClientSender::run() {
-    Contenedor c(0, 0, 0, 0, 0, false);
     while (_keep_running) {
         try {
-            c = queueSender.pop();
+            Contenedor c = queueSender.pop();
             serverProtocol.send_datos_objeto(c);
             // enviar estados a todos los clientes
         } catch (ProtocolDesconection& d) {

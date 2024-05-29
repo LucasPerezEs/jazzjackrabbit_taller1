@@ -87,7 +87,7 @@ void Personaje::update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) {
             width = auxw;
         }
     }
-    Contenedor c(this->id, this->x, this->y, this->width, this->height, this->borrar);
+    Contenedor c(0, this->id, this->x, this->y, this->width, this->height, this->borrar);
     q.try_push(c);
 }
 
@@ -156,7 +156,7 @@ void Bala::update(
     if (mapa.CheckColision(x, y, width, height)) {
         this->borrar = true;
     }
-    Contenedor c(this->id, this->x, this->y, this->width, this->height, this->borrar);
+    Contenedor c(0, this->id, this->x, this->y, this->width, this->height, this->borrar);
     q.try_push(c);
 }
 

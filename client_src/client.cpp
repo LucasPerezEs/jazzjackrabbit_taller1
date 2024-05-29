@@ -27,13 +27,17 @@ bool Client::is_online() {
 
 void Client::close() {
     this->client_protocol.stop();
+    std::cout << "Cierro el protocolo" << std::endl;
 
     this->event_handler.close();
     this->event_handler.join();
+    std::cout << "Cierro el handler" << std::endl;
 
     // this->client_receiver.close();
     this->client_receiver.join();
+    std::cout << "Cierro el reciever" << std::endl;
 
     this->updater.close();
     this->updater.join();
+    std::cout << "Cierro el updater" << std::endl;
 }

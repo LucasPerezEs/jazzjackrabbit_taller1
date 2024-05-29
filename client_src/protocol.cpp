@@ -20,6 +20,7 @@ std::pair<State::StateType, SpecialAction::SpecialActionType> ClientProtocol::re
 
 
 Contenedor ClientProtocol::receiveDatosObjeto() {
+    int msg_code;
     int id;
     float x;
     float y;
@@ -27,6 +28,7 @@ Contenedor ClientProtocol::receiveDatosObjeto() {
     float h;
     bool borrar;
     bool was_closed = false;
+    socket.recvall(&msg_code, sizeof(msg_code), &was_closed);
     socket.recvall(&id, sizeof(id), &was_closed);
     socket.recvall(&x, sizeof(x), &was_closed);
     socket.recvall(&y, sizeof(y), &was_closed);
@@ -34,7 +36,7 @@ Contenedor ClientProtocol::receiveDatosObjeto() {
     socket.recvall(&h, sizeof(h), &was_closed);
     socket.recvall(&borrar, sizeof(borrar), &was_closed);
 
-    Contenedor c(id, x, y, w, h, borrar);
+    Contenedor c(msg_code, id, x, y, w, h, borrar);
     return c;
 }
 

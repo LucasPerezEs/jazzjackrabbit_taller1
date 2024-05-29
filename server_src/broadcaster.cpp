@@ -4,7 +4,7 @@ Broadcaster::Broadcaster(std::list<ClientHandler*>& clients, Queue<Contenedor>& 
         clients(clients), stateQueue(stateQueue) {}
 
 void Broadcaster::run() {
-    Contenedor c(0, 0, 0, 0, 0, false);
+    Contenedor c(0, 0, 0, 0, 0, 0, false);
 
     while (_keep_running) {
 

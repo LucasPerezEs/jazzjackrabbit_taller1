@@ -12,12 +12,14 @@ void ServerProtocol::send_state(State::StateType state) { sendUChar(state); }
 
 void ServerProtocol::send_datos_objeto(Contenedor c) {
     bool was_closed;
+    int msg_code = c.msg_code();
     int id = c.id();
     float x = c.posx();
     float y = c.posy();
     float w = c.width();
     float h = c.height();
     bool borrar = c.borrar();
+    socket.sendall(&msg_code, sizeof(msg_code), &was_closed);
     socket.sendall(&id, sizeof(id), &was_closed);
     socket.sendall(&x, sizeof(x), &was_closed);
     socket.sendall(&y, sizeof(y), &was_closed);

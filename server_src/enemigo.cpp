@@ -48,7 +48,7 @@ void Enemigo::update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) {
         x = auxx;                    // se pone la pos x anterior
         width = auxw;
     }
-    Contenedor c(this->id, this->x, this->y, this->width, this->height, this->borrar);
+    Contenedor c(0, this->id, this->x, this->y, this->width, this->height, this->borrar);
     q.try_push(c);
 }
 
@@ -57,8 +57,8 @@ void Enemigo::update_vivo(ListaObjetos& objetos, Queue<Contenedor>& q) {
         if (contador == 1) {  // si acaba de morir dropea una municion
             Municion* municion = new Municion((x + width) / 2, (y + height) / 2);
             objetos.agregar_objeto(municion);
-            Contenedor c(municion->id, municion->x, municion->y, municion->width, municion->height,
-                         municion->borrar);
+            Contenedor c(0, municion->id, municion->x, municion->y, municion->width,
+                         municion->height, municion->borrar);
             q.try_push(c);
         }
         if (contador == 240) {  // despues de un rato revive
@@ -66,7 +66,7 @@ void Enemigo::update_vivo(ListaObjetos& objetos, Queue<Contenedor>& q) {
             borrar = false;
             objetos.agregar_objeto(this);
             contador = 0;
-            Contenedor c(this->id, this->x, this->y, this->width, this->height, this->borrar);
+            Contenedor c(0, this->id, this->x, this->y, this->width, this->height, this->borrar);
             q.try_push(c);
         }
         contador++;

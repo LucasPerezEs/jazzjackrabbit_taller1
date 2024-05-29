@@ -8,7 +8,8 @@ private:
     std::vector<float> vector;
 
 public:
-    Contenedor(int id, float x, float y, float w, float h, bool borrar);
+    Contenedor(int msg_code, int id, float x, float y, float w, float h, bool borrar);
+    int msg_code();
     int id();
     float posx();
     float posy();
