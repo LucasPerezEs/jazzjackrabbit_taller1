@@ -5,6 +5,7 @@
 #include <SDL.h>
 
 #include "headers/SdlTexture.h"
+#include "headers/entity.h"
 #include "headers/game.h"
 
 int main(int argc, char* argv[]) {
@@ -23,11 +24,12 @@ int main(int argc, char* argv[]) {
 
         Queue<Contenedor> receiverQueue;
 
+        std::map<int, Entity*> entidades;
         std::vector<std::vector<float>> objetos;
 
-        Client client(argv[1], argv[2], player, receiverQueue, window, objetos);
+        Client client(argv[1], argv[2], player, receiverQueue, window, entidades);
 
-        Game game(client, window, player, objetos);
+        Game game(client, window, player, entidades);
         game.run();
 
         return 0;

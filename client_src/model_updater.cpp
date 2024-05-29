@@ -1,9 +1,11 @@
 #include "headers/model_updater.h"
 
 ModelUpdater::ModelUpdater(ClientProtocol& protocol, SdlWindow& window,
-                           std::vector<std::vector<float>>& objetos,
-                           Queue<Contenedor>& reciever_queue):
-        protocol(protocol), was_closed(false), objetos(objetos), reciever_queue(reciever_queue) {
+                           std::map<int, Entity*>& entidades, Queue<Contenedor>& reciever_queue):
+        protocol(protocol),
+        was_closed(false),
+        entidades(entidades),
+        reciever_queue(reciever_queue) {
     this->init_textures(window);
 }
 
@@ -35,40 +37,20 @@ void ModelUpdater::update(float dt) {
 
         switch (c.msg_code()) {
             case 0:  // Actualiza un objeto, si no existe, lo crea.
-                for (long unsigned int i = 0; i <= objetos.size(); i++) {
-                    if (i != objetos.size() && (objetos[i])[0] == c.id()) {
-                        (objetos[i])[1] = c.posx();
-                        (objetos[i])[2] = c.posy();
-                        (objetos[i])[3] = c.width();
-                        (objetos[i])[4] = c.height();
-                        (objetos[i])[5] = (float)c.borrar();
-                        break;
-                    } else if (i == objetos.size()) {
-                        std::vector<float> vector;
-                        vector.push_back(c.id());
-                        vector.push_back(c.posx());
-                        vector.push_back(c.posy());
-                        vector.push_back(c.width());
-                        vector.push_back(c.height());
-                        vector.push_back((float)c.borrar());
-                        objetos.push_back(vector);
-                        break;
-                    }
+                if (entidades.count(c.id()) > 0) {
+                    std::cout << "Se actualiza una entidad con id:" << c.id() << std::endl;
+                    entidades[c.id()]->update_stats(c.posx(), c.posy(), c.width(), c.height(),
+                                                    c.borrar());
+                } else {
+                    std::cout << "Se crea una entidad con id:" << c.id() << std::endl;
+                    entidades[c.id()] = new Entity(c.id(), c.posx(), c.posy(), c.width(),
+                                                   c.height(), c.borrar());
                 }
                 break;
 
             case 1:  // Despawnea un objeto
-            {
-                for (long unsigned int i = 0; i <= objetos.size(); i++) {
-                    // cppcheck-suppress stlOutOfBounds
-                    if ((objetos[i])[0] == c.id()) {
-                        std::vector<std::vector<float>>::iterator it = objetos.begin() + i;
-                        objetos.erase(it);
-                        break;
-                    }
-                }
+                entidades.erase(c.id());
                 break;
-            }
 
             default:
                 break;

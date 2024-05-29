@@ -1,12 +1,11 @@
 #include "headers/client.h"
 
 Client::Client(const std::string& hostname, const std::string& servername, Player& player,
-               Queue<Contenedor>& queue, SdlWindow& window,
-               std::vector<std::vector<float>>& objetos):
+               Queue<Contenedor>& queue, SdlWindow& window, std::map<int, Entity*>& entidades):
         client_protocol(hostname.c_str(), servername.c_str()),
         client_receiver(client_protocol, queue),
         event_handler(client_protocol, player),
-        updater(client_protocol, window, objetos, queue),
+        updater(client_protocol, window, entidades, queue),
         player(player),
         online(false) {}
 
@@ -27,17 +26,13 @@ bool Client::is_online() {
 
 void Client::close() {
     this->client_protocol.stop();
-    std::cout << "Cierro el protocolo" << std::endl;
 
     this->event_handler.close();
     this->event_handler.join();
-    std::cout << "Cierro el handler" << std::endl;
 
     // this->client_receiver.close();
     this->client_receiver.join();
-    std::cout << "Cierro el reciever" << std::endl;
 
     this->updater.close();
     this->updater.join();
-    std::cout << "Cierro el updater" << std::endl;
 }

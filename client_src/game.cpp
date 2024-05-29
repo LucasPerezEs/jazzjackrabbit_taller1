@@ -1,8 +1,7 @@
 #include "headers/game.h"
 
-Game::Game(Client& client, SdlWindow& window, Player& player,
-           std::vector<std::vector<float>>& objetos):
-        client(client), window(window), player(player), objetos(objetos) {}
+Game::Game(Client& client, SdlWindow& window, Player& player, std::map<int, Entity*>& entidades):
+        client(client), window(window), player(player), entidades(entidades) {}
 
 void Game::run() {
     uint32_t time1 = 0;
@@ -32,13 +31,8 @@ void Game::render() {
 
     SDL_SetRenderDrawColor(window.getRenderer(), 255, 255, 255, 255);
 
-    for (auto o: objetos) {
-        SDL_Rect r;
-        r.h = ((o[2] - o[4]) * 6);
-        r.w = ((o[3] - o[1]) * 8);
-        r.x = o[1] * 8;
-        r.y = 600 - (o[2] * 6);
-        SDL_RenderDrawRect(window.getRenderer(), &r);
+    for (std::map<int, Entity*>::iterator it = entidades.begin(); it != entidades.end(); ++it) {
+        it->second->render(window);
     }
     SDL_SetRenderDrawColor(window.getRenderer(), 0, 0, 0, 255);
 

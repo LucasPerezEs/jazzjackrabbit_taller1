@@ -9,6 +9,7 @@
 #include "../../common_src/headers/commands.h"
 
 #include "clientReceiver.h"
+#include "entity.h"
 #include "event_handler.h"
 #include "model_updater.h"
 #include "protocol.h"
@@ -18,7 +19,7 @@
 class Client {
 public:
     Client(const std::string& hostname, const std::string& servername, Player& player,
-           Queue<Contenedor>& queue, SdlWindow& window, std::vector<std::vector<float>>& objetos);
+           Queue<Contenedor>& queue, SdlWindow& window, std::map<int, Entity*>& entidades);
 
     void go_online();
     bool is_online();

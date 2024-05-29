@@ -4,6 +4,9 @@ add_library(client_lib
     game.cpp
     player.cpp
     protocol.cpp
+    client.cpp
+    clientReceiver.cpp
+    entity.cpp
     ../common_src/liberror.cpp
     ../common_src/protocol.cpp
     ../common_src/resolver.cpp
@@ -16,8 +19,6 @@ add_library(client_lib
     sdl_libs/SdlException.cpp
     sdl_libs/SdlTexture.cpp
     sdl_libs/SdlWindow.cpp
-    client.cpp
-    clientReceiver.cpp
 )
 
 target_include_directories(client_lib PRIVATE headers/*)

@@ -1,14 +1,15 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include <map>
 #include <string>
-#include <vector>
 
 #include <SDL2/SDL.h>
 #include <unistd.h>
 
 #include "SdlWindow.h"
 #include "client.h"
+#include "entity.h"
 #include "event_handler.h"
 #include "model_updater.h"
 #include "player.h"
@@ -19,12 +20,11 @@ private:
     Client& client;
     SdlWindow& window;
     Player& player;
-    std::vector<std::vector<float>>& objetos;
+    std::map<int, Entity*>& entidades;
 
 
 public:
-    Game(Client& client, SdlWindow& window, Player& player,
-         std::vector<std::vector<float>>& objetos);
+    Game(Client& client, SdlWindow& window, Player& player, std::map<int, Entity*>& entidades);
 
     void run();
 

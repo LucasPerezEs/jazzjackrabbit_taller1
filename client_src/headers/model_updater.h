@@ -13,6 +13,7 @@
 
 #include "SdlTexture.h"
 #include "SdlWindow.h"
+#include "entity.h"
 #include "protocol.h"
 #include "texture_ids.h"
 
@@ -24,15 +25,15 @@ class ModelUpdater: public Thread {
 private:
     ClientProtocol& protocol;
     bool was_closed;
-    std::vector<std::vector<float>>& objetos;
+    std::map<int, Entity*>& entidades;
     std::map<int, std::map<int, SdlTexture*>> textures;
     Queue<Contenedor>& reciever_queue;
 
     void init_textures(SdlWindow& window);
 
 public:
-    ModelUpdater(ClientProtocol& protocol, SdlWindow& window,
-                 std::vector<std::vector<float>>& objetos, Queue<Contenedor>& reciever_queue);
+    ModelUpdater(ClientProtocol& protocol, SdlWindow& window, std::map<int, Entity*>& entidades,
+                 Queue<Contenedor>& reciever_queue);
 
     virtual void run() override;
 
