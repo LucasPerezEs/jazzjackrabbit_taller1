@@ -18,7 +18,8 @@ protected:
     int danio;
 
 public:
-    Enemigo(float x, float y, float w, float h, int vida);
+    Enemigo(float x, float y, float w, float h, int vida, EntityType en_type,
+            AnimationType an_type);
     virtual void colision(Objeto& o) override;
     virtual void colision(Personaje& p) override;
     virtual void colision(Bala& b) override;

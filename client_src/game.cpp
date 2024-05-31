@@ -11,6 +11,7 @@ void Game::run() {
 
     while (client.is_online()) {
 
+        this->update();
         this->render();
 
         uint32_t time2;
@@ -24,22 +25,35 @@ void Game::run() {
     this->close();
 }
 
-void Game::update(float dt) { this->player.update(dt); }
+void Game::update() {
+    for (std::map<int, Entity*>::iterator it = entidades.begin(); it != entidades.end(); ++it) {
+        it->second->update_animation();
+    }
+    /*if (entidades.count(0) > 0) {
+        entidades[0]->update_animation();
+    }
+    if (entidades.count(1) > 0) {
+        entidades[1]->update_animation();
+    }*/
+}
 
 void Game::render() {
-    SDL_RenderClear(window.getRenderer());  // renderizo todo como un rectangulo
+    this->window.fill();
 
-    SDL_SetRenderDrawColor(window.getRenderer(), 255, 255, 255, 255);
+
+    // Cuando esten todas las animaciones se pueden renderizar todas las entidades en partida
 
     for (std::map<int, Entity*>::iterator it = entidades.begin(); it != entidades.end(); ++it) {
         it->second->render(window);
     }
-    SDL_SetRenderDrawColor(window.getRenderer(), 0, 0, 0, 255);
+    /*if (entidades.count(0) > 0) {
+        entidades[0]->render(window); // Renderizo solo el jugador para probar
+    }
+    if (entidades.count(1) > 0) {
+        entidades[1]->render(window);
+    }*/
 
-    SDL_RenderPresent(window.getRenderer());
-    /*this->window.fill();
-    player.render();
-    this->window.render();*/
+    this->window.render();
 }
 
 void Game::close() { client.close(); }

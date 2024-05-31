@@ -26,7 +26,9 @@ Contenedor ClientProtocol::receiveDatosObjeto() {
     float y;
     float w;
     float h;
-    bool borrar;
+    int direccion;
+    AnimationType an;
+    EntityType en;
     bool was_closed = false;
     socket.recvall(&msg_code, sizeof(msg_code), &was_closed);
     socket.recvall(&id, sizeof(id), &was_closed);
@@ -34,9 +36,11 @@ Contenedor ClientProtocol::receiveDatosObjeto() {
     socket.recvall(&y, sizeof(y), &was_closed);
     socket.recvall(&w, sizeof(w), &was_closed);
     socket.recvall(&h, sizeof(h), &was_closed);
-    socket.recvall(&borrar, sizeof(borrar), &was_closed);
+    socket.recvall(&direccion, sizeof(direccion), &was_closed);
+    socket.recvall(&an, sizeof(an), &was_closed);
+    socket.recvall(&en, sizeof(en), &was_closed);
 
-    Contenedor c(msg_code, id, x, y, w, h, borrar);
+    Contenedor c(msg_code, id, x, y, w, h, direccion, an, en);
     return c;
 }
 

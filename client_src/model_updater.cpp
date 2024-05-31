@@ -6,21 +6,30 @@ ModelUpdater::ModelUpdater(ClientProtocol& protocol, SdlWindow& window,
         was_closed(false),
         entidades(entidades),
         reciever_queue(reciever_queue) {
-    this->init_textures(window);
+    this->init_animations(window);
 }
 
-void ModelUpdater::init_textures(SdlWindow& window) {
-    /*this->texture[EntityType::JAZZ][AnimationType::IDLE] = new SdlTexture(PATH, window,
-    Color{0x2C, 0x66, 0x96}); this->texture[EntityType::JAZZ][AnimationType::WALK] = new
-    SdlTexture(PATH, window, Color{0x2C, 0x66, 0x96});
-    this->texture[EntityType::JAZZ][AnimationType::RUN] = new SdlTexture(PATH, window, Color{0x2C,
-    0x66, 0x96}); this->texture[EntityType::JAZZ][AnimationType::JUMP] = new SdlTexture(PATH,
-    window, Color{0x2C, 0x66, 0x96});*/
-
-    this->textures[0][0] = new SdlTexture("../client_src/assets/jazz_walking.png", window,
-                                          Color{0x2C, 0x66, 0x96});
-    this->textures[0][1] = new SdlTexture("../client_src/assets/jazz_intoxicated_walking.png",
-                                          window, Color{0x2C, 0x66, 0x96});
+void ModelUpdater::init_animations(SdlWindow& window) {
+    this->animations[EntityType::JAZZ][AnimationType::WALK] =
+            new Animation(new SdlTexture("../client_src/assets/jazz_walking.png", window,
+                                         Color{0x2C, 0x66, 0x96}),
+                          8);
+    this->animations[EntityType::JAZZ][AnimationType::INTOXICATED_WALK] =
+            new Animation(new SdlTexture("../client_src/assets/jazz_intoxicated_walking.png",
+                                         window, Color{0x2C, 0x66, 0x96}),
+                          12);
+    this->animations[EntityType::ENEMY][AnimationType::WALK] =
+            new Animation(new SdlTexture("../client_src/assets/fantasma_walking.png", window,
+                                         Color{0x2C, 0x66, 0x96}),
+                          5);
+    this->animations[EntityType::BULLET][AnimationType::WALK] =
+            new Animation(new SdlTexture("../client_src/assets/bullet_shoot.png", window,
+                                         Color{0x2C, 0x66, 0x96}),
+                          6);
+    this->animations[EntityType::BULLET][AnimationType::PICKUP] =
+            new Animation(new SdlTexture("../client_src/assets/bullet_pickup.png", window,
+                                         Color{0x2C, 0x66, 0x96}),
+                          10);
 }
 
 void ModelUpdater::run() {
@@ -38,13 +47,16 @@ void ModelUpdater::update(float dt) {
         switch (c.msg_code()) {
             case 0:  // Actualiza un objeto, si no existe, lo crea.
                 if (entidades.count(c.id()) > 0) {
-                    std::cout << "Se actualiza una entidad con id:" << c.id() << std::endl;
                     entidades[c.id()]->update_stats(c.posx(), c.posy(), c.width(), c.height(),
-                                                    c.borrar());
+                                                    c.direccion());
+                    entidades[c.id()]->modify_animation(
+                            this->animations[c.entity_type()][c.animation_type()],
+                            c.animation_type());
                 } else {
-                    std::cout << "Se crea una entidad con id:" << c.id() << std::endl;
-                    entidades[c.id()] = new Entity(c.id(), c.posx(), c.posy(), c.width(),
-                                                   c.height(), c.borrar());
+                    entidades[c.id()] = new Entity(
+                            c.id(), c.posx(), c.posy(), c.width(), c.height(), c.direccion(),
+                            c.animation_type(),
+                            this->animations[c.entity_type()][c.animation_type()], c.entity_type());
                 }
                 break;
 
@@ -55,44 +67,6 @@ void ModelUpdater::update(float dt) {
             default:
                 break;
         }
-
-        /*std::pair<State::StateType, SpecialAction::SpecialActionType> update =
-                protocol.receive_update();
-
-        State::StateType stateType = update.first;
-        SpecialAction::SpecialActionType actionType = update.second;
-
-        if (stateType != State::NONE) {
-            switch (stateType) {
-                case State::INTOXICATED:
-                    std::cout << "INTOXICATED" << std::endl;
-                    break;
-                case State::DEATH:
-                    std::cout << "DEATH" << std::endl;
-                    break;
-                default:
-                    std::cerr << "Estado no reconocido: " << std::endl;
-                    break;
-            }
-        }
-
-        if (actionType != SpecialAction::NONE) {
-            switch (actionType) {
-                case SpecialAction::PUNCH:
-                    std::cout << "PUNCH" << std::endl;
-                    break;
-                case SpecialAction::SHORTKICK:
-                    std::cout << "SHORTKICK" << std::endl;
-                    break;
-                case SpecialAction::SIDEKICK:
-                    std::cout << "SIDEKICK" << std::endl;
-                    break;
-                default:
-                    std::cerr << "Special Action no reconocida: " << std::endl;
-                    break;
-            }
-        }*/
-
 
     } catch (const std::exception& e) {
         std::cerr << "Protocolo cerrado" << e.what() << "\n";

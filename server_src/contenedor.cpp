@@ -1,13 +1,16 @@
 #include "headers/contenedor.h"
 
-Contenedor::Contenedor(int msg_code, int id, float x, float y, float w, float h, bool borrar) {
+Contenedor::Contenedor(int msg_code, int id, float x, float y, float w, float h, int direccion,
+                       AnimationType an_type, EntityType en_type) {
     vector.push_back(msg_code);
     vector.push_back(id);
     vector.push_back(x);
     vector.push_back(y);
     vector.push_back(w);
     vector.push_back(h);
-    vector.push_back(borrar);
+    vector.push_back(direccion);
+    vector.push_back(an_type);
+    vector.push_back(en_type);
 }
 
 int Contenedor::msg_code() { return vector[0]; }
@@ -22,4 +25,8 @@ float Contenedor::width() { return vector[4]; }
 
 float Contenedor::height() { return vector[5]; }
 
-bool Contenedor::borrar() { return vector[6]; }
+int Contenedor::direccion() { return vector[6]; }
+
+AnimationType Contenedor::animation_type() { return (AnimationType)vector[7]; }
+
+EntityType Contenedor::entity_type() { return (EntityType)vector[8]; }

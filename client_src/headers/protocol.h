@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "../../common_src/headers/commands.h"
+#include "../../common_src/headers/entity_commands.h"
 #include "../../common_src/headers/protocol.h"
 #include "../../common_src/headers/socket.h"
 #include "../../server_src/headers/contenedor.h"

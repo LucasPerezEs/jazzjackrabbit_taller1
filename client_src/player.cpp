@@ -7,7 +7,7 @@ Player::~Player() {}
 
 void Player::update(float dt) {
     if (moving) {
-        an.update(dt);
+        an.update(0);
         if (facingLeft)
             x -= 15;
         else
@@ -16,9 +16,9 @@ void Player::update(float dt) {
 }
 
 void Player::render() {
-    SDL_RendererFlip flip = facingLeft ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
-    Area destArea(x, y, 200, 200);
-    an.render(destArea, flip);
+    // SDL_RendererFlip flip = facingLeft ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
+    /*Area destArea(x, y, 200, 200);
+    an.render(destArea, flip);*/
 }
 
 void Player::moveRigth() {

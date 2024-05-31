@@ -29,7 +29,7 @@ public:
     void run();
 
     void init();
-    void update(float dt);
+    void update();
     void render();
 
     void close();

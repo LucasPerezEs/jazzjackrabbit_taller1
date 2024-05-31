@@ -7,7 +7,9 @@
 #include "headers/lista_objetos.h"
 #include "headers/municion.h"
 
-Personaje::Personaje(float x, float y, float w, float h, int vida): Ente(x, y, w + x, h + y, vida) {
+Personaje::Personaje(float x, float y, float w, float h, int vida, EntityType en_type,
+                     AnimationType an_type):
+        Ente(x, y, w + x, h + y, vida, en_type, an_type) {
     velx = 1;
     vely = 0;
     direccion = 1;
@@ -22,23 +24,38 @@ Personaje::Personaje(float x, float y, float w, float h, int vida): Ente(x, y, w
 void Personaje::moveRigth() {
     movingright = true;
     direccion = 1;
+    an_type = AnimationType::WALK;
 }
 void Personaje::moveLeft() {
     movingleft = true;
     direccion = -1;
+    an_type = AnimationType::INTOXICATED_WALK;  // Prueba
 }
-void Personaje::stopMovingRight() { movingright = false; }
+void Personaje::stopMovingRight() {
+    movingright = false;
+    // an_type = AnimationType::IDLE;
+}
 
-void Personaje::stopMovingLeft() { movingleft = false; }
+void Personaje::stopMovingLeft() {
+    movingleft = false;
+    // an_type = AnimationType::IDLE;
+}
 
-void Personaje::run() { velx = 1.5; }
+void Personaje::run() {
+    velx = 1.5;
+    // an_type = AnimationType::RUN;
+}
 
-void Personaje::stoprunning() { velx = 1; }
+void Personaje::stoprunning() {
+    velx = 1;
+    // an_type = AnimationType::IDLE;
+}
 
 void Personaje::jump() {
     if (!jumping) {  // Esto es para evitar que se pueda spamear el jump y volar
         vely = 2;
         jumping = true;
+        // an_type = AnimationType::JUMP;
     }
 }
 
@@ -87,7 +104,8 @@ void Personaje::update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) {
             width = auxw;
         }
     }
-    Contenedor c(0, this->id, this->x, this->y, this->width, this->height, this->borrar);
+    Contenedor c(0, this->id, this->x, this->y, this->width, this->height, this->direccion,
+                 this->an_type, this->en_type);
     q.try_push(c);
 }
 
@@ -131,8 +149,9 @@ void Arma::disminuir_municion() { municion--; }
 
 
 Bala::Bala(float x, float y, int d):
-        Objeto(x, y, x + 1,
-               y + 1) {  // se le pasa la direccion a la que va a salir la bala por parametro
+        Objeto(x, y, x + 1, y + 1, EntityType::BULLET,
+               AnimationType::WALK) {  // se le pasa la direccion a la que va a salir la bala por
+                                       // parametro
     vel = 2 * d;
     danio = 10;
 }
@@ -156,7 +175,8 @@ void Bala::update(
     if (mapa.CheckColision(x, y, width, height)) {
         this->borrar = true;
     }
-    Contenedor c(0, this->id, this->x, this->y, this->width, this->height, this->borrar);
+    Contenedor c(0, this->id, this->x, this->y, this->width, this->height, 0, this->an_type,
+                 this->en_type);
     q.try_push(c);
 }
 

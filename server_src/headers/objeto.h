@@ -4,6 +4,7 @@
 #include <map>
 #include <vector>
 
+#include "../../common_src/headers/entity_commands.h"
 #include "../../common_src/headers/queue.h"
 
 #include "contenedor.h"
@@ -22,10 +23,12 @@ public:
     float y;
     float width;
     float height;
-    bool borrar;  // borrar se usa para borrar del map de colisiones al objeto
+    bool borrar;            // borrar se usa para borrar del map de colisiones al objeto
+    EntityType en_type;     // Identifica al objeto con un tipo (ej. Bala, Jazz, Lori, etc)
+    AnimationType an_type;  // Tipo de animacion inicial del objeto.
 
 public:
-    Objeto(float x, float y, float w, float h);
+    Objeto(float x, float y, float w, float h, EntityType en_type, AnimationType an_type);
 
     virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q);
     virtual void eliminar();
@@ -45,7 +48,7 @@ protected:
 public:
     int vida;
 
-    Ente(float x, float y, float w, float h, int vida);
+    Ente(float x, float y, float w, float h, int vida, EntityType en_type, AnimationType an_type);
     void RecibirDanio(int d);
     bool vivo();
     virtual void update_vivo(ListaObjetos& objetos, Queue<Contenedor>& q);

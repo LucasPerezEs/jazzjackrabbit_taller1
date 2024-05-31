@@ -8,6 +8,7 @@
 
 #include <SDL.h>
 
+#include "../../common_src/headers/entity_commands.h"
 #include "../../common_src/headers/queue.h"
 #include "../../common_src/headers/thread.h"
 
@@ -15,9 +16,8 @@
 #include "SdlWindow.h"
 #include "entity.h"
 #include "protocol.h"
-#include "texture_ids.h"
 
-#define FRAME_RATE 1000000.0f / 60.0f
+#define FRAME_RATE 1000000.0f / 20.0f
 
 
 class ModelUpdater: public Thread {
@@ -26,10 +26,10 @@ private:
     ClientProtocol& protocol;
     bool was_closed;
     std::map<int, Entity*>& entidades;
-    std::map<int, std::map<int, SdlTexture*>> textures;
+    std::map<int, std::map<int, Animation*>> animations;
     Queue<Contenedor>& reciever_queue;
 
-    void init_textures(SdlWindow& window);
+    void init_animations(SdlWindow& window);
 
 public:
     ModelUpdater(ClientProtocol& protocol, SdlWindow& window, std::map<int, Entity*>& entidades,

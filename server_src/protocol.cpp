@@ -18,14 +18,19 @@ void ServerProtocol::send_datos_objeto(Contenedor c) {
     float y = c.posy();
     float w = c.width();
     float h = c.height();
-    bool borrar = c.borrar();
+    int direccion = c.direccion();
+    AnimationType an_type = c.animation_type();
+    EntityType en_type = c.entity_type();
+
     socket.sendall(&msg_code, sizeof(msg_code), &was_closed);
     socket.sendall(&id, sizeof(id), &was_closed);
     socket.sendall(&x, sizeof(x), &was_closed);
     socket.sendall(&y, sizeof(y), &was_closed);
     socket.sendall(&w, sizeof(w), &was_closed);
     socket.sendall(&h, sizeof(h), &was_closed);
-    socket.sendall(&borrar, sizeof(borrar), &was_closed);
+    socket.sendall(&direccion, sizeof(direccion), &was_closed);
+    socket.sendall(&an_type, sizeof(an_type), &was_closed);
+    socket.sendall(&en_type, sizeof(en_type), &was_closed);
 }
 
 void ServerProtocol::stop() { Protocol::stop(); }

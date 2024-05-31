@@ -2,7 +2,6 @@
 #define __PLAYER_H__
 
 #include "Animation.h"
-#include "Area.h"
 
 class Player {
 public:

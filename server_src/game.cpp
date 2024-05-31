@@ -10,8 +10,8 @@ void Game::run() {
     Mapa m = Mapa();
     ListaObjetos objetos;
     std::vector<Ente*> entes;
-    Personaje personaje = Personaje(4, 0, 2, 4, 100);
-    Enemigo enemigo = Enemigo(50, 0, 2, 4, 100);
+    Personaje personaje = Personaje(4, 0, 2, 4, 100, EntityType::JAZZ, AnimationType::WALK);
+    Enemigo enemigo = Enemigo(50, 0, 2, 4, 100, EntityType::ENEMY, AnimationType::WALK);
     objetos.agregar_objeto(&personaje);
     objetos.agregar_objeto(&enemigo);
     entes.push_back(&personaje);

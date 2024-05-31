@@ -7,7 +7,9 @@
 #include "headers/personaje.h"
 
 
-Enemigo::Enemigo(float x, float y, float w, float h, int vida): Ente(x, y, w + x, h + y, vida) {
+Enemigo::Enemigo(float x, float y, float w, float h, int vida, EntityType en_type,
+                 AnimationType an_type):
+        Ente(x, y, w + x, h + y, vida, en_type, an_type) {
     direccion = 1;
     danio = 1;
     limxder = x + 20;  // cuanto se va a mover de izquierda a derecha
@@ -48,7 +50,8 @@ void Enemigo::update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) {
         x = auxx;                    // se pone la pos x anterior
         width = auxw;
     }
-    Contenedor c(0, this->id, this->x, this->y, this->width, this->height, this->borrar);
+    Contenedor c(0, this->id, this->x, this->y, this->width, this->height, this->direccion,
+                 this->an_type, this->en_type);
     q.try_push(c);
 }
 
@@ -58,7 +61,7 @@ void Enemigo::update_vivo(ListaObjetos& objetos, Queue<Contenedor>& q) {
             Municion* municion = new Municion((x + width) / 2, (y + height) / 2);
             objetos.agregar_objeto(municion);
             Contenedor c(0, municion->id, municion->x, municion->y, municion->width,
-                         municion->height, municion->borrar);
+                         municion->height, 0, AnimationType::PICKUP, EntityType::BULLET);
             q.try_push(c);
         }
         if (contador == 240) {  // despues de un rato revive
@@ -66,7 +69,8 @@ void Enemigo::update_vivo(ListaObjetos& objetos, Queue<Contenedor>& q) {
             borrar = false;
             objetos.agregar_objeto(this);
             contador = 0;
-            Contenedor c(0, this->id, this->x, this->y, this->width, this->height, this->borrar);
+            Contenedor c(0, this->id, this->x, this->y, this->width, this->height, this->direccion,
+                         AnimationType::WALK, EntityType::ENEMY);
             q.try_push(c);
         }
         contador++;
