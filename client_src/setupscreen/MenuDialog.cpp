@@ -1,4 +1,4 @@
-#include "MenuDIalog.h"
+#include "MenuDialog.h"
 
 MenuDialog::MenuDialog(QWidget *parent)
         : QDialog(parent)
@@ -23,3 +23,5 @@ MenuDialog::MenuDialog(QWidget *parent)
 void MenuDialog::acceptInput() {
     accept();
 }
+
+MenuDialog::~MenuDialog() {}
