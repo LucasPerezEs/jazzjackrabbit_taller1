@@ -2,7 +2,9 @@
 #include <fstream>
 #include <iostream>
 
-#include <SDL.h>
+
+
+#include "setupscreen/MenuDialog.h"
 
 #include "headers/SdlTexture.h"
 #include "headers/entity.h"
@@ -10,11 +12,17 @@
 
 int main(int argc, char* argv[]) {
     try {
-        if (argc != 3 && argc != 4) {
-            std::cerr << "Bad program call. Expected " << argv[0]
-                      << " <hostname> <servername> [<filename>]\n";
-            return -1;
+
+        QApplication app(argc, argv);
+
+        MenuDialog menu;
+        if (menu.exec() != QDialog::Accepted) {
+            return -1; // El usuario canceló, salimos
         }
+
+        std::string ip = menu.getIp().toStdString();
+        std::string port = std::to_string(menu.getPort());
+
 
         SdlWindow window(800, 600);
         SdlTexture player_png("../client_src/assets/jazz_walking.png", window,
@@ -27,7 +35,7 @@ int main(int argc, char* argv[]) {
         std::map<int, Entity*> entidades;
         std::vector<std::vector<float>> objetos;
 
-        Client client(argv[1], argv[2], player, receiverQueue, window, entidades);
+        Client client(ip, port, player, receiverQueue, window, entidades);
 
         Game game(client, window, player, entidades);
         game.run();

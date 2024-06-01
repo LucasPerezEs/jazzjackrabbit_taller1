@@ -19,7 +19,13 @@ add_library(client_lib
     sdl_libs/SdlException.cpp
     sdl_libs/SdlTexture.cpp
     sdl_libs/SdlWindow.cpp
+        setupscreen/MenuDialog.cpp
 )
 
+target_link_libraries(client_lib setupscreen)
 target_include_directories(client_lib PRIVATE headers/*)
-target_include_directories(client_lib PRIVATE ../common_src/headers/*)
+target_include_directories(client_lib PRIVATE ../common_src/headers/* setupscreen)
+
+
+
+
