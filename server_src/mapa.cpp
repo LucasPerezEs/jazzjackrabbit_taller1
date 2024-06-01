@@ -20,7 +20,7 @@ Mapa::Mapa() {
     Piso* piso = new Piso(0, -1, 1000, 0);   // piso
     Piso* piso2 = new Piso(99, 0, 110, 50);  // pared derecha
     Piso* piso3 = new Piso(0, 0, 3, 50);     // pared izquierda
-    Piso* piso4 = new Piso(20, 10, 35, 11);  // plataforma
+    //Piso* piso4 = new Piso(20, 10, 35, 11);  // plataforma
     objetos.push_back(piso);
     objetos.push_back(piso2);
     objetos.push_back(piso3);

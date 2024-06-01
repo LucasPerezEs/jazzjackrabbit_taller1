@@ -6,6 +6,10 @@
 
 #include <SDL2/SDL.h>
 #include <unistd.h>
+#include <fstream>
+#include <sstream>
+#include <vector>
+#include <cmath>
 
 #include "SdlWindow.h"
 #include "client.h"
@@ -21,6 +25,9 @@ private:
     SdlWindow& window;
     Player& player;
     std::map<int, Entity*>& entidades;
+
+    std::vector<std::vector<int>> cargarCSV(const std::string& ruta);
+    void draw(std::vector<std::vector<int>>& tilemap, SDL_Texture* tilesetTexture);
 
 
 public:

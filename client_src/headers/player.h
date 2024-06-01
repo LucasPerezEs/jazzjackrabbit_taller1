@@ -2,6 +2,7 @@
 #define __PLAYER_H__
 
 #include "Animation.h"
+#include <utility>
 
 class Player {
 public:
@@ -12,6 +13,8 @@ public:
     void moveRigth();
     void moveLeft();
     void stopMoving();
+
+    std::pair<int, int> getPosition();
 
 private:
     Animation an;
