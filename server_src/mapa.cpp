@@ -24,7 +24,7 @@ Mapa::Mapa() {
     objetos.push_back(piso);
     objetos.push_back(piso2);
     objetos.push_back(piso3);
-    objetos.push_back(piso4);
+    //objetos.push_back(piso4);
 }
 
 bool Mapa::CheckColision(
