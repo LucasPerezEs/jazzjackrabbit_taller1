@@ -24,10 +24,14 @@
 
 #ifndef SERVER_GAME_H
 #define SERVER_GAME_H
+#include <mutex>
 
 #include <iostream>
 #include <memory>
 #include <string>
+#include <unordered_map>
+#include "personaje.h"
+#include "lista_objetos.h"
 
 #include "../../common_src/headers/commands.h"
 #include "../../common_src/headers/queue.h"
@@ -37,18 +41,25 @@
 
 class Game: public Thread {
 public:
-    explicit Game(Queue<Command::ActionType>& actionQueue, Queue<Contenedor>& eventQueue);
+    explicit Game(Queue<Command>& actionQueue, Queue<Contenedor>& eventQueue);
 
     void run() override;
     void stop() override;
+
+    void addPlayer(int clientId);
 
 
     bool is_running() { return _is_alive; }
 
 private:
-    Queue<Command::ActionType>& actionQueue;
+    std::unordered_map<uint32_t, Personaje*> clientCharacters;
+    ListaObjetos objetos;
+    std::vector<Ente*> entes;
+
+    Queue<Command>& actionQueue;
 
     Queue<Contenedor>& stateQueue;
+    std::mutex clientCharactersMutex;
 };
 
 #endif  // SERVER_GAME_H

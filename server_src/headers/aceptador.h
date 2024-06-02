@@ -6,6 +6,7 @@
 #include <list>
 #include <string>
 #include <utility>
+#include "game.h"
 
 #include "../../common_src/headers/socket.h"
 #include "../../common_src/headers/thread.h"
@@ -21,7 +22,7 @@ private:
     void definir_conexion();
 
 public:
-    Aceptador(const std::string& servname, bool& server_closed);
+    Aceptador(const std::string& servname, bool& server_closed, Game& game);
 
     void finalizar_conexion();
 

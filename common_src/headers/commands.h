@@ -19,6 +19,7 @@ struct Command {
         STOPFIRE = 0X11
     };
     ActionType action;
+    uint32_t clientId;
 };
 
 struct State {

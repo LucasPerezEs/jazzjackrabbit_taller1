@@ -12,11 +12,13 @@
 
 class ClientSender: public Thread {
 private:
+
     ServerProtocol& serverProtocol;
+    uint32_t id;
     Queue<Contenedor> queueSender;
 
 public:
-    explicit ClientSender(ServerProtocol& protocol);
+    explicit ClientSender(uint32_t id,ServerProtocol& protocol);
     void pushDatosObjeto(const Contenedor& c);
     void run() override;
     void close();

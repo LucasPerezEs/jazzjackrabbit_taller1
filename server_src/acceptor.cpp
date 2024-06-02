@@ -2,8 +2,8 @@
 
 
 Acceptor::Acceptor(Socket& socket, std::list<ClientHandler*>& clients,
-                   Queue<Command::ActionType>& actionQueue):
-        sk(socket), clients(clients), actionQueue(actionQueue) {}
+                   Queue<Command>& actionQueue, Game& game):
+        sk(socket), clients(clients), actionQueue(actionQueue), game(game) {}
 
 void Acceptor::reap_offline_clients() {
     clients.remove_if([](ClientHandler* c) {
@@ -27,13 +27,15 @@ void Acceptor::kill_all() {
 }
 
 void Acceptor::run() {
-
+    int id = 0;
     while (_keep_running) {
         try {
+            id++;
             Socket peer = sk.accept();
-            ClientHandler* client = new ClientHandler(std::move(peer), actionQueue);
+            ClientHandler* client = new ClientHandler(id,std::move(peer), actionQueue);
             client->go_online();
             clients.push_back(client);
+            game.addPlayer(id);
             reap_offline_clients();
         } catch (LibError& err) {
             break;

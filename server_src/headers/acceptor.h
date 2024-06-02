@@ -15,12 +15,14 @@ private:
     Socket& sk;
     std::list<ClientHandler*>& clients;
 
-    Queue<Command::ActionType>& actionQueue;
+
+    Queue<Command>& actionQueue;
+    Game& game;
 
 
 public:
     Acceptor(Socket& socket, std::list<ClientHandler*>& clients,
-             Queue<Command::ActionType>& actionQueue);
+             Queue<Command>& actionQueue, Game& game);
     void run() override;
     void reap_offline_clients();
     void kill_all();

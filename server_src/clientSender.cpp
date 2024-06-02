@@ -1,7 +1,7 @@
 #include "headers/clientSender.h"
 
 
-ClientSender::ClientSender(ServerProtocol& protocol): serverProtocol(protocol) {}
+ClientSender::ClientSender(uint32_t id,ServerProtocol& protocol): serverProtocol(protocol), id(id) {}
 
 void ClientSender::run() {
     while (_keep_running) {

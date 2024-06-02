@@ -5,7 +5,10 @@ ClientProtocol::ClientProtocol(const std::string& hostname, const std::string& s
 
 void ClientProtocol::send_command(Command& cmd) {
     sendUChar(static_cast<unsigned char>(cmd.action));
+
 }
+
+
 
 std::pair<State::StateType, SpecialAction::SpecialActionType> ClientProtocol::receive_update() {
     unsigned char receivedState = receiveUChar();

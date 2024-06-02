@@ -1,13 +1,14 @@
 #include "headers/clientReceiver.h"
 
-ClientReceiver::ClientReceiver(ServerProtocol& protocol, Queue<Command::ActionType>& receiverQueue):
-        serverProtocol(protocol), queueReceiver(receiverQueue) {}
+ClientReceiver::ClientReceiver(uint32_t id,ServerProtocol& protocol, Queue<Command>& receiverQueue):
+        id(id),serverProtocol(protocol), queueReceiver(receiverQueue) {}
 
 void ClientReceiver::run() {
     while (_keep_running) {
         try {
             //recibir comando de un cliente
-            Command::ActionType command = serverProtocol.receive_command();
+            auto action = serverProtocol.receive_command();
+            Command command = { action, id };
             queueReceiver.push(command);
         } catch (ProtocolDesconection& d) {
             break;
