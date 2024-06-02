@@ -64,8 +64,11 @@ void Game::render() {
 
     SDL_FreeSurface(tilesetSurface);
 
-    std::vector<std::vector<int>> tilemap_terreno = cargarCSV("../client_src/assets/background/medivo_map/mediva_map_csv.csv");
-    draw(tilemap_terreno, tilesetTexture);
+    //std::vector<std::vector<int>> tilemap_fondo = cargarCSV("../client_src/assets/background/medivo_map/Medivo_model_Fondo.csv");
+    //draw(tilemap_fondo, tilesetTexture);
+
+    std::vector<std::vector<int>> tilemap_terreno_solido = cargarCSV("../client_src/assets/background/medivo_map/Medivo_model_Terreno_completo.csv");
+    draw(tilemap_terreno_solido, tilesetTexture);
 
     for (std::map<int, Entity*>::iterator it = entidades.begin(); it != entidades.end(); ++it) {
         it->second->render(window);
@@ -104,36 +107,44 @@ void Game::draw(std::vector<std::vector<int>>& tilemap, SDL_Texture* tilesetText
     int tileHeight = 16;
 
     //Dimensiones de todo tileset.
-    int tilset_width = 20;
+    int tilset_width = 20; //Ancho del tile set (La imagen del tile set ocupa 320 pixeles de ancho pero como la divido en Tiles de 16x16 entonces 320/16= 20).
 
-    //int mapa_rows = tilemap.size();
-    //int mapa_colums = tilemap[0].size();
-    int mapa_rows = 14;
-    int mapa_colums = 25;
+    int mapa_columns = 80;//tilemap.size(); Esto en realidad tambien es 80 ya que el CSV tiene 80
+    int mapa_rows = 40;//tilemap[0].size();
+    //int mapa_rows = 14;
+    //int mapa_colums = 25;
 
     //std::cout << "Filas del CSV: " << mapa_rows << " y Columnas del CSV: " << mapa_colums << std::endl;
 
+    int posicion_jugador_x = 0;
+    int posicion_jugador_y = 20; 
+    //No es por los anchos del tile set, es porque quiero que me muestra solo esto de alto en principio.
+    //16 pixeles el lo que ocupa cada piso de alto, mas de eso se ve el piso superior.
+
+    for (int x = posicion_jugador_x; x < mapa_columns; x++) {
+        for (int y = posicion_jugador_y; y < mapa_rows; y++) {
     //for (int x = 0; x < mapa_colums; x++) {
-    //    for (int y = 0; y < mapa_rows; y++) {
-    for (int x = 0; x < mapa_colums; x++) {
-        for (int y = 0; y < mapa_rows; y++) {
+      //  for (int y = 0; y < mapa_rows; y++) {
 
         //Obtienes el valor en la celda actual
         int tileValue = tilemap[y][x];
 
+        //if(tileValue == -1)
+          //  continue;
+
         // Calculas la posición del tile en el tileset
         SDL_Rect sourceRect;
         sourceRect.x = (tileValue % tilset_width) * tileWidth;
-        sourceRect.y = (tileValue / tileHeight) * tileHeight;
+        sourceRect.y = (tileValue / tilset_width) * tileHeight;
         sourceRect.w = tileWidth;
         sourceRect.h = tileHeight;
 
         // Calculas la posición donde quieres renderizar el tile en la pantalla
         SDL_Rect destinationRect;
-        destinationRect.x = x * 48;
-        destinationRect.y = y * 48;
-        destinationRect.w = 48;
-        destinationRect.h = 48;
+        destinationRect.x = (x - posicion_jugador_x) * 32;
+        destinationRect.y = (y - posicion_jugador_y) * 32;
+        destinationRect.w = 32;
+        destinationRect.h = 32;
 
         //std::cout << "Fila: " << x << " y Columna: " << y << std::endl;
         //std::cout << "Soy el elemento: " << sourceRect.x << " - " << sourceRect.y << " de mi TileSet" << std::endl;

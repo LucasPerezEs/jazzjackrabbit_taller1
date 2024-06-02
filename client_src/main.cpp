@@ -20,8 +20,8 @@ int main(int argc, char* argv[]) {
             return -1; // El usuario canceló, salimos
         }
 
-        std::string ip = menu.getIp().toStdString();
-        std::string port = std::to_string(menu.getPort());
+        //std::string ip = menu.getIp().toStdString();
+        //std::string port = std::to_string(menu.getPort());
 
 
         SdlWindow window(800, 600);
@@ -35,7 +35,7 @@ int main(int argc, char* argv[]) {
         std::map<int, Entity*> entidades;
         std::vector<std::vector<float>> objetos;
 
-        Client client(ip, port, player, receiverQueue, window, entidades);
+        Client client("127.1.0", "8080", player, receiverQueue, window, entidades);
 
         Game game(client, window, player, entidades);
         game.run();
