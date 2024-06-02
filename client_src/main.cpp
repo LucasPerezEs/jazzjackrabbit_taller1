@@ -36,7 +36,7 @@ int main(int argc, char* argv[]) {
 
             if(client.is_online()){
 
-                //setup.ShowMultiplayerMenu();
+                setup.ShowMultiplayerMenu();
 
 
             }

@@ -24,6 +24,7 @@ void SetupScreen::ShowConnectMenu(){
 void SetupScreen::ShowMultiplayerMenu(){
 
     multiplayerMenu.show();
+    multiplayerMenu.exec();
 
 
 }

@@ -1,7 +1,10 @@
 #include "MultiplayerMenu.h"
 
 MultiplayerMenu::MultiplayerMenu(QWidget *parent) :
-        QDialog(parent)
+        QDialog(parent),
+        createGameWidget(new CreateGame()),
+        joinGameWidget(new JoinGame()),
+        gameListWidget(new GameList())
 {
     init();
 }
