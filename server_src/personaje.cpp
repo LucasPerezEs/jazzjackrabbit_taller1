@@ -42,7 +42,7 @@ void Personaje::stopMovingLeft() {
 }
 
 void Personaje::run() {
-    velx = 1.5;
+    velx = 1.2;
     // an_type = AnimationType::RUN;
 }
 
@@ -53,7 +53,7 @@ void Personaje::stoprunning() {
 
 void Personaje::jump() {
     if (!jumping) {  // Esto es para evitar que se pueda spamear el jump y volar
-        vely = 2;
+        vely = 3;
         jumping = true;
         // an_type = AnimationType::JUMP;
     }
@@ -83,7 +83,7 @@ void Personaje::update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) {
     }
     y += vely;
     height += vely;
-    vely -= 0.2;  // esto es la aceleracion de la gravedad, se tiene que poner un limite de vely
+    vely -= 0.3;  // esto es la aceleracion de la gravedad, se tiene que poner un limite de vely
 
     colisionx = m.CheckColision(x, auxy, width, auxh);
     colisiony = m.CheckColision(auxx, y, auxw, height);

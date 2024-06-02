@@ -124,8 +124,14 @@ void Game::draw(std::vector<std::vector<int>>& tilemap, SDL_Texture* tilesetText
 
     std::pair<float, float> posicion = primer_valor->getPosition();
 
-    float posicion_jugador_x = std::floor(posicion.first);  //0;
-    float posicion_jugador_y = 20; //std::ceil(posicion.second / 16); //20;
+    int posicion_jugador_x = std::floor(posicion.first);  //0;
+    int posicion_jugador_y = 20 - (std::floor(posicion.second)); //std::ceil(posicion.second / 16); //20;
+
+    if(posicion_jugador_x < 0)
+        posicion_jugador_x = 0;
+
+    if(posicion_jugador_y < 0)
+        posicion_jugador_y = 0;
 
     std::cout << posicion_jugador_x << std::endl;
     std::cout << posicion_jugador_y << std::endl;
@@ -134,14 +140,13 @@ void Game::draw(std::vector<std::vector<int>>& tilemap, SDL_Texture* tilesetText
 
     for (int x = posicion_jugador_x; x < mapa_columns; x++) {
         for (int y = posicion_jugador_y; y < mapa_rows; y++) {
-    //for (int x = 0; x < mapa_colums; x++) {
-      //  for (int y = 0; y < mapa_rows; y++) {
 
         //Obtienes el valor en la celda actual
         int tileValue = tilemap[y][x];
 
-        //if(tileValue == -1)
-          //  continue;
+        if(tileValue < 0){
+            continue;
+        }
 
         // Calculas la posición del tile en el tileset
         SDL_Rect sourceRect;
