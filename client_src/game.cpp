@@ -116,8 +116,19 @@ void Game::draw(std::vector<std::vector<int>>& tilemap, SDL_Texture* tilesetText
 
     //std::cout << "Filas del CSV: " << mapa_rows << " y Columnas del CSV: " << mapa_colums << std::endl;
 
-    int posicion_jugador_x = 0;
-    int posicion_jugador_y = 20; 
+
+    std::map<int, Entity*>::iterator it = entidades.begin();
+
+    //int primer_clave = it->first;
+    Entity* primer_valor = it->second;
+
+    std::pair<float, float> posicion = primer_valor->getPosition();
+
+    float posicion_jugador_x = std::floor(posicion.first);  //0;
+    float posicion_jugador_y = 20; //std::ceil(posicion.second / 16); //20;
+
+    std::cout << posicion_jugador_x << std::endl;
+    std::cout << posicion_jugador_y << std::endl;
     //No es por los anchos del tile set, es porque quiero que me muestra solo esto de alto en principio.
     //16 pixeles el lo que ocupa cada piso de alto, mas de eso se ve el piso superior.
 

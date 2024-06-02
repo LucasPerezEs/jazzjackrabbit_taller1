@@ -2,7 +2,7 @@
 #define ENTITY_H_
 
 #include <iostream>
-
+#include <utility>
 #include <SDL2/SDL.h>
 
 #include "../../common_src/headers/entity_commands.h"
@@ -39,6 +39,7 @@ public:
     // bool vivo();
     // virtual void eliminar();
     void render(const SdlWindow& window);
+    std::pair<float, float> getPosition();
 };
 
 #endif

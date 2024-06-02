@@ -10,6 +10,7 @@
 #include <sstream>
 #include <vector>
 #include <cmath>
+#include <utility>
 
 #include "SdlWindow.h"
 #include "client.h"

@@ -14,8 +14,6 @@ public:
     void moveLeft();
     void stopMoving();
 
-    std::pair<int, int> getPosition();
-
 private:
     Animation an;
     bool facingLeft;

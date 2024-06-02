@@ -48,3 +48,12 @@ void Entity::render(const SdlWindow& window) {
 
     an->render(destArea, flip, current_frame);
 }
+
+std::pair<float, float> Entity::getPosition() {
+
+    std::pair<float, float> posicionJugador;
+    posicionJugador.first = this->x;
+    posicionJugador.second = this->y;
+
+    return posicionJugador;
+}

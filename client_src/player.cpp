@@ -32,12 +32,3 @@ void Player::moveLeft() {
 }
 
 void Player::stopMoving() { moving = false; }
-
-std::pair<int, int> Player::getPosition() {
-
-    std::pair<int, int> posicionJugador;
-    posicionJugador.first = this->x;
-    posicionJugador.second = this->y;
-
-    return posicionJugador;
-}
