@@ -9,12 +9,13 @@
 					"childIndexes" : 
 					[
 						1,
-						2
+						2,
+						3
 					],
 					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
 					"minimumCMakeVersion" : 
 					{
-						"string" : "2.8"
+						"string" : "2.8.12"
 					},
 					"projectIndex" : 0,
 					"source" : ".",
@@ -29,7 +30,7 @@
 					"jsonFile" : "directory-client_src-Debug-179201f71f9f693dff96.json",
 					"minimumCMakeVersion" : 
 					{
-						"string" : "2.8"
+						"string" : "2.8.12"
 					},
 					"parentIndex" : 0,
 					"projectIndex" : 0,
@@ -44,7 +45,7 @@
 					"jsonFile" : "directory-server_src-Debug-42873fb438c2fb44b4f4.json",
 					"minimumCMakeVersion" : 
 					{
-						"string" : "2.8"
+						"string" : "2.8.12"
 					},
 					"parentIndex" : 0,
 					"projectIndex" : 0,
@@ -53,12 +54,31 @@
 					[
 						3
 					]
+				},
+				{
+					"build" : "client_src/setupscreen",
+					"jsonFile" : "directory-client_src.setupscreen-Debug-cd6e2e7b37527981a326.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.12"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "client_src/setupscreen",
+					"targetIndexes" : 
+					[
+						4
+					]
 				}
 			],
 			"name" : "Debug",
 			"projects" : 
 			[
 				{
+					"childIndexes" : 
+					[
+						1
+					],
 					"directoryIndexes" : 
 					[
 						0,
@@ -73,6 +93,18 @@
 						2,
 						3
 					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						3
+					],
+					"name" : "setupscreen",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						4
+					]
 				}
 			],
 			"targets" : 
@@ -80,21 +112,21 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "client::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-client-Debug-bb85f5b1a98399cf87af.json",
+					"jsonFile" : "target-client-Debug-eba7c858a820aeab6e4a.json",
 					"name" : "client",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 1,
 					"id" : "client_lib::@eafd6e3045e1d2452d18",
-					"jsonFile" : "target-client_lib-Debug-f5d2566787b97d5b3293.json",
+					"jsonFile" : "target-client_lib-Debug-f15973c9b125800afe34.json",
 					"name" : "client_lib",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
 					"id" : "server::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-server-Debug-29cf01a7e10af2065893.json",
+					"jsonFile" : "target-server-Debug-c17db1a783e8a698953f.json",
 					"name" : "server",
 					"projectIndex" : 0
 				},
@@ -104,6 +136,13 @@
 					"jsonFile" : "target-server_lib-Debug-81a6133ef80101568f5e.json",
 					"name" : "server_lib",
 					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "setupscreen::@5facb4b79328fbd2ad45",
+					"jsonFile" : "target-setupscreen-Debug-8f3a60ded94d61c5bcfa.json",
+					"name" : "setupscreen",
+					"projectIndex" : 1
 				}
 			]
 		}

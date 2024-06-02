@@ -8,3 +8,6 @@
 /home/pablo/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/server_src/CMakeFiles/server_lib.dir
 /home/pablo/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/server_src/CMakeFiles/edit_cache.dir
 /home/pablo/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/server_src/CMakeFiles/rebuild_cache.dir
+/home/pablo/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/client_src/setupscreen/CMakeFiles/setupscreen.dir
+/home/pablo/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/client_src/setupscreen/CMakeFiles/edit_cache.dir
+/home/pablo/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/client_src/setupscreen/CMakeFiles/rebuild_cache.dir
