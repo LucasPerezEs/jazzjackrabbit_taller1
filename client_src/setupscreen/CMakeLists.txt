@@ -1,11 +1,21 @@
 project(setupscreen)
 
 set(HEADER_FILES
-        MenuDialog.h
+        ConnectMenu.h
+        SetupScreen.h
+        MultiplayerMenu.h
 )
 
 set(SOURCE_FILES
-        MenuDialog.cpp
+        ConnectMenu.cpp
+        SetupScreen.cpp
+        MultiplayerMenu.cpp
+        CreateGame.cpp
+        CreateGame.h
+        JoinGame.cpp
+        JoinGame.h
+        GameList.cpp
+        GameList.h
 )
 
 add_library(setupscreen STATIC ${SOURCE_FILES} ${HEADER_FILES})

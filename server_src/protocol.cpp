@@ -36,3 +36,9 @@ void ServerProtocol::send_datos_objeto(Contenedor c) {
 void ServerProtocol::stop() { Protocol::stop(); }
 
 void ServerProtocol::close() { Protocol::close(); }
+
+std::pair<Command::ActionType, uint32_t> ServerProtocol::receive_command_with_id() {
+    unsigned char code = receiveUChar();
+    uint32_t clientId = receiveUInt32(); // Suponiendo que el ID del cliente es un entero sin signo de 32 bits
+    return std::make_pair(static_cast<Command::ActionType>(code), clientId);
+}

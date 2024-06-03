@@ -9,11 +9,12 @@
 
 class ClientReceiver: public Thread {
 private:
+    uint32_t id;
     ServerProtocol& serverProtocol;
-    Queue<Command::ActionType>& queueReceiver;
+    Queue<Command>& queueReceiver;
 
 public:
-    ClientReceiver(ServerProtocol& protocol, Queue<Command::ActionType>& receiverQueue);
+    ClientReceiver(uint32_t id, ServerProtocol& protocol, Queue<Command>& receiverQueue);
     void run() override;
 };
 

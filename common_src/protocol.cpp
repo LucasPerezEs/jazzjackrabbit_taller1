@@ -88,4 +88,25 @@ void Protocol::stop() {
     socket.close();
 }
 
+// Pre:
+// Post: Recive un entero de 32 bits sin signo por el socket del protocolo.
+uint32_t Protocol::receiveUInt32() {
+    bool was_closed;
+    uint32_t res;
+    socket.recvall(&res, sizeof(uint32_t), &was_closed);
+    if (was_closed) {
+        throw ProtocolDesconection("Lectura de socket cerrado");
+    }
+    return ntohl(res);
+}
+
+void Protocol::send32(uint32_t v) {
+    bool was_closed;
+    uint32_t vn = htonl(v);
+    socket.sendall(&vn, sizeof(uint32_t), &was_closed);
+    if (was_closed) {
+        throw ProtocolDesconection("Escritura en socket cerrado");
+    }
+}
+
 void Protocol::close() { socket.close(); }

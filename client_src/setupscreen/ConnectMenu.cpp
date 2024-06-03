@@ -1,6 +1,6 @@
-#include "MenuDialog.h"
+#include "ConnectMenu.h"
 
-MenuDialog::MenuDialog(QWidget *parent)
+ConnectMenu::ConnectMenu(QWidget *parent)
         : QDialog(parent)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
@@ -16,12 +16,12 @@ MenuDialog::MenuDialog(QWidget *parent)
     layout->addWidget(connectButton);
     layout->addWidget(cancelButton);
 
-    connect(connectButton, &QPushButton::clicked, this, &MenuDialog::acceptInput);
+    connect(connectButton, &QPushButton::clicked, this, &ConnectMenu::acceptInput);
     connect(cancelButton, &QPushButton::clicked, this, &QDialog::reject);
 }
 
-void MenuDialog::acceptInput() {
+void ConnectMenu::acceptInput() {
     accept();
 }
 
-MenuDialog::~MenuDialog() {}
+ConnectMenu::~ConnectMenu() {}

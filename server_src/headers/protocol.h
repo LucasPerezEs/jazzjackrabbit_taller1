@@ -18,7 +18,7 @@ public:
     explicit ServerProtocol(Socket peer);
 
     Command::ActionType receive_command();
-
+    std::pair<Command::ActionType, uint32_t> receive_command_with_id() ;
     void send_state(State::StateType state);
 
     void send_datos_objeto(Contenedor c);

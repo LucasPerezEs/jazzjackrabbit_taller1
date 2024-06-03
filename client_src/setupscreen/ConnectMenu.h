@@ -8,15 +8,16 @@
 #include <QLineEdit>
 #include <QDialog>
 
-class MenuDialog : public QDialog {
+
+class ConnectMenu: public QDialog {
 
 
 public:
-    explicit MenuDialog(QWidget *parent = 0);
-    virtual ~MenuDialog();
+    explicit ConnectMenu(QWidget *parent = 0);
+    virtual ~ConnectMenu();
 
     QString getIp() const { return ipEdit->text(); }
-    int getPort() const { return portEdit->text().toInt(); }
+    QString getPort() const { return portEdit->text(); }
 
 
 
