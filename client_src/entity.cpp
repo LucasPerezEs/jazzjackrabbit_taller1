@@ -42,7 +42,7 @@ void Entity::render(const SdlWindow& window) {
     }
 
     int render_width = (this->width - this->x) * 40;
-    int render_height = (this->height - this->y) * 30;
+    int render_height = (this->height - this->y) * 30; //x2 - x1
 
     Area destArea(this->x * 8, (600 - render_height) - (this->y * 6), render_width, render_height);
 

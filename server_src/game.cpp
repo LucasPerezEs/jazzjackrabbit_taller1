@@ -43,6 +43,8 @@ void Game::run() {
             }
         }
 
+        std::cout << "Fila: "<< personaje.x << " Columna: " << personaje.y << std::endl;
+
         objetos.eliminar_borrados(stateQueue);
         objetos.correr_colisiones();
         for (auto e: entes) {

@@ -3,7 +3,7 @@
 Piso::Piso(float posx, float posy, float width,
            float height) {  // Lo llame piso pero tambien puede ser una pared
     x = posx;
-    y = posy;  // hitbox
+    y = posy;  //hitbox
     w = width;
     h = height;
 }
@@ -16,17 +16,54 @@ bool Piso::colision(float posx, float posy, float width, float height) {
 }
 
 
+std::vector<std::vector<int>> Mapa::cargarCSV(const std::string& ruta) {
+    std::vector<std::vector<int>> matriz;
+    std::ifstream archivo(ruta);
+
+    if (archivo.is_open()) {
+        std::string linea;
+        while (std::getline(archivo, linea)) {
+            std::vector<int> fila;
+            std::stringstream ss(linea);
+            std::string valor;
+            while (std::getline(ss, valor, ',')) {
+                fila.push_back(std::stoi(valor));
+            }
+            matriz.push_back(fila);
+        }
+        archivo.close();
+    }s
+
+    return matriz;
+}
+
 Mapa::Mapa() {
-    Piso* piso = new Piso(0, -1, 1000, 0);   // piso
-    //Piso* piso2 = new Piso(99, 0, 110, 50);  // pared derecha
-    Piso* piso3 = new Piso(0, 0, 3, 50);     // pared izquierda
+
+    std::vector<std::vector<int>> tilemap = cargarCSV("../client_src/assets/background/medivo_map/Medivo_model_Terreno_solido.csv");
+
+for (std::vector<int>::size_type i = 0; i < tilemap.size(); i++) {
+    for (std::vector<int>::size_type j = 0; j < tilemap[i].size(); j++) {
+        if (tilemap[i][j] != -1) {
+            // Asume que el tamaño de cada tile es de 32x32
+            Piso* piso = new Piso(i-7.0, j, i-6.0, j+1.0);
+            objetos.push_back(piso);
+
+            std::cout << "Soy un piso y mi x1 es: " << piso->x << " mi x2 es: " << piso->w << " mi y1 es: " << piso->y << " mi y2 es: " << piso->h << std::endl;
+        }
+    }
+}
+
+
+    //Piso* piso = new Piso(0, -1, 1000, 0);   // posicion.x posicion.y posicion.x2 posicion.y2
+    //Piso* piso2 = new Piso(10, 0, 5, 40);  // pared derecha
+    //Piso* piso3 = new Piso(0, 0, 1, 40);     // pared izquierda
     //Piso* piso4 = new Piso(20, 10, 35, 11);  // plataforma
-    Piso* piso5 = new Piso(0, 20, 1000, 0);
-    objetos.push_back(piso);
+    //Piso* piso5 = new Piso(0, 20, 1000, 0);
+    //objetos.push_back(piso);
     //objetos.push_back(piso2);
-    objetos.push_back(piso3);
+    //objetos.push_back(piso3);
     //objetos.push_back(piso4);
-    objetos.push_back(piso5);
+    //objetos.push_back(piso5);
 }
 
 bool Mapa::CheckColision(

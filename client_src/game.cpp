@@ -102,71 +102,63 @@ std::vector<std::vector<int>> Game::cargarCSV(const std::string& ruta) {
 
 void Game::draw(std::vector<std::vector<int>>& tilemap, SDL_Texture* tilesetTexture) {
 
-    // Tamaño de cada elemento del tilset.
-    int tileWidth = 16;
-    int tileHeight = 16;
-
-    //Dimensiones de todo tileset.
-    int tilset_width = 20; //Ancho del tile set (La imagen del tile set ocupa 320 pixeles de ancho pero como la divido en Tiles de 16x16 entonces 320/16= 20).
-
-    int mapa_columns = 80;//tilemap.size(); Esto en realidad tambien es 80 ya que el CSV tiene 80
-    int mapa_rows = 40;//tilemap[0].size();
-    //int mapa_rows = 14;
-    //int mapa_colums = 25;
-
-    //std::cout << "Filas del CSV: " << mapa_rows << " y Columnas del CSV: " << mapa_colums << std::endl;
-
-
-    std::map<int, Entity*>::iterator it = entidades.begin();
+     std::map<int, Entity*>::iterator it = entidades.begin();
 
     //int primer_clave = it->first;
     Entity* primer_valor = it->second;
 
     std::pair<float, float> posicion = primer_valor->getPosition();
 
-    int posicion_jugador_x = std::floor(posicion.first);  //0;
-    int posicion_jugador_y = 20 - (std::floor(posicion.second)); //std::ceil(posicion.second / 16); //20;
+    // Tamaño del tile en píxeles
+    int TILE_SIZE = 32;
+    int TILESET_WIDTH = 20;
 
-    if(posicion_jugador_x < 0)
-        posicion_jugador_x = 0;
+    // Tamaño de la ventana en píxeles
+    int WINDOW_WIDTH = 800;
+    int WINDOW_HEIGHT = 600;
 
-    if(posicion_jugador_y < 0)
-        posicion_jugador_y = 0;
+    // Tamaño de la ventana en tiles
+    int WINDOW_WIDTH_TILES = WINDOW_WIDTH / TILE_SIZE;
+    int WINDOW_HEIGHT_TILES = WINDOW_HEIGHT / TILE_SIZE;
 
-    std::cout << posicion_jugador_x << std::endl;
-    std::cout << posicion_jugador_y << std::endl;
-    //No es por los anchos del tile set, es porque quiero que me muestra solo esto de alto en principio.
-    //16 pixeles el lo que ocupa cada piso de alto, mas de eso se ve el piso superior.
+    // Posición de la cámara en tiles
+    int camX = posicion.first;
+    int camY = 40 - std::ceil(posicion.second);
 
-    for (int x = posicion_jugador_x; x < mapa_columns; x++) {
-        for (int y = posicion_jugador_y; y < mapa_rows; y++) {
+    // Se asegura de que la cámara no se salga de los límites del mapa
+    camX = std::max(0, std::min(camX, static_cast<int>(tilemap[0].size()) - WINDOW_WIDTH_TILES));
+    camY = std::max(0, std::min(camY, static_cast<int>(tilemap.size()) - WINDOW_HEIGHT_TILES));
 
-        //Obtienes el valor en la celda actual
-        int tileValue = tilemap[y][x];
+    // Ahora recorre solo los tiles que están dentro de la vista de la cámara
+    for (int y = 0; y < WINDOW_HEIGHT_TILES; y++){
+        for (int x = 0; x < WINDOW_WIDTH_TILES; x++){
 
-        if(tileValue < 0){
-            continue;
-        }
+        // Calcula la posición del tile en el mapa
+        int tileX = std::min(camX + x, 80);
+        int tileY = std::min(camY + y, 40);
 
-        // Calculas la posición del tile en el tileset
+        // Obtiene el id del tile
+        int tileValue = tilemap[tileY][tileX];
+
+        // Calcula la posición del tile en píxeles
+        int posX = x * TILE_SIZE;
+        int posY = y * TILE_SIZE;
+
         SDL_Rect sourceRect;
-        sourceRect.x = (tileValue % tilset_width) * tileWidth;
-        sourceRect.y = (tileValue / tilset_width) * tileHeight;
-        sourceRect.w = tileWidth;
-        sourceRect.h = tileHeight;
+        sourceRect.x = (tileValue % TILESET_WIDTH) * 16;
+        sourceRect.y = (tileValue / TILESET_WIDTH) * 16;
+        sourceRect.w = 16;
+        sourceRect.h = 16;
 
-        // Calculas la posición donde quieres renderizar el tile en la pantalla
+        // Define el rectángulo de destino en la pantalla
         SDL_Rect destinationRect;
-        destinationRect.x = (x - posicion_jugador_x) * 32;
-        destinationRect.y = (y - posicion_jugador_y) * 32;
-        destinationRect.w = 32;
-        destinationRect.h = 32;
+        destinationRect.x = posX;
+        destinationRect.y = posY;
+        destinationRect.w = TILE_SIZE;
+        destinationRect.h = TILE_SIZE;
 
-        //std::cout << "Fila: " << x << " y Columna: " << y << std::endl;
-        //std::cout << "Soy el elemento: " << sourceRect.x << " - " << sourceRect.y << " de mi TileSet" << std::endl;
-
-        // Renderizas el tile
+        // Renderiza el tile
         SDL_RenderCopy(this->window.getRenderer(), tilesetTexture, &sourceRect, &destinationRect);
-        }
     }
+}
 }
