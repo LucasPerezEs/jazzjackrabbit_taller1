@@ -1,18 +1,18 @@
 #include "headers/broadcaster.h"
 
-Broadcaster::Broadcaster(std::list<ClientHandler*>& clients, Queue<State::StateType>& stateQueue):
+Broadcaster::Broadcaster(std::list<ClientHandler*>& clients, Queue<Contenedor>& stateQueue):
         clients(clients), stateQueue(stateQueue) {}
 
 void Broadcaster::run() {
-    State::StateType state;
+    Contenedor c(0, 0, 0, 0, 0, 0, 0, AnimationType::NONE_ANIMATION, EntityType::NONE_ENTITY);
 
     while (_keep_running) {
 
         try {
-            state = stateQueue.pop();
+            c = stateQueue.pop();
             for (auto& client: clients) {
-                std::cout << "Pusheo estados" << std::endl;
-                client->pushState(state);
+                // std::cout << "Pusheo estados" << std::endl;
+                client->pushState(c);
             }
         } catch (const ClosedQueue&) {
             break;

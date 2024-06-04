@@ -6,9 +6,11 @@
 #include <vector>
 
 #include "../../common_src/headers/commands.h"
+#include "../../common_src/headers/entity_commands.h"
 #include "../../common_src/headers/protocol.h"
 #include "../../common_src/headers/socket.h"
 
+#include "contenedor.h"
 
 class ServerProtocol: private Protocol {
 private:
@@ -16,9 +18,10 @@ public:
     explicit ServerProtocol(Socket peer);
 
     Command::ActionType receive_command();
-
+    std::pair<Command::ActionType, uint32_t> receive_command_with_id() ;
     void send_state(State::StateType state);
 
+    void send_datos_objeto(Contenedor c);
 
     ServerProtocol(const ServerProtocol&) = delete;
     ServerProtocol& operator=(const ServerProtocol&) = delete;

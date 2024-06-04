@@ -6,14 +6,14 @@ void Server::run() {
 
     int c;
 
-    Queue<Command::ActionType> actionQueue;
-    Queue<State::StateType> stateQueue;
+    Queue<Command> actionQueue;
+    Queue<Contenedor> stateQueue;
 
     std::list<ClientHandler*> clients;
 
 
     Game game(actionQueue, stateQueue);
-    Acceptor thread_acceptador(srv, clients, actionQueue);
+    Acceptor thread_acceptador(srv, clients, actionQueue, game);
     Broadcaster br(clients, stateQueue);
 
 

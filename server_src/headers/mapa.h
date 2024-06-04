@@ -2,7 +2,9 @@
 #define MAPA_H_
 
 #include <vector>
-
+#include <sstream>
+#include <fstream>
+#include <iostream>
 #include "objeto.h"
 
 class Piso {
@@ -27,6 +29,7 @@ public:
 class Mapa {
 public:
     std::vector<Piso*> objetos;
+    std::vector<std::vector<int>> cargarCSV(const std::string& ruta);
     Mapa();
     bool CheckColision(float x, float y, float w, float h);
     ~Mapa();

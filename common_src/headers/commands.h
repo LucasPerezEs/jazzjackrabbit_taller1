@@ -12,9 +12,14 @@ struct Command {
         RIGHT = 0x04,
         RUN = 0x05,
         RUNFAST = 0x06,
-        JUMP = 0x07
+        JUMP = 0x07,
+        FIRE = 0X08,
+        STOPLEFT = 0X09,
+        STOPRIGHT = 0X10,
+        STOPFIRE = 0X11
     };
     ActionType action;
+    uint32_t clientId;
 };
 
 struct State {

@@ -1,9 +1,9 @@
 #ifndef __PLAYER_H__
 #define __PLAYER_H__
 
+#include <utility>
+
 #include "Animation.h"
-#include "Area.h"
-#include "SdlTexture.h"
 
 class Player {
 public:

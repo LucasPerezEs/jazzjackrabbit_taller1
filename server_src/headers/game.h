@@ -7,11 +7,11 @@
 //#include "aceptador.h"
 //#include "partida.h"
 //
-//class Game {
-//private:
+// class Game {
+// private:
 //    const std::string& servname;
 //
-//public:
+// public:
 //    explicit Game(const std::string& servname);
 //
 //    void init_game();
@@ -24,30 +24,42 @@
 
 #ifndef SERVER_GAME_H
 #define SERVER_GAME_H
+#include <mutex>
 
 #include <iostream>
 #include <memory>
 #include <string>
+#include <unordered_map>
+#include "personaje.h"
+#include "lista_objetos.h"
 
 #include "../../common_src/headers/commands.h"
 #include "../../common_src/headers/queue.h"
 #include "../../common_src/headers/thread.h"
 
+#include "contenedor.h"
+
 class Game: public Thread {
 public:
-    explicit Game(Queue<Command::ActionType>& actionQueue, Queue<State::StateType>& eventQueue);
+    explicit Game(Queue<Command>& actionQueue, Queue<Contenedor>& eventQueue);
 
     void run() override;
     void stop() override;
+
+    void addPlayer(int clientId);
 
 
     bool is_running() { return _is_alive; }
 
 private:
-    Queue<Command::ActionType>& actionQueue;
+    std::unordered_map<uint32_t, Personaje*> clientCharacters;
+    ListaObjetos objetos;
+    std::vector<Ente*> entes;
 
-    Queue<State::StateType>& stateQueue;
+    Queue<Command>& actionQueue;
 
+    Queue<Contenedor>& stateQueue;
+    std::mutex clientCharactersMutex;
 };
 
 #endif  // SERVER_GAME_H

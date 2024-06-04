@@ -4,7 +4,8 @@
 
 #include "headers/personaje.h"
 
-Municion::Municion(float x, float y): Objeto(x, y, x + 1, y + 1) {}
+Municion::Municion(float x, float y):
+        Objeto(x, y, x + 1, y + 1, EntityType::AMMO, AnimationType::NONE_ANIMATION) {}
 
 void Municion::colision(Objeto& o) {
     if (this == &o) {

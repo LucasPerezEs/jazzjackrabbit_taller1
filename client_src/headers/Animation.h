@@ -10,7 +10,7 @@
 
 #include "SdlException.h"
 
-#define FRAME_RATE 1000000.0f / 40.0f
+#define FRAME_RATE 1000000.0f / 20.0f
 
 class SdlTexture;
 class Area;
@@ -19,12 +19,12 @@ class Animation {
 public:
     Animation(const SdlTexture* texture, int numFrames);
     ~Animation();
-    void update(float dt);
-    void render(const Area& dst, const SDL_RendererFlip& flipType);
-
+    int update(int current_frame);
+    void render(const Area& dst, const SDL_RendererFlip& flipType, int current_frame);
+    void reset();
 
 private:
-    void advanceFrame();
+    int advanceFrame(int current_frame);
     /** SDL texture of the raw image. */
     const SdlTexture* texture;
     /** Current animation frame. */

@@ -2,36 +2,34 @@
 
 // Pre: -
 // Post: -
-EventHandler::EventHandler(ClientProtocol& protocol,Player& player): protocol(protocol), player(player),was_closed(false) {}
+EventHandler::EventHandler(ClientProtocol& protocol, Player& player):
+        protocol(protocol), player(player), was_closed(false) {}
 
 void EventHandler::handle_keydown(const SDL_Event& event, Command& cmd) {
     const SDL_KeyboardEvent& keyEvent = (SDL_KeyboardEvent&)event;
     switch (keyEvent.keysym.sym) {
         case SDLK_w:
-            std::cout << "Estoy subiendo" << std::endl;
             cmd.action = Command::UP;
             break;
         case SDLK_s:
             cmd.action = Command::DOWN;
-            std::cout << "Estoy bajando" << std::endl;
             break;
         case SDLK_a:
             cmd.action = Command::LEFT;
-            player.moveLeft();
-            std::cout << "Voy a la izquierda" << std::endl;
+            // player.moveLeft();
             break;
         case SDLK_d:
             cmd.action = Command::RIGHT;
-            std::cout << "Voy a la derecha" << std::endl;
-            player.moveRigth();
+            // player.moveRigth();
             break;
         case SDLK_SPACE:
             cmd.action = Command::JUMP;
-            std::cout << "Estoy saltando" << std::endl;
             break;
         case SDLK_LSHIFT:  // Suponiendo que SHIFT es el comando para correr
-            cmd.action = Command::RUN;
-            std::cout << "Estoy corriendo" << std::endl;
+            cmd.action = Command::RUNFAST;
+            break;
+        case SDLK_f:
+            cmd.action = Command::FIRE;
             break;
         default:  // Para el caso que toque una tecla no asignada.
             cmd.action = Command::NONE;
@@ -39,14 +37,23 @@ void EventHandler::handle_keydown(const SDL_Event& event, Command& cmd) {
     }
 }
 
-void EventHandler::handle_keyup(const SDL_Event& event) {
+void EventHandler::handle_keyup(const SDL_Event& event, Command& cmd) {
     const SDL_KeyboardEvent& keyEvent = (SDL_KeyboardEvent&)event;
     switch (keyEvent.keysym.sym) {
         case SDLK_a:
-            player.stopMoving();
+            cmd.action = Command::STOPLEFT;
+            // player.stopMoving();
             break;
         case SDLK_d:
-            player.stopMoving();
+            cmd.action = Command::STOPRIGHT;
+            // player.stopMoving();
+            break;
+        case SDLK_f:
+            cmd.action = Command::STOPFIRE;
+            // player.stopMoving();
+            break;
+        case SDLK_LSHIFT:  // Suponiendo que SHIFT es el comando para correr
+            cmd.action = Command::RUN;
             break;
     }
 }
@@ -69,7 +76,8 @@ void EventHandler::run() {
                 this->protocol.send_command(cmd);
                 break;
             case SDL_KEYUP:
-                this->handle_keyup(event);
+                this->handle_keyup(event, cmd);
+                this->protocol.send_command(cmd);
                 break;
             case SDL_QUIT:
                 std::cout << "Quit :(" << std::endl;

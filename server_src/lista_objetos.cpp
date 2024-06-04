@@ -27,8 +27,10 @@ void ListaObjetos::eliminar_borrados(Queue<Contenedor>& q) {
     objetos.erase(std::remove_if(objetos.begin(), objetos.end(),
                                  [&](Objeto* o) {
                                      if (o->borrar) {
-                                         Contenedor c(o->id, o->x, o->y, o->width, o->height,
-                                                      o->borrar);
+                                         Contenedor c(1, o->id, 0, 0, 0, 0, 0,
+                                                      AnimationType::NONE_ANIMATION,
+                                                      EntityType::NONE_ENTITY);
+                                         // Al borrar solo hace falta el id
                                          q.try_push(c);
                                          return true;
                                      }

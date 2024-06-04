@@ -2,29 +2,50 @@
 #include <fstream>
 #include <iostream>
 
-#include <SDL.h>
-
 #include "headers/SdlTexture.h"
+#include "headers/entity.h"
 #include "headers/game.h"
+#include "setupscreen/SetupScreen.h"
 
 int main(int argc, char* argv[]) {
     try {
-        if (argc != 3 && argc != 4) {
-            std::cerr << "Bad program call. Expected " << argv[0]
-                      << " <hostname> <servername> [<filename>]\n";
-            return -1;
+
+        QApplication app(argc, argv);
+
+        SetupScreen setup;
+
+        setup.ShowConnectMenu();
+
+        if (setup.AcceptedConnection()) {
+            std::string ip = setup.getIp().toStdString();
+            std::string port = setup.getPort().toStdString();
+
+            SdlWindow window(800, 600);
+            SdlTexture player_png("../client_src/assets/jazz_walking.png", window,
+                                  Color{0x2C, 0x66, 0x96});
+
+            Player player(player_png);
+
+            Queue<Contenedor> receiverQueue;
+
+            std::map<int, Entity*> entidades;
+            std::vector<std::vector<float>> objetos;
+
+            Client client("localhost", "8080", player, receiverQueue, window, entidades);
+
+
+            /*if(client.is_online()){
+
+                setup.ShowMultiplayerMenu();
+
+
+            }*/
+
+
+            Game game(client, window, player, entidades);
+            game.run();
         }
 
-        SdlWindow window(800, 600);
-        SdlTexture player_png("../client_src/assets/jazz_walking.png", window,
-                              Color{0x2C, 0x66, 0x96});
-
-        Player player(player_png);
-
-        Client client(argv[1], argv[2], player, window);
-
-        Game game(client, window, player);
-        game.run();
 
         return 0;
 

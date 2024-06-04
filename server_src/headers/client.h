@@ -5,28 +5,29 @@
 
 #include <arpa/inet.h>
 
-#include "clientReceiver.h"
-#include "clientSender.h"
-#include "../../common_src/headers/socket.h"
-#include "game.h"
 #include "../../common_src/headers/protocol.h"
+#include "../../common_src/headers/socket.h"
 #include "../../common_src/headers/thread.h"
 
-//AGREGA ID JUGADOR
+#include "clientReceiver.h"
+#include "clientSender.h"
+#include "game.h"
+
+// AGREGA ID JUGADOR
 class ClientHandler {
 private:
+    uint32_t id;
     ServerProtocol serverProtocol;
-
     ClientReceiver receiverThread;
     ClientSender senderThread;
 
     bool online;
 
 public:
-    ClientHandler(Socket peer, Queue<Command::ActionType>& receiverQueue);
+    ClientHandler(uint32_t id,Socket peer, Queue<Command>& receiverQueue);
     bool is_online();
     void kill();
-    void pushState(const State::StateType state);
+    void pushState(const Contenedor& c);
     void go_online();
     ~ClientHandler();
 };

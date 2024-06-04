@@ -28,7 +28,10 @@ public:
 
     std::string receiveString();
 
-    Protocol(const Protocol&) = delete;
+    uint32_t receiveUInt32();
+    void send32(uint32_t v);
+
+            Protocol(const Protocol&) = delete;
 
     Protocol& operator=(const Protocol&) = delete;
 

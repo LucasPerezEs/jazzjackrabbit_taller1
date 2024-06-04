@@ -47,7 +47,8 @@ protected:
 public:
     int municion;
     bool disparando;
-    Personaje(float x, float y, float w, float h, int vida);
+    Personaje(float x, float y, float w, float h, int vida, EntityType en_type,
+              AnimationType an_type);
     virtual void colision(Objeto& o) override;
     virtual void colision(Enemigo& e) override;
     virtual void colision(Municion& m) override;

@@ -29,14 +29,7 @@ Animation::Animation(const SdlTexture* texture, int numFrames):
 
 Animation::~Animation() {}
 
-void Animation::update(float dt) {
-    this->elapsed += dt;
-    /* checks if the frame should be updated based on the time elapsed since the last update */
-    while (this->elapsed > FRAME_RATE) {
-        this->advanceFrame();
-        this->elapsed -= FRAME_RATE;
-    }
-}
+int Animation::update(int current_frame) { return this->advanceFrame(current_frame); }
 
 /**
  * @brief Renders the animation in the given coordinates.
@@ -45,13 +38,11 @@ void Animation::update(float dt) {
  * @param x X coordinate.
  * @param y Y corrdinate.
  */
-void Animation::render(const Area& dst, const SDL_RendererFlip& flipType) {
-    Area src(1 + (1 + this->size_width) * this->currentFrame, 0, this->size_width,
-             this->size_height);
+void Animation::render(const Area& dst, const SDL_RendererFlip& flipType, int current_frame) {
+    Area src((this->size_width) * current_frame, 0, this->size_width, this->size_height);
     this->texture->render(src, dst, flipType);
 }
 
-void Animation::advanceFrame() {
-    this->currentFrame += 1;
-    this->currentFrame = this->currentFrame % this->numFrames;
-}
+void Animation::reset() { this->currentFrame = 0; }
+
+int Animation::advanceFrame(int current_frame) { return (current_frame + 1) % this->numFrames; }

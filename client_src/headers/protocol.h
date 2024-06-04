@@ -7,8 +7,10 @@
 #include <utility>
 
 #include "../../common_src/headers/commands.h"
+#include "../../common_src/headers/entity_commands.h"
 #include "../../common_src/headers/protocol.h"
 #include "../../common_src/headers/socket.h"
+#include "../../server_src/headers/contenedor.h"
 
 class ClientProtocol: public Protocol {
 private:
@@ -17,6 +19,8 @@ public:
 
     void send_command(Command& cmd);
     std::pair<State::StateType, SpecialAction::SpecialActionType> receive_update();
+
+    Contenedor receiveDatosObjeto();
 
     ClientProtocol(const ClientProtocol&) = delete;
     ClientProtocol& operator=(const ClientProtocol&) = delete;

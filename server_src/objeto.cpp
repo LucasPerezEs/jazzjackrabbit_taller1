@@ -10,13 +10,14 @@
 int cant = 1;
 int num = 0;
 
-Objeto::Objeto(float x, float y, float w, float h): x(x), y(y), width(w), height(h), borrar(false) {
+Objeto::Objeto(float x, float y, float w, float h, EntityType en_type, AnimationType an_type):
+        x(x), y(y), width(w), height(h), borrar(false), en_type(en_type), an_type(an_type) {
     id = num;
     num++;
 }
 
-Ente::Ente(float x, float y, float w, float h, int vida):
-        Objeto(x, y, w, h),
+Ente::Ente(float x, float y, float w, float h, int vida, EntityType en_type, AnimationType an_type):
+        Objeto(x, y, w, h, en_type, an_type),
         direccion(1),
         contador(0),
         vida(vida) {  // para la direccion 1 es a la derecha y -1 a la izquierda
@@ -50,7 +51,8 @@ void Ente::update_vivo(ListaObjetos& objetos, Queue<Contenedor>& q) {
             borrar = false;
             objetos.agregar_objeto(this);
             contador = 0;
-            Contenedor c(this->id, this->x, this->y, this->width, this->height, this->borrar);
+            Contenedor c(0, this->id, this->x, this->y, this->width, this->height, this->direccion,
+                         this->an_type, this->en_type);
             q.try_push(c);
         }
         contador++;

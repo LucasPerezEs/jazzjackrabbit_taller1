@@ -2,18 +2,19 @@
 #define SERVER_BROADCASTER_H
 #include <list>
 
+#include "../../common_src/headers/thread.h"
+
 #include "client.h"
 #include "game.h"
-#include "../../common_src/headers/thread.h"
 
 class Broadcaster: public Thread {
 private:
     std::list<ClientHandler*>& clients;
-    Queue<State::StateType>& stateQueue;
+    Queue<Contenedor>& stateQueue;
 
 
 public:
-    explicit Broadcaster(std::list<ClientHandler*>& clients, Queue<State::StateType>& stateQueue);
+    explicit Broadcaster(std::list<ClientHandler*>& clients, Queue<Contenedor>& stateQueue);
     void run() override;
     void stop() override;
 };
