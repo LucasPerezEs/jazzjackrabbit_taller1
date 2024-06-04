@@ -13,12 +13,14 @@ struct Command {
         RUN = 0x05,
         RUNFAST = 0x06,
         JUMP = 0x07,
-        FIRE = 0X08,
-        STOPLEFT = 0X09,
-        STOPRIGHT = 0X10,
-        STOPFIRE = 0X11
+        FIRE = 0x08,
+        STOPLEFT = 0x09,
+        STOPRIGHT = 0x10,
+        STOPFIRE = 0x11,
+        QUIT = 0x12
     };
     ActionType action;
+    // cppcheck-suppress unusedStructMember
     uint32_t clientId;
 };
 

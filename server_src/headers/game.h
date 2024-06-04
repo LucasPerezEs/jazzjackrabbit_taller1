@@ -24,20 +24,20 @@
 
 #ifndef SERVER_GAME_H
 #define SERVER_GAME_H
-#include <mutex>
-
 #include <iostream>
 #include <memory>
+#include <mutex>
 #include <string>
 #include <unordered_map>
-#include "personaje.h"
-#include "lista_objetos.h"
+#include <vector>
 
 #include "../../common_src/headers/commands.h"
 #include "../../common_src/headers/queue.h"
 #include "../../common_src/headers/thread.h"
 
 #include "contenedor.h"
+#include "lista_objetos.h"
+#include "personaje.h"
 
 class Game: public Thread {
 public:
@@ -47,7 +47,6 @@ public:
     void stop() override;
 
     void addPlayer(int clientId);
-
 
     bool is_running() { return _is_alive; }
 

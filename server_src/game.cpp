@@ -3,27 +3,27 @@
 #include "headers/partida.h"
 
 Game::Game(Queue<Command>& actionQueue, Queue<Contenedor>& stateQueue):
-        actionQueue(actionQueue), stateQueue(stateQueue),clientCharactersMutex() {
-}
+        actionQueue(actionQueue), stateQueue(stateQueue), clientCharactersMutex() {}
 
 void Game::run() {
     // Queue<Contenedor> q; // esta queue tiene que ir al sender
     Mapa m = Mapa();
-    //Personaje personaje = Personaje(4, 0, 2, 4, 100, EntityType::JAZZ, AnimationType::WALK);
-    //Enemigo enemigo = Enemigo(50, 0, 2, 4, 100, EntityType::ENEMY, AnimationType::WALK);
-    //objetos.agregar_objeto(&personaje);
-    //objetos.agregar_objeto(&enemigo);
-    //entes.push_back(&personaje);
-    //entes.push_back(&enemigo);
-
+    // Personaje personaje = Personaje(4, 0, 2, 4, 100, EntityType::JAZZ, AnimationType::WALK);
+    // Enemigo enemigo = Enemigo(50, 0, 2, 4, 100, EntityType::ENEMY, AnimationType::WALK);
+    // objetos.agregar_objeto(&personaje);
+    // objetos.agregar_objeto(&enemigo);
+    // entes.push_back(&personaje);
+    // entes.push_back(&enemigo);
 
 
     while (_keep_running) {
         // uint32_t time1 = SDL_GetTicks();
         Command command;
         while (actionQueue.try_pop(command)) {
+
             uint32_t clientId = command.clientId;
             Personaje* personaje = clientCharacters[clientId];
+
             if (command.action == Command::ActionType::LEFT) {
                 personaje->moveLeft();
             } else if (command.action == Command::ActionType::RIGHT) {
@@ -42,13 +42,10 @@ void Game::run() {
                 personaje->stoprunning();
             } else if (command.action == Command::ActionType::STOPFIRE) {
                 personaje->disparando = false;
+            } else if (command.action == Command::ActionType::QUIT) {
+                personaje->borrar = true;
             }
         }
-
-       //std::cout << "Enemigo posx: "<< enemigo.x << " posy: " << enemigo.y << std::endl;
-       if (clientCharacters.size() > 0)
-       std::cout << "Personaje posx: "<< clientCharacters.begin()->second->x << " posy: " << clientCharacters.begin()->second->y << std::endl;
-
 
         objetos.eliminar_borrados(stateQueue);
         objetos.correr_colisiones();
@@ -63,13 +60,12 @@ void Game::run() {
 
 void Game::addPlayer(int clientId) {
     std::lock_guard<std::mutex> lock(clientCharactersMutex);
-    Personaje* personaje = new Personaje(4 + clientId * 20, 0, 4, 8, 100, EntityType::JAZZ, AnimationType::WALK);
+    Personaje* personaje =
+            new Personaje(4 + clientId * 20, 0, 4, 8, 100, EntityType::JAZZ, AnimationType::WALK);
     clientCharacters[clientId] = personaje;
     objetos.agregar_objeto(personaje);
     entes.push_back(personaje);
 }
-
-
 
 void Game::stop() {
     stateQueue.close();

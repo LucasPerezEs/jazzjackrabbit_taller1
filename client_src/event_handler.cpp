@@ -75,6 +75,8 @@ void EventHandler::run() {
                 break;
             case SDL_QUIT:
                 std::cout << "Quit :(" << std::endl;
+                cmd.action = Command::QUIT;
+                this->protocol.send_command(cmd);
                 this->was_closed = true;
         }
     }
