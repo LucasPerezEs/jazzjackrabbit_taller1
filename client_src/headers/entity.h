@@ -38,7 +38,7 @@ public:
     // void recibir_danio(int d);
     // bool vivo();
     // virtual void eliminar();
-    void render(const SdlWindow& window);
+    void render(const SdlWindow& window, Entity* personaje);
     std::pair<float, float> getPosition();
 };
 

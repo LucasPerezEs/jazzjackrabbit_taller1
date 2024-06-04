@@ -1,7 +1,7 @@
 #include "headers/game.h"
 
-int escala2x = 24;
-int escala2y = 18;
+int escala2x = 8;
+int escala2y = 6;
 
 Game::Game(Client& client, SdlWindow& window, Player& player, std::map<int, Entity*>& entidades):
         client(client), window(window), player(player), entidades(entidades) {
@@ -102,7 +102,7 @@ void Game::render() {
     draw(tilemap_terreno_solido, tilesetTexture);
 
     for (std::map<int, Entity*>::iterator it = entidades.begin(); it != entidades.end(); ++it) {
-        it->second->render(window);
+        it->second->render(window, entidades.begin()->second);
     }
 
     this->window.render();
@@ -133,20 +133,20 @@ std::vector<std::vector<int>> Game::cargarCSV(const std::string& ruta) {
 
 void Game::draw(std::vector<std::vector<int>>& tilemap, SDL_Texture* tilesetTexture) {
 
-    //std::map<int, Entity*>::iterator it = entidades.begin();
+    std::map<int, Entity*>::iterator it = entidades.begin();
 
     //int primer_clave = it->first;
-    //Entity* primer_valor = it->second;
+    Entity* primer_valor = it->second;
 
-    //std::pair<float, float> posicion = primer_valor->getPosition();
+    std::pair<float, float> posicion = primer_valor->getPosition();
 
     // Tamaño del tile en píxeles
     //int TILE_SIZE = 32;
     int TILESET_WIDTH = 20;
 
     // Tamaño de la ventana en píxeles
-    //int WINDOW_WIDTH = 800;
-    //int WINDOW_HEIGHT = 600;
+    int WINDOW_WIDTH = 800;
+    int WINDOW_HEIGHT = 600;
 
     // Tamaño de la ventana en tiles
     //int WINDOW_WIDTH_TILES = WINDOW_WIDTH / TILE_SIZE;
@@ -183,8 +183,8 @@ void Game::draw(std::vector<std::vector<int>>& tilemap, SDL_Texture* tilesetText
 
         // Define el rectángulo de destino en la pantalla
         SDL_Rect destinationRect;
-        destinationRect.x = 2*(posX)*escala2x;
-        destinationRect.y = 2*(posY)*escala2y-840;  //2*escala2x
+        destinationRect.x = 2*(posX)*escala2x-posicion.first*escala2x + WINDOW_WIDTH/2;
+        destinationRect.y = 2*(posY)*escala2y-(2*escala2y*tilemap.size()-WINDOW_HEIGHT)+ posicion.second*escala2y - 2*escala2y;  //2*escala2x
         destinationRect.w = 2*escala2x;
         destinationRect.h = 2*escala2y;
  

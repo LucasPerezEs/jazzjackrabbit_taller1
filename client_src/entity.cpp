@@ -1,7 +1,7 @@
 #include "headers/entity.h"
 
-int escalax = 24;
-int escalay = 18;
+int escalax = 8;
+int escalay = 6;
 
 Entity::Entity(int id, float x, float y, float width, float height, int direccion,
                AnimationType an_type, Animation* an, EntityType entity_type):
@@ -36,7 +36,7 @@ void Entity::modify_animation(Animation* new_an, AnimationType new_an_type) {
 
 void Entity::update_animation() { this->current_frame = an->update(current_frame); }
 
-void Entity::render(const SdlWindow& window) {
+void Entity::render(const SdlWindow& window, Entity* personaje) {
     SDL_RendererFlip flip;
     if (direccion == -1) {
         flip = SDL_FLIP_HORIZONTAL;
@@ -47,15 +47,15 @@ void Entity::render(const SdlWindow& window) {
     //int render_width = (this->width - this->x) * 40;
     //int render_height = (this->height - this->y) * 30;
 
-    Area destArea(x*escalax, 600-y*escalay-(this->height - this->y) * escalay, (this->width - this->x)*escalax, (this->height - this->y) * escalay);
+    Area destArea(x*escalax-personaje->getPosition().first*escalax + 400, 600-y*escalay-(this->height - this->y) * escalay + personaje->getPosition().second*escalay - 2*escalay, (this->width - this->x)*escalax, (this->height - this->y) * escalay);
 
     an->render(destArea, flip, current_frame);
 
     SDL_Rect r;
     r.h = ((this->y - this->height) * escalay);
     r.w = ((this->width - this->x) * escalax);
-    r.x = this->x * escalax;
-    r.y = 600 - (this->y * escalay);
+    r.x = this->x * escalax - personaje->getPosition().first*escalax + 400;
+    r.y = 600 - (this->y * escalay) + personaje->getPosition().second*escalay - 2*escalay;
     SDL_RenderDrawRect(window.getRenderer(), &r);    
 }
 
