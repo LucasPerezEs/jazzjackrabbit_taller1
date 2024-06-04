@@ -1,5 +1,8 @@
 #include "headers/entity.h"
 
+int escalax = 24;
+int escalay = 18;
+
 Entity::Entity(int id, float x, float y, float width, float height, int direccion,
                AnimationType an_type, Animation* an, EntityType entity_type):
         id(id),
@@ -41,12 +44,19 @@ void Entity::render(const SdlWindow& window) {
         flip = SDL_FLIP_NONE;
     }
 
-    int render_width = (this->width - this->x) * 40;
-    int render_height = (this->height - this->y) * 30; //x2 - x1
+    //int render_width = (this->width - this->x) * 40;
+    //int render_height = (this->height - this->y) * 30;
 
-    Area destArea(this->x * 8, (600 - render_height) - (this->y * 6), render_width, render_height);
+    Area destArea(x*escalax, 600-y*escalay-(this->height - this->y) * escalay, (this->width - this->x)*escalax, (this->height - this->y) * escalay);
 
     an->render(destArea, flip, current_frame);
+
+    SDL_Rect r;
+    r.h = ((this->y - this->height) * escalay);
+    r.w = ((this->width - this->x) * escalax);
+    r.x = this->x * escalax;
+    r.y = 600 - (this->y * escalay);
+    SDL_RenderDrawRect(window.getRenderer(), &r);    
 }
 
 std::pair<float, float> Entity::getPosition() {

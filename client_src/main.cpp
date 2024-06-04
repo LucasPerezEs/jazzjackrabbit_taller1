@@ -31,15 +31,15 @@ int main(int argc, char* argv[]) {
             std::map<int, Entity*> entidades;
             std::vector<std::vector<float>> objetos;
 
-            Client client(ip, port, player, receiverQueue, window, entidades);
+            Client client("localhost", "8080", player, receiverQueue, window, entidades);
 
 
-            if(client.is_online()){
+            /*if(client.is_online()){
 
                 setup.ShowMultiplayerMenu();
 
 
-            }
+            }*/
 
 
             Game game(client, window, player, entidades);

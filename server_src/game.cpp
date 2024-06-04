@@ -10,11 +10,11 @@ void Game::run() {
     // Queue<Contenedor> q; // esta queue tiene que ir al sender
     Mapa m = Mapa();
     //Personaje personaje = Personaje(4, 0, 2, 4, 100, EntityType::JAZZ, AnimationType::WALK);
-    Enemigo enemigo = Enemigo(50, 0, 2, 4, 100, EntityType::ENEMY, AnimationType::WALK);
+    //Enemigo enemigo = Enemigo(50, 0, 2, 4, 100, EntityType::ENEMY, AnimationType::WALK);
     //objetos.agregar_objeto(&personaje);
-    objetos.agregar_objeto(&enemigo);
+    //objetos.agregar_objeto(&enemigo);
     //entes.push_back(&personaje);
-    entes.push_back(&enemigo);
+    //entes.push_back(&enemigo);
 
 
 
@@ -45,7 +45,10 @@ void Game::run() {
             }
         }
 
-        std::cout << "Fila: "<< personaje.x << " Columna: " << personaje.y << std::endl;
+       //std::cout << "Enemigo posx: "<< enemigo.x << " posy: " << enemigo.y << std::endl;
+       if (clientCharacters.size() > 0)
+       std::cout << "Personaje posx: "<< clientCharacters.begin()->second->x << " posy: " << clientCharacters.begin()->second->y << std::endl;
+
 
         objetos.eliminar_borrados(stateQueue);
         objetos.correr_colisiones();
@@ -60,7 +63,7 @@ void Game::run() {
 
 void Game::addPlayer(int clientId) {
     std::lock_guard<std::mutex> lock(clientCharactersMutex);
-    Personaje* personaje = new Personaje(4 + clientId * 20, 0, 2, 4, 100, EntityType::JAZZ, AnimationType::WALK);
+    Personaje* personaje = new Personaje(4 + clientId * 20, 0, 4, 8, 100, EntityType::JAZZ, AnimationType::WALK);
     clientCharacters[clientId] = personaje;
     objetos.agregar_objeto(personaje);
     entes.push_back(personaje);

@@ -32,7 +32,7 @@ std::vector<std::vector<int>> Mapa::cargarCSV(const std::string& ruta) {
             matriz.push_back(fila);
         }
         archivo.close();
-    }s
+    }
 
     return matriz;
 }
@@ -41,19 +41,16 @@ Mapa::Mapa() {
 
     std::vector<std::vector<int>> tilemap = cargarCSV("../client_src/assets/background/medivo_map/Medivo_model_Terreno_solido.csv");
 
-for (std::vector<int>::size_type i = 0; i < tilemap.size(); i++) {
+for (std::vector<int>::size_type i = tilemap.size()-1; i >= 1; --i) {
     for (std::vector<int>::size_type j = 0; j < tilemap[i].size(); j++) {
         if (tilemap[i][j] != -1) {
-            // Asume que el tamaño de cada tile es de 32x32
-            Piso* piso = new Piso(i-7.0, j, i-6.0, j+1.0);
+            Piso* piso = new Piso(j*2, (39-i)*2, j*2+2, (39-i)*2+1);
             objetos.push_back(piso);
-
+            if ((tilemap[i][j] == 256 || tilemap[i][j] == 257) && piso->x > 8 && piso->x < 30 && piso->y > 3 && piso->y > 15)
             std::cout << "Soy un piso y mi x1 es: " << piso->x << " mi x2 es: " << piso->w << " mi y1 es: " << piso->y << " mi y2 es: " << piso->h << std::endl;
         }
     }
 }
-
-
     //Piso* piso = new Piso(0, -1, 1000, 0);   // posicion.x posicion.y posicion.x2 posicion.y2
     //Piso* piso2 = new Piso(10, 0, 5, 40);  // pared derecha
     //Piso* piso3 = new Piso(0, 0, 1, 40);     // pared izquierda

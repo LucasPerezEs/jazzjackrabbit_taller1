@@ -1,7 +1,25 @@
 #include "headers/game.h"
 
+int escala2x = 24;
+int escala2y = 18;
+
 Game::Game(Client& client, SdlWindow& window, Player& player, std::map<int, Entity*>& entidades):
-        client(client), window(window), player(player), entidades(entidades) {}
+        client(client), window(window), player(player), entidades(entidades) {
+
+    SDL_Surface* tilesetSurface = IMG_Load("../client_src/assets/background/medivo_map/TILESET_Medivo.png");
+    if (tilesetSurface == nullptr) {
+        std::cout << "Error al cargar la imagen: " << IMG_GetError() << std::endl;
+        return;
+    }
+
+    tilesetTexture = SDL_CreateTextureFromSurface(this->window.getRenderer(), tilesetSurface);
+    if (tilesetTexture == nullptr)
+        std::cout << "Error al crear la textura: " << SDL_GetError() << std::endl;
+
+    SDL_FreeSurface(tilesetSurface);
+
+    tilemap_terreno_solido = cargarCSV("../client_src/assets/background/medivo_map/Medivo_model_Terreno_completo.csv");
+}
 
 void Game::run() {
     uint32_t time1 = 0;
@@ -11,8 +29,31 @@ void Game::run() {
 
     while (client.is_online()) {
 
+        //SDL_SetRenderDrawColor(window.getRenderer(), 0, 0, 0, 255);
+
+        SDL_RenderClear(window.getRenderer());  // renderizo todo como un rectangulo
+
+        //SDL_SetRenderDrawColor(window.getRenderer(), 255, 255, 255, 255);
+
         this->update();
         this->render();
+        /*for (std::vector<int>::size_type i = tilemap_terreno_solido.size()-1; i >= 1; --i) {
+            for (std::vector<int>::size_type j = 0; j < tilemap_terreno_solido[i].size(); j++) {
+                if (tilemap_terreno_solido[i][j] != -1) {
+                    // Asume que el tamaño de cada tile es de 32x32
+                    SDL_Rect r;
+                    r.h = ((1) * escala2y);
+                    r.w = ((1) * escala2x);
+                    r.x = j*2 * escala2x;
+                    r.y = 600 - ((39-i)*2 * escala2y);
+                    SDL_RenderDrawRect(window.getRenderer(), &r);
+
+                    //std::cout << "Soy un piso y mi x1 es: " << piso->x << " mi x2 es: " << piso->w << " mi y1 es: " << piso->y << " mi y2 es: " << piso->h << std::endl;
+                }
+            }
+        }*/
+
+        SDL_RenderPresent(window.getRenderer());
 
         uint32_t time2;
         time2 = SDL_GetTicks();
@@ -20,6 +61,7 @@ void Game::run() {
         time1 = time2;
 
         usleep(rest);
+
     }
 
     this->close();
@@ -52,22 +94,11 @@ void Game::render() {
         entidades[1]->render(window);
     }*/
 
-    SDL_Surface* tilesetSurface = IMG_Load("../client_src/assets/background/medivo_map/TILESET_Medivo.png");
-    if (tilesetSurface == nullptr) {
-        std::cout << "Error al cargar la imagen: " << IMG_GetError() << std::endl;
-        return;
-    }
 
-    SDL_Texture* tilesetTexture = SDL_CreateTextureFromSurface(this->window.getRenderer(), tilesetSurface);
-    if (tilesetTexture == nullptr)
-        std::cout << "Error al crear la textura: " << SDL_GetError() << std::endl;
-
-    SDL_FreeSurface(tilesetSurface);
 
     //std::vector<std::vector<int>> tilemap_fondo = cargarCSV("../client_src/assets/background/medivo_map/Medivo_model_Fondo.csv");
     //draw(tilemap_fondo, tilesetTexture);
 
-    std::vector<std::vector<int>> tilemap_terreno_solido = cargarCSV("../client_src/assets/background/medivo_map/Medivo_model_Terreno_completo.csv");
     draw(tilemap_terreno_solido, tilesetTexture);
 
     for (std::map<int, Entity*>::iterator it = entidades.begin(); it != entidades.end(); ++it) {
@@ -102,47 +133,47 @@ std::vector<std::vector<int>> Game::cargarCSV(const std::string& ruta) {
 
 void Game::draw(std::vector<std::vector<int>>& tilemap, SDL_Texture* tilesetTexture) {
 
-     std::map<int, Entity*>::iterator it = entidades.begin();
+    //std::map<int, Entity*>::iterator it = entidades.begin();
 
     //int primer_clave = it->first;
-    Entity* primer_valor = it->second;
+    //Entity* primer_valor = it->second;
 
-    std::pair<float, float> posicion = primer_valor->getPosition();
+    //std::pair<float, float> posicion = primer_valor->getPosition();
 
     // Tamaño del tile en píxeles
-    int TILE_SIZE = 32;
+    //int TILE_SIZE = 32;
     int TILESET_WIDTH = 20;
 
     // Tamaño de la ventana en píxeles
-    int WINDOW_WIDTH = 800;
-    int WINDOW_HEIGHT = 600;
+    //int WINDOW_WIDTH = 800;
+    //int WINDOW_HEIGHT = 600;
 
     // Tamaño de la ventana en tiles
-    int WINDOW_WIDTH_TILES = WINDOW_WIDTH / TILE_SIZE;
-    int WINDOW_HEIGHT_TILES = WINDOW_HEIGHT / TILE_SIZE;
+    //int WINDOW_WIDTH_TILES = WINDOW_WIDTH / TILE_SIZE;
+    //int WINDOW_HEIGHT_TILES = WINDOW_HEIGHT / TILE_SIZE;
 
     // Posición de la cámara en tiles
-    int camX = posicion.first;
-    int camY = 40 - std::ceil(posicion.second);
+    //int camX = posicion.first;
+    //int camY = 40 - std::ceil(posicion.second);
 
     // Se asegura de que la cámara no se salga de los límites del mapa
-    camX = std::max(0, std::min(camX, static_cast<int>(tilemap[0].size()) - WINDOW_WIDTH_TILES));
-    camY = std::max(0, std::min(camY, static_cast<int>(tilemap.size()) - WINDOW_HEIGHT_TILES));
+    //camX = std::max(0, std::min(camX, static_cast<int>(tilemap[0].size()) - WINDOW_WIDTH_TILES));
+    //camY = std::max(0, std::min(camY, static_cast<int>(tilemap.size()) - WINDOW_HEIGHT_TILES));
 
     // Ahora recorre solo los tiles que están dentro de la vista de la cámara
-    for (int y = 0; y < WINDOW_HEIGHT_TILES; y++){
-        for (int x = 0; x < WINDOW_WIDTH_TILES; x++){
+    for (int y = 0; y < 40; y++){
+        for (int x = 0; x < 80; x++){
 
         // Calcula la posición del tile en el mapa
-        int tileX = std::min(camX + x, 80);
-        int tileY = std::min(camY + y, 40);
+        //int tileX = std::min(camX + x, 80);
+        //int tileY = std::min(camY + y, 40);
 
         // Obtiene el id del tile
-        int tileValue = tilemap[tileY][tileX];
+        int tileValue = tilemap[y][x];
 
         // Calcula la posición del tile en píxeles
-        int posX = x * TILE_SIZE;
-        int posY = y * TILE_SIZE;
+        int posX = x;
+        int posY = y;
 
         SDL_Rect sourceRect;
         sourceRect.x = (tileValue % TILESET_WIDTH) * 16;
@@ -152,13 +183,14 @@ void Game::draw(std::vector<std::vector<int>>& tilemap, SDL_Texture* tilesetText
 
         // Define el rectángulo de destino en la pantalla
         SDL_Rect destinationRect;
-        destinationRect.x = posX;
-        destinationRect.y = posY;
-        destinationRect.w = TILE_SIZE;
-        destinationRect.h = TILE_SIZE;
-
+        destinationRect.x = 2*(posX)*escala2x;
+        destinationRect.y = 2*(posY)*escala2y-840;  //2*escala2x
+        destinationRect.w = 2*escala2x;
+        destinationRect.h = 2*escala2y;
+ 
         // Renderiza el tile
         SDL_RenderCopy(this->window.getRenderer(), tilesetTexture, &sourceRect, &destinationRect);
+
     }
 }
 }

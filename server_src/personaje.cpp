@@ -10,7 +10,7 @@
 Personaje::Personaje(float x, float y, float w, float h, int vida, EntityType en_type,
                      AnimationType an_type):
         Ente(x, y, w + x, h + y, vida, en_type, an_type) {
-    velx = 1;
+    velx = 0.5;
     vely = 0;
     direccion = 1;
     jumping = false;
@@ -47,13 +47,13 @@ void Personaje::run() {
 }
 
 void Personaje::stoprunning() {
-    velx = 1;
+    velx = 0.5;
     // an_type = AnimationType::IDLE;
 }
 
 void Personaje::jump() {
     if (!jumping) {  // Esto es para evitar que se pueda spamear el jump y volar
-        vely = 4;
+        vely = 3;
         jumping = true;
         // an_type = AnimationType::JUMP;
     }
@@ -83,7 +83,7 @@ void Personaje::update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) {
     }
     y += vely;
     height += vely;
-    vely -= 0.2;  // esto es la aceleracion de la gravedad, se tiene que poner un limite de vely
+    vely -= 0.4;  // esto es la aceleracion de la gravedad, se tiene que poner un limite de vely
 
     colisionx = m.CheckColision(x, auxy, width, auxh);
     colisiony = m.CheckColision(auxx, y, auxw, height);

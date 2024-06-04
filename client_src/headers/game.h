@@ -27,6 +27,9 @@ private:
     Player& player;
     std::map<int, Entity*>& entidades;
 
+    SDL_Texture* tilesetTexture;
+    std::vector<std::vector<int>> tilemap_terreno_solido;
+
     std::vector<std::vector<int>> cargarCSV(const std::string& ruta);
     void draw(std::vector<std::vector<int>>& tilemap, SDL_Texture* tilesetTexture);
 
