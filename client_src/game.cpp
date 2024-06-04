@@ -184,8 +184,9 @@ void Game::draw(std::vector<std::vector<int>>& tilemap, SDL_Texture* tilesetText
         // Define el rectángulo de destino en la pantalla
         SDL_Rect destinationRect;
         destinationRect.x = 2*(posX)*escala2x-posicion.first*escala2x + WINDOW_WIDTH/2;
-        //destinationRect.y = 2*(posY)*escala2y + posicion.second*escala2y - WINDOW_HEIGHT/2;
-        destinationRect.y = 2*(posY)*escala2y + posicion.second*escala2y - WINDOW_HEIGHT/2 - 80;
+        //destinationRect.y = 2*(posY)*escala2y-(2*escala2y*tilemap.size()-WINDOW_HEIGHT)+ posicion.second*escala2y - 2*escala2y;  //Version1
+        //destinationRect.y = 2*(posY)*escala2y + posicion.second*escala2y - WINDOW_HEIGHT/2; //Version2 que lo manejaba bien pero estaba desfasado.
+        destinationRect.y = 2*(posY)*escala2y + posicion.second*escala2y - WINDOW_HEIGHT/2 - 80; //Version3 que arregla momentaneamente el desfase.
 
 
         destinationRect.w = 2*escala2x;
