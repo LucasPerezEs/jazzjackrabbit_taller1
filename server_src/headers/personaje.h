@@ -60,6 +60,7 @@ public:
     void run();
     void stoprunning();
     void jump();
+    void set_id(int i);
     virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) override;
 };
 

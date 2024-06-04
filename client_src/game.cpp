@@ -101,8 +101,15 @@ void Game::render() {
 
     draw(tilemap_terreno_solido, tilesetTexture);
 
+    Entity *entidad;
+    if (entidades.find(client.get_id()) != entidades.end()) {
+        entidad = entidades[client.get_id()];
+    } else {
+        entidad = entidades.begin()->second;
+    }
+
     for (std::map<int, Entity*>::iterator it = entidades.begin(); it != entidades.end(); ++it) {
-        it->second->render(window, entidades.begin()->second);
+        it->second->render(window, entidad);
     }
 
     this->window.render();
@@ -133,12 +140,14 @@ std::vector<std::vector<int>> Game::cargarCSV(const std::string& ruta) {
 
 void Game::draw(std::vector<std::vector<int>>& tilemap, SDL_Texture* tilesetTexture) {
 
-    std::map<int, Entity*>::iterator it = entidades.begin();
+    Entity *entidad;
+    if (entidades.find(client.get_id()) != entidades.end()) {
+        entidad = entidades[client.get_id()];
+    } else {
+        entidad = entidades.begin()->second;
+    }
 
-    //int primer_clave = it->first;
-    Entity* primer_valor = it->second;
-
-    std::pair<float, float> posicion = primer_valor->getPosition();
+    std::pair<float, float> posicion = entidad->getPosition();
 
     // Tamaño del tile en píxeles
     //int TILE_SIZE = 32;

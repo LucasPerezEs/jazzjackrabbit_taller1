@@ -7,7 +7,9 @@ Client::Client(const std::string& hostname, const std::string& servername, Playe
         event_handler(client_protocol, player),
         updater(client_protocol, window, entidades, queue),
         player(player),
-        online(false) {}
+        online(false) {
+            updater.agregar_cliente(this);
+        }
 
 void Client::go_online() {
 
@@ -23,6 +25,13 @@ bool Client::is_online() {
     return online;
 }
 
+void Client::set_id(int i) {
+    id = i;
+}
+
+int Client::get_id() {
+    return id;
+}
 
 void Client::close() {
     this->client_protocol.stop();

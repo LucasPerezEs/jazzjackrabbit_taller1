@@ -22,8 +22,24 @@ std::pair<State::StateType, SpecialAction::SpecialActionType> ClientProtocol::re
 }
 
 
-Contenedor ClientProtocol::receiveDatosObjeto() {
+Contenedor ClientProtocol::receive_info() {
+    bool was_closed = false;
     int msg_code;
+    socket.recvall(&msg_code, sizeof(msg_code), &was_closed);
+    if (msg_code == 2) {
+        int id;
+        socket.recvall(&id, sizeof(id), &was_closed);
+        Contenedor c(msg_code, id, 0, 0,0, 0, 0, AnimationType::NONE_ANIMATION, EntityType::NONE_ENTITY);
+        return c;
+    } else {
+        Contenedor aux = receiveDatosObjeto();
+        Contenedor c(msg_code, aux.id(), aux.posx(), aux.posy(), aux.width(), aux.height(), aux.direccion(), aux.animation_type(), aux.entity_type());
+        return c;
+    }
+}
+
+Contenedor ClientProtocol::receiveDatosObjeto() {
+    
     int id;
     float x;
     float y;
@@ -33,7 +49,6 @@ Contenedor ClientProtocol::receiveDatosObjeto() {
     AnimationType an;
     EntityType en;
     bool was_closed = false;
-    socket.recvall(&msg_code, sizeof(msg_code), &was_closed);
     socket.recvall(&id, sizeof(id), &was_closed);
     socket.recvall(&x, sizeof(x), &was_closed);
     socket.recvall(&y, sizeof(y), &was_closed);
@@ -43,7 +58,7 @@ Contenedor ClientProtocol::receiveDatosObjeto() {
     socket.recvall(&an, sizeof(an), &was_closed);
     socket.recvall(&en, sizeof(en), &was_closed);
 
-    Contenedor c(msg_code, id, x, y, w, h, direccion, an, en);
+    Contenedor c(0, id, x, y, w, h, direccion, an, en);
     return c;
 }
 

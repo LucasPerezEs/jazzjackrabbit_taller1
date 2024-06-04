@@ -18,12 +18,16 @@
 
 class Client {
 public:
+
     Client(const std::string& hostname, const std::string& servername, Player& player,
            Queue<Contenedor>& queue, SdlWindow& window, std::map<int, Entity*>& entidades);
 
     void go_online();
     bool is_online();
 
+    void set_id(int i);
+
+    int get_id();
 
     void close();
 
@@ -34,6 +38,7 @@ private:
     ModelUpdater updater;        // actualizar modelos (receiver)
     Player& player;
     bool online;
+    int id;
 
     // SdlWindow& window;
 };
