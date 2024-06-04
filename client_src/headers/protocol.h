@@ -20,6 +20,8 @@ public:
     void send_command(Command& cmd);
     std::pair<State::StateType, SpecialAction::SpecialActionType> receive_update();
 
+    Contenedor receive_info();
+
     Contenedor receiveDatosObjeto();
 
     ClientProtocol(const ClientProtocol&) = delete;

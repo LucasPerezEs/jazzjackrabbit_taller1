@@ -21,7 +21,11 @@ public:
     std::pair<Command::ActionType, uint32_t> receive_command_with_id() ;
     void send_state(State::StateType state);
 
+    void send_id(Contenedor c);
+
     void send_datos_objeto(Contenedor c);
+
+    void send_info(Contenedor c);
 
     ServerProtocol(const ServerProtocol&) = delete;
     ServerProtocol& operator=(const ServerProtocol&) = delete;

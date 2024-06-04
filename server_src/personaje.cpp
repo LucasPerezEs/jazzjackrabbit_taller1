@@ -126,6 +126,10 @@ void Personaje::disparar(ListaObjetos& objetos) {
     arma.disparar(objetos, x, width, y, height, direccion);
 }
 
+void Personaje::set_id(int i) {
+    id = i;
+}
+
 
 Arma::Arma() { municion = 10; }
 

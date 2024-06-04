@@ -7,7 +7,7 @@ void ClientReceiver::run() {
     while (_keep_running) {
         try {
             // recibir comando de un cliente
-            Contenedor c = clientProtocol.receiveDatosObjeto();
+            Contenedor c = clientProtocol.receive_info();
             queueReceiver.push(c);
         } catch (ProtocolDesconection& d) {
             break;

@@ -10,6 +10,23 @@ Command::ActionType ServerProtocol::receive_command() {
 
 void ServerProtocol::send_state(State::StateType state) { sendUChar(state); }
 
+void ServerProtocol::send_info(Contenedor c) {
+    if (c.msg_code() == 2) {
+        send_id(c);
+    } else {
+        send_datos_objeto(c);
+    }
+}
+
+void ServerProtocol::send_id(Contenedor c) {
+    bool was_closed;
+    int msg_code = c.msg_code();
+    int id = c.id();
+
+    socket.sendall(&msg_code, sizeof(msg_code), &was_closed);
+    socket.sendall(&id, sizeof(id), &was_closed);
+}
+
 void ServerProtocol::send_datos_objeto(Contenedor c) {
     bool was_closed;
     int msg_code = c.msg_code();

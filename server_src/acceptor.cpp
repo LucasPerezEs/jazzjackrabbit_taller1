@@ -34,6 +34,8 @@ void Acceptor::run() {
             Socket peer = sk.accept();
             ClientHandler* client = new ClientHandler(id,std::move(peer), actionQueue);
             client->go_online();
+            Contenedor c(2, id, 0, 0, 0, 0, 0, AnimationType::NONE_ANIMATION, EntityType::NONE_ENTITY);
+            client->pushState(c);
             clients.push_back(client);
             game.addPlayer(id);
             reap_offline_clients();

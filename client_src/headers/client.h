@@ -24,6 +24,9 @@ public:
     void go_online();
     bool is_online();
 
+    void set_id(int i);
+
+    int get_id();
 
     void close();
 
@@ -33,6 +36,7 @@ private:
     EventHandler event_handler;  // eventos teclado (sender)
     ModelUpdater updater;        // actualizar modelos (receiver)
     bool online;
+    int id;
 
     // SdlWindow& window;
 };

@@ -8,7 +8,7 @@
 #include "headers/mapa.h"
 
 int cant = 1;
-int num = 0;
+int num = 20;
 
 Objeto::Objeto(float x, float y, float w, float h, EntityType en_type, AnimationType an_type):
         x(x), y(y), width(w), height(h), borrar(false), en_type(en_type), an_type(an_type) {

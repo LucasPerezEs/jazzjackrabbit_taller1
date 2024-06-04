@@ -19,6 +19,7 @@
 
 #define FRAME_RATE 1000000.0f / 20.0f
 
+class Client;
 
 class ModelUpdater: public Thread {
 
@@ -28,6 +29,7 @@ private:
     std::map<int, Entity*>& entidades;
     std::map<int, std::map<int, Animation*>> animations;
     Queue<Contenedor>& reciever_queue;
+    Client *cliente;
 
     void init_animations(SdlWindow& window);
 
@@ -42,6 +44,8 @@ public:
     void close();
 
     bool is_running();
+
+    void agregar_cliente(Client* c);
 
     ModelUpdater(const ModelUpdater&) = delete;
     ModelUpdater& operator=(const ModelUpdater&) = delete;

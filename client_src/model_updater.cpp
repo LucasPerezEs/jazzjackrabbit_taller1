@@ -1,4 +1,5 @@
 #include "headers/model_updater.h"
+#include "headers/client.h"
 
 ModelUpdater::ModelUpdater(ClientProtocol& protocol, SdlWindow& window,
                            std::map<int, Entity*>& entidades, Queue<Contenedor>& reciever_queue):
@@ -64,6 +65,10 @@ void ModelUpdater::update(float dt) {
                 entidades.erase(c.id());
                 break;
 
+            case 2:  // Despawnea un objeto
+                cliente->set_id(c.id());
+                break;
+
             default:
                 break;
         }
@@ -74,6 +79,10 @@ void ModelUpdater::update(float dt) {
 }
 
 bool ModelUpdater::is_running() { return not was_closed; }
+
+void ModelUpdater::agregar_cliente(Client* c) {
+    this->cliente = c;
+}
 
 void ModelUpdater::close() {
     this->reciever_queue.close();
