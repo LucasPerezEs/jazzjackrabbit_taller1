@@ -2,6 +2,7 @@
 #define PERSONAJE_H_
 
 #include <vector>
+#include <chrono>
 
 #include "../../common_src/headers/queue.h"
 
@@ -27,6 +28,8 @@ public:
 
 class Arma {  // No se si es necesaria esta clase
 protected:
+    int espera;
+    std::chrono::system_clock::time_point tiempo;
     int municion;
     virtual void disminuir_municion();
 

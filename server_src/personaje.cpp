@@ -131,10 +131,14 @@ void Personaje::set_id(int i) {
 }
 
 
-Arma::Arma() { municion = 10; }
+Arma::Arma() { 
+    espera = 500; // en milisegundos
+    tiempo = std::chrono::system_clock::now();
+    municion = 10; }
 
 void Arma::disparar(ListaObjetos& objetos, float x, float w, float y, float h, int d) {
-    if (municion > 0) {
+    if (municion > 0 && std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - tiempo).count() > espera) {
+        tiempo = std::chrono::system_clock::now();
         int aux;
         if (d ==
             1) {      // Si se dispara mirando a la derecha la bala sale desde la derecha del objeto
