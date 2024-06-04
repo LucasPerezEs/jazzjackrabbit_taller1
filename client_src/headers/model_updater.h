@@ -16,7 +16,6 @@
 #include "SdlWindow.h"
 #include "entity.h"
 #include "protocol.h"
-#include "texture_ids.h"
 
 #define FRAME_RATE 1000000.0f / 20.0f
 
