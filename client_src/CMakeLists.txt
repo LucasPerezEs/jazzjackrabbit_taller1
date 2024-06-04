@@ -2,7 +2,6 @@ add_library(client_lib
     event_handler.cpp
     model_updater.cpp
     game.cpp
-    player.cpp
     protocol.cpp
     client.cpp
     clientReceiver.cpp

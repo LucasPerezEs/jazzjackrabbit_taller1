@@ -2,8 +2,7 @@
 
 // Pre: -
 // Post: -
-EventHandler::EventHandler(ClientProtocol& protocol, Player& player):
-        protocol(protocol), player(player), was_closed(false) {}
+EventHandler::EventHandler(ClientProtocol& protocol): protocol(protocol), was_closed(false) {}
 
 void EventHandler::handle_keydown(const SDL_Event& event, Command& cmd) {
     const SDL_KeyboardEvent& keyEvent = (SDL_KeyboardEvent&)event;
@@ -16,11 +15,9 @@ void EventHandler::handle_keydown(const SDL_Event& event, Command& cmd) {
             break;
         case SDLK_a:
             cmd.action = Command::LEFT;
-            // player.moveLeft();
             break;
         case SDLK_d:
             cmd.action = Command::RIGHT;
-            // player.moveRigth();
             break;
         case SDLK_SPACE:
             cmd.action = Command::JUMP;
@@ -42,15 +39,12 @@ void EventHandler::handle_keyup(const SDL_Event& event, Command& cmd) {
     switch (keyEvent.keysym.sym) {
         case SDLK_a:
             cmd.action = Command::STOPLEFT;
-            // player.stopMoving();
             break;
         case SDLK_d:
             cmd.action = Command::STOPRIGHT;
-            // player.stopMoving();
             break;
         case SDLK_f:
             cmd.action = Command::STOPFIRE;
-            // player.stopMoving();
             break;
         case SDLK_LSHIFT:  // Suponiendo que SHIFT es el comando para correr
             cmd.action = Command::RUN;

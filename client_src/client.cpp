@@ -1,12 +1,11 @@
 #include "headers/client.h"
 
-Client::Client(const std::string& hostname, const std::string& servername, Player& player,
-               Queue<Contenedor>& queue, SdlWindow& window, std::map<int, Entity*>& entidades):
+Client::Client(const std::string& hostname, const std::string& servername, Queue<Contenedor>& queue,
+               SdlWindow& window, std::map<int, Entity*>& entidades):
         client_protocol(hostname.c_str(), servername.c_str()),
         client_receiver(client_protocol, queue),
-        event_handler(client_protocol, player),
+        event_handler(client_protocol),
         updater(client_protocol, window, entidades, queue),
-        player(player),
         online(false) {}
 
 void Client::go_online() {

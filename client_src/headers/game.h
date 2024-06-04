@@ -1,30 +1,28 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include <cmath>
+#include <fstream>
 #include <map>
+#include <sstream>
 #include <string>
+#include <utility>
+#include <vector>
 
 #include <SDL2/SDL.h>
 #include <unistd.h>
-#include <fstream>
-#include <sstream>
-#include <vector>
-#include <cmath>
-#include <utility>
 
 #include "SdlWindow.h"
 #include "client.h"
 #include "entity.h"
 #include "event_handler.h"
 #include "model_updater.h"
-#include "player.h"
 #include "protocol.h"
 
 class Game {
 private:
     Client& client;
     SdlWindow& window;
-    Player& player;
     std::map<int, Entity*>& entidades;
 
     SDL_Texture* tilesetTexture;
@@ -35,7 +33,7 @@ private:
 
 
 public:
-    Game(Client& client, SdlWindow& window, Player& player, std::map<int, Entity*>& entidades);
+    Game(Client& client, SdlWindow& window, std::map<int, Entity*>& entidades);
 
     void run();
 

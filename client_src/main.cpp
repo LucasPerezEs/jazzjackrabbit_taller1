@@ -21,17 +21,13 @@ int main(int argc, char* argv[]) {
             std::string port = setup.getPort().toStdString();
 
             SdlWindow window(800, 600);
-            SdlTexture player_png("../client_src/assets/jazz_walking.png", window,
-                                  Color{0x2C, 0x66, 0x96});
-
-            Player player(player_png);
 
             Queue<Contenedor> receiverQueue;
 
             std::map<int, Entity*> entidades;
             std::vector<std::vector<float>> objetos;
 
-            Client client("localhost", "8080", player, receiverQueue, window, entidades);
+            Client client("localhost", "8080", receiverQueue, window, entidades);
 
 
             /*if(client.is_online()){
@@ -42,7 +38,7 @@ int main(int argc, char* argv[]) {
             }*/
 
 
-            Game game(client, window, player, entidades);
+            Game game(client, window, entidades);
             game.run();
         }
 
