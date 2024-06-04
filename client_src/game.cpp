@@ -1,7 +1,7 @@
 #include "headers/game.h"
 
-int escala2x = 8;
-int escala2y = 6;
+int escala2x = 16;
+int escala2y = 12;
 
 Game::Game(Client& client, SdlWindow& window, Player& player, std::map<int, Entity*>& entidades):
         client(client), window(window), player(player), entidades(entidades) {
@@ -184,7 +184,10 @@ void Game::draw(std::vector<std::vector<int>>& tilemap, SDL_Texture* tilesetText
         // Define el rectángulo de destino en la pantalla
         SDL_Rect destinationRect;
         destinationRect.x = 2*(posX)*escala2x-posicion.first*escala2x + WINDOW_WIDTH/2;
-        destinationRect.y = 2*(posY)*escala2y-(2*escala2y*tilemap.size()-WINDOW_HEIGHT)+ posicion.second*escala2y - 2*escala2y;  //2*escala2x
+        //destinationRect.y = 2*(posY)*escala2y + posicion.second*escala2y - WINDOW_HEIGHT/2;
+        destinationRect.y = 2*(posY)*escala2y + posicion.second*escala2y - WINDOW_HEIGHT/2 - 80;
+
+
         destinationRect.w = 2*escala2x;
         destinationRect.h = 2*escala2y;
  

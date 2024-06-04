@@ -1,7 +1,7 @@
 #include "headers/entity.h"
 
-int escalax = 8;
-int escalay = 6;
+int escalax = 16;
+int escalay = 12;
 
 Entity::Entity(int id, float x, float y, float width, float height, int direccion,
                AnimationType an_type, Animation* an, EntityType entity_type):
