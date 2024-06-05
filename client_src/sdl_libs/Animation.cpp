@@ -15,13 +15,14 @@
 #include "../headers/Area.h"
 #include "../headers/SdlTexture.h"
 
-Animation::Animation(const SdlTexture* texture, int numFrames):
+Animation::Animation(const SdlTexture* texture, int numFrames, int animation_speed):
         texture(texture),
-        currentFrame(0),
         numFrames(numFrames),
         size_width(this->texture->getWidth() / this->numFrames),
         size_height(this->texture->getHeight()),
-        elapsed(0.0f) {
+        elapsed(0.0f),
+        animation_speed(animation_speed),
+        counter(1) {
     assert(this->numFrames > 0);
     assert(this->size_width > 0);
     assert(this->size_height > 0);
@@ -29,7 +30,16 @@ Animation::Animation(const SdlTexture* texture, int numFrames):
 
 Animation::~Animation() {}
 
-int Animation::update(int current_frame) { return this->advanceFrame(current_frame); }
+int Animation::update(int current_frame, int& counter) {
+    std::cout << counter << std::endl;
+    if (counter == animation_speed) {
+        counter = 1;
+        return this->advanceFrame(current_frame);
+    } else {
+        counter++;
+        return current_frame;
+    }
+}
 
 /**
  * @brief Renders the animation in the given coordinates.
@@ -42,7 +52,5 @@ void Animation::render(const Area& dst, const SDL_RendererFlip& flipType, int cu
     Area src((this->size_width) * current_frame, 0, this->size_width, this->size_height);
     this->texture->render(src, dst, flipType);
 }
-
-void Animation::reset() { this->currentFrame = 0; }
 
 int Animation::advanceFrame(int current_frame) { return (current_frame + 1) % this->numFrames; }

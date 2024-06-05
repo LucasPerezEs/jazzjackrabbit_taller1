@@ -40,8 +40,8 @@ void Enemigo::update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) {
     float auxh = height;
     bool colisionx;
 
-    x += 0.5 * direccion;
-    width += 0.5 * direccion;
+    x += 0.25 * direccion;
+    width += 0.25 * direccion;
 
     colisionx = m.CheckColision(x, auxy, width, auxh);
 

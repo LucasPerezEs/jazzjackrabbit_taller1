@@ -8,13 +8,13 @@ Game::Game(Queue<Command>& actionQueue, Queue<Contenedor>& stateQueue):
 void Game::run() {
     // Queue<Contenedor> q; // esta queue tiene que ir al sender
     Mapa m = Mapa();
-    //Personaje personaje = Personaje(4, 0, 2, 4, 100, EntityType::JAZZ, AnimationType::WALK);
-    //Enemigo enemigo = Enemigo(50, 4, 4, 8, 100, EntityType::ENEMY, AnimationType::WALK);
-    //objetos.agregar_objeto(&personaje);
-    //objetos.agregar_objeto(&enemigo);
-    //entes.push_back(&personaje);
-    //entes.push_back(&enemigo);
-
+    // Personaje personaje = Personaje(4, 0, 2, 4, 100, EntityType::JAZZ, AnimationType::WALK);
+    Enemigo enemigo = Enemigo(50, 4, 4, 8, 100, EntityType::ENEMY, AnimationType::WALK);
+    // objetos.agregar_objeto(&personaje);
+    objetos.agregar_objeto(&enemigo);
+    // entes.push_back(&personaje);
+    // cppcheck-suppress danglingLifetime
+    entes.push_back(&enemigo);
 
 
     while (_keep_running) {
@@ -61,7 +61,8 @@ void Game::run() {
 
 void Game::addPlayer(int clientId) {
     std::lock_guard<std::mutex> lock(clientCharactersMutex);
-    Personaje* personaje = new Personaje(4 + clientId * 20, 4, 4, 8, 100, EntityType::JAZZ, AnimationType::WALK);
+    Personaje* personaje = new Personaje(4 + clientId * 20, 4, 4, 8, 100, EntityType::JAZZ,
+                                         AnimationType::SHOOT_IDLE);
     personaje->set_id(clientId);
     clientCharacters[clientId] = personaje;
     objetos.agregar_objeto(personaje);

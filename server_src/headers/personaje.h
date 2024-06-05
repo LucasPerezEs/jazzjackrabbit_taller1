@@ -1,8 +1,8 @@
 #ifndef PERSONAJE_H_
 #define PERSONAJE_H_
 
-#include <vector>
 #include <chrono>
+#include <vector>
 
 #include "../../common_src/headers/queue.h"
 
@@ -40,6 +40,9 @@ public:
 
 class Personaje: public Ente {
 protected:
+    int espera_idle;
+    int espera_shoot;
+    std::chrono::system_clock::time_point tiempo;
     bool movingright;
     bool movingleft;
     bool jumping;

@@ -1,6 +1,7 @@
 #include "headers/model_updater.h"
-#include "headers/client.h"
 
+#include "headers/client.h"
+// cppcheck-suppress uninitMemberVar
 ModelUpdater::ModelUpdater(ClientProtocol& protocol, SdlWindow& window,
                            std::map<int, Entity*>& entidades, Queue<Contenedor>& reciever_queue):
         protocol(protocol),
@@ -14,23 +15,46 @@ void ModelUpdater::init_animations(SdlWindow& window) {
     this->animations[EntityType::JAZZ][AnimationType::WALK] =
             new Animation(new SdlTexture("../client_src/assets/jazz_walking.png", window,
                                          Color{0x2C, 0x66, 0x96}),
-                          8);
+                          8, AnimationSpeed::FAST);
+
     this->animations[EntityType::JAZZ][AnimationType::INTOXICATED_WALK] =
             new Animation(new SdlTexture("../client_src/assets/jazz_intoxicated_walking.png",
                                          window, Color{0x2C, 0x66, 0x96}),
-                          12);
+                          12, AnimationSpeed::FAST);
+
+    this->animations[EntityType::JAZZ][AnimationType::IDLE] = new Animation(
+            new SdlTexture("../client_src/assets/jazz_idle.png", window, Color{0x2C, 0x66, 0x96}),
+            13, AnimationSpeed::NORMAL);
+
+    this->animations[EntityType::JAZZ][AnimationType::SHOOT] =
+            new Animation(new SdlTexture("../client_src/assets/jazz_shooting.png", window,
+                                         Color{0x2C, 0x66, 0x96}),
+                          6, AnimationSpeed::FAST);
+
+    this->animations[EntityType::JAZZ][AnimationType::SHOOT_IDLE] =
+            new Animation(new SdlTexture("../client_src/assets/jazz_shoot_idle.png", window,
+                                         Color{0x2C, 0x66, 0x96}),
+                          2, AnimationSpeed::SLOW);
+
+    this->animations[EntityType::JAZZ][AnimationType::JUMP] =
+            new Animation(new SdlTexture("../client_src/assets/jazz_jumping.png", window,
+                                         Color{0x2C, 0x66, 0x96}),
+                          17, AnimationSpeed::FAST);
+
     this->animations[EntityType::ENEMY][AnimationType::WALK] =
             new Animation(new SdlTexture("../client_src/assets/fantasma_walking.png", window,
                                          Color{0x2C, 0x66, 0x96}),
-                          5);
+                          5, AnimationSpeed::FAST);
+
     this->animations[EntityType::BULLET][AnimationType::WALK] =
             new Animation(new SdlTexture("../client_src/assets/bullet_shoot.png", window,
                                          Color{0x2C, 0x66, 0x96}),
-                          6);
+                          6, AnimationSpeed::FAST);
+
     this->animations[EntityType::BULLET][AnimationType::PICKUP] =
             new Animation(new SdlTexture("../client_src/assets/bullet_pickup.png", window,
                                          Color{0x2C, 0x66, 0x96}),
-                          10);
+                          10, AnimationSpeed::FAST);
 }
 
 void ModelUpdater::run() {
@@ -80,9 +104,7 @@ void ModelUpdater::update(float dt) {
 
 bool ModelUpdater::is_running() { return not was_closed; }
 
-void ModelUpdater::agregar_cliente(Client* c) {
-    this->cliente = c;
-}
+void ModelUpdater::agregar_cliente(Client* c) { this->cliente = c; }
 
 void ModelUpdater::close() {
     this->reciever_queue.close();

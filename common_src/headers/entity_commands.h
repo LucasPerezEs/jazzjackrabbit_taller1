@@ -22,7 +22,11 @@ enum AnimationType {
     SPECIAL_ACTION = 0x17,
     INTOXICATED_WALK = 0x18,
     PICKUP = 0x19,
-    NONE_ANIMATION = 0x20
+    NONE_ANIMATION = 0x20,
+    SHOOT = 0x21,
+    SHOOT_IDLE = 0x22
 };
+
+enum AnimationSpeed { FAST = 1, NORMAL = 2, SLOW = 3 };
 
 #endif

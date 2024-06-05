@@ -9,7 +9,7 @@
 
 Personaje::Personaje(float x, float y, float w, float h, int vida, EntityType en_type,
                      AnimationType an_type):
-        Ente(x, y, w + x, h + y, vida, en_type, an_type) {
+        Ente(x, y, w + x, h + y, vida, en_type, an_type), tiempo(std::chrono::system_clock::now()) {
     velx = 0.5;
     vely = 0;
     direccion = 1;
@@ -19,26 +19,30 @@ Personaje::Personaje(float x, float y, float w, float h, int vida, EntityType en
     disparando = false;
     contador = 0;
     municion = 20;
+    espera_idle = 2000;  // en milisegundos
+    espera_shoot = 250;  // Misma que la del arma
 }
 
 void Personaje::moveRigth() {
     movingright = true;
     direccion = 1;
     an_type = AnimationType::WALK;
+    tiempo = std::chrono::system_clock::now();
 }
 void Personaje::moveLeft() {
     movingleft = true;
     direccion = -1;
     an_type = AnimationType::INTOXICATED_WALK;  // Prueba
+    tiempo = std::chrono::system_clock::now();
 }
 void Personaje::stopMovingRight() {
     movingright = false;
-    // an_type = AnimationType::IDLE;
+    an_type = AnimationType::SHOOT_IDLE;
 }
 
 void Personaje::stopMovingLeft() {
     movingleft = false;
-    // an_type = AnimationType::IDLE;
+    an_type = AnimationType::SHOOT_IDLE;
 }
 
 void Personaje::run() {
@@ -55,13 +59,29 @@ void Personaje::jump() {
     if (!jumping) {  // Esto es para evitar que se pueda spamear el jump y volar
         vely = 3;
         jumping = true;
-        // an_type = AnimationType::JUMP;
+        // Mas adelante estaria bueno detectar cuando esta cayendo y poner animacion FALL, en vez de
+        // todo junto pq no llega a terminar la animacion.
+        an_type = AnimationType::JUMP;
+        tiempo = std::chrono::system_clock::now();
     }
 }
 
 void Personaje::update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) {
     if (disparando) {
         disparar(objetos);  // Creo que ahora con sender y receiver esto se puede poner afuera
+    }
+
+    if (!(movingleft || movingright || disparando || jumping) &&
+        std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() -
+                                                              tiempo)
+                        .count() > espera_idle) {
+        an_type = AnimationType::IDLE;
+
+    } else if (!movingleft && !movingright && !jumping &&
+               std::chrono::duration_cast<std::chrono::milliseconds>(
+                       std::chrono::system_clock::now() - tiempo)
+                               .count() > espera_shoot) {
+        an_type = AnimationType::SHOOT_IDLE;
     }
 
     float auxx = x;
@@ -123,21 +143,25 @@ void Personaje::colision(Enemigo& e) { e.colision(*this); }
 void Personaje::colision(Municion& m) { m.colision(*this); }
 
 void Personaje::disparar(ListaObjetos& objetos) {
-    arma.disparar(objetos, x, width, y, height, direccion);
-}
-
-void Personaje::set_id(int i) {
-    id = i;
-}
-
-
-Arma::Arma() { 
-    espera = 500; // en milisegundos
     tiempo = std::chrono::system_clock::now();
-    municion = 10; }
+    arma.disparar(objetos, x, width, y, height, direccion);
+    if (!movingleft && !movingright) {
+        an_type = AnimationType::SHOOT;
+    }
+}
+
+void Personaje::set_id(int i) { id = i; }
+
+
+Arma::Arma(): tiempo(std::chrono::system_clock::now()) {
+    espera = 250;  // en milisegundos
+    municion = 10;
+}
 
 void Arma::disparar(ListaObjetos& objetos, float x, float w, float y, float h, int d) {
-    if (municion > 0 && std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - tiempo).count() > espera) {
+    if (municion > 0 && std::chrono::duration_cast<std::chrono::milliseconds>(
+                                std::chrono::system_clock::now() - tiempo)
+                                        .count() > espera) {
         tiempo = std::chrono::system_clock::now();
         int aux;
         if (d ==

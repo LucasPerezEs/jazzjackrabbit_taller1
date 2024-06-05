@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <utility>
+
 #include <SDL2/SDL.h>
 
 #include "../../common_src/headers/entity_commands.h"
@@ -25,8 +26,8 @@ private:
     Animation* an;
     EntityType entity_type;
     int current_frame;  // Como hay un 'banco' de animaciones, las entidades pueden compartir una
-                        // misma animacion. entonces cada entidad debe llevar en que frame esta de
-                        // la animacion.
+    int speed_counter;  // misma animacion. entonces cada entidad debe llevar en que frame esta de
+                        // la animacion y su contador de velocidad.
 
 public:
     Entity(int id, float x, float y, float width, float height, int direccion,
