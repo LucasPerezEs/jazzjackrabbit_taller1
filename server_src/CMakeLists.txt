@@ -1,20 +1,21 @@
 add_library(server_lib
-        enemigo.cpp
+    enemigo.cpp
     game.cpp
-        mapa.cpp
+    mapa.cpp
     objeto.cpp
     partida.cpp
     personaje.cpp
     protocol.cpp
-        broadcaster.cpp
-        client.cpp
-        clientReceiver.cpp
-        clientSender.cpp
-        acceptor.cpp
-        server.cpp
-        contenedor.cpp
-        lista_objetos.cpp
-        municion.cpp
+    broadcaster.cpp
+    client.cpp
+    clientReceiver.cpp
+    clientSender.cpp
+    acceptor.cpp
+    server.cpp
+    contenedor.cpp
+    lista_objetos.cpp
+    municion.cpp
+    pickup.cpp
     ../common_src/liberror.cpp
     ../common_src/protocol.cpp
     ../common_src/resolver.cpp

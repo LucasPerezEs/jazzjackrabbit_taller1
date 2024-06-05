@@ -1,10 +1,11 @@
-#include "objeto.h"
+#include <iostream>
 
-class Municion: public Objeto {
+#include "personaje.h"
+#include "pickup.h"
+
+class Municion: public Pickup {
 public:
     Municion(float x, float y);
 
-    virtual void colision(Objeto& o) override;
     virtual void colision(Personaje& p) override;
-    virtual void eliminar() override;
 };
