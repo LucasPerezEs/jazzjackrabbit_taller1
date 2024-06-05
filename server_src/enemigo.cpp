@@ -2,12 +2,6 @@
 
 #include <iostream>
 
-#include "headers/gold_coin.h"
-#include "headers/lista_objetos.h"
-#include "headers/municion.h"
-#include "headers/personaje.h"
-#include "headers/zanahoria.h"
-
 
 Enemigo::Enemigo(float x, float y, float w, float h, int vida, EntityType en_type,
                  AnimationType an_type):
@@ -57,10 +51,34 @@ void Enemigo::update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) {
     q.try_push(c);
 }
 
+Pickup* Enemigo::drop_item() {
+    int random_int = rand() % 100 + 1;
+
+    if (random_int < 25) {
+        Gold_Coin* drop = new Gold_Coin((x + width) / 2, (y + height) / 3);
+        return static_cast<Pickup*>(drop);
+
+    } else if (random_int >= 25 && random_int < 50) {
+        Zanahoria* drop = new Zanahoria((x + width) / 2, (y + height) / 3);
+        return static_cast<Pickup*>(drop);
+
+    } else if (random_int >= 50 && random_int < 75) {
+        Municion* drop = new Municion((x + width) / 2, (y + height) / 3);
+        return static_cast<Pickup*>(drop);
+
+    } else {
+        return nullptr;
+    }
+}
+
 void Enemigo::update_vivo(ListaObjetos& objetos, Queue<Contenedor>& q) {
     if (vida <= 0) {
         if (contador == 1) {  // si acaba de morir dropea una municion o moneda o zanahoria
-            Gold_Coin* drop = new Gold_Coin((x + width) / 2, (y + height) / 3);
+            Pickup* drop = drop_item();
+            if (!drop) {
+                contador++;
+                return;
+            }
             objetos.agregar_objeto(drop);
             Contenedor c(0, drop->id, drop->x, drop->y, drop->width, drop->height, 0, drop->an_type,
                          drop->en_type, 0, 0, 0);
