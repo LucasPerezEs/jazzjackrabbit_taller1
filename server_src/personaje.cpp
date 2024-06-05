@@ -21,6 +21,7 @@ Personaje::Personaje(float x, float y, float w, float h, int vida, EntityType en
     municion = 20;
     espera_idle = 2000;  // en milisegundos
     espera_shoot = 250;  // Misma que la del arma
+    score = 0;
 }
 
 void Personaje::moveRigth() {
@@ -124,9 +125,25 @@ void Personaje::update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) {
             width = auxw;
         }
     }
-    Contenedor c(0, this->id, this->x, this->y, this->width, this->height, this->direccion,
-                 this->an_type, this->en_type);
+    Contenedor c(3, this->id, this->x, this->y, this->width, this->height, this->direccion,
+                 this->an_type, this->en_type, this->vida, this->municion, this->score);
     q.try_push(c);
+}
+
+void Personaje::update_vivo(ListaObjetos& objetos, Queue<Contenedor>& q) {
+    if (vida <= 0) {
+        if (contador ==
+            240) {  // revive despues de tantos ciclos y lo agrego al vector de colisiones
+            vida = 100;
+            borrar = false;
+            objetos.agregar_objeto(this);
+            contador = 0;
+            Contenedor c(3, this->id, this->x, this->y, this->width, this->height, this->direccion,
+                         this->an_type, this->en_type, this->vida, this->municion, this->score);
+            q.try_push(c);
+        }
+        contador++;
+    }
 }
 
 
@@ -208,7 +225,7 @@ void Bala::update(
         this->borrar = true;
     }
     Contenedor c(0, this->id, this->x, this->y, this->width, this->height, 0, this->an_type,
-                 this->en_type);
+                 this->en_type, 0, 0, 0);
     q.try_push(c);
 }
 

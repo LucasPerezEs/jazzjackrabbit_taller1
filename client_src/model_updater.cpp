@@ -3,11 +3,13 @@
 #include "headers/client.h"
 // cppcheck-suppress uninitMemberVar
 ModelUpdater::ModelUpdater(ClientProtocol& protocol, SdlWindow& window,
-                           std::map<int, Entity*>& entidades, Queue<Contenedor>& reciever_queue):
+                           std::map<int, Entity*>& entidades, Queue<Contenedor>& reciever_queue,
+                           std::map<int, Player*>& personajes):
         protocol(protocol),
         was_closed(false),
         entidades(entidades),
-        reciever_queue(reciever_queue) {
+        reciever_queue(reciever_queue),
+        personajes(personajes) {
     this->init_animations(window);
 }
 
@@ -86,11 +88,32 @@ void ModelUpdater::update(float dt) {
                 break;
 
             case 1:  // Despawnea un objeto
-                entidades.erase(c.id());
+                if (personajes.count(c.id()) > 0) {
+                    personajes.erase(c.id());
+                } else {
+                    entidades.erase(c.id());
+                }
                 break;
 
             case 2:  // Despawnea un objeto
                 cliente->set_id(c.id());
+                break;
+
+            case 3:  // Actualiza un personaje, si no existe, lo crea.
+                if (personajes.count(c.id()) > 0) {
+                    personajes[c.id()]->update_player_stats(c.posx(), c.posy(), c.width(),
+                                                            c.height(), c.direccion(), c.vida(),
+                                                            c.municion(), c.score());
+                    personajes[c.id()]->modify_animation(
+                            this->animations[c.entity_type()][c.animation_type()],
+                            c.animation_type());
+                } else {
+                    personajes[c.id()] =
+                            new Player(c.id(), c.posx(), c.posy(), c.width(), c.height(),
+                                       c.direccion(), c.animation_type(),
+                                       this->animations[c.entity_type()][c.animation_type()],
+                                       c.entity_type(), c.vida(), c.municion(), c.score());
+                }
                 break;
 
             default:

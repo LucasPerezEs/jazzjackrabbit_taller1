@@ -40,6 +40,7 @@ public:
 
 class Personaje: public Ente {
 protected:
+    int score;
     int espera_idle;
     int espera_shoot;
     std::chrono::system_clock::time_point tiempo;
@@ -68,6 +69,7 @@ public:
     void jump();
     void set_id(int i);
     virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) override;
+    virtual void update_vivo(ListaObjetos& objetos, Queue<Contenedor>& q) override;
 };
 
 #endif

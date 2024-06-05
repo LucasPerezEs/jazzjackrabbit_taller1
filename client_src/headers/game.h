@@ -24,6 +24,7 @@ private:
     Client& client;
     SdlWindow& window;
     std::map<int, Entity*>& entidades;
+    std::map<int, Player*>& personajes;
 
     SDL_Texture* tilesetTexture;
     std::vector<std::vector<int>> tilemap_terreno_solido;
@@ -33,7 +34,8 @@ private:
 
 
 public:
-    Game(Client& client, SdlWindow& window, std::map<int, Entity*>& entidades);
+    Game(Client& client, SdlWindow& window, std::map<int, Entity*>& entidades,
+         std::map<int, Player*>& personajes);
 
     void run();
 

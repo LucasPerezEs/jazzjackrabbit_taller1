@@ -6,6 +6,7 @@ add_library(client_lib
     client.cpp
     clientReceiver.cpp
     entity.cpp
+    player.cpp
     ../common_src/liberror.cpp
     ../common_src/protocol.cpp
     ../common_src/resolver.cpp

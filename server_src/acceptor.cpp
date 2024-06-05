@@ -1,8 +1,8 @@
 #include "headers/acceptor.h"
 
 
-Acceptor::Acceptor(Socket& socket, std::list<ClientHandler*>& clients,
-                   Queue<Command>& actionQueue, Game& game):
+Acceptor::Acceptor(Socket& socket, std::list<ClientHandler*>& clients, Queue<Command>& actionQueue,
+                   Game& game):
         sk(socket), clients(clients), actionQueue(actionQueue), game(game) {}
 
 void Acceptor::reap_offline_clients() {
@@ -32,9 +32,10 @@ void Acceptor::run() {
         try {
             id++;
             Socket peer = sk.accept();
-            ClientHandler* client = new ClientHandler(id,std::move(peer), actionQueue);
+            ClientHandler* client = new ClientHandler(id, std::move(peer), actionQueue);
             client->go_online();
-            Contenedor c(2, id, 0, 0, 0, 0, 0, AnimationType::NONE_ANIMATION, EntityType::NONE_ENTITY);
+            Contenedor c(2, id, 0, 0, 0, 0, 0, AnimationType::NONE_ANIMATION,
+                         EntityType::NONE_ENTITY, 0, 0, 0);
             client->pushState(c);
             clients.push_back(client);
             game.addPlayer(id);

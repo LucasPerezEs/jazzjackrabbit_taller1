@@ -11,7 +11,7 @@ private:
 
 public:
     Contenedor(int msg_code, int id, float x, float y, float w, float h, int direccion,
-               AnimationType an_type, EntityType en_type);
+               AnimationType an_type, EntityType en_type, int vida, int municion, int score);
     int msg_code();
     int id();
     float posx();
@@ -19,6 +19,9 @@ public:
     float width();
     float height();
     int direccion();
+    int vida();
+    int municion();
+    int score();
     AnimationType animation_type();
     EntityType entity_type();
 };

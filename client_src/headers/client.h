@@ -12,6 +12,7 @@
 #include "entity.h"
 #include "event_handler.h"
 #include "model_updater.h"
+#include "player.h"
 #include "protocol.h"
 //#include "SdlWindow.h"
 
@@ -19,7 +20,8 @@
 class Client {
 public:
     Client(const std::string& hostname, const std::string& servername, Queue<Contenedor>& queue,
-           SdlWindow& window, std::map<int, Entity*>& entidades);
+           SdlWindow& window, std::map<int, Entity*>& entidades,
+           std::map<int, Player*>& personajes);
 
     void go_online();
     bool is_online();

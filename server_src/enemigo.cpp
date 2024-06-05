@@ -51,7 +51,7 @@ void Enemigo::update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) {
         width = auxw;
     }
     Contenedor c(0, this->id, this->x, this->y, this->width, this->height, this->direccion,
-                 this->an_type, this->en_type);
+                 this->an_type, this->en_type, 0, 0, 0);
     q.try_push(c);
 }
 
@@ -61,7 +61,7 @@ void Enemigo::update_vivo(ListaObjetos& objetos, Queue<Contenedor>& q) {
             Municion* municion = new Municion((x + width) / 2, (y + height) / 2);
             objetos.agregar_objeto(municion);
             Contenedor c(0, municion->id, municion->x, municion->y, municion->width,
-                         municion->height, 0, AnimationType::PICKUP, EntityType::BULLET);
+                         municion->height, 0, AnimationType::PICKUP, EntityType::BULLET, 0, 0, 0);
             q.try_push(c);
         }
         if (contador == 240) {  // despues de un rato revive
@@ -70,7 +70,7 @@ void Enemigo::update_vivo(ListaObjetos& objetos, Queue<Contenedor>& q) {
             objetos.agregar_objeto(this);
             contador = 0;
             Contenedor c(0, this->id, this->x, this->y, this->width, this->height, this->direccion,
-                         AnimationType::WALK, EntityType::ENEMY);
+                         AnimationType::WALK, EntityType::ENEMY, 0, 0, 0);
             q.try_push(c);
         }
         contador++;

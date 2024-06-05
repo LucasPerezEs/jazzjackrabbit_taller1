@@ -15,6 +15,7 @@
 #include "SdlTexture.h"
 #include "SdlWindow.h"
 #include "entity.h"
+#include "player.h"
 #include "protocol.h"
 
 #define FRAME_RATE 1000000.0f / 20.0f
@@ -29,13 +30,14 @@ private:
     std::map<int, Entity*>& entidades;
     std::map<int, std::map<int, Animation*>> animations;
     Queue<Contenedor>& reciever_queue;
-    Client *cliente;
+    Client* cliente;
+    std::map<int, Player*>& personajes;
 
     void init_animations(SdlWindow& window);
 
 public:
     ModelUpdater(ClientProtocol& protocol, SdlWindow& window, std::map<int, Entity*>& entidades,
-                 Queue<Contenedor>& reciever_queue);
+                 Queue<Contenedor>& reciever_queue, std::map<int, Player*>& personajes);
 
     virtual void run() override;
 

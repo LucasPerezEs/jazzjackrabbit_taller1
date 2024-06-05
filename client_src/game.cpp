@@ -3,8 +3,9 @@
 int escala2x = 16;
 int escala2y = 12;
 
-Game::Game(Client& client, SdlWindow& window, std::map<int, Entity*>& entidades):
-        client(client), window(window), entidades(entidades) {
+Game::Game(Client& client, SdlWindow& window, std::map<int, Entity*>& entidades,
+           std::map<int, Player*>& personajes):
+        client(client), window(window), entidades(entidades), personajes(personajes) {
 
     SDL_Surface* tilesetSurface =
             IMG_Load("../client_src/assets/background/medivo_map/TILESET_Medivo.png");
@@ -39,22 +40,6 @@ void Game::run() {
 
         this->update();
         this->render();
-        /*for (std::vector<int>::size_type i = tilemap_terreno_solido.size()-1; i >= 1; --i) {
-            for (std::vector<int>::size_type j = 0; j < tilemap_terreno_solido[i].size(); j++) {
-                if (tilemap_terreno_solido[i][j] != -1) {
-                    // Asume que el tamaño de cada tile es de 32x32
-                    SDL_Rect r;
-                    r.h = ((1) * escala2y);
-                    r.w = ((1) * escala2x);
-                    r.x = j*2 * escala2x;
-                    r.y = 600 - ((39-i)*2 * escala2y);
-                    SDL_RenderDrawRect(window.getRenderer(), &r);
-
-                    //std::cout << "Soy un piso y mi x1 es: " << piso->x << " mi x2 es: " << piso->w
-        << " mi y1 es: " << piso->y << " mi y2 es: " << piso->h << std::endl;
-                }
-            }
-        }*/
 
         SDL_RenderPresent(window.getRenderer());
 
@@ -73,44 +58,33 @@ void Game::update() {
     for (std::map<int, Entity*>::iterator it = entidades.begin(); it != entidades.end(); ++it) {
         it->second->update_animation();
     }
-    /*if (entidades.count(0) > 0) {
-        entidades[0]->update_animation();
+
+    for (std::map<int, Player*>::iterator it = personajes.begin(); it != personajes.end(); ++it) {
+        it->second->update_animation();
     }
-    if (entidades.count(1) > 0) {
-        entidades[1]->update_animation();
-    }*/
 }
 
 void Game::render() {
     this->window.fill();
 
-    // Cuando esten todas las animaciones se pueden renderizar todas las entidades en partida
-
-    // for (std::map<int, Entity*>::iterator it = entidades.begin(); it != entidades.end(); ++it) {
-    //   it->second->render(window);
-    //}
-    /*if (entidades.count(0) > 0) {
-        entidades[0]->render(window); // Renderizo solo el jugador para probar
-    }
-    if (entidades.count(1) > 0) {
-        entidades[1]->render(window);
-    }*/
-
-
-    // std::vector<std::vector<int>> tilemap_fondo =
-    // cargarCSV("../client_src/assets/background/medivo_map/Medivo_model_Fondo.csv");
-    // draw(tilemap_fondo, tilesetTexture);
-
     draw(tilemap_terreno_solido, tilesetTexture);
 
-    Entity *entidad;
-    if (entidades.find(client.get_id()) != entidades.end()) {
-        entidad = entidades[client.get_id()];
+    Entity* entidad;
+    if (personajes.find(client.get_id()) != personajes.end()) {
+        entidad = static_cast<Entity*>(personajes[client.get_id()]);
     } else {
-        entidad = entidades.begin()->second;
+        if (personajes.size() > 0) {
+            entidad = static_cast<Entity*>(personajes.begin()->second);
+        } else {
+            entidad = entidades.begin()->second;
+        }
     }
 
     for (std::map<int, Entity*>::iterator it = entidades.begin(); it != entidades.end(); ++it) {
+        it->second->render(window, entidad);
+    }
+
+    for (std::map<int, Player*>::iterator it = personajes.begin(); it != personajes.end(); ++it) {
         it->second->render(window, entidad);
     }
 
@@ -142,11 +116,15 @@ std::vector<std::vector<int>> Game::cargarCSV(const std::string& ruta) {
 
 void Game::draw(const std::vector<std::vector<int>>& tilemap, SDL_Texture* tilesetTexture) {
 
-    Entity *entidad;
-    if (entidades.find(client.get_id()) != entidades.end()) {
-        entidad = entidades[client.get_id()];
+    Entity* entidad;
+    if (personajes.find(client.get_id()) != personajes.end()) {
+        entidad = static_cast<Entity*>(personajes[client.get_id()]);
     } else {
-        entidad = entidades.begin()->second;
+        if (personajes.size() > 0) {
+            entidad = static_cast<Entity*>(personajes.begin()->second);
+        } else {
+            entidad = entidades.begin()->second;
+        }
     }
 
     std::pair<float, float> posicion = entidad->getPosition();
