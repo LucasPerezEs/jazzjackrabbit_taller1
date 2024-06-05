@@ -17,6 +17,7 @@ add_library(server_lib
     municion.cpp
     pickup.cpp
     zanahoria.cpp
+    gold_coin.cpp
     ../common_src/liberror.cpp
     ../common_src/protocol.cpp
     ../common_src/resolver.cpp

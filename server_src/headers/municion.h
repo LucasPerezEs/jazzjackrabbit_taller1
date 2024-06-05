@@ -1,3 +1,6 @@
+#ifndef MUNICION_H
+#define MUNICION_H
+
 #include <iostream>
 
 #include "personaje.h"
@@ -9,3 +12,5 @@ public:
 
     virtual void colision(Personaje& p) override;
 };
+
+#endif

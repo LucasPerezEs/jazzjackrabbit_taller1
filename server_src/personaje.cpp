@@ -67,6 +67,11 @@ void Personaje::jump() {
     }
 }
 
+void Personaje::add_score(int score) {
+    this->score += score;
+    std::cout << "Puntos: " << this->score << std::endl;
+}
+
 void Personaje::update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) {
     if (disparando) {
         disparar(objetos);  // Creo que ahora con sender y receiver esto se puede poner afuera

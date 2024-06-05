@@ -62,6 +62,11 @@ void ModelUpdater::init_animations(SdlWindow& window) {
             new Animation(new SdlTexture("../client_src/assets/carrot_pickup.png", window,
                                          Color{0x2C, 0x66, 0x96}),
                           10, AnimationSpeed::NORMAL);
+
+    this->animations[EntityType::GOLD_COIN][AnimationType::PICKUP] =
+            new Animation(new SdlTexture("../client_src/assets/goldcoin_pickup.png", window,
+                                         Color{0x2C, 0x66, 0x96}),
+                          20, AnimationSpeed::FAST);
 }
 
 void ModelUpdater::run() {

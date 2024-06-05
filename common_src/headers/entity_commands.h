@@ -9,7 +9,8 @@ enum EntityType {
     BULLET = 0x04,
     AMMO = 0x05,
     CARROT = 0x06,
-    NONE_ENTITY = 0x07
+    GOLD_COIN = 0x07,
+    NONE_ENTITY = 0x08
 };
 
 enum AnimationType {

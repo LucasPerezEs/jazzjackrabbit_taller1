@@ -1,14 +1,14 @@
-#ifndef ZANAHORIA_H
-#define ZANAHORIA_H
+#ifndef COIN_H
+#define COIN_H
 
 #include <iostream>
 
 #include "personaje.h"
 #include "pickup.h"
 
-class Zanahoria: public Pickup {
+class Gold_Coin: public Pickup {
 public:
-    Zanahoria(float x, float y);
+    Gold_Coin(float x, float y);
 
     virtual void colision(Personaje& p) override;
 };

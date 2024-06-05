@@ -68,6 +68,7 @@ public:
     void stoprunning();
     void jump();
     void set_id(int i);
+    void add_score(int score);
     virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) override;
     virtual void update_vivo(ListaObjetos& objetos, Queue<Contenedor>& q) override;
 };
