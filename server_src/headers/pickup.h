@@ -5,7 +5,8 @@
 
 class Pickup: public Objeto {
 public:
-    Pickup(float x, float y, EntityType entity_type, AnimationType animation_type);
+    Pickup(float x, float y, float width, float height, EntityType entity_type,
+           AnimationType animation_type);
 
     virtual void colision(Objeto& o) override;
     virtual void colision(Personaje& p) override = 0;

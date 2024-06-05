@@ -16,6 +16,7 @@ add_library(server_lib
     lista_objetos.cpp
     municion.cpp
     pickup.cpp
+    zanahoria.cpp
     ../common_src/liberror.cpp
     ../common_src/protocol.cpp
     ../common_src/resolver.cpp

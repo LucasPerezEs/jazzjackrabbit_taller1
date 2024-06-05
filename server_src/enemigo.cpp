@@ -5,6 +5,7 @@
 #include "headers/lista_objetos.h"
 #include "headers/municion.h"
 #include "headers/personaje.h"
+#include "headers/zanahoria.h"
 
 
 Enemigo::Enemigo(float x, float y, float w, float h, int vida, EntityType en_type,
@@ -58,7 +59,7 @@ void Enemigo::update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) {
 void Enemigo::update_vivo(ListaObjetos& objetos, Queue<Contenedor>& q) {
     if (vida <= 0) {
         if (contador == 1) {  // si acaba de morir dropea una municion
-            Municion* municion = new Municion((x + width) / 2, (y + height) / 2);
+            Municion* municion = new Municion((x + width) / 2, (y + height) / 3);
             objetos.agregar_objeto(municion);
             Contenedor c(0, municion->id, municion->x, municion->y, municion->width,
                          municion->height, 0, municion->an_type, municion->en_type, 0, 0, 0);

@@ -8,7 +8,8 @@ enum EntityType {
     ENEMY = 0x03,
     BULLET = 0x04,
     AMMO = 0x05,
-    NONE_ENTITY = 0x06
+    CARROT = 0x06,
+    NONE_ENTITY = 0x07
 };
 
 enum AnimationType {

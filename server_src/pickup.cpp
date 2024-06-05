@@ -4,8 +4,9 @@
 
 #include "headers/personaje.h"
 
-Pickup::Pickup(float x, float y, EntityType entity_type, AnimationType animation_type):
-        Objeto(x, y, x + 2, y + 2, entity_type, animation_type) {}
+Pickup::Pickup(float x, float y, float width, float height, EntityType entity_type,
+               AnimationType animation_type):
+        Objeto(x, y, width, height, entity_type, animation_type) {}
 
 void Pickup::colision(Objeto& o) {
     if (this == &o) {
