@@ -1,8 +1,6 @@
 #include "CreateGame.h"
 
-CreateGame::CreateGame(QWidget *parent) :
-        QWidget(parent)
-{
+CreateGame::CreateGame(QWidget *parent) : QWidget(parent) {
     init();
 }
 
@@ -16,9 +14,8 @@ void CreateGame::init() {
     layout->addWidget(createButton);
 
     connect(createButton, &QPushButton::clicked, this, [this]() {
-        // Lógica para crear el juego usando el nombre ingresado
         QString gameName = gameNameInput->text();
-        // ...
+        emit createGameRequested(gameName);
     });
 }
 

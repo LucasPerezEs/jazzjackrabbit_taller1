@@ -5,15 +5,23 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QVBoxLayout>
+#include <QString>
 
 #include "CreateGame.h"
 #include "JoinGame.h"
 #include "GameList.h"
 
 class MultiplayerMenu : public QDialog {
+    Q_OBJECT
+
 public:
     explicit MultiplayerMenu(QWidget *parent = nullptr);
     virtual ~MultiplayerMenu();
+
+signals:
+    void refreshRequested();
+    void createGameRequested(const QString &gameName);
+    void joinGameRequested(const QString &gameID);
 
 private:
     QPushButton *createGameButton;
@@ -30,4 +38,4 @@ private:
     void onRefreshClicked();
 };
 
-#endif //JAZZJACKRABBIT_MULTIPLAYERMENU_H
+#endif // JAZZJACKRABBIT_MULTIPLAYERMENU_H

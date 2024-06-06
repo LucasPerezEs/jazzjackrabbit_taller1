@@ -5,13 +5,19 @@
 #include <QVBoxLayout>
 #include <QListWidget>
 #include <QPushButton>
+#include <QStringList>
 
 class GameList : public QWidget {
+    Q_OBJECT
+
 public:
-    GameList(QWidget *parent = nullptr);
-    ~GameList();
+    explicit GameList(QWidget *parent = nullptr);
+    virtual ~GameList();
 
     void updateGameList(const QStringList &games);
+
+signals:
+    void refreshRequested();
 
 private:
     QListWidget *gameList;
@@ -20,4 +26,4 @@ private:
     void init();
 };
 
-#endif // GAMELISTWIDGET_H
+#endif // GAMELIST_H

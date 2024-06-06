@@ -37,13 +37,42 @@ int main(int argc, char* argv[]) {
             Client client("localhost", "8080", receiverQueue, window, entidades, personajes);
 
 
-            /*if(client.is_online()){
+            if(client.is_online()) {
+                MultiplayerMenu multiplayerMenu;
 
-                setup.ShowMultiplayerMenu();
+                std::cout << "Refresh antes" << std::endl;
+                QObject::connect(&multiplayerMenu, &MultiplayerMenu::refreshRequested, [&]() {
+                    std::cout << "Refresh" << std::endl;
+                    //auto gameList = client.refreshGameList();
+                    //multiplayerMenu.updateGameList(gameList);
+                });
+                std::cout << "Create antes" << std::endl;
+                QObject::connect(&multiplayerMenu, &MultiplayerMenu::createGameRequested, [&]() {
+                    std::cout << "Create game" << std::endl;
+                    // if (client.createGame()) {
+                    //   multiplayerMenu.showGameCreatedMessage();
+                    //} else {
+                    //  multiplayerMenu.showGameCreationFailedMessage();
+                    // }
+                });
+                std::cout << "Join antes" << std::endl;
+                QObject::connect(&multiplayerMenu, &MultiplayerMenu::joinGameRequested, [&](const QString &gameID) {
+                    std::cout << "Join" << std::endl;
+                    multiplayerMenu.close();
+                    Game game(client, window, entidades, personajes);
+                    game.run();
 
+                    //if (client.joinGame(gameID.toStdString())) {
+                    //  Game game(client, window, player, entidades);
+                    //game.run();
+                    //} else {
+                    //  multiplayerMenu.showJoinGameFailedMessage();
+                    //}
+                });
+                multiplayerMenu.show();
+                multiplayerMenu.exec();
 
-            }*/
-
+            }
 
             Game game(client, window, entidades, personajes);
             game.run();

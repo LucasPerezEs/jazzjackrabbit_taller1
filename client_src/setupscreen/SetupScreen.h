@@ -14,6 +14,7 @@
 
 
 class SetupScreen : public QDialog {
+    Q_OBJECT
 public:
     explicit SetupScreen(QWidget *parent = 0);
     virtual ~SetupScreen();
@@ -27,9 +28,6 @@ public:
     void ShowMultiplayerMenu();
     bool AcceptedConnection();
 
-private slots:
-    void acceptInput();
-    void onConnectClicked();
 
 private:
     ConnectMenu connectMenu;
