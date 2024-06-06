@@ -37,12 +37,13 @@ int main(int argc, char* argv[]) {
             if(client.is_online()) {
                 MultiplayerMenu multiplayerMenu;
 
+                std::cout << "Refresh antes" << std::endl;
                 QObject::connect(&multiplayerMenu, &MultiplayerMenu::refreshRequested, [&]() {
                     std::cout << "Refresh" << std::endl;
                     //auto gameList = client.refreshGameList();
                     //multiplayerMenu.updateGameList(gameList);
                 });
-
+                std::cout << "Create antes" << std::endl;
                 QObject::connect(&multiplayerMenu, &MultiplayerMenu::createGameRequested, [&]() {
                     std::cout << "Create game" << std::endl;
                    // if (client.createGame()) {
@@ -51,7 +52,7 @@ int main(int argc, char* argv[]) {
                       //  multiplayerMenu.showGameCreationFailedMessage();
                    // }
                 });
-
+                std::cout << "Join antes" << std::endl;
                 QObject::connect(&multiplayerMenu, &MultiplayerMenu::joinGameRequested, [&](const QString &gameID) {
                     std::cout << "Join" << std::endl;
                     //if (client.joinGame(gameID.toStdString())) {
@@ -61,8 +62,9 @@ int main(int argc, char* argv[]) {
                       //  multiplayerMenu.showJoinGameFailedMessage();
                     //}
                 });
+                multiplayerMenu.show();
+                multiplayerMenu.exec();
 
-                setup.ShowMultiplayerMenu();
             }
 
 
