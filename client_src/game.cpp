@@ -9,7 +9,7 @@ Game::Game(Client& client, SdlWindow& window, std::map<int, Entity*>& entidades,
         window(window),
         entidades(entidades),
         personajes(personajes),
-        fuente("../client_src/assets/ARCADECLASSIC.TTF", 32) {
+        UI_manager(personajes, window) {
 
     SDL_Surface* tilesetSurface =
             IMG_Load("../client_src/assets/background/medivo_map/TILESET_Medivo.png");
@@ -92,8 +92,7 @@ void Game::render() {
         it->second->render(window, entidad);
     }
 
-    SDL_Color color = {237, 206, 69, 255};
-    this->fuente.render(10, 10, "0 1 2 3 4 5 ", this->window, color);
+    UI_manager.render_UI(this->client.get_id());
 
     this->window.render();
 }
@@ -129,8 +128,10 @@ void Game::draw(const std::vector<std::vector<int>>& tilemap, SDL_Texture* tiles
     } else {
         if (personajes.size() > 0) {
             entidad = static_cast<Entity*>(personajes.begin()->second);
-        } else {
+        } else if (entidades.size() > 0) {
             entidad = entidades.begin()->second;
+        } else {
+            return;
         }
     }
 

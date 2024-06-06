@@ -2,6 +2,8 @@
 #define PLAYER_H
 
 
+#include <string>
+
 #include <SDL2/SDL.h>
 
 #include "../../common_src/headers/entity_commands.h"
@@ -22,6 +24,10 @@ public:
 
     void update_player_stats(float x, float y, float width, float height, int direccion, int vida,
                              int municion, int score);
+
+    int get_vida();
+    int get_municion();
+    int get_score();
 
     Player(const Player&) = delete;
     Player& operator=(const Player&) = delete;

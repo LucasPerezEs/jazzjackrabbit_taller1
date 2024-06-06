@@ -14,6 +14,7 @@
 
 #include "Fuente.h"
 #include "SdlWindow.h"
+#include "UIManager.h"
 #include "client.h"
 #include "entity.h"
 #include "event_handler.h"
@@ -29,7 +30,7 @@ private:
 
     SDL_Texture* tilesetTexture;
     std::vector<std::vector<int>> tilemap_terreno_solido;
-    Fuente fuente;
+    UIManager UI_manager;
 
     std::vector<std::vector<int>> cargarCSV(const std::string& ruta);
     void draw(const std::vector<std::vector<int>>& tilemap, SDL_Texture* tilesetTexture);

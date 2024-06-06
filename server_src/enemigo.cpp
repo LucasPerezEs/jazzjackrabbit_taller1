@@ -52,6 +52,7 @@ void Enemigo::update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) {
 }
 
 Pickup* Enemigo::drop_item() {
+    srand(time(nullptr));
     int random_int = rand() % 100 + 1;
 
     if (random_int < 25) {

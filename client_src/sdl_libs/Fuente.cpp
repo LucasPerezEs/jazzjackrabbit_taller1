@@ -18,7 +18,17 @@ Fuente::~Fuente() {
 void Fuente::render(float pos_x, float pos_y, const std::string& texto, const SdlWindow& window,
                     SDL_Color color) {
     SdlTexture* texture = new SdlTexture(this->fuente, texto, window, color);
-    Area dst(pos_x, pos_y, pos_x + texture->getWidth(), pos_y + texture->getHeight());
+    int fixed_height = 50;
+    int max_width = 300;
+
+    float aspect_ratio = static_cast<float>(texture->getWidth() / texture->getHeight());
+    int scaled_width = static_cast<int>(fixed_height * aspect_ratio);
+
+    if (scaled_width > max_width) {
+        scaled_width = max_width;
+    }
+
+    Area dst(pos_x, pos_y, scaled_width, fixed_height);
     texture->render(dst);
 }
 

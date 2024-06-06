@@ -15,3 +15,9 @@ void Player::update_player_stats(float new_x, float new_y, float new_width, floa
     this->municion = new_municion;
     this->score = new_score;
 }
+
+int Player::get_vida() { return this->vida; }
+
+int Player::get_municion() { return this->municion; }
+
+int Player::get_score() { return this->score; }
