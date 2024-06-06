@@ -7,9 +7,14 @@
 #include <QPushButton>
 
 class JoinGame : public QWidget {
+    Q_OBJECT
+
 public:
-    JoinGame(QWidget *parent = nullptr);
-    ~JoinGame();
+    explicit JoinGame(QWidget *parent = nullptr);
+    virtual ~JoinGame();
+
+signals:
+    void joinGameRequested(const QString &gameID);
 
 private:
     QLineEdit *gameIdInput;

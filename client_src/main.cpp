@@ -31,15 +31,39 @@ int main(int argc, char* argv[]) {
             std::map<int, Entity*> entidades;
             std::vector<std::vector<float>> objetos;
 
-            Client client("localhost", "8080", player, receiverQueue, window, entidades);
+            Client client(ip, port, player, receiverQueue, window, entidades);
 
 
-            /*if(client.is_online()){
+            if(client.is_online()) {
+                MultiplayerMenu multiplayerMenu;
+
+                QObject::connect(&multiplayerMenu, &MultiplayerMenu::refreshRequested, [&]() {
+                    std::cout << "Refresh" << std::endl;
+                    //auto gameList = client.refreshGameList();
+                    //multiplayerMenu.updateGameList(gameList);
+                });
+
+                QObject::connect(&multiplayerMenu, &MultiplayerMenu::createGameRequested, [&]() {
+                    std::cout << "Create game" << std::endl;
+                   // if (client.createGame()) {
+                     //   multiplayerMenu.showGameCreatedMessage();
+                    //} else {
+                      //  multiplayerMenu.showGameCreationFailedMessage();
+                   // }
+                });
+
+                QObject::connect(&multiplayerMenu, &MultiplayerMenu::joinGameRequested, [&](const QString &gameID) {
+                    std::cout << "Join" << std::endl;
+                    //if (client.joinGame(gameID.toStdString())) {
+                      //  Game game(client, window, player, entidades);
+                        //game.run();
+                    //} else {
+                      //  multiplayerMenu.showJoinGameFailedMessage();
+                    //}
+                });
 
                 setup.ShowMultiplayerMenu();
-
-
-            }*/
+            }
 
 
             Game game(client, window, player, entidades);

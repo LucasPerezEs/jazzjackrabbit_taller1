@@ -10,7 +10,7 @@
 
 
 class ConnectMenu: public QDialog {
-
+    Q_OBJECT
 
 public:
     explicit ConnectMenu(QWidget *parent = 0);

@@ -1,8 +1,6 @@
 #include "GameList.h"
 
-GameList::GameList(QWidget *parent) :
-        QWidget(parent)
-{
+GameList::GameList(QWidget *parent) : QWidget(parent) {
     init();
 }
 
@@ -16,8 +14,7 @@ void GameList::init() {
     layout->addWidget(refreshButton);
 
     connect(refreshButton, &QPushButton::clicked, this, [this]() {
-        // Lógica para actualizar la lista de juegos
-        // ...
+        emit refreshRequested();
     });
 }
 

@@ -1,8 +1,6 @@
 #include "JoinGame.h"
 
-JoinGame::JoinGame(QWidget *parent) :
-        QWidget(parent)
-{
+JoinGame::JoinGame(QWidget *parent) : QWidget(parent) {
     init();
 }
 
@@ -16,9 +14,8 @@ void JoinGame::init() {
     layout->addWidget(joinButton);
 
     connect(joinButton, &QPushButton::clicked, this, [this]() {
-        // Lógica para unirse al juego usando el ID ingresado
         QString gameId = gameIdInput->text();
-        // ...
+        emit joinGameRequested(gameId);
     });
 }
 

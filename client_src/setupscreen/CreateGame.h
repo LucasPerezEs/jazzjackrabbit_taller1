@@ -7,9 +7,14 @@
 #include <QPushButton>
 
 class CreateGame : public QWidget {
+    Q_OBJECT
+
 public:
-    CreateGame(QWidget *parent = nullptr);
-    ~CreateGame();
+    explicit CreateGame(QWidget *parent = nullptr);
+    virtual ~CreateGame();
+
+signals:
+    void createGameRequested(const QString &gameName);
 
 private:
     QLineEdit *gameNameInput;
