@@ -34,6 +34,9 @@ void Game::run() {
 
     client.go_online();
 
+    Music musica("../client_src/assets/music/Its_Pizza_Time.wav");
+    musica.PlayMusic(-1);
+
     while (client.is_online()) {
 
         // SDL_SetRenderDrawColor(window.getRenderer(), 0, 0, 0, 255);

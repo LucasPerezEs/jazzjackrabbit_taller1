@@ -20,6 +20,7 @@
 #include "event_handler.h"
 #include "model_updater.h"
 #include "protocol.h"
+#include "Music.h"
 
 class Game {
 private:

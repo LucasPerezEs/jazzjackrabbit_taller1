@@ -21,6 +21,8 @@ add_library(client_lib
     sdl_libs/SdlTexture.cpp
     sdl_libs/SdlWindow.cpp
     sdl_libs/Fuente.cpp
+    sdl_libs/Music.cpp
+    sdl_libs/Sound.cpp
     setupscreen/ConnectMenu.cpp
 )
 
