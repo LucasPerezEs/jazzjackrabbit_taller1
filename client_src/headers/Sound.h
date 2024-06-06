@@ -4,7 +4,7 @@
 #include <string>
 
 // Third Party
-#include <SDL2/SDL.h> // For Mac, use <SDL.h>
+#include <SDL2/SDL.h>
 
 // Interface for Audio
 class ISound{

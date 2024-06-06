@@ -10,7 +10,7 @@
 
 #include "../../common_src/headers/commands.h"
 #include "../../common_src/headers/thread.h"
-
+#include "Sound.h"
 #include "protocol.h"
 
 #define FRAME_RATE 1000000.0f / 20.0f
@@ -21,6 +21,10 @@ private:
     ClientProtocol& protocol;
 
     bool was_closed;
+
+    Sound jump_effect;
+    Sound shot_effect;
+    Sound run_effect;
 
     void handle_keydown(const SDL_Event& event, Command& cmd);
 

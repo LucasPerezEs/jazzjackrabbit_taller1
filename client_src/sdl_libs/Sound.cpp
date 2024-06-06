@@ -19,7 +19,7 @@ void Sound::PlaySound(){
     //                  as oppososed to a callback function)
     int status = SDL_QueueAudio(m_device, m_waveStart, m_waveLength);
     if (status < 0) {
-        std::cout << "Error al hacer SDL_QueueAudio: " << SDL_GetError() << std::endl;
+        std::cout << "Error: " << SDL_GetError() << std::endl;
     }
 
     SDL_PauseAudioDevice(m_device,0);

@@ -36,6 +36,7 @@ void Game::run() {
 
     Music musica("../client_src/assets/music/Its_Pizza_Time.wav");
     musica.PlayMusic(-1);
+    musica.SetVolume(20);
 
     while (client.is_online()) {
 

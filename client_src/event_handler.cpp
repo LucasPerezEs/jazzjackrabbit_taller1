@@ -2,10 +2,12 @@
 
 // Pre: -
 // Post: -
-EventHandler::EventHandler(ClientProtocol& protocol): protocol(protocol), was_closed(false) {}
+EventHandler::EventHandler(ClientProtocol& protocol): protocol(protocol), was_closed(false), 
+jump_effect("../client_src/assets/music/jump_sound.wav"), shot_effect("../client_src/assets/music/shot_sound.wav"), run_effect("../client_src/assets/music/run_sound.wav") {}
 
 void EventHandler::handle_keydown(const SDL_Event& event, Command& cmd) {
     const SDL_KeyboardEvent& keyEvent = (SDL_KeyboardEvent&)event;
+
     switch (keyEvent.keysym.sym) {
         case SDLK_w:
             cmd.action = Command::UP;
@@ -21,12 +23,15 @@ void EventHandler::handle_keydown(const SDL_Event& event, Command& cmd) {
             break;
         case SDLK_SPACE:
             cmd.action = Command::JUMP;
+            jump_effect.PlaySound();
             break;
         case SDLK_LSHIFT:  // Suponiendo que SHIFT es el comando para correr
             cmd.action = Command::RUNFAST;
+            run_effect.PlaySound();
             break;
         case SDLK_f:
             cmd.action = Command::FIRE;
+            shot_effect.PlaySound();
             break;
         default:  // Para el caso que toque una tecla no asignada.
             cmd.action = Command::NONE;
@@ -61,6 +66,10 @@ void EventHandler::run() {
     Command cmd;
     SDL_Event event;
 
+    jump_effect.SetupDevice();
+    shot_effect.SetupDevice();
+    run_effect.SetupDevice();
+
     while (not was_closed) {
         SDL_WaitEvent(&event);
 
@@ -74,7 +83,7 @@ void EventHandler::run() {
                 this->protocol.send_command(cmd);
                 break;
             case SDL_QUIT:
-                std::cout << "Quit :(" << std::endl;
+                std::cout << "Ha salido del juego" << std::endl;
                 cmd.action = Command::QUIT;
                 this->protocol.send_command(cmd);
                 this->was_closed = true;
