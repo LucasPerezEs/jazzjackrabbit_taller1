@@ -12,7 +12,7 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -Werror -pedantic -ped
 
 if(APPLE)
   message("Estoy en OSX")
-  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -I/usr/local/include -L/usr/local/lib -lSDL2")
+  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -I/usr/local/include -L/usr/local/lib -lSDL2 -lSDL2_ttf")
 endif()
 
 
@@ -35,6 +35,6 @@ add_executable (client
 )
 
 
-target_link_libraries(client client_lib Qt5::Widgets setupscreen SDL2 SDL2_image pthread)
+target_link_libraries(client client_lib Qt5::Widgets setupscreen SDL2 SDL2_image pthread SDL2_ttf)
 
 target_link_libraries(server server_lib pthread)

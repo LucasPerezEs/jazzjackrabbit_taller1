@@ -9,11 +9,10 @@
 #include <SDL2/SDL.h>
 
 #include "SdlException.h"
+#include "SdlTexture.h"
 
 #define FRAME_RATE 1000000.0f / 20.0f
 
-class SdlTexture;
-class Area;
 
 class Animation {
 public:

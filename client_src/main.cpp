@@ -2,6 +2,7 @@
 #include <fstream>
 #include <iostream>
 
+#include "SDL2/SDL_ttf.h"
 #include "headers/SdlTexture.h"
 #include "headers/entity.h"
 #include "headers/game.h"
@@ -21,7 +22,12 @@ int main(int argc, char* argv[]) {
             std::string ip = setup.getIp().toStdString();
             std::string port = setup.getPort().toStdString();
 
+
             SdlWindow window(800, 600);
+
+            if (TTF_Init() < 0) {
+                std::cout << "Error al iniciar TTF: " << TTF_GetError() << std::endl;
+            }
 
             Queue<Contenedor> receiverQueue;
 
@@ -43,7 +49,7 @@ int main(int argc, char* argv[]) {
             game.run();
         }
 
-
+        TTF_Quit();
         return 0;
 
     } catch (const std::exception& err) {

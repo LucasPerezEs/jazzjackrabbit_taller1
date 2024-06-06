@@ -19,7 +19,8 @@ add_library(client_lib
     sdl_libs/SdlException.cpp
     sdl_libs/SdlTexture.cpp
     sdl_libs/SdlWindow.cpp
-        setupscreen/ConnectMenu.cpp
+    sdl_libs/Fuente.cpp
+    setupscreen/ConnectMenu.cpp
 )
 
 target_link_libraries(client_lib setupscreen)

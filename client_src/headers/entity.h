@@ -9,7 +9,6 @@
 #include "../../common_src/headers/entity_commands.h"
 
 #include "Animation.h"
-#include "Area.h"
 #include "SdlTexture.h"
 #include "SdlWindow.h"
 

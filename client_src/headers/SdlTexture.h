@@ -1,10 +1,14 @@
 #ifndef __SDL_TEXTURE_H__
 #define __SDL_TEXTURE_H__
 #include <cstdint>
+#include <iostream>
 #include <string>
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
+
+#include "Area.h"
 
 class SDL_Texture;
 class SDL_Renderer;
@@ -25,6 +29,7 @@ public:
                SDL_BlendMode blending, uint8_t alpha);
     SdlTexture(const std::string& filename, const SdlWindow& window, Color key);
     SdlTexture(const std::string& filename, const SdlWindow& window);
+    SdlTexture(TTF_Font* fuente, const std::string& texto, const SdlWindow& window, SDL_Color key);
     /**
      * Libera la memoria reservada por la textura
      **/
@@ -36,6 +41,7 @@ public:
                const SDL_RendererFlip& flipType = SDL_FLIP_NONE) const;
     int render(const Area& src, const Area& dest, float angle,
                const SDL_RendererFlip& flip = SDL_FLIP_NONE) const;
+    int render(const Area& dest) const;
     /**
      * Getters de las dimensiones de la textura
      */

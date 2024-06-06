@@ -5,7 +5,11 @@ int escala2y = 12;
 
 Game::Game(Client& client, SdlWindow& window, std::map<int, Entity*>& entidades,
            std::map<int, Player*>& personajes):
-        client(client), window(window), entidades(entidades), personajes(personajes) {
+        client(client),
+        window(window),
+        entidades(entidades),
+        personajes(personajes),
+        fuente("../client_src/assets/ARCADECLASSIC.TTF", 32) {
 
     SDL_Surface* tilesetSurface =
             IMG_Load("../client_src/assets/background/medivo_map/TILESET_Medivo.png");
@@ -87,6 +91,9 @@ void Game::render() {
     for (std::map<int, Player*>::iterator it = personajes.begin(); it != personajes.end(); ++it) {
         it->second->render(window, entidad);
     }
+
+    SDL_Color color = {237, 206, 69, 255};
+    this->fuente.render(10, 10, "0 1 2 3 4 5 ", this->window, color);
 
     this->window.render();
 }
