@@ -21,6 +21,7 @@
 #include "model_updater.h"
 #include "protocol.h"
 #include "Music.h"
+#include "camara.h"
 
 class Game {
 private:
@@ -35,6 +36,8 @@ private:
 
     std::vector<std::vector<int>> cargarCSV(const std::string& ruta);
     void draw(const std::vector<std::vector<int>>& tilemap, SDL_Texture* tilesetTexture);
+
+    Camara *camara;
 
 
 public:

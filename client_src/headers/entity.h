@@ -11,6 +11,7 @@
 #include "Animation.h"
 #include "SdlTexture.h"
 #include "SdlWindow.h"
+#include "camara.h"
 
 class Entity {
 private:
@@ -38,7 +39,7 @@ public:
     // void recibir_danio(int d);
     // bool vivo();
     // virtual void eliminar();
-    void render(const SdlWindow& window, Entity* personaje);
+    void render(const SdlWindow& window, Entity* personaje, Camara *camara);
     std::pair<float, float> getPosition();
 };
 

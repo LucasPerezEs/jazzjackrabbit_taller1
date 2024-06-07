@@ -7,6 +7,7 @@ add_library(client_lib
     clientReceiver.cpp
     entity.cpp
     player.cpp
+    camara.cpp
     UIManager.cpp
     ../common_src/liberror.cpp
     ../common_src/protocol.cpp

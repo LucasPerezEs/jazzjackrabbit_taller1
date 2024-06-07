@@ -58,7 +58,7 @@ void Personaje::stoprunning() {
 
 void Personaje::jump() {
     if (!jumping) {  // Esto es para evitar que se pueda spamear el jump y volar
-        vely = 2;
+        vely = 1;
         jumping = true;
         // Mas adelante estaria bueno detectar cuando esta cayendo y poner animacion FALL, en vez de
         // todo junto pq no llega a terminar la animacion.
