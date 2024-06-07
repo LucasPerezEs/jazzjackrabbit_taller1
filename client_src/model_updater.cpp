@@ -43,6 +43,16 @@ void ModelUpdater::init_animations(SdlWindow& window) {
                                          Color{0x2C, 0x66, 0x96}),
                           17, AnimationSpeed::FAST);
 
+    this->animations[EntityType::JAZZ][AnimationType::FALL] =
+            new Animation(new SdlTexture("../client_src/assets/jazz_falling.png", window,
+                                         Color{0x2C, 0x66, 0x96}),
+                          3, AnimationSpeed::NORMAL);
+
+    this->animations[EntityType::JAZZ][AnimationType::SPECIAL_ACTION] =
+            new Animation(new SdlTexture("../client_src/assets/jazz_uppercut.png", window,
+                                         Color{0x2C, 0x66, 0x96}),
+                          12, AnimationSpeed::FAST);
+
     this->animations[EntityType::ENEMY][AnimationType::WALK] =
             new Animation(new SdlTexture("../client_src/assets/fantasma_walking.png", window,
                                          Color{0x2C, 0x66, 0x96}),

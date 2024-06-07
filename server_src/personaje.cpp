@@ -17,20 +17,29 @@ Personaje::Personaje(float x, float y, float w, float h, int vida, EntityType en
     movingright = false;
     movingleft = false;
     disparando = false;
+    special_action_active = false;
     contador = 0;
     municion = 20;
     espera_idle = 2000;  // en milisegundos
     espera_shoot = 250;  // Misma que la del arma
     score = 0;
+    danio_ataque_especial = 100;
 }
 
 void Personaje::moveRigth() {
+    if (special_action_active) {
+        return;
+    }
+
     movingright = true;
     direccion = 1;
     an_type = AnimationType::WALK;
     tiempo = std::chrono::system_clock::now();
 }
 void Personaje::moveLeft() {
+    if (special_action_active) {
+        return;
+    }
     movingleft = true;
     direccion = -1;
     an_type = AnimationType::INTOXICATED_WALK;  // Prueba
@@ -38,12 +47,16 @@ void Personaje::moveLeft() {
 }
 void Personaje::stopMovingRight() {
     movingright = false;
-    an_type = AnimationType::SHOOT_IDLE;
+    if (!jumping && !special_action_active) {
+        an_type = AnimationType::SHOOT_IDLE;
+    }
 }
 
 void Personaje::stopMovingLeft() {
     movingleft = false;
-    an_type = AnimationType::SHOOT_IDLE;
+    if (!jumping && !special_action_active) {
+        an_type = AnimationType::SHOOT_IDLE;
+    }
 }
 
 void Personaje::run() {
@@ -67,17 +80,28 @@ void Personaje::jump() {
     }
 }
 
+void Personaje::special_action() {
+    if (!special_action_active) {
+        special_action_active = true;
+        movingleft = false;
+        movingright = false;
+        vely = 2;
+        jumping = true;
+        an_type = AnimationType::SPECIAL_ACTION;
+        tiempo = std::chrono::system_clock::now();
+    }
+}
+
+bool Personaje::has_special_action_active() { return special_action_active; }
+
 void Personaje::add_score(int score) {
     this->score += score;
     std::cout << "Puntos: " << this->score << std::endl;
 }
 
-void Personaje::update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) {
-    if (disparando) {
-        disparar(objetos);  // Creo que ahora con sender y receiver esto se puede poner afuera
-    }
+void Personaje::check_idle() {
 
-    if (!(movingleft || movingright || disparando || jumping) &&
+    if (!movingleft && !movingright && !disparando && !jumping &&
         std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() -
                                                               tiempo)
                         .count() > espera_idle) {
@@ -89,47 +113,70 @@ void Personaje::update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) {
                                .count() > espera_shoot) {
         an_type = AnimationType::SHOOT_IDLE;
     }
+}
 
-    float auxx = x;
-    float auxy = y;  // se guarda la posicion actual
-    //float auxw = width;
-    //float auxh = height;
-    bool colisionx;
-    bool colisiony;
+void Personaje::update_position() {
+
+    // float auxw = width;
+    // float auxh = height;
     if (!(movingleft && movingright) &&
         (movingleft || movingright)) {  // mientras se este apretando una tecla de mover el jugador
         if (movingleft) {
             x += velx * -1;  // se actualiza la posicin en x
-            //width += velx * -1;
+            // width += velx * -1;
         }
         if (movingright) {
             x += velx;  // se actualiza la posicin en x
-            //width += velx;
+            // width += velx;
         }
     }
     y += vely;
-    //height += vely;
+    // height += vely;
     vely -= 0.1;  // esto es la aceleracion de la gravedad, se tiene que poner un limite de vely
+}
 
-    colisionx = m.CheckColision(x, auxy, width, height);
-    colisiony = m.CheckColision(auxx, y, width, height);
+void Personaje::check_colisions(Mapa& m, int aux_x, int aux_y) {
 
-    if (colisionx) {   // si colisiona con la pos x actualizada
-        x = auxx;      // se pone la pos x anterior
-        //width = auxw;  // lo mismo con la pos y
+    bool colisionx;
+    bool colisiony;
+    colisionx = m.CheckColision(x, aux_y, width, height);
+    colisiony = m.CheckColision(aux_x, y, width, height);
+
+    if (colisionx) {  // si colisiona con la pos x actualizada
+        x = aux_x;    // se pone la pos x anterior
+        // width = auxw;  // lo mismo con la pos y
     }
     if (colisiony) {
         jumping = false;  // esta en el piso se puede saltar
         vely = 0;
-        y = auxy;
-        //height = auxh;
+        y = aux_y;
+        // height = auxh;
+        if (this->en_type == EntityType::JAZZ) {
+            special_action_active = false;
+        }
     }
     if (!(colisionx && colisiony)) {  // me fijo si justo se da el caso que solo choca en diagonal
         if (m.CheckColision(x, y, width, height)) {
-            x = auxx;  // se pone la pos x anterior
-            //width = auxw;
+            x = aux_x;  // se pone la pos x anterior
+            // width = auxw;
         }
     }
+}
+
+void Personaje::update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) {
+    if (disparando) {
+        disparar(objetos);  // Creo que ahora con sender y receiver esto se puede poner afuera
+    }
+
+    float aux_x = x;
+    float aux_y = y;  // se guarda la posicion actual
+
+    check_idle();
+
+    update_position();
+
+    check_colisions(m, aux_x, aux_y);
+
     Contenedor c(3, this->id, this->x, this->y, this->width, this->height, this->direccion,
                  this->an_type, this->en_type, this->vida, this->municion, this->score);
     q.try_push(c);
@@ -184,13 +231,13 @@ void Arma::disparar(ListaObjetos& objetos, float x, float w, float y, float h, i
         tiempo = std::chrono::system_clock::now();
         int aux;
         if (d ==
-            1) {      // Si se dispara mirando a la derecha la bala sale desde la derecha del objeto
+            1) {  // Si se dispara mirando a la derecha la bala sale desde la derecha del objeto
             aux = x + w;  // Si se dispara mirando a la izquierda sale a la izquierda
         } else {
             aux = x + w;
         }
 
-        Bala* b = new Bala(aux, y + h/2, d);
+        Bala* b = new Bala(aux, y + h / 2, d);
         objetos.agregar_objeto(b);  // Se agrega al vector de colisiones
         // disminuir_municion();
     }
@@ -219,7 +266,7 @@ void Bala::update(
         Mapa& mapa, ListaObjetos& objetos,
         Queue<Contenedor>& q) {  // actualiza la posicion, si choca con el mapa se tiene que borrar
     x += vel;
-    //width += vel;
+    // width += vel;
     if (mapa.CheckColision(x, y, width, height)) {
         this->borrar = true;
     }

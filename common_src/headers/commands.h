@@ -17,7 +17,8 @@ struct Command {
         STOPLEFT = 0x09,
         STOPRIGHT = 0x10,
         STOPFIRE = 0x11,
-        QUIT = 0x12,
+        SPECIAL = 0x12,
+        QUIT = 0x13,
         JOIN_GAME = 0x31,
         CREATE_GAME = 0x32,
         GET_GAME_LIST = 0x33,
@@ -26,7 +27,6 @@ struct Command {
     // cppcheck-suppress unusedStructMember
     uint32_t clientId;
 };
-
 
 
 struct State {
