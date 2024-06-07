@@ -1,7 +1,7 @@
 #include "headers/entity.h"
 
-int escalax = 16;
-int escalay = 12;
+int escalax = 32;
+int escalay = 24;
 
 Entity::Entity(int id, float x, float y, float width, float height, int direccion,
                AnimationType an_type, Animation* an, EntityType entity_type):
@@ -46,9 +46,6 @@ void Entity::render(const SdlWindow& window, Entity* personaje) {
     } else {
         flip = SDL_FLIP_NONE;
     }
-
-    // int render_width = (this->width - this->x) * 40;
-    // int render_height = (this->height - this->y) * 30;
 
     Area destArea(x * escalax - personaje->getPosition().first * escalax + 400,
                   600 - y * escalay - (this->height) * escalay +

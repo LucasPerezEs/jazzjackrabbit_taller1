@@ -1,7 +1,7 @@
 #include "headers/game.h"
 
-int escala2x = 16;
-int escala2y = 12;
+int escala2x = 32;
+int escala2y = 24;
 
 Game::Game(Client& client, SdlWindow& window, std::map<int, Entity*>& entidades,
            std::map<int, Player*>& personajes):
@@ -184,18 +184,15 @@ void Game::draw(const std::vector<std::vector<int>>& tilemap, SDL_Texture* tiles
 
             // Define el rectángulo de destino en la pantalla
             SDL_Rect destinationRect;
-            destinationRect.x = 2 * (posX)*escala2x - posicion.first * escala2x + WINDOW_WIDTH / 2;
+            destinationRect.x = (posX - posicion.first)*escala2x + WINDOW_WIDTH / 2;
             // destinationRect.y = 2*(posY)*escala2y-(2*escala2y*tilemap.size()-WINDOW_HEIGHT)+
             // posicion.second*escala2y - 2*escala2y;  //Version1 destinationRect.y =
             // 2*(posY)*escala2y + posicion.second*escala2y - WINDOW_HEIGHT/2; //Version2 que lo
             // manejaba bien pero estaba desfasado.
-            destinationRect.y = 2 * (posY)*escala2y + posicion.second * escala2y -
-                                WINDOW_HEIGHT / 2 -
-                                80;  // Version3 que arregla momentaneamente el desfase.
+            destinationRect.y = (posY + posicion.second-tilemap.size())*escala2y + WINDOW_HEIGHT - 2*escala2y;  // Version3 que arregla momentaneamente el desfase.
 
-
-            destinationRect.w = 2 * escala2x;
-            destinationRect.h = 2 * escala2y;
+            destinationRect.w = escala2x;
+            destinationRect.h = escala2y;
 
             // Renderiza el tile
             SDL_RenderCopy(this->window.getRenderer(), tilesetTexture, &sourceRect,

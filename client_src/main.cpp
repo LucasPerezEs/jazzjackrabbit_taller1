@@ -30,6 +30,7 @@ int main(int argc, char* argv[]) {
             }
 
             SDL_Init(SDL_INIT_AUDIO);
+            
             Queue<Contenedor> receiverQueue;
 
             std::map<int, Entity*> entidades;
