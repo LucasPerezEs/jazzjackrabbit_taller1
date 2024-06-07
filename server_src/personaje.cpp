@@ -99,10 +99,7 @@ void Personaje::add_score(int score) {
     std::cout << "Puntos: " << this->score << std::endl;
 }
 
-void Personaje::update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) {
-    if (disparando) {
-        disparar(objetos);  // Creo que ahora con sender y receiver esto se puede poner afuera
-    }
+void Personaje::check_idle() {
 
     if (!movingleft && !movingright && !disparando && !jumping &&
         std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() -
@@ -116,13 +113,12 @@ void Personaje::update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) {
                                .count() > espera_shoot) {
         an_type = AnimationType::SHOOT_IDLE;
     }
+}
 
-    float auxx = x;
-    float auxy = y;  // se guarda la posicion actual
+void Personaje::update_position() {
+
     // float auxw = width;
     // float auxh = height;
-    bool colisionx;
-    bool colisiony;
     if (!(movingleft && movingright) &&
         (movingleft || movingright)) {  // mientras se este apretando una tecla de mover el jugador
         if (movingleft) {
@@ -137,18 +133,23 @@ void Personaje::update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) {
     y += vely;
     // height += vely;
     vely -= 0.1;  // esto es la aceleracion de la gravedad, se tiene que poner un limite de vely
+}
 
-    colisionx = m.CheckColision(x, auxy, width, height);
-    colisiony = m.CheckColision(auxx, y, width, height);
+void Personaje::check_colisions(Mapa& m, int aux_x, int aux_y) {
+
+    bool colisionx;
+    bool colisiony;
+    colisionx = m.CheckColision(x, aux_y, width, height);
+    colisiony = m.CheckColision(aux_x, y, width, height);
 
     if (colisionx) {  // si colisiona con la pos x actualizada
-        x = auxx;     // se pone la pos x anterior
+        x = aux_x;    // se pone la pos x anterior
         // width = auxw;  // lo mismo con la pos y
     }
     if (colisiony) {
         jumping = false;  // esta en el piso se puede saltar
         vely = 0;
-        y = auxy;
+        y = aux_y;
         // height = auxh;
         if (this->en_type == EntityType::JAZZ) {
             special_action_active = false;
@@ -156,10 +157,26 @@ void Personaje::update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) {
     }
     if (!(colisionx && colisiony)) {  // me fijo si justo se da el caso que solo choca en diagonal
         if (m.CheckColision(x, y, width, height)) {
-            x = auxx;  // se pone la pos x anterior
+            x = aux_x;  // se pone la pos x anterior
             // width = auxw;
         }
     }
+}
+
+void Personaje::update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) {
+    if (disparando) {
+        disparar(objetos);  // Creo que ahora con sender y receiver esto se puede poner afuera
+    }
+
+    float aux_x = x;
+    float aux_y = y;  // se guarda la posicion actual
+
+    check_idle();
+
+    update_position();
+
+    check_colisions(m, aux_x, aux_y);
+
     Contenedor c(3, this->id, this->x, this->y, this->width, this->height, this->direccion,
                  this->an_type, this->en_type, this->vida, this->municion, this->score);
     q.try_push(c);

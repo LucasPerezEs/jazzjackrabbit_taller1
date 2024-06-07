@@ -52,6 +52,10 @@ protected:
     Arma arma;
     bool special_action_active;
 
+    void check_idle();
+    void update_position();
+    void check_colisions(Mapa& m, int aux_x, int aux_y);
+
 public:
     int danio_ataque_especial;
     int municion;
