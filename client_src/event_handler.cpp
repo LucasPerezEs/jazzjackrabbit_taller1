@@ -2,8 +2,12 @@
 
 // Pre: -
 // Post: -
-EventHandler::EventHandler(ClientProtocol& protocol): protocol(protocol), was_closed(false), 
-jump_effect("../client_src/assets/music/jump_sound.wav"), shot_effect("../client_src/assets/music/shot_sound.wav"), run_effect("../client_src/assets/music/run_sound.wav") {}
+EventHandler::EventHandler(ClientProtocol& protocol):
+        protocol(protocol),
+        was_closed(false),
+        jump_effect("../client_src/assets/music/jump_sound.wav"),
+        shot_effect("../client_src/assets/music/shot_sound.wav"),
+        run_effect("../client_src/assets/music/run_sound.wav") {}
 
 void EventHandler::handle_keydown(const SDL_Event& event, Command& cmd) {
     const SDL_KeyboardEvent& keyEvent = (SDL_KeyboardEvent&)event;
@@ -32,6 +36,9 @@ void EventHandler::handle_keydown(const SDL_Event& event, Command& cmd) {
         case SDLK_f:
             cmd.action = Command::FIRE;
             shot_effect.PlaySound();
+            break;
+        case SDLK_k:
+            cmd.action = Command::SPECIAL;
             break;
         default:  // Para el caso que toque una tecla no asignada.
             cmd.action = Command::NONE;

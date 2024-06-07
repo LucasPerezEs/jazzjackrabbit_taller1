@@ -50,8 +50,10 @@ protected:
     float velx;
     float vely;
     Arma arma;
+    bool special_action_active;
 
 public:
+    int danio_ataque_especial;
     int municion;
     bool disparando;
     Personaje(float x, float y, float w, float h, int vida, EntityType en_type,
@@ -67,8 +69,10 @@ public:
     void run();
     void stoprunning();
     void jump();
+    void special_action();
     void set_id(int i);
     void add_score(int score);
+    bool has_special_action_active();
     virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) override;
     virtual void update_vivo(ListaObjetos& objetos, Queue<Contenedor>& q) override;
 };

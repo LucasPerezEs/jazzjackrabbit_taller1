@@ -33,6 +33,8 @@ void Game::run() {
                 personaje->run();
             } else if (command.action == Command::ActionType::JUMP) {
                 personaje->jump();
+            } else if (command.action == Command::ActionType::SPECIAL) {
+                personaje->special_action();
             } else if (command.action == Command::ActionType::FIRE) {
                 personaje->disparando = true;
             } else if (command.action == Command::ActionType::STOPLEFT) {
