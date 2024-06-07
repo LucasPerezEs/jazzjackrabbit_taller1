@@ -9,7 +9,7 @@
 
 Personaje::Personaje(float x, float y, float w, float h, int vida, EntityType en_type,
                      AnimationType an_type):
-        Ente(x, y, w + x, h + y, vida, en_type, an_type), tiempo(std::chrono::system_clock::now()) {
+        Ente(x, y, w, h, vida, en_type, an_type), tiempo(std::chrono::system_clock::now()) {
     velx = 0.5;
     vely = 0;
     direccion = 1;
@@ -47,7 +47,7 @@ void Personaje::stopMovingLeft() {
 }
 
 void Personaje::run() {
-    velx = 1.2;
+    velx = 1;
     // an_type = AnimationType::RUN;
 }
 
@@ -58,7 +58,7 @@ void Personaje::stoprunning() {
 
 void Personaje::jump() {
     if (!jumping) {  // Esto es para evitar que se pueda spamear el jump y volar
-        vely = 3;
+        vely = 2;
         jumping = true;
         // Mas adelante estaria bueno detectar cuando esta cayendo y poner animacion FALL, en vez de
         // todo junto pq no llega a terminar la animacion.
@@ -92,42 +92,42 @@ void Personaje::update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) {
 
     float auxx = x;
     float auxy = y;  // se guarda la posicion actual
-    float auxw = width;
-    float auxh = height;
+    //float auxw = width;
+    //float auxh = height;
     bool colisionx;
     bool colisiony;
     if (!(movingleft && movingright) &&
         (movingleft || movingright)) {  // mientras se este apretando una tecla de mover el jugador
         if (movingleft) {
             x += velx * -1;  // se actualiza la posicin en x
-            width += velx * -1;
+            //width += velx * -1;
         }
         if (movingright) {
             x += velx;  // se actualiza la posicin en x
-            width += velx;
+            //width += velx;
         }
     }
     y += vely;
-    height += vely;
-    vely -= 0.4;  // esto es la aceleracion de la gravedad, se tiene que poner un limite de vely
+    //height += vely;
+    vely -= 0.1;  // esto es la aceleracion de la gravedad, se tiene que poner un limite de vely
 
-    colisionx = m.CheckColision(x, auxy, width, auxh);
-    colisiony = m.CheckColision(auxx, y, auxw, height);
+    colisionx = m.CheckColision(x, auxy, width, height);
+    colisiony = m.CheckColision(auxx, y, width, height);
 
     if (colisionx) {   // si colisiona con la pos x actualizada
         x = auxx;      // se pone la pos x anterior
-        width = auxw;  // lo mismo con la pos y
+        //width = auxw;  // lo mismo con la pos y
     }
     if (colisiony) {
         jumping = false;  // esta en el piso se puede saltar
         vely = 0;
         y = auxy;
-        height = auxh;
+        //height = auxh;
     }
     if (!(colisionx && colisiony)) {  // me fijo si justo se da el caso que solo choca en diagonal
         if (m.CheckColision(x, y, width, height)) {
             x = auxx;  // se pone la pos x anterior
-            width = auxw;
+            //width = auxw;
         }
     }
     Contenedor c(3, this->id, this->x, this->y, this->width, this->height, this->direccion,
@@ -153,10 +153,7 @@ void Personaje::update_vivo(ListaObjetos& objetos, Queue<Contenedor>& q) {
 
 
 void Personaje::colision(Objeto& o) {
-    if (this == &o) {
-        return;
-    }
-    if (x < (o.width) && (width) > o.x && y < (o.height) && (height) > o.y) {
+    if (check_colision(o)) {
         o.colision(*this);
     }
 }
@@ -188,12 +185,12 @@ void Arma::disparar(ListaObjetos& objetos, float x, float w, float y, float h, i
         int aux;
         if (d ==
             1) {      // Si se dispara mirando a la derecha la bala sale desde la derecha del objeto
-            aux = w;  // Si se dispara mirando a la izquierda sale a la izquierda
+            aux = x + w;  // Si se dispara mirando a la izquierda sale a la izquierda
         } else {
-            aux = x;
+            aux = x + w;
         }
 
-        Bala* b = new Bala(aux, (y + h) / 2, d);
+        Bala* b = new Bala(aux, y + h/2, d);
         objetos.agregar_objeto(b);  // Se agrega al vector de colisiones
         // disminuir_municion();
     }
@@ -203,18 +200,15 @@ void Arma::disminuir_municion() { municion--; }
 
 
 Bala::Bala(float x, float y, int d):
-        Objeto(x, y, x + 1, y + 1, EntityType::BULLET,
+        Objeto(x, y, 1, 1, EntityType::BULLET,
                AnimationType::WALK) {  // se le pasa la direccion a la que va a salir la bala por
                                        // parametro
-    vel = 2 * d;
+    vel = 1.5 * d;
     danio = 10;
 }
 
 void Bala::colision(Objeto& o) {
-    if (this == &o) {
-        return;
-    }
-    if (x < (o.width) && (width) > o.x && y < (o.height) && (height) > o.y) {
+    if (check_colision(o)) {
         o.colision(*this);
     }
 }
@@ -225,7 +219,7 @@ void Bala::update(
         Mapa& mapa, ListaObjetos& objetos,
         Queue<Contenedor>& q) {  // actualiza la posicion, si choca con el mapa se tiene que borrar
     x += vel;
-    width += vel;
+    //width += vel;
     if (mapa.CheckColision(x, y, width, height)) {
         this->borrar = true;
     }

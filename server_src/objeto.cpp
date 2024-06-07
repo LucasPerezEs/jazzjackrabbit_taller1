@@ -27,6 +27,17 @@ Ente::Ente(float x, float y, float w, float h, int vida, EntityType en_type, Ani
 
 void Objeto::update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) {}
 void Objeto::eliminar() {}
+
+bool Objeto::check_colision(Objeto& o) {
+    if (this == &o) {
+        return false;
+    }
+    if (x < (o.x + o.width) && (x + width) > o.x && y < (o.y + o.height) && (y + height) > o.y) {
+        return true;
+    }
+    return false;
+}
+
 void Objeto::colision(Personaje& o) {}  //       Por defecto los objetos no hacen nada
 void Objeto::colision(Enemigo& o) {
 }  //       Le decis vos que queres que hagan o con que pueden interacturar

@@ -9,7 +9,7 @@ Piso::Piso(float posx, float posy, float width,
 }
 
 bool Piso::colision(float posx, float posy, float width, float height) {
-    if (x < (width) && (w) > posx && y < (height) && (h) > posy) {
+    if (x < (posx + width) && (x + w) > posx && y < (posy + height) && (y + h) > posy) {
         return true;
     }
     return false;
@@ -44,7 +44,7 @@ Mapa::Mapa() {
 for (std::vector<int>::size_type i = tilemap.size()-1; i >= 1; --i) {
     for (std::vector<int>::size_type j = 0; j < tilemap[i].size(); j++) {
         if (tilemap[i][j] != -1) {
-            Piso* piso = new Piso(j*2, (39-i)*2, j*2+2, (39-i)*2+1);
+            Piso* piso = new Piso(j*2, (39-i)*2, 2, 1);
             objetos.push_back(piso);
             if ((tilemap[i][j] == 256 || tilemap[i][j] == 257) && piso->x > 8 && piso->x < 30 && piso->y > 3 && piso->y > 15)
             std::cout << "Soy un piso y mi x1 es: " << piso->x << " mi x2 es: " << piso->w << " mi y1 es: " << piso->y << " mi y2 es: " << piso->h << std::endl;

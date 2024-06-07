@@ -32,7 +32,7 @@ public:
 
     virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q);
     virtual void eliminar();
-
+    bool check_colision(Objeto& o);
     virtual void colision(Objeto& o) = 0;
     virtual void colision(Personaje& o);
     virtual void colision(Enemigo& o);

@@ -15,7 +15,7 @@ class ListaObjetos;
 
 class Bala: public Objeto {
 protected:
-    int vel;
+    float vel;
 
 public:
     int danio;

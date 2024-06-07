@@ -1,7 +1,7 @@
 #include "headers/zanahoria.h"
 
 Zanahoria::Zanahoria(float x, float y):
-        Pickup(x, y, x + 3, y + 5, EntityType::CARROT, AnimationType::PICKUP) {}
+        Pickup(x, y, 3, 5, EntityType::CARROT, AnimationType::PICKUP) {}
 
 void Zanahoria::colision(Personaje& p) {
     borrar = true;

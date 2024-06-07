@@ -51,17 +51,17 @@ void Entity::render(const SdlWindow& window, Entity* personaje) {
     // int render_height = (this->height - this->y) * 30;
 
     Area destArea(x * escalax - personaje->getPosition().first * escalax + 400,
-                  600 - y * escalay - (this->height - this->y) * escalay +
+                  600 - y * escalay - (this->height) * escalay +
                           personaje->getPosition().second * escalay - 2 * escalay,
-                  (this->width - this->x) * escalax, (this->height - this->y) * escalay);
+                  (this->width) * escalax, (this->height) * escalay);
 
     an->render(destArea, flip, current_frame);
 
     SDL_Rect r;
-    r.h = ((this->y - this->height) * escalay);
-    r.w = ((this->width - this->x) * escalax);
+    r.h = (this->height * escalay);
+    r.w = (this->width * escalax);
     r.x = this->x * escalax - personaje->getPosition().first * escalax + 400;
-    r.y = 600 - (this->y * escalay) + personaje->getPosition().second * escalay - 2 * escalay;
+    r.y = 600 - (this->y * escalay) + personaje->getPosition().second * escalay - 2 * escalay-(this->height * escalay);
     SDL_RenderDrawRect(window.getRenderer(), &r);
 }
 

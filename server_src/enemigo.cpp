@@ -5,7 +5,7 @@
 
 Enemigo::Enemigo(float x, float y, float w, float h, int vida, EntityType en_type,
                  AnimationType an_type):
-        Ente(x, y, w + x, h + y, vida, en_type, an_type) {
+        Ente(x, y, w, h, vida, en_type, an_type) {
     direccion = 1;
     danio = 1;
     limxder = x + 20;  // cuanto se va a mover de izquierda a derecha
@@ -16,10 +16,7 @@ Enemigo::Enemigo(float x, float y, float w, float h, int vida, EntityType en_typ
 }
 
 void Enemigo::colision(Objeto& o) {
-    if (this == &o) {
-        return;
-    }
-    if (x < (o.width) && (width) > o.x && y < (o.height) && (height) > o.y) {
+    if (check_colision(o)) {
         o.colision(*this);
     }
 }
@@ -32,19 +29,19 @@ void Enemigo::colision(Bala& b) {
 void Enemigo::update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) {
     float auxx = x;
     float auxy = y;  // se guarda la posicion actual
-    float auxw = width;
-    float auxh = height;
+    //float auxw = width;
+    //float auxh = height;
     bool colisionx;
 
     x += 0.25 * direccion;
-    width += 0.25 * direccion;
+    //width += 0.25 * direccion;
 
-    colisionx = m.CheckColision(x, auxy, width, auxh);
+    colisionx = m.CheckColision(x, auxy, width, height);
 
     if (colisionx || x > limxder || x < limxizq) {
         direccion = direccion * -1;  // si colisiona con la pos x actualizada
         x = auxx;                    // se pone la pos x anterior
-        width = auxw;
+        //width = auxw;
     }
     Contenedor c(0, this->id, this->x, this->y, this->width, this->height, this->direccion,
                  this->an_type, this->en_type, 0, 0, 0);
@@ -56,15 +53,15 @@ Pickup* Enemigo::drop_item() {
     int random_int = rand() % 100 + 1;
 
     if (random_int < 25) {
-        Gold_Coin* drop = new Gold_Coin((x + width) / 2, (y + height) / 3);
+        Gold_Coin* drop = new Gold_Coin(x + width/2, y + height/3);
         return static_cast<Pickup*>(drop);
 
     } else if (random_int >= 25 && random_int < 50) {
-        Zanahoria* drop = new Zanahoria((x + width) / 2, (y + height) / 3);
+        Zanahoria* drop = new Zanahoria(x + width/2, y + height/3);
         return static_cast<Pickup*>(drop);
 
     } else if (random_int >= 50 && random_int < 75) {
-        Municion* drop = new Municion((x + width) / 2, (y + height) / 3);
+        Municion* drop = new Municion(x + width/2, y + height/3);
         return static_cast<Pickup*>(drop);
 
     } else {
