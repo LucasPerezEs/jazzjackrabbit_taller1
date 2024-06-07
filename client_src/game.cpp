@@ -26,6 +26,8 @@ Game::Game(Client& client, SdlWindow& window, std::map<int, Entity*>& entidades,
 
     tilemap_terreno_solido = cargarCSV(
             "../client_src/assets/background/medivo_map/Medivo_model_Terreno_completo.csv");
+    
+    camara = new Camara(0, 0, 800, 600, tilemap_terreno_solido[0].size(), tilemap_terreno_solido.size());
 }
 
 void Game::run() {
@@ -40,11 +42,7 @@ void Game::run() {
 
     while (client.is_online()) {
 
-        // SDL_SetRenderDrawColor(window.getRenderer(), 0, 0, 0, 255);
-
-        SDL_RenderClear(window.getRenderer());  // renderizo todo como un rectangulo
-
-        // SDL_SetRenderDrawColor(window.getRenderer(), 255, 255, 255, 255);
+        SDL_RenderClear(window.getRenderer());  
 
         this->update();
         this->render();
@@ -75,8 +73,6 @@ void Game::update() {
 void Game::render() {
     this->window.fill();
 
-    draw(tilemap_terreno_solido, tilesetTexture);
-
     Entity* entidad;
     if (personajes.find(client.get_id()) != personajes.end()) {
         entidad = static_cast<Entity*>(personajes[client.get_id()]);
@@ -88,12 +84,16 @@ void Game::render() {
         }
     }
 
+    camara->actualizar_pos(entidad->getPosition().first, entidad->getPosition().second);
+
+    draw(tilemap_terreno_solido, tilesetTexture);
+
     for (std::map<int, Entity*>::iterator it = entidades.begin(); it != entidades.end(); ++it) {
-        it->second->render(window, entidad);
+        it->second->render(window, entidad, camara);
     }
 
     for (std::map<int, Player*>::iterator it = personajes.begin(); it != personajes.end(); ++it) {
-        it->second->render(window, entidad);
+        it->second->render(window, entidad, camara);
     }
 
     UI_manager.render_UI(this->client.get_id());
@@ -126,26 +126,8 @@ std::vector<std::vector<int>> Game::cargarCSV(const std::string& ruta) {
 
 void Game::draw(const std::vector<std::vector<int>>& tilemap, SDL_Texture* tilesetTexture) {
 
-    Entity* entidad;
-    if (personajes.find(client.get_id()) != personajes.end()) {
-        entidad = static_cast<Entity*>(personajes[client.get_id()]);
-    } else {
-        if (personajes.size() > 0) {
-            entidad = static_cast<Entity*>(personajes.begin()->second);
-        } else if (entidades.size() > 0) {
-            entidad = entidades.begin()->second;
-        } else {
-            return;
-        }
-    }
-
-    std::pair<float, float> posicion = entidad->getPosition();
-
     int TILESET_WIDTH = 20;
 
-    // Tamaño de la ventana en píxeles
-    int WINDOW_WIDTH = 800;
-    int WINDOW_HEIGHT = 600;
 
     // Ahora recorre solo los tiles que están dentro de la vista de la cámara
     for (int y = 0; y < 40; y++) {
@@ -157,7 +139,11 @@ void Game::draw(const std::vector<std::vector<int>>& tilemap, SDL_Texture* tiles
 
             // Calcula la posición del tile en píxeles
             int posX = x;
-            int posY = y;
+            int posY = tilemap.size() - y;
+
+            if (!camara->en_rango(posX, posY, 1, 1)) {
+                continue;
+            }
 
             SDL_Rect sourceRect;
             sourceRect.x = (tileValue % TILESET_WIDTH) * 16;
@@ -167,11 +153,12 @@ void Game::draw(const std::vector<std::vector<int>>& tilemap, SDL_Texture* tiles
 
             // Define el rectángulo de destino en la pantalla
             SDL_Rect destinationRect;
-            destinationRect.x = (posX - posicion.first)*escala2x + WINDOW_WIDTH / 2;
-            destinationRect.y = (posY + posicion.second-tilemap.size())*escala2y + WINDOW_HEIGHT - 2*escala2y;  // Version3 que arregla momentaneamente el desfase.
 
-            destinationRect.w = escala2x;
-            destinationRect.h = escala2y;
+            destinationRect.x = (posX - camara->x)*camara->escalax;
+            destinationRect.y = (camara->y - posY)*camara->escalay;
+            destinationRect.w = camara->escalax;
+            destinationRect.h = camara->escalay;
+
 
             // Renderiza el tile
             SDL_RenderCopy(this->window.getRenderer(), tilesetTexture, &sourceRect,
@@ -179,3 +166,5 @@ void Game::draw(const std::vector<std::vector<int>>& tilemap, SDL_Texture* tiles
         }
     }
 }
+
+// tengo que hacer la camara y arreglar las fisicas para que se peguen al terreno
