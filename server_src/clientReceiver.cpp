@@ -9,18 +9,16 @@ void ClientReceiver::run() {
         try {
             //recibir comando de un cliente
             auto action = serverProtocol.receive_command();
-
             if (action == Command::CREATE_GAME){
                 create_game();
-            }
-            if (action == Command::JOIN_GAME){
+            }else if (action == Command::JOIN_GAME){
                 join_game(joined);
-            }
-            if (action == Command::GET_GAME_LIST){
+            }else if (action == Command::GET_GAME_LIST){
                 std::cout << "GET_GAME_LIST" << std::endl;
-            }
+            } else{
             Command command = { action, id };
             queueReceiver.push(command);
+            }
         } catch (ProtocolDesconection& d) {
             break;
         } catch (LibError& e) {
