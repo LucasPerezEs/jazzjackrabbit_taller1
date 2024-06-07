@@ -10,6 +10,21 @@ Trabajo Practico final para la materia Taller de Programacion I - FIUBA
 ## Instalacion del proyecto
 * [Instalacion](MANUAL_DE_INSTALACION.txt)
 
+## Ejecución para el Cliente y Servidor
+Servidor:
+1. Abra una terminal y navegar hasta el directorio del servidor.
+2. Ejecute el comando `./server <puerto>` para iniciar el servidor.
+
+Cliente:
+1. Abra otra terminal y navegar hasta el directorio del cliente.
+2. Ejecute el comando `./client` para iniciar el cliente.
+
+![ConnectMenu](doc/port-ip.jpeg)
+3. Coloque la dirección IP y el puerto del servidor para conectarse.
+
+![JoinMenu](doc/join.jpeg)
+4. Haga clic en "Join" para unirse a una partida.
+
 ## Controles
 * Mover izquierda: `A`
 * Mover derecha: `D`

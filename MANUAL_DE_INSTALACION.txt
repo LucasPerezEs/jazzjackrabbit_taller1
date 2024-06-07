@@ -25,7 +25,7 @@ sudo mkdir build
 cd build
 sudo cmake ..
 sudo make
-Luego podemos ejecutar los correspondientes: ./server para correr el servidor y ./client para correr el cliente.
+Luego podemos ejecutar los correspondientes: ./server <puerto> para correr el servidor y ./client para correr el cliente.
 
 Para DETENER la maquina virtual corriendo con vagrant se debe de utilizar el comando "vagrant halt".
 Una vez realizados todos los pasos anteriores para la instalacion, si se quiere volver a iniciar la maquina solamente hace falta usar el comando "vagrand up". No se requiere de volver a realizar los comandos de init y anteriores.
