@@ -23,6 +23,10 @@ public:
            SdlWindow& window, std::map<int, Entity*>& entidades,
            std::map<int, Player*>& personajes);
 
+    bool createGame(const std::string& gameId);
+    bool joinGame(const std::string& gameId);
+    std::vector<std::string> refreshGameList();
+
     void go_online();
     bool is_online();
 

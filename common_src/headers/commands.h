@@ -17,12 +17,17 @@ struct Command {
         STOPLEFT = 0x09,
         STOPRIGHT = 0x10,
         STOPFIRE = 0x11,
-        QUIT = 0x12
+        QUIT = 0x12,
+        JOIN_GAME = 0x31,
+        CREATE_GAME = 0x32,
+        GET_GAME_LIST = 0x33,
     };
     ActionType action;
     // cppcheck-suppress unusedStructMember
     uint32_t clientId;
 };
+
+
 
 struct State {
     enum StateType { INTOXICATED = 0x11, DEATH = 0x12, NONE = 0x00 };

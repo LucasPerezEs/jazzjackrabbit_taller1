@@ -46,10 +46,10 @@ int main(int argc, char* argv[]) {
                     //auto gameList = client.refreshGameList();
                     //multiplayerMenu.updateGameList(gameList);
                 });
-                std::cout << "Create antes" << std::endl;
                 QObject::connect(&multiplayerMenu, &MultiplayerMenu::createGameRequested, [&]() {
-                    std::cout << "Create game" << std::endl;
-                    // if (client.createGame()) {
+                    if (client.createGame("Juego 1")) {
+
+                    }
                     //   multiplayerMenu.showGameCreatedMessage();
                     //} else {
                     //  multiplayerMenu.showGameCreationFailedMessage();
@@ -57,14 +57,11 @@ int main(int argc, char* argv[]) {
                 });
                 std::cout << "Join antes" << std::endl;
                 QObject::connect(&multiplayerMenu, &MultiplayerMenu::joinGameRequested, [&](const QString &gameID) {
-                    std::cout << "Join" << std::endl;
                     multiplayerMenu.close();
-                    Game game(client, window, entidades, personajes);
-                    game.run();
-
-                    //if (client.joinGame(gameID.toStdString())) {
-                    //  Game game(client, window, player, entidades);
-                    //game.run();
+                    if (client.joinGame(gameID.toStdString())) {
+                        Game game(client, window, entidades, personajes);
+                        game.run();
+                    }
                     //} else {
                     //  multiplayerMenu.showJoinGameFailedMessage();
                     //}
@@ -74,8 +71,8 @@ int main(int argc, char* argv[]) {
 
             }
 
-            Game game(client, window, entidades, personajes);
-            game.run();
+            //Game game(client, window, entidades, personajes);
+            //game.run();
         }
 
         TTF_Quit();
