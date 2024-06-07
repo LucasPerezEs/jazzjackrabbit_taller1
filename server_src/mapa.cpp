@@ -46,7 +46,7 @@ for (std::vector<int>::size_type i = tilemap.size()-1; i >= 1; --i) {
         if (tilemap[i][j] != -1) {
             Piso* piso = new Piso(j, (39-i), 1, 1); // cada numero en la matriz representa un espacio de 1x1
             objetos.push_back(piso);
-            if ((tilemap[i][j] == 256 || tilemap[i][j] == 257) && piso->x > 8 && piso->x < 30 && piso->y > 3 && piso->y > 15)
+            if ((tilemap[i][j] == 256 || tilemap[i][j] == 257) && piso->x > 8 && piso->x < 30 && piso->y > 3 && piso->y > 15);
         }
     }
 }
