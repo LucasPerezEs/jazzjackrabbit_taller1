@@ -29,6 +29,7 @@ int main(int argc, char* argv[]) {
                 std::cout << "Error al iniciar TTF: " << TTF_GetError() << std::endl;
             }
 
+            SDL_Init(SDL_INIT_AUDIO);
             Queue<Contenedor> receiverQueue;
 
             std::map<int, Entity*> entidades;
