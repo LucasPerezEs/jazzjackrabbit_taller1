@@ -1,0 +1,13 @@
+Vagrant: Version 2.4.1
+VirtualBox: 7.0.14
+
+Como instalar Vagrant?
+Para utilizar vagrant es condicion necesaria tener descargadas las versiones indicadas anteriormente (para usuarios de windows).
+
+1) Descargue el instalador "I686" de la pagina: https://developer.hashicorp.com/vagrant/install
+2) Al finalizar su instalacion, cree una carpeta llamada vagrant con una subcarpeta dentro llamada vm1.
+3) Dentro de vm1, se debe de ejecutar el siguiente comando "vagrant box add ubuntu/bionic64".
+4) Una vez finalizada la descarga, se debe de ejecutar, vagrant init ubuntu/bionic64. (Esto nos generará un archivo VagrantFile)
+5) A continuacion, se debe de ejecutar el comando vagrant up para poder levantar la maquina virtual.
+
+Luego de estos pasos, la VM deberia estar corriendo correctamente por lo que solo resta usar el comando "ssh" para que podamos navegar en nuestra maquina virtual hasta el proyecto "jazzjackrabbit_taller1", entrar a la carpeta "build" y desde allí ejecutar ./server para correr el servidor y ./client para correr el cliente.
