@@ -19,7 +19,9 @@ public:
 
     void send_command(Command& cmd);
     std::pair<State::StateType, SpecialAction::SpecialActionType> receive_update();
-
+    void send_join_game();
+    void send_create_game();
+    void send_get_game_list();
     Contenedor receive_info();
 
     Contenedor receiveDatosObjeto();

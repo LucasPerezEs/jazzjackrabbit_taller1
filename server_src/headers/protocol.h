@@ -18,12 +18,11 @@ public:
     explicit ServerProtocol(Socket peer);
 
     Command::ActionType receive_command();
-    std::pair<Command::ActionType, uint32_t> receive_command_with_id() ;
-    void send_state(State::StateType state);
-
     void send_id(Contenedor c);
-
+    std::string receive_game_id();
+    uint32_t receive_max_players();
     void send_datos_objeto(Contenedor c);
+    void send_games_ids(const std::vector<std::string>& gameIDs);
 
     void send_info(Contenedor c);
 

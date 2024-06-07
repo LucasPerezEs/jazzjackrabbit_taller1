@@ -8,7 +8,6 @@ Command::ActionType ServerProtocol::receive_command() {
     return static_cast<Command::ActionType>(code);
 }
 
-void ServerProtocol::send_state(State::StateType state) { sendUChar(state); }
 
 void ServerProtocol::send_info(Contenedor c) {
     if (c.msg_code() == 2) {
@@ -60,9 +59,16 @@ void ServerProtocol::stop() { Protocol::stop(); }
 
 void ServerProtocol::close() { Protocol::close(); }
 
-std::pair<Command::ActionType, uint32_t> ServerProtocol::receive_command_with_id() {
-    unsigned char code = receiveUChar();
-    uint32_t clientId =
-            receiveUInt32();  // Suponiendo que el ID del cliente es un entero sin signo de 32 bits
-    return std::make_pair(static_cast<Command::ActionType>(code), clientId);
+
+
+std::string ServerProtocol::receive_game_id() {
+    return receiveString();
+}
+
+uint32_t ServerProtocol::receive_max_players() {
+    return receiveUInt32();
+}
+
+void ServerProtocol::send_games_ids(const std::vector<std::string>& gameIDs) {
+    //send_vector_string(gameIDs);
 }

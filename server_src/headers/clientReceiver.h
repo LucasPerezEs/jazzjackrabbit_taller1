@@ -15,6 +15,11 @@ private:
 
 public:
     ClientReceiver(uint32_t id, ServerProtocol& protocol, Queue<Command>& receiverQueue);
+
+    void join_game(bool& joined);
+    void create_game();
+    void send_game_list();
+
     void run() override;
 };
 

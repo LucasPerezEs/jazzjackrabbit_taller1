@@ -70,4 +70,16 @@ Contenedor ClientProtocol::receiveDatosObjeto() {
     return c;
 }
 
+void ClientProtocol::send_join_game() {
+    sendUChar(static_cast<unsigned char>(Command::JOIN_GAME));
+}
+
+void ClientProtocol::send_create_game() {
+    sendUChar(static_cast<unsigned char>(Command::CREATE_GAME));
+}
+
+void ClientProtocol::send_get_game_list() {
+    sendUChar(static_cast<unsigned char>(Command::GET_GAME_LIST));
+}
+
 void ClientProtocol::stop() { Protocol::stop(); }
