@@ -4,12 +4,12 @@ int escala2x = 26;
 int escala2y = 26;
 
 Game::Game(Client& client, SdlWindow& window, std::map<int, Entity*>& entidades,
-           std::map<int, Player*>& personajes):
+           std::map<int, Player*>& personajes, UIManager& ui_manager):
         client(client),
         window(window),
         entidades(entidades),
         personajes(personajes),
-        UI_manager(personajes, window) {
+        ui_manager(ui_manager) {
 
     SDL_Surface* tilesetSurface =
             IMG_Load("../client_src/assets/background/medivo_map/TILESET_Medivo.png");
@@ -26,8 +26,10 @@ Game::Game(Client& client, SdlWindow& window, std::map<int, Entity*>& entidades,
 
     tilemap_terreno_solido = cargarCSV(
             "../client_src/assets/background/medivo_map/Medivo_model_Terreno_completo.csv");
-    
-    camara = new Camara(0, 0, 800, 600, tilemap_terreno_solido[0].size(), tilemap_terreno_solido.size());
+
+    // cppcheck-suppress noOperatorEq
+    camara = new Camara(0, 0, 800, 600, tilemap_terreno_solido[0].size(),
+                        tilemap_terreno_solido.size());
 
     client.get_EventHandler()->set_camara(camara);
 }
@@ -44,7 +46,7 @@ void Game::run() {
 
     while (client.is_online()) {
 
-        SDL_RenderClear(window.getRenderer());  
+        SDL_RenderClear(window.getRenderer());
 
         this->update();
         this->render();
@@ -98,7 +100,7 @@ void Game::render() {
         it->second->render(window, entidad, camara);
     }
 
-    UI_manager.render_UI(this->client.get_id());
+    ui_manager.render_UI(this->client.get_id());
 
     this->window.render();
 }
@@ -156,8 +158,8 @@ void Game::draw(const std::vector<std::vector<int>>& tilemap, SDL_Texture* tiles
             // Define el rectángulo de destino en la pantalla
             SDL_Rect destinationRect;
 
-            destinationRect.x = (posX - camara->x)*camara->escalax;
-            destinationRect.y = (camara->y - posY)*camara->escalay;
+            destinationRect.x = (posX - camara->x) * camara->escalax;
+            destinationRect.y = (camara->y - posY) * camara->escalay;
             destinationRect.w = camara->escalax;
             destinationRect.h = camara->escalay;
 

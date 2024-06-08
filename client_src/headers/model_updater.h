@@ -14,6 +14,7 @@
 
 #include "SdlTexture.h"
 #include "SdlWindow.h"
+#include "UIManager.h"
 #include "entity.h"
 #include "player.h"
 #include "protocol.h"
@@ -32,12 +33,14 @@ private:
     Queue<Contenedor>& reciever_queue;
     Client* cliente;
     std::map<int, Player*>& personajes;
+    UIManager& ui_manager;
 
     void init_animations(SdlWindow& window);
 
 public:
     ModelUpdater(ClientProtocol& protocol, SdlWindow& window, std::map<int, Entity*>& entidades,
-                 Queue<Contenedor>& reciever_queue, std::map<int, Player*>& personajes);
+                 Queue<Contenedor>& reciever_queue, std::map<int, Player*>& personajes,
+                 UIManager& ui_manager);
 
     virtual void run() override;
 

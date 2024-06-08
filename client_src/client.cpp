@@ -2,11 +2,11 @@
 
 Client::Client(const std::string& hostname, const std::string& servername, Queue<Contenedor>& queue,
                SdlWindow& window, std::map<int, Entity*>& entidades,
-               std::map<int, Player*>& personajes):
+               std::map<int, Player*>& personajes, UIManager& ui_manager):
         client_protocol(hostname.c_str(), servername.c_str()),
         client_receiver(client_protocol, queue),
         event_handler(client_protocol),
-        updater(client_protocol, window, entidades, queue, personajes),
+        updater(client_protocol, window, entidades, queue, personajes, ui_manager),
         online(false) {
     updater.agregar_cliente(this);
 }
@@ -45,14 +45,14 @@ void Client::close() {
 bool Client::createGame(const std::string& gameId) {
     client_protocol.send_create_game();
     client_protocol.sendString(gameId);
-    //recibir confirmacion del server
+    // recibir confirmacion del server
     return true;
 }
 
 bool Client::joinGame(const std::string& gameId) {
     client_protocol.send_join_game();
     client_protocol.sendString(gameId);
-    //recibir confirmacion del server
+    // recibir confirmacion del server
     return true;
 }
 
@@ -62,6 +62,4 @@ std::vector<std::string> Client::refreshGameList() {
     return std::vector<std::string>();
 }
 
-EventHandler* Client::get_EventHandler() {
-    return &event_handler;
-}
+EventHandler* Client::get_EventHandler() { return &event_handler; }

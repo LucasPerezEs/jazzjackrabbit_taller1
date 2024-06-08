@@ -8,17 +8,13 @@ Game::Game(Queue<Command>& actionQueue, Queue<Contenedor>& stateQueue):
 void Game::run() {
     // Queue<Contenedor> q; // esta queue tiene que ir al sender
     Mapa m = Mapa();
-    // Personaje personaje = Personaje(4, 0, 2, 4, 100, EntityType::JAZZ, AnimationType::WALK);
     Enemigo enemigo = Enemigo(50, 2, 2, 4, 100, EntityType::ENEMY, AnimationType::WALK);
-    // objetos.agregar_objeto(&personaje);
     objetos.agregar_objeto(&enemigo);
-    // entes.push_back(&personaje);
     // cppcheck-suppress danglingLifetime
     entes.push_back(&enemigo);
 
 
-    while (_keep_running) {
-        // uint32_t time1 = SDL_GetTicks();
+    while (_keep_running && !clock.times_up()) {
         Command command;
         while (actionQueue.try_pop(command)) {
 
@@ -57,6 +53,8 @@ void Game::run() {
         }
         objetos.update(m, stateQueue);
 
+        clock.update(stateQueue);
+
         std::this_thread::sleep_for(std::chrono::milliseconds(17));
     }
 }
@@ -69,6 +67,11 @@ void Game::addPlayer(int clientId) {
     clientCharacters[clientId] = personaje;
     objetos.agregar_objeto(personaje);
     entes.push_back(personaje);
+
+    // Para mas adelante, el reloj deberia empezar cuando hay dos jugadores
+    if (clientCharacters.size() == 1) {
+        clock.start();
+    }
 }
 
 void Game::stop() {

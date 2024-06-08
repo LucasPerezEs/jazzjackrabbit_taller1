@@ -4,6 +4,7 @@
 
 #include "SDL2/SDL_ttf.h"
 #include "headers/SdlTexture.h"
+#include "headers/UIManager.h"
 #include "headers/entity.h"
 #include "headers/game.h"
 #include "headers/player.h"
@@ -32,51 +33,51 @@ int main(int argc, char* argv[]) {
             if (SDL_Init(SDL_INIT_AUDIO) < 0) {
                 std::cout << "Error al iniciar Audio subsystem: " << SDL_GetError() << std::endl;
             }
-            
+
             Queue<Contenedor> receiverQueue;
 
             std::map<int, Entity*> entidades;
             std::map<int, Player*> personajes;
+            UIManager ui_manager(personajes, window);
 
-            Client client(ip, port, receiverQueue, window, entidades, personajes);
+            Client client(ip, port, receiverQueue, window, entidades, personajes, ui_manager);
 
 
-            if(client.is_online()) {
+            if (client.is_online()) {
                 MultiplayerMenu multiplayerMenu;
 
                 std::cout << "Refresh antes" << std::endl;
                 QObject::connect(&multiplayerMenu, &MultiplayerMenu::refreshRequested, [&]() {
                     std::cout << "Refresh" << std::endl;
-                    //auto gameList = client.refreshGameList();
-                    //multiplayerMenu.updateGameList(gameList);
+                    // auto gameList = client.refreshGameList();
+                    // multiplayerMenu.updateGameList(gameList);
                 });
                 QObject::connect(&multiplayerMenu, &MultiplayerMenu::createGameRequested, [&]() {
-                    if (client.createGame("Juego 1")) {
-
-                    }
+                    if (client.createGame("Juego 1")) {}
                     //   multiplayerMenu.showGameCreatedMessage();
                     //} else {
                     //  multiplayerMenu.showGameCreationFailedMessage();
                     // }
                 });
                 std::cout << "Join antes" << std::endl;
-                QObject::connect(&multiplayerMenu, &MultiplayerMenu::joinGameRequested, [&](const QString &gameID) {
-                    multiplayerMenu.close();
-                    if (client.joinGame(gameID.toStdString())) {
-                        Game game(client, window, entidades, personajes);
-                        game.run();
-                    }
-                    //} else {
-                    //  multiplayerMenu.showJoinGameFailedMessage();
-                    //}
-                });
+                QObject::connect(&multiplayerMenu, &MultiplayerMenu::joinGameRequested,
+                                 [&](const QString& gameID) {
+                                     multiplayerMenu.close();
+                                     if (client.joinGame(gameID.toStdString())) {
+                                         Game game(client, window, entidades, personajes,
+                                                   ui_manager);
+                                         game.run();
+                                     }
+                                     //} else {
+                                     //  multiplayerMenu.showJoinGameFailedMessage();
+                                     //}
+                                 });
                 multiplayerMenu.show();
                 multiplayerMenu.exec();
-
             }
 
-            //Game game(client, window, entidades, personajes);
-            //game.run();
+            // Game game(client, window, entidades, personajes);
+            // game.run();
         }
 
         TTF_Quit();

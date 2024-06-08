@@ -35,6 +35,7 @@
 #include "../../common_src/headers/queue.h"
 #include "../../common_src/headers/thread.h"
 
+#include "clock.h"
 #include "contenedor.h"
 #include "lista_objetos.h"
 #include "personaje.h"
@@ -59,6 +60,7 @@ private:
 
     Queue<Contenedor>& stateQueue;
     std::mutex clientCharactersMutex;
+    Clock clock;
 };
 
 #endif  // SERVER_GAME_H

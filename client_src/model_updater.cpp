@@ -4,12 +4,13 @@
 // cppcheck-suppress uninitMemberVar
 ModelUpdater::ModelUpdater(ClientProtocol& protocol, SdlWindow& window,
                            std::map<int, Entity*>& entidades, Queue<Contenedor>& reciever_queue,
-                           std::map<int, Player*>& personajes):
+                           std::map<int, Player*>& personajes, UIManager& ui_manager):
         protocol(protocol),
         was_closed(false),
         entidades(entidades),
         reciever_queue(reciever_queue),
-        personajes(personajes) {
+        personajes(personajes),
+        ui_manager(ui_manager) {
     this->init_animations(window);
 }
 
@@ -115,7 +116,7 @@ void ModelUpdater::update(float dt) {
                 }
                 break;
 
-            case 2:  // Despawnea un objeto
+            case 2:  // Setea el ID al cliente
                 cliente->set_id(c.id());
                 break;
 
@@ -134,6 +135,10 @@ void ModelUpdater::update(float dt) {
                                        this->animations[c.entity_type()][c.animation_type()],
                                        c.entity_type(), c.vida(), c.municion(), c.score());
                 }
+                break;
+
+            case 4:  // Actualiza el reloj de partida
+                ui_manager.update_clock(c.id());
                 break;
 
             default:

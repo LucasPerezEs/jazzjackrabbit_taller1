@@ -13,15 +13,15 @@
 #include <unistd.h>
 
 #include "Fuente.h"
+#include "Music.h"
 #include "SdlWindow.h"
 #include "UIManager.h"
+#include "camara.h"
 #include "client.h"
 #include "entity.h"
 #include "event_handler.h"
 #include "model_updater.h"
 #include "protocol.h"
-#include "Music.h"
-#include "camara.h"
 
 class Game {
 private:
@@ -32,17 +32,17 @@ private:
 
     SDL_Texture* tilesetTexture;
     std::vector<std::vector<int>> tilemap_terreno_solido;
-    UIManager UI_manager;
+    UIManager& ui_manager;
 
     std::vector<std::vector<int>> cargarCSV(const std::string& ruta);
     void draw(const std::vector<std::vector<int>>& tilemap, SDL_Texture* tilesetTexture);
 
-    Camara *camara;
+    Camara* camara;
 
 
 public:
     Game(Client& client, SdlWindow& window, std::map<int, Entity*>& entidades,
-         std::map<int, Player*>& personajes);
+         std::map<int, Player*>& personajes, UIManager& ui_manager);
 
     void run();
 

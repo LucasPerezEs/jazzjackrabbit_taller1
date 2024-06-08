@@ -3,6 +3,8 @@
 #include <map>
 // En este archivo se pueden crear nuevos comandos.
 
+#define GAME_TIME 90  // En segundos
+
 struct Command {
     enum ActionType {
         NONE = 0x00,
