@@ -1,6 +1,8 @@
 #ifndef COMMON_COMMANDS_H
 #define COMMON_COMMANDS_H
 #include <map>
+#include <cstdint>
+
 // En este archivo se pueden crear nuevos comandos.
 
 #define GAME_TIME 90  // En segundos
