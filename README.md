@@ -19,11 +19,11 @@ Cliente:
 1. Abra otra terminal y navegar hasta el directorio del cliente.
 2. Ejecute el comando `./client` para iniciar el cliente.
 
+3. Coloque la dirección IP y el puerto del servidor para conectarse.  
 ![ConnectMenu](doc/port-ip.jpeg)
-3. Coloque la dirección IP y el puerto del servidor para conectarse.
 
+4. Haga clic en "Join" para unirse a una partida.  
 ![JoinMenu](doc/join.jpeg)
-4. Haga clic en "Join" para unirse a una partida.
 
 ## Controles
 * Mover izquierda: `A`
@@ -48,6 +48,7 @@ Cliente:
 * Musica de fondo y algunos efectos de sonido
 * Interfaz de menu principal basica
 * Archivo Vagrant para la instalacion
+* Primera version de reloj de partida
 
 ### Lo que nos falta por hacer
 * Server con varias partidas en simultaneo
@@ -62,7 +63,7 @@ Cliente:
 * Menu principal mas desarrollado
 * Mas efectos de sonido
 * Animaciones para explosiones
-* Sistema de reloj en partida
+* Logica finalizacion de partida
 * Pantalla final con el Scoreboard
 * Configuracion con YAML
 * Editor de mapas
