@@ -37,12 +37,19 @@ private:
 
     void init_animations(SdlWindow& window);
 
+    void update_entity(Contenedor& c);
+
+    void update_player(Contenedor& c);
+
+    void despawn_entity(Contenedor& c);
+
 public:
     ModelUpdater(ClientProtocol& protocol, SdlWindow& window, std::map<int, Entity*>& entidades,
                  Queue<Contenedor>& reciever_queue, std::map<int, Player*>& personajes,
                  UIManager& ui_manager);
 
     virtual void run() override;
+
 
     void update(float dt);
 

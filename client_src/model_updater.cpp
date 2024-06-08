@@ -86,6 +86,41 @@ void ModelUpdater::run() {
     }
 }
 
+void ModelUpdater::update_entity(Contenedor& c) {
+    if (entidades.count(c.id()) > 0) {
+        entidades[c.id()]->update_stats(c.posx(), c.posy(), c.width(), c.height(), c.direccion());
+        entidades[c.id()]->modify_animation(this->animations[c.entity_type()][c.animation_type()],
+                                            c.animation_type());
+    } else {
+        entidades[c.id()] =
+                new Entity(c.id(), c.posx(), c.posy(), c.width(), c.height(), c.direccion(),
+                           c.animation_type(),
+                           this->animations[c.entity_type()][c.animation_type()], c.entity_type());
+    }
+}
+
+void ModelUpdater::update_player(Contenedor& c) {
+    if (personajes.count(c.id()) > 0) {
+        personajes[c.id()]->update_player_stats(c.posx(), c.posy(), c.width(), c.height(),
+                                                c.direccion(), c.vida(), c.municion(), c.score());
+        personajes[c.id()]->modify_animation(this->animations[c.entity_type()][c.animation_type()],
+                                             c.animation_type());
+    } else {
+        personajes[c.id()] = new Player(c.id(), c.posx(), c.posy(), c.width(), c.height(),
+                                        c.direccion(), c.animation_type(),
+                                        this->animations[c.entity_type()][c.animation_type()],
+                                        c.entity_type(), c.vida(), c.municion(), c.score());
+    }
+}
+
+void ModelUpdater::despawn_entity(Contenedor& c) {
+    if (personajes.count(c.id()) > 0) {
+        personajes.erase(c.id());
+    } else {
+        entidades.erase(c.id());
+    }
+}
+
 void ModelUpdater::update(float dt) {
 
     try {
@@ -94,26 +129,11 @@ void ModelUpdater::update(float dt) {
 
         switch (c.msg_code()) {
             case 0:  // Actualiza un objeto, si no existe, lo crea.
-                if (entidades.count(c.id()) > 0) {
-                    entidades[c.id()]->update_stats(c.posx(), c.posy(), c.width(), c.height(),
-                                                    c.direccion());
-                    entidades[c.id()]->modify_animation(
-                            this->animations[c.entity_type()][c.animation_type()],
-                            c.animation_type());
-                } else {
-                    entidades[c.id()] = new Entity(
-                            c.id(), c.posx(), c.posy(), c.width(), c.height(), c.direccion(),
-                            c.animation_type(),
-                            this->animations[c.entity_type()][c.animation_type()], c.entity_type());
-                }
+                update_entity(c);
                 break;
 
             case 1:  // Despawnea un objeto
-                if (personajes.count(c.id()) > 0) {
-                    personajes.erase(c.id());
-                } else {
-                    entidades.erase(c.id());
-                }
+                despawn_entity(c);
                 break;
 
             case 2:  // Setea el ID al cliente
@@ -121,20 +141,7 @@ void ModelUpdater::update(float dt) {
                 break;
 
             case 3:  // Actualiza un personaje, si no existe, lo crea.
-                if (personajes.count(c.id()) > 0) {
-                    personajes[c.id()]->update_player_stats(c.posx(), c.posy(), c.width(),
-                                                            c.height(), c.direccion(), c.vida(),
-                                                            c.municion(), c.score());
-                    personajes[c.id()]->modify_animation(
-                            this->animations[c.entity_type()][c.animation_type()],
-                            c.animation_type());
-                } else {
-                    personajes[c.id()] =
-                            new Player(c.id(), c.posx(), c.posy(), c.width(), c.height(),
-                                       c.direccion(), c.animation_type(),
-                                       this->animations[c.entity_type()][c.animation_type()],
-                                       c.entity_type(), c.vida(), c.municion(), c.score());
-                }
+                update_player(c);
                 break;
 
             case 4:  // Actualiza el reloj de partida
