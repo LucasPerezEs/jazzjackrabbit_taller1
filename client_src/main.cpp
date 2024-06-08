@@ -29,7 +29,9 @@ int main(int argc, char* argv[]) {
                 std::cout << "Error al iniciar TTF: " << TTF_GetError() << std::endl;
             }
 
-            SDL_Init(SDL_INIT_AUDIO);
+            if (SDL_Init(SDL_INIT_AUDIO) < 0) {
+                std::cout << "Error al iniciar Audio subsystem: " << SDL_GetError() << std::endl;
+            }
             
             Queue<Contenedor> receiverQueue;
 

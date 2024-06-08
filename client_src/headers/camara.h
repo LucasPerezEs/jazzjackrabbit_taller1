@@ -11,7 +11,6 @@ class Camara {
     private:
     float width;
     float height;
-    bool first;
     float limitex;
     float limitey;
 

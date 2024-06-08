@@ -143,9 +143,9 @@ void Game::draw(const std::vector<std::vector<int>>& tilemap, SDL_Texture* tiles
             int posX = x;
             int posY = tilemap.size() - y;
 
-            /*if (!camara->en_rango(posX, posY, 1, 1)) {
+            if (!camara->en_rango(posX, posY, 1, 1)) {
                 continue;
-            }*/
+            }
 
             SDL_Rect sourceRect;
             sourceRect.x = (tileValue % TILESET_WIDTH) * 16;
