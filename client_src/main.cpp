@@ -36,7 +36,7 @@ int main(int argc, char* argv[]) {
             std::map<int, Entity*> entidades;
             std::map<int, Player*> personajes;
 
-            Client client("localhost", "8080", receiverQueue, window, entidades, personajes);
+            Client client(ip, port, receiverQueue, window, entidades, personajes);
 
 
             if(client.is_online()) {

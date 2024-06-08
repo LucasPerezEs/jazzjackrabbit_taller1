@@ -1,7 +1,7 @@
 #include "headers/game.h"
 
-int escala2x = 32;
-int escala2y = 24;
+int escala2x = 26;
+int escala2y = 26;
 
 Game::Game(Client& client, SdlWindow& window, std::map<int, Entity*>& entidades,
            std::map<int, Player*>& personajes):
@@ -128,48 +128,13 @@ std::vector<std::vector<int>> Game::cargarCSV(const std::string& ruta) {
 
 void Game::draw(const std::vector<std::vector<int>>& tilemap, SDL_Texture* tilesetTexture) {
 
-    /*Entity* entidad;
-    if (personajes.find(client.get_id()) != personajes.end()) {
-        entidad = static_cast<Entity*>(personajes[client.get_id()]);
-    } else {
-        if (personajes.size() > 0) {
-            entidad = static_cast<Entity*>(personajes.begin()->second);
-        } else if (entidades.size() > 0) {
-            entidad = entidades.begin()->second;
-        } else {
-            return;
-        }
-    }
-
-    std::pair<float, float> posicion = entidad->getPosition();*/
-
-    // Tamaño del tile en píxeles
-    // int TILE_SIZE = 32;
     int TILESET_WIDTH = 20;
 
-    // Tamaño de la ventana en píxeles
-    //int WINDOW_WIDTH = 800;
-    //int WINDOW_HEIGHT = 600;
-
-    // Tamaño de la ventana en tiles
-    // int WINDOW_WIDTH_TILES = WINDOW_WIDTH / TILE_SIZE;
-    // int WINDOW_HEIGHT_TILES = WINDOW_HEIGHT / TILE_SIZE;
-
-    // Posición de la cámara en tiles
-    // int camX = posicion.first;
-    // int camY = 40 - std::ceil(posicion.second);
-
-    // Se asegura de que la cámara no se salga de los límites del mapa
-    // camX = std::max(0, std::min(camX, static_cast<int>(tilemap[0].size()) - WINDOW_WIDTH_TILES));
-    // camY = std::max(0, std::min(camY, static_cast<int>(tilemap.size()) - WINDOW_HEIGHT_TILES));
 
     // Ahora recorre solo los tiles que están dentro de la vista de la cámara
     for (long unsigned int y = 0; y < tilemap.size(); y++) {
         for (long unsigned int x = 0; x < tilemap[0].size(); x++) {
 
-            // Calcula la posición del tile en el mapa
-            // int tileX = std::min(camX + x, 80);
-            // int tileY = std::min(camY + y, 40);
 
             // Obtiene el id del tile
             int tileValue = tilemap[y][x];
@@ -190,10 +155,12 @@ void Game::draw(const std::vector<std::vector<int>>& tilemap, SDL_Texture* tiles
 
             // Define el rectángulo de destino en la pantalla
             SDL_Rect destinationRect;
+
             destinationRect.x = (posX - camara->x)*camara->escalax;
             destinationRect.y = (camara->y - posY)*camara->escalay;
             destinationRect.w = camara->escalax;
             destinationRect.h = camara->escalay;
+
 
             // Renderiza el tile
             SDL_RenderCopy(this->window.getRenderer(), tilesetTexture, &sourceRect,
