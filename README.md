@@ -32,6 +32,8 @@ Cliente:
 * Saltar: `Barra espaciadora`
 * Golpe especial: `K`
 * Sprint: `LSHIFT`
+* Zoom in: `Flecha hacia arriba`
+* Zoom out: `Flecha hacia abajo`
 
 ## Documentacion primera entrega
 ### Lo que ya tenemos
@@ -54,6 +56,7 @@ Cliente:
 * Sistema de armas y municiones
 * Daño entre jugadores
 * Mas formas de ganar puntos (Gemas, matando jugadores, etc)
+* Mas personajes
 * Mas enemigos
 * Un escenario
 * Menu principal mas desarrollado
