@@ -47,9 +47,9 @@ void Entity::render(const SdlWindow& window, Entity* personaje, Camara *camara) 
         flip = SDL_FLIP_NONE;
     }
 
-    if (!camara->en_rango(this->x, this->y, this->width, this->height)) {
+    /*if (!camara->en_rango(this->x, this->y, this->width, this->height)) {
         return;
-    }
+    }*/
 
     Area destArea(  (x - camara->x)*camara->escalax,
                     (camara->y - y - height)*camara->escalay,

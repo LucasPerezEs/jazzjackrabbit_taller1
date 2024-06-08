@@ -28,6 +28,8 @@ Game::Game(Client& client, SdlWindow& window, std::map<int, Entity*>& entidades,
             "../client_src/assets/background/medivo_map/Medivo_model_Terreno_completo.csv");
     
     camara = new Camara(0, 0, 800, 600, tilemap_terreno_solido[0].size(), tilemap_terreno_solido.size());
+
+    client.get_EventHandler()->set_camara(camara);
 }
 
 void Game::run() {
@@ -162,8 +164,8 @@ void Game::draw(const std::vector<std::vector<int>>& tilemap, SDL_Texture* tiles
     // camY = std::max(0, std::min(camY, static_cast<int>(tilemap.size()) - WINDOW_HEIGHT_TILES));
 
     // Ahora recorre solo los tiles que están dentro de la vista de la cámara
-    for (int y = 0; y < 40; y++) {
-        for (int x = 0; x < 80; x++) {
+    for (long unsigned int y = 0; y < tilemap.size(); y++) {
+        for (long unsigned int x = 0; x < tilemap[0].size(); x++) {
 
             // Calcula la posición del tile en el mapa
             // int tileX = std::min(camX + x, 80);
@@ -176,9 +178,9 @@ void Game::draw(const std::vector<std::vector<int>>& tilemap, SDL_Texture* tiles
             int posX = x;
             int posY = tilemap.size() - y;
 
-            if (!camara->en_rango(posX, posY, 1, 1)) {
+            /*if (!camara->en_rango(posX, posY, 1, 1)) {
                 continue;
-            }
+            }*/
 
             SDL_Rect sourceRect;
             sourceRect.x = (tileValue % TILESET_WIDTH) * 16;

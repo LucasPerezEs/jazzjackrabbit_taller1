@@ -34,6 +34,8 @@ public:
 
     int get_id();
 
+    EventHandler* get_EventHandler();
+
     void close();
 
 private:

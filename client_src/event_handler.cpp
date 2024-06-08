@@ -40,6 +40,14 @@ void EventHandler::handle_keydown(const SDL_Event& event, Command& cmd) {
         case SDLK_k:
             cmd.action = Command::SPECIAL;
             break;
+        case SDLK_UP:
+            cmd.action = Command::NONE;
+            camara->zoomIn();
+            break;
+        case SDLK_DOWN:
+            cmd.action = Command::NONE;
+            camara->zoomOut();
+            break;
         default:  // Para el caso que toque una tecla no asignada.
             cmd.action = Command::NONE;
             break;
@@ -99,3 +107,7 @@ void EventHandler::run() {
 }
 
 void EventHandler::close() { this->was_closed = true; }
+
+void EventHandler::set_camara(Camara *c) {
+    camara = c;
+}

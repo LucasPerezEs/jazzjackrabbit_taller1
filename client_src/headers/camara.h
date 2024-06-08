@@ -3,24 +3,26 @@
 
 class Camara {
     public:
-    int escalax;
-    int escalay;
+    float escalax;
+    float escalay;
     float x;
     float y;
 
     private:
-    int width;
-    int height;
+    float width;
+    float height;
     bool first;
-    int limitex;
-    int limitey;
+    float limitex;
+    float limitey;
 
     public:
-    Camara(float x, float y, int width, int height, int limitex, int limitey);
+    Camara(float x, float y, float width, float height, float limitex, float limitey);
     bool en_rango(float x, float y, float width, float height);
     void actualizar_pos(float x, float y);
-    int escalaX();
-    int escalaY();
+    float escalaX();
+    float escalaY();
+    void zoomIn();
+    void zoomOut();
     
 };
 

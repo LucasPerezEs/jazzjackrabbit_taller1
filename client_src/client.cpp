@@ -61,3 +61,7 @@ std::vector<std::string> Client::refreshGameList() {
 
     return std::vector<std::string>();
 }
+
+EventHandler* Client::get_EventHandler() {
+    return &event_handler;
+}
