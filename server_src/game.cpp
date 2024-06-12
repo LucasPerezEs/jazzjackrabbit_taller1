@@ -2,13 +2,18 @@
 
 #include "headers/partida.h"
 
-Game::Game(Queue<Command>& actionQueue, Queue<Contenedor>& stateQueue):
-        actionQueue(actionQueue), stateQueue(stateQueue), clientCharactersMutex() {}
+Game::Game(Queue<Command>& actionQueue, Queue<Contenedor>& stateQueue,
+           std::map<std::string, float>& config):
+        actionQueue(actionQueue),
+        stateQueue(stateQueue),
+        config(config),
+        clientCharactersMutex(),
+        clock(config) {}
 
 void Game::run() {
     // Queue<Contenedor> q; // esta queue tiene que ir al sender
     Mapa m = Mapa();
-    Enemigo enemigo = Enemigo(50, 2, 2, 4, 100, EntityType::ENEMY, AnimationType::WALK);
+    Enemigo enemigo = Enemigo(50, 2, 2, 4, EntityType::ENEMY, AnimationType::WALK, config);
     objetos.agregar_objeto(&enemigo);
     // cppcheck-suppress danglingLifetime
     entes.push_back(&enemigo);
@@ -61,8 +66,8 @@ void Game::run() {
 
 void Game::addPlayer(int clientId) {
     std::lock_guard<std::mutex> lock(clientCharactersMutex);
-    Personaje* personaje = new Personaje(4 + clientId * 20, 2, 2, 4, 100, EntityType::JAZZ,
-                                         AnimationType::SHOOT_IDLE);
+    Personaje* personaje = new Personaje(4 + clientId * 20, 2, 2, 4, EntityType::JAZZ,
+                                         AnimationType::SHOOT_IDLE, config);
     personaje->set_id(clientId);
     clientCharacters[clientId] = personaje;
     objetos.agregar_objeto(personaje);

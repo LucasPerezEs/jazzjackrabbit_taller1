@@ -3,8 +3,9 @@
 
 #include <chrono>
 #include <iostream>
+#include <map>
+#include <string>
 
-#include "../../common_src/headers/commands.h"
 #include "../../common_src/headers/queue.h"
 
 #include "contenedor.h"
@@ -17,7 +18,7 @@ private:
     bool game_ended;
 
 public:
-    Clock();
+    explicit Clock(std::map<std::string, float>& config);
 
     void start();
 

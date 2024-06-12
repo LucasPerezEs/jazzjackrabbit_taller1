@@ -78,7 +78,7 @@ Vagrant.configure("2") do |config|
     sudo apt-get update
     sudo apt-get install -y cmake
     sudo apt-get update
-    sudo apt-get install -y libsdl2-dev libsdl2-ttf-dev qt5-default libsdl2-mixer-dev libsdl2-image-dev
+    sudo apt-get install -y libsdl2-dev libsdl2-ttf-dev qt5-default libsdl2-mixer-dev libsdl2-image-dev libyaml-cpp-dev
     git clone https://github.com/LucasPerezEs/jazzjackrabbit_taller1.git
    SHELL
 end

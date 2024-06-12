@@ -7,10 +7,13 @@
 #include "headers/lista_objetos.h"
 #include "headers/municion.h"
 
-Personaje::Personaje(float x, float y, float w, float h, int vida, EntityType en_type,
-                     AnimationType an_type):
-        Ente(x, y, w, h, vida, en_type, an_type), tiempo(std::chrono::system_clock::now()) {
-    velx = 0.5;
+Personaje::Personaje(float x, float y, float w, float h, EntityType en_type, AnimationType an_type,
+                     std::map<std::string, float>& config):
+        Ente(x, y, w, h, config["player_life"], en_type, an_type),
+        tiempo(std::chrono::system_clock::now()),
+        config(config),
+        arma(config) {
+    velx = config["player_speed"];
     vely = 0;
     direccion = 1;
     jumping = false;
@@ -23,7 +26,7 @@ Personaje::Personaje(float x, float y, float w, float h, int vida, EntityType en
     espera_idle = 2000;  // en milisegundos
     espera_shoot = 250;  // Misma que la del arma
     score = 0;
-    danio_ataque_especial = 100;
+    danio_ataque_especial = config["player_special_attack_dmg"];
 }
 
 void Personaje::moveRigth() {
@@ -60,18 +63,18 @@ void Personaje::stopMovingLeft() {
 }
 
 void Personaje::run() {
-    velx = 1;
+    velx = config["player_run_speed"];
     // an_type = AnimationType::RUN;
 }
 
 void Personaje::stoprunning() {
-    velx = 0.5;
+    velx = config["player_speed"];
     // an_type = AnimationType::IDLE;
 }
 
 void Personaje::jump() {
     if (!jumping) {  // Esto es para evitar que se pueda spamear el jump y volar
-        vely = 1;
+        vely = config["player_jump"];
         jumping = true;
         an_type = AnimationType::JUMP;
         tiempo = std::chrono::system_clock::now();
@@ -83,7 +86,7 @@ void Personaje::special_action() {
         special_action_active = true;
         movingleft = false;
         movingright = false;
-        vely = 2;
+        vely = config["player_jump"] + 1;
         jumping = true;
         an_type = AnimationType::SPECIAL_ACTION;
         tiempo = std::chrono::system_clock::now();
@@ -130,7 +133,8 @@ void Personaje::update_position() {
     }
     y += vely;
     // height += vely;
-    vely -= 0.1;  // esto es la aceleracion de la gravedad, se tiene que poner un limite de vely
+    vely -= config["gravity"];  // esto es la aceleracion de la gravedad, se tiene que poner un
+                                // limite de vely
 }
 
 void Personaje::check_colisions(Mapa& m, int aux_x, int aux_y) {
@@ -184,7 +188,7 @@ void Personaje::update_vivo(ListaObjetos& objetos, Queue<Contenedor>& q) {
     if (vida <= 0) {
         if (contador ==
             240) {  // revive despues de tantos ciclos y lo agrego al vector de colisiones
-            vida = 100;
+            vida = config["player_life"];
             borrar = false;
             objetos.agregar_objeto(this);
             contador = 0;
@@ -217,9 +221,10 @@ void Personaje::disparar(ListaObjetos& objetos) {
 void Personaje::set_id(int i) { id = i; }
 
 
-Arma::Arma(): tiempo(std::chrono::system_clock::now()) {
-    espera = 250;  // en milisegundos
-    municion = 10;
+Arma::Arma(std::map<std::string, float>& config):
+        tiempo(std::chrono::system_clock::now()), config(config) {
+    espera = 1000 / config["weapon_firerate"];  // en milisegundos
+    municion = config["weapon_initial_ammo"];
 }
 
 void Arma::disparar(ListaObjetos& objetos, float x, float w, float y, float h, int d) {
@@ -235,7 +240,7 @@ void Arma::disparar(ListaObjetos& objetos, float x, float w, float y, float h, i
             aux = x + w;
         }
 
-        Bala* b = new Bala(aux, y + h / 2, d);
+        Bala* b = new Bala(aux, y + h / 2, d, config);
         objetos.agregar_objeto(b);  // Se agrega al vector de colisiones
         // disminuir_municion();
     }
@@ -243,13 +248,13 @@ void Arma::disparar(ListaObjetos& objetos, float x, float w, float y, float h, i
 
 void Arma::disminuir_municion() { municion--; }
 
-
-Bala::Bala(float x, float y, int d):
+// cppcheck-suppress constParameter
+Bala::Bala(float x, float y, int d, std::map<std::string, float>& config):
         Objeto(x, y, 1, 1, EntityType::BULLET,
                AnimationType::WALK) {  // se le pasa la direccion a la que va a salir la bala por
                                        // parametro
-    vel = 1.5 * d;
-    danio = 10;
+    vel = config["bullet_speed"] * d;
+    danio = config["bullet_damage"];
 }
 
 void Bala::colision(Objeto& o) {

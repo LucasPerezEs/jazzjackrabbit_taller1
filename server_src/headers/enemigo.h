@@ -2,6 +2,7 @@
 #define ENEMIGO_H_
 
 #include <map>
+#include <string>
 
 #include "../../common_src/headers/queue.h"
 
@@ -21,10 +22,11 @@ protected:
     float limxder;
     float limy;
     int danio;
+    std::map<std::string, float>& config;
 
 public:
-    Enemigo(float x, float y, float w, float h, int vida, EntityType en_type,
-            AnimationType an_type);
+    Enemigo(float x, float y, float w, float h, EntityType en_type, AnimationType an_type,
+            std::map<std::string, float>& config);
     virtual void colision(Objeto& o) override;
     virtual void colision(Personaje& p) override;
     virtual void colision(Bala& b) override;

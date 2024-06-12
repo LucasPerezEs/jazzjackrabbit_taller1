@@ -25,6 +25,7 @@
 #ifndef SERVER_GAME_H
 #define SERVER_GAME_H
 #include <iostream>
+#include <map>
 #include <memory>
 #include <mutex>
 #include <string>
@@ -42,7 +43,8 @@
 
 class Game: public Thread {
 public:
-    explicit Game(Queue<Command>& actionQueue, Queue<Contenedor>& eventQueue);
+    explicit Game(Queue<Command>& actionQueue, Queue<Contenedor>& eventQueue,
+                  std::map<std::string, float>& config);
 
     void run() override;
     void stop() override;
@@ -57,8 +59,10 @@ private:
     std::vector<Ente*> entes;
 
     Queue<Command>& actionQueue;
-
     Queue<Contenedor>& stateQueue;
+
+    std::map<std::string, float>& config;
+
     std::mutex clientCharactersMutex;
     Clock clock;
 };

@@ -33,4 +33,4 @@ add_executable (client
 
 
 target_link_libraries(client client_lib Qt5::Widgets setupscreen SDL2 SDL2_image pthread SDL2_ttf -lSDL2_mixer)
-target_link_libraries(server server_lib pthread)
+target_link_libraries(server server_lib pthread yaml-cpp)

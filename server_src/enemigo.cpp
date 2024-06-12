@@ -3,11 +3,11 @@
 #include <iostream>
 
 
-Enemigo::Enemigo(float x, float y, float w, float h, int vida, EntityType en_type,
-                 AnimationType an_type):
-        Ente(x, y, w, h, vida, en_type, an_type) {
+Enemigo::Enemigo(float x, float y, float w, float h, EntityType en_type, AnimationType an_type,
+                 std::map<std::string, float>& config):
+        Ente(x, y, w, h, config["enemy_life"], en_type, an_type), config(config) {
     direccion = 1;
-    danio = 1;
+    danio = config["enemy_damage"];
     limxder = x + 20;  // cuanto se va a mover de izquierda a derecha
     limxizq = x - 20;
     limy = y + 0;  // por si lo queremos hacer volador
@@ -40,7 +40,7 @@ void Enemigo::update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) {
     // float auxh = height;
     bool colisionx;
 
-    x += 0.25 * direccion;
+    x += config["enemy_speed"] * direccion;
     // width += 0.25 * direccion;
 
     colisionx = m.CheckColision(x, auxy, width, height);
@@ -59,16 +59,20 @@ Pickup* Enemigo::drop_item() {
     srand(time(nullptr));
     int random_int = rand() % 100 + 1;
 
-    if (random_int < 25) {
-        Gold_Coin* drop = new Gold_Coin(x + width / 2, y + height / 3);
+    float prob_goldcoin = config["enemy_prob_goldcoin"] * 100;
+    float prob_carrot = config["enemy_prob_carrot"] * 100;
+    float prob_ammo = config["enemy_prob_ammo"] * 100;
+
+    if (random_int < prob_goldcoin) {
+        Gold_Coin* drop = new Gold_Coin(x + width / 2, y + height / 3, config);
         return static_cast<Pickup*>(drop);
 
-    } else if (random_int >= 25 && random_int < 50) {
-        Zanahoria* drop = new Zanahoria(x + width / 2, y + height / 3);
+    } else if (random_int < prob_goldcoin + prob_carrot) {
+        Zanahoria* drop = new Zanahoria(x + width / 2, y + height / 3, config);
         return static_cast<Pickup*>(drop);
 
-    } else if (random_int >= 50 && random_int < 75) {
-        Municion* drop = new Municion(x + width / 2, y + height / 3);
+    } else if (random_int < prob_goldcoin + prob_carrot + prob_ammo) {
+        Municion* drop = new Municion(x + width / 2, y + height / 3, config);
         return static_cast<Pickup*>(drop);
 
     } else {
@@ -90,7 +94,7 @@ void Enemigo::update_vivo(ListaObjetos& objetos, Queue<Contenedor>& q) {
             q.try_push(c);
         }
         if (contador == 240) {  // despues de un rato revive
-            vida = 100;
+            vida = config["enemy_life"];
             borrar = false;
             objetos.agregar_objeto(this);
             contador = 0;
