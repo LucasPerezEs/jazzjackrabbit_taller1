@@ -21,6 +21,8 @@ add_library(server_lib
     clock.cpp
     ghost.cpp
     bat.cpp
+    monkey.cpp
+    banana.cpp
     ../common_src/liberror.cpp
     ../common_src/protocol.cpp
     ../common_src/resolver.cpp

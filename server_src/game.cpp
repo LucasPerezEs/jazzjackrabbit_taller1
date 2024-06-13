@@ -15,11 +15,14 @@ void Game::run() {
     Mapa m = Mapa();
     Ghost ghost = Ghost(50, 2, config);
     Bat bat = Bat(75, 4, config);
+    Monkey monkey = Monkey(20, 1, config);
     objetos.agregar_objeto(&ghost);
     objetos.agregar_objeto(&bat);
+    objetos.agregar_objeto(&monkey);
     entes.push_back(&ghost);
-    // cppcheck-suppress danglingLifetime
     entes.push_back(&bat);
+    // cppcheck-suppress danglingLifetime
+    entes.push_back(&monkey);
 
 
     while (_keep_running && !clock.times_up()) {

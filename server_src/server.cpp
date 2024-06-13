@@ -39,6 +39,14 @@ std::map<std::string, float> Server::load_config(const std::string& path) {
     config["bat_prob_ammo"] = yaml["bat"]["prob_ammo"].as<float>();
     config["bat_prob_goldcoin"] = yaml["bat"]["prob_goldcoin"].as<float>();
 
+    // Monkey
+    config["monkey_life"] = yaml["monkey"]["life"].as<float>();
+    config["monkey_damage"] = yaml["monkey"]["damage"].as<float>();
+    config["monkey_speed"] = yaml["monkey"]["speed"].as<float>();
+    config["monkey_prob_carrot"] = yaml["monkey"]["prob_carrot"].as<float>();
+    config["monkey_prob_ammo"] = yaml["monkey"]["prob_ammo"].as<float>();
+    config["monkey_prob_goldcoin"] = yaml["monkey"]["prob_goldcoin"].as<float>();
+
     // Pickups
     config["goldcoin_addscore"] = yaml["goldcoin"]["add_score"].as<float>();
     config["carrot_addlife"] = yaml["carrot"]["add_life"].as<float>();
@@ -51,6 +59,9 @@ std::map<std::string, float> Server::load_config(const std::string& path) {
     // Bullets
     config["bullet_speed"] = yaml["bullet"]["speed"].as<float>();
     config["bullet_damage"] = yaml["bullet"]["damage"].as<float>();
+
+    config["banana_speed"] = yaml["banana"]["speed"].as<float>();
+    config["banana_damage"] = yaml["banana"]["damage"].as<float>();
 
     return config;
 }

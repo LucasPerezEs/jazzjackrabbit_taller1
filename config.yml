@@ -24,6 +24,7 @@ ghost:
   prob_ammo: 25 
   prob_goldcoin: 25 
 
+# Murcielago
 bat:
  life: 10
  damage: 2
@@ -31,6 +32,15 @@ bat:
  prob_carrot: 25
  prob_ammo: 0
  prob_goldcoin: 50
+
+# Mono
+monkey:
+ life: 10
+ damage: 1
+ speed: 0
+ prob_carrot: 25
+ prob_ammo: 25
+ prob_goldcoin: 25
 
 # GoldCoin
 goldcoin:
@@ -53,3 +63,7 @@ weapon:
 bullet:
   speed: 1.5
   damage: 10
+
+banana:
+  speed: 1
+  damage: 1

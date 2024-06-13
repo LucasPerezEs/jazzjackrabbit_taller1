@@ -81,7 +81,21 @@ void ModelUpdater::init_animations(SdlWindow& window) {
 
     this->animations[EntityType::BAT][AnimationType::FLY] = new Animation(
             new SdlTexture("../client_src/assets/bat_flying.png", window, Color{0x2C, 0x66, 0x96}),
-            8, AnimationSpeed::NORMAL);
+            8, AnimationSpeed::FAST);
+
+    this->animations[EntityType::MONKEY][AnimationType::IDLE] = new Animation(
+            new SdlTexture("../client_src/assets/monkey_idle.png", window, Color{0x2C, 0x66, 0x96}),
+            12, AnimationSpeed::NORMAL);
+
+    this->animations[EntityType::MONKEY][AnimationType::SHOOT] =
+            new Animation(new SdlTexture("../client_src/assets/monkey_shoot.png", window,
+                                         Color{0x2C, 0x66, 0x96}),
+                          16, AnimationSpeed::NORMAL);
+
+    this->animations[EntityType::BANANA][AnimationType::WALK] =
+            new Animation(new SdlTexture("../client_src/assets/banana_shoot.png", window,
+                                         Color{0x2C, 0x66, 0x96}),
+                          8, AnimationSpeed::FAST);
 }
 
 void ModelUpdater::run() {

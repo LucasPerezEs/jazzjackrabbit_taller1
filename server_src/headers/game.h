@@ -41,6 +41,7 @@
 #include "contenedor.h"
 #include "ghost.h"
 #include "lista_objetos.h"
+#include "monkey.h"
 #include "personaje.h"
 
 class Game: public Thread {
