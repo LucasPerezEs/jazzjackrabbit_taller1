@@ -23,13 +23,21 @@ std::map<std::string, float> Server::load_config(const std::string& path) {
     config["player_run_speed"] = yaml["player"]["run_speed"].as<float>();
     config["player_jump"] = yaml["player"]["jump"].as<float>();
 
-    // Enemy
+    // Ghost
     config["ghost_life"] = yaml["ghost"]["life"].as<float>();
     config["ghost_damage"] = yaml["ghost"]["damage"].as<float>();
     config["ghost_speed"] = yaml["ghost"]["speed"].as<float>();
     config["ghost_prob_carrot"] = yaml["ghost"]["prob_carrot"].as<float>();
     config["ghost_prob_ammo"] = yaml["ghost"]["prob_ammo"].as<float>();
     config["ghost_prob_goldcoin"] = yaml["ghost"]["prob_goldcoin"].as<float>();
+
+    // Bat
+    config["bat_life"] = yaml["bat"]["life"].as<float>();
+    config["bat_damage"] = yaml["bat"]["damage"].as<float>();
+    config["bat_speed"] = yaml["bat"]["speed"].as<float>();
+    config["bat_prob_carrot"] = yaml["bat"]["prob_carrot"].as<float>();
+    config["bat_prob_ammo"] = yaml["bat"]["prob_ammo"].as<float>();
+    config["bat_prob_goldcoin"] = yaml["bat"]["prob_goldcoin"].as<float>();
 
     // Pickups
     config["goldcoin_addscore"] = yaml["goldcoin"]["add_score"].as<float>();

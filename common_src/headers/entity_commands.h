@@ -6,11 +6,12 @@ enum EntityType {
     LORI = 0x01,
     SPAZ = 0x02,
     GHOST = 0x03,
-    BULLET = 0x04,
-    AMMO = 0x05,
-    CARROT = 0x06,
-    GOLD_COIN = 0x07,
-    NONE_ENTITY = 0x08
+    BAT = 0x04,
+    BULLET = 0x05,
+    AMMO = 0x06,
+    CARROT = 0x07,
+    GOLD_COIN = 0x08,
+    NONE_ENTITY = 0x09
 };
 
 enum AnimationType {
@@ -26,7 +27,8 @@ enum AnimationType {
     PICKUP = 0x19,
     NONE_ANIMATION = 0x20,
     SHOOT = 0x21,
-    SHOOT_IDLE = 0x22
+    SHOOT_IDLE = 0x22,
+    FLY = 0x23
 };
 
 enum AnimationSpeed { FAST = 1, NORMAL = 2, SLOW = 3 };

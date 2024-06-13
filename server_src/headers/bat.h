@@ -1,5 +1,5 @@
-#ifndef GHOST_H_
-#define GHOST_H_
+#ifndef BAT_H_
+#define BAT_H_
 
 #include <map>
 #include <string>
@@ -17,17 +17,15 @@
 
 class ListaObjetos;
 
-class Ghost: public Enemigo {
+class Bat: public Enemigo {
 protected:
-    float lim_x_izq;
-    float lim_x_der;
-    float lim_y;
+    float lim_y_sup;
+    float lim_y_inf;
 
 public:
-    Ghost(float x, float y, std::map<std::string, float>& config);
+    Bat(float x, float y, std::map<std::string, float>& config);
     virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) override;
     virtual void update_vivo(ListaObjetos& objetos, Queue<Contenedor>& q) override;
 };
-
 
 #endif

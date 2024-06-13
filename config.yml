@@ -17,12 +17,20 @@ player:
 
 # Fantasma 
 ghost:
-  life: 100
+  life: 10
   damage: 1
   speed: 0.25
-  prob_carrot: 0.25
-  prob_ammo: 0.25
-  prob_goldcoin: 0.25
+  prob_carrot: 25 # sobre 100
+  prob_ammo: 25 
+  prob_goldcoin: 25 
+
+bat:
+ life: 10
+ damage: 2
+ speed: 0.25
+ prob_carrot: 25
+ prob_ammo: 0
+ prob_goldcoin: 50
 
 # GoldCoin
 goldcoin:

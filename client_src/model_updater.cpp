@@ -78,6 +78,10 @@ void ModelUpdater::init_animations(SdlWindow& window) {
             new Animation(new SdlTexture("../client_src/assets/goldcoin_pickup.png", window,
                                          Color{0x2C, 0x66, 0x96}),
                           20, AnimationSpeed::FAST);
+
+    this->animations[EntityType::BAT][AnimationType::FLY] = new Animation(
+            new SdlTexture("../client_src/assets/bat_flying.png", window, Color{0x2C, 0x66, 0x96}),
+            8, AnimationSpeed::NORMAL);
 }
 
 void ModelUpdater::run() {

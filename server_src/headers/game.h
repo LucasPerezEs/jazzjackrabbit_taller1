@@ -36,6 +36,7 @@
 #include "../../common_src/headers/queue.h"
 #include "../../common_src/headers/thread.h"
 
+#include "bat.h"
 #include "clock.h"
 #include "contenedor.h"
 #include "ghost.h"

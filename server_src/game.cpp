@@ -14,9 +14,12 @@ void Game::run() {
     // Queue<Contenedor> q; // esta queue tiene que ir al sender
     Mapa m = Mapa();
     Ghost ghost = Ghost(50, 2, config);
+    Bat bat = Bat(75, 4, config);
     objetos.agregar_objeto(&ghost);
-    // cppcheck-suppress danglingLifetime
+    objetos.agregar_objeto(&bat);
     entes.push_back(&ghost);
+    // cppcheck-suppress danglingLifetime
+    entes.push_back(&bat);
 
 
     while (_keep_running && !clock.times_up()) {

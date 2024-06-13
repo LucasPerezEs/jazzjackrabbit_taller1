@@ -20,6 +20,7 @@ add_library(server_lib
     gold_coin.cpp
     clock.cpp
     ghost.cpp
+    bat.cpp
     ../common_src/liberror.cpp
     ../common_src/protocol.cpp
     ../common_src/resolver.cpp
