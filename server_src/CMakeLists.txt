@@ -23,6 +23,8 @@ add_library(server_lib
     bat.cpp
     monkey.cpp
     banana.cpp
+    jazz.cpp
+    lori.cpp
     ../common_src/liberror.cpp
     ../common_src/protocol.cpp
     ../common_src/resolver.cpp

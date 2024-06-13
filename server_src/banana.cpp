@@ -15,6 +15,10 @@ void Banana::colision(Objeto& o) {
     }
 }
 
+void Banana::colision(Enemigo& o) {}
+
+void Banana::colision(Pickup& o) {}
+
 void Banana::colision(Personaje& p) { p.RecibirDanio(danio); }
 
 void Banana::update(

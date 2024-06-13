@@ -15,6 +15,7 @@ class Bala;
 class Mapa;
 class Municion;
 class ListaObjetos;
+class Pickup;
 
 class Objeto {
 public:
@@ -34,6 +35,7 @@ public:
     virtual void eliminar();
     bool check_colision(Objeto& o);
     virtual void colision(Objeto& o) = 0;
+    virtual void colision(Pickup& o);
     virtual void colision(Personaje& o);
     virtual void colision(Enemigo& o);
     virtual void colision(Bala& o);

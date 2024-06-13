@@ -11,6 +11,7 @@
 #include "mapa.h"
 #include "objeto.h"
 #include "personaje.h"
+#include "pickup.h"
 
 class Banana: public Objeto {
 protected:
@@ -21,6 +22,8 @@ public:
     Banana(float x, float y, int d, std::map<std::string, float>& config);
     virtual void colision(Objeto& o) override;
     virtual void colision(Personaje& o) override;
+    virtual void colision(Enemigo& o) override;
+    virtual void colision(Pickup& o) override;
     virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) override;
     virtual void eliminar() override;
 };

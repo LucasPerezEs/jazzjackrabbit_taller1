@@ -14,6 +14,8 @@ Personaje::Personaje(float x, float y, float w, float h, EntityType en_type, Ani
         config(config),
         arma(config) {
     velx = config["player_speed"];
+    jump_speed = config["player_jump"];
+    danio_ataque_especial = config["player_special_attack_dmg"];
     vely = 0;
     direccion = 1;
     jumping = false;
@@ -26,7 +28,6 @@ Personaje::Personaje(float x, float y, float w, float h, EntityType en_type, Ani
     espera_idle = 2000;  // en milisegundos
     espera_shoot = 250;  // Misma que la del arma
     score = 0;
-    danio_ataque_especial = config["player_special_attack_dmg"];
 }
 
 void Personaje::moveRigth() {
@@ -45,7 +46,7 @@ void Personaje::moveLeft() {
     }
     movingleft = true;
     direccion = -1;
-    an_type = AnimationType::INTOXICATED_WALK;  // Prueba
+    an_type = AnimationType::WALK;
     tiempo = std::chrono::system_clock::now();
 }
 void Personaje::stopMovingRight() {
@@ -77,18 +78,6 @@ void Personaje::jump() {
         vely = config["player_jump"];
         jumping = true;
         an_type = AnimationType::JUMP;
-        tiempo = std::chrono::system_clock::now();
-    }
-}
-
-void Personaje::special_action() {
-    if (!special_action_active) {
-        special_action_active = true;
-        movingleft = false;
-        movingright = false;
-        vely = config["player_jump"] + 1;
-        jumping = true;
-        an_type = AnimationType::SPECIAL_ACTION;
         tiempo = std::chrono::system_clock::now();
     }
 }
@@ -153,9 +142,7 @@ void Personaje::check_colisions(Mapa& m, int aux_x, int aux_y) {
         vely = 0;
         y = aux_y;
         // height = auxh;
-        if (this->en_type == EntityType::JAZZ) {
-            special_action_active = false;
-        }
+        special_action_active = false;
     }
     if (!(colisionx && colisiony)) {  // me fijo si justo se da el caso que solo choca en diagonal
         if (m.CheckColision(x, y, width, height)) {

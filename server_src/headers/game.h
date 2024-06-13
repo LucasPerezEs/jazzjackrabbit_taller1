@@ -40,7 +40,9 @@
 #include "clock.h"
 #include "contenedor.h"
 #include "ghost.h"
+#include "jazz.h"
 #include "lista_objetos.h"
+#include "lori.h"
 #include "monkey.h"
 #include "personaje.h"
 

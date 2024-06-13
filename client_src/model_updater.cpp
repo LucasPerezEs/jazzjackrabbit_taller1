@@ -96,6 +96,35 @@ void ModelUpdater::init_animations(SdlWindow& window) {
             new Animation(new SdlTexture("../client_src/assets/banana_shoot.png", window,
                                          Color{0x2C, 0x66, 0x96}),
                           8, AnimationSpeed::FAST);
+
+    this->animations[EntityType::LORI][AnimationType::WALK] =
+            new Animation(new SdlTexture("../client_src/assets/lori_walking.png", window,
+                                         Color{0x2C, 0x66, 0x96}),
+                          8, AnimationSpeed::FAST);
+
+    this->animations[EntityType::LORI][AnimationType::IDLE] = new Animation(
+            new SdlTexture("../client_src/assets/lori_idle.png", window, Color{0x2C, 0x66, 0x96}),
+            16, AnimationSpeed::FAST);
+
+    this->animations[EntityType::LORI][AnimationType::SHOOT_IDLE] =
+            new Animation(new SdlTexture("../client_src/assets/lori_shoot_idle.png", window,
+                                         Color{0x2C, 0x66, 0x96}),
+                          2, AnimationSpeed::SLOW);
+
+    this->animations[EntityType::LORI][AnimationType::SHOOT] =
+            new Animation(new SdlTexture("../client_src/assets/lori_shooting.png", window,
+                                         Color{0x2C, 0x66, 0x96}),
+                          4, AnimationSpeed::FAST);
+
+    this->animations[EntityType::LORI][AnimationType::JUMP] =
+            new Animation(new SdlTexture("../client_src/assets/lori_jumping.png", window,
+                                         Color{0x2C, 0x66, 0x96}),
+                          18, AnimationSpeed::FAST);
+
+    this->animations[EntityType::LORI][AnimationType::SPECIAL_ACTION] =
+            new Animation(new SdlTexture("../client_src/assets/lori_highkick.png", window,
+                                         Color{0x2C, 0x66, 0x96}),
+                          10, AnimationSpeed::FAST);
 }
 
 void ModelUpdater::run() {

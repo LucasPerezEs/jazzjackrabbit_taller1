@@ -54,6 +54,7 @@ protected:
     float velx;
     float vely;
     bool special_action_active;
+    float jump_speed;
     std::map<std::string, float>& config;
     Arma arma;
 
@@ -78,7 +79,7 @@ public:
     void run();
     void stoprunning();
     void jump();
-    void special_action();
+    virtual void special_action() = 0;
     void set_id(int i);
     void add_score(int score);
     bool has_special_action_active();
