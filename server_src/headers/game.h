@@ -38,6 +38,7 @@
 
 #include "clock.h"
 #include "contenedor.h"
+#include "ghost.h"
 #include "lista_objetos.h"
 #include "personaje.h"
 

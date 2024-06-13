@@ -15,8 +15,8 @@ player:
   run_speed: 1
   jump: 1
 
-# Enemigo (mas adelante hay que separar segun que enemigo es)
-enemy:
+# Fantasma 
+ghost:
   life: 100
   damage: 1
   speed: 0.25

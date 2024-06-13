@@ -19,6 +19,7 @@ add_library(server_lib
     zanahoria.cpp
     gold_coin.cpp
     clock.cpp
+    ghost.cpp
     ../common_src/liberror.cpp
     ../common_src/protocol.cpp
     ../common_src/resolver.cpp

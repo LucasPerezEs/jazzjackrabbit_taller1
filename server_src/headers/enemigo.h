@@ -18,21 +18,18 @@ class ListaObjetos;
 
 class Enemigo: public Ente {
 protected:
-    float limxizq;
-    float limxder;
-    float limy;
-    int danio;
-    std::map<std::string, float>& config;
+    int damage;
+    float speed;
 
 public:
-    Enemigo(float x, float y, float w, float h, EntityType en_type, AnimationType an_type,
-            std::map<std::string, float>& config);
+    Enemigo(float x, float y, float w, float h, float vida, float speed, float damage,
+            EntityType en_type, AnimationType an_type);
     virtual void colision(Objeto& o) override;
     virtual void colision(Personaje& p) override;
     virtual void colision(Bala& b) override;
-    virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) override;
-    virtual void update_vivo(ListaObjetos& objetos, Queue<Contenedor>& q) override;
-    Pickup* drop_item();
+    virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) override = 0;
+    virtual void update_vivo(ListaObjetos& objetos, Queue<Contenedor>& q) override = 0;
+    virtual Pickup* drop_item() = 0;
 };
 
 

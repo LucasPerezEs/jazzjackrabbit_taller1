@@ -13,10 +13,10 @@ Game::Game(Queue<Command>& actionQueue, Queue<Contenedor>& stateQueue,
 void Game::run() {
     // Queue<Contenedor> q; // esta queue tiene que ir al sender
     Mapa m = Mapa();
-    Enemigo enemigo = Enemigo(50, 2, 2, 4, EntityType::ENEMY, AnimationType::WALK, config);
-    objetos.agregar_objeto(&enemigo);
+    Ghost ghost = Ghost(50, 2, config);
+    objetos.agregar_objeto(&ghost);
     // cppcheck-suppress danglingLifetime
-    entes.push_back(&enemigo);
+    entes.push_back(&ghost);
 
 
     while (_keep_running && !clock.times_up()) {

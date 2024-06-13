@@ -5,7 +5,7 @@ enum EntityType {
     JAZZ = 0x00,
     LORI = 0x01,
     SPAZ = 0x02,
-    ENEMY = 0x03,
+    GHOST = 0x03,
     BULLET = 0x04,
     AMMO = 0x05,
     CARROT = 0x06,

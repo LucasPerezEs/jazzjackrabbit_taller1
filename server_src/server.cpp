@@ -24,12 +24,12 @@ std::map<std::string, float> Server::load_config(const std::string& path) {
     config["player_jump"] = yaml["player"]["jump"].as<float>();
 
     // Enemy
-    config["enemy_life"] = yaml["enemy"]["life"].as<float>();
-    config["enemy_damage"] = yaml["enemy"]["damage"].as<float>();
-    config["enemy_speed"] = yaml["enemy"]["speed"].as<float>();
-    config["enemy_prob_carrot"] = yaml["enemy"]["prob_carrot"].as<float>();
-    config["enemy_prob_ammo"] = yaml["enemy"]["prob_ammo"].as<float>();
-    config["enemy_prob_goldcoin"] = yaml["enemy"]["prob_goldcoin"].as<float>();
+    config["ghost_life"] = yaml["ghost"]["life"].as<float>();
+    config["ghost_damage"] = yaml["ghost"]["damage"].as<float>();
+    config["ghost_speed"] = yaml["ghost"]["speed"].as<float>();
+    config["ghost_prob_carrot"] = yaml["ghost"]["prob_carrot"].as<float>();
+    config["ghost_prob_ammo"] = yaml["ghost"]["prob_ammo"].as<float>();
+    config["ghost_prob_goldcoin"] = yaml["ghost"]["prob_goldcoin"].as<float>();
 
     // Pickups
     config["goldcoin_addscore"] = yaml["goldcoin"]["add_score"].as<float>();

@@ -54,7 +54,7 @@ void ModelUpdater::init_animations(SdlWindow& window) {
                                          Color{0x2C, 0x66, 0x96}),
                           12, AnimationSpeed::FAST);
 
-    this->animations[EntityType::ENEMY][AnimationType::WALK] =
+    this->animations[EntityType::GHOST][AnimationType::WALK] =
             new Animation(new SdlTexture("../client_src/assets/fantasma_walking.png", window,
                                          Color{0x2C, 0x66, 0x96}),
                           5, AnimationSpeed::FAST);
