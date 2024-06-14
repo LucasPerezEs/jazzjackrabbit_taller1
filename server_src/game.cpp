@@ -3,7 +3,7 @@
 #include "headers/partida.h"
 
 Game::Game(Queue<Command>& actionQueue, Queue<Contenedor>& stateQueue,
-           std::map<std::string, float>& config):
+            std::map<std::string, float>& config):
         actionQueue(actionQueue),
         stateQueue(stateQueue),
         config(config),
@@ -68,6 +68,7 @@ void Game::run() {
 
         std::this_thread::sleep_for(std::chrono::milliseconds(17));
     }
+
 }
 
 void Game::addPlayer(int clientId) {

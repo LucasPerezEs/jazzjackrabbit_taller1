@@ -25,6 +25,7 @@ private:
 
 public:
     ClientHandler(uint32_t id,Socket peer, Queue<Command>& receiverQueue);
+    uint32_t getId();
     bool is_online();
     void kill();
     void pushState(const Contenedor& c);

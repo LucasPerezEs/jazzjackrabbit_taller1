@@ -33,19 +33,19 @@
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 25,
+				"line" : 30,
 				"parent" : 0
 			},
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 26,
+				"line" : 31,
 				"parent" : 0
 			},
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 27,
+				"line" : 32,
 				"parent" : 0
 			}
 		]
@@ -56,7 +56,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : " -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -std=gnu++17 -fdiagnostics-color=always"
+					"fragment" : " -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always"
 				},
 				{
 					"backtrace" : 2,
@@ -82,19 +82,19 @@
 			[
 				{
 					"backtrace" : 3,
-					"path" : "/home/pablo/Escritorio/jazzjackrabbit_taller1/client_src/headers/*"
+					"path" : "/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/headers/*"
 				},
 				{
 					"backtrace" : 4,
-					"path" : "/home/pablo/Escritorio/jazzjackrabbit_taller1/client_src/../common_src/headers/*"
+					"path" : "/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/../common_src/headers/*"
 				},
 				{
 					"backtrace" : 4,
-					"path" : "/home/pablo/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen"
+					"path" : "/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen"
 				},
 				{
 					"backtrace" : 2,
-					"path" : "/home/pablo/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.."
+					"path" : "/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.."
 				},
 				{
 					"backtrace" : 2,
@@ -153,7 +153,12 @@
 				17,
 				18,
 				19,
-				20
+				20,
+				21,
+				22,
+				23,
+				24,
+				25
 			]
 		}
 	],
@@ -198,7 +203,12 @@
 				17,
 				18,
 				19,
-				20
+				20,
+				21,
+				22,
+				23,
+				24,
+				25
 			]
 		}
 	],
@@ -225,12 +235,6 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "client_src/player.cpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
 			"path" : "client_src/protocol.cpp",
 			"sourceGroupIndex" : 0
 		},
@@ -250,6 +254,24 @@
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "client_src/entity.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "client_src/player.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "client_src/camara.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "client_src/UIManager.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
@@ -322,6 +344,24 @@
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "client_src/sdl_libs/SdlWindow.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "client_src/sdl_libs/Fuente.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "client_src/sdl_libs/Music.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "client_src/sdl_libs/Sound.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{

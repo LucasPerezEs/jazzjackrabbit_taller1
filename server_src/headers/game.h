@@ -47,7 +47,7 @@
 class Game: public Thread {
 public:
     explicit Game(Queue<Command>& actionQueue, Queue<Contenedor>& eventQueue,
-                  std::map<std::string, float>& config);
+                   std::map<std::string, float>& config);
 
     void run() override;
     void stop() override;
