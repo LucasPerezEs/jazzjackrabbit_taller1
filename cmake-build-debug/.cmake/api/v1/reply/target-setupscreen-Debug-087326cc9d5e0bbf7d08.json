@@ -27,19 +27,19 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 21,
+				"line" : 26,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 26,
+				"line" : 28,
 				"parent" : 0
 			},
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 28,
+				"line" : 30,
 				"parent" : 0
 			}
 		]
@@ -50,7 +50,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : " -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -std=gnu++17 -fdiagnostics-color=always"
+					"fragment" : " -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always"
 				},
 				{
 					"backtrace" : 2,
@@ -76,7 +76,7 @@
 			[
 				{
 					"backtrace" : 3,
-					"path" : "/home/pablo/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.."
+					"path" : "/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.."
 				},
 				{
 					"backtrace" : 2,
@@ -119,8 +119,14 @@
 				1,
 				2,
 				3,
+				4,
 				5,
-				7
+				6,
+				7,
+				8,
+				9,
+				10,
+				11
 			]
 		}
 	],
@@ -142,20 +148,26 @@
 				1,
 				2,
 				3,
-				5,
-				7
-			]
-		},
-		{
-			"name" : "Header Files",
-			"sourceIndexes" : 
-			[
 				4,
+				5,
 				6,
+				7,
 				8,
 				9,
 				10,
 				11
+			]
+		},
+		{
+			"name" : "CMake Rules",
+			"sourceIndexes" : 
+			[
+				12,
+				13,
+				14,
+				15,
+				16,
+				17
 			]
 		}
 	],
@@ -187,19 +199,9 @@
 		},
 		{
 			"backtrace" : 1,
-			"path" : "client_src/setupscreen/CreateGame.h",
-			"sourceGroupIndex" : 1
-		},
-		{
-			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "client_src/setupscreen/JoinGame.cpp",
 			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"path" : "client_src/setupscreen/JoinGame.h",
-			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
@@ -209,22 +211,80 @@
 		},
 		{
 			"backtrace" : 1,
-			"path" : "client_src/setupscreen/GameList.h",
-			"sourceGroupIndex" : 1
+			"compileGroupIndex" : 0,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/client_src/setupscreen/moc_ConnectMenu.cpp",
+			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
-			"path" : "client_src/setupscreen/ConnectMenu.h",
-			"sourceGroupIndex" : 1
+			"compileGroupIndex" : 0,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/client_src/setupscreen/moc_SetupScreen.cpp",
+			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
-			"path" : "client_src/setupscreen/SetupScreen.h",
-			"sourceGroupIndex" : 1
+			"compileGroupIndex" : 0,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/client_src/setupscreen/moc_MultiplayerMenu.cpp",
+			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
-			"path" : "client_src/setupscreen/MultiplayerMenu.h",
+			"compileGroupIndex" : 0,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/client_src/setupscreen/moc_CreateGame.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/client_src/setupscreen/moc_JoinGame.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/client_src/setupscreen/moc_GameList.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/client_src/setupscreen/moc_ConnectMenu.cpp.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/client_src/setupscreen/moc_SetupScreen.cpp.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/client_src/setupscreen/moc_MultiplayerMenu.cpp.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/client_src/setupscreen/moc_CreateGame.cpp.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/client_src/setupscreen/moc_JoinGame.cpp.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/client_src/setupscreen/moc_GameList.cpp.rule",
 			"sourceGroupIndex" : 1
 		}
 	],

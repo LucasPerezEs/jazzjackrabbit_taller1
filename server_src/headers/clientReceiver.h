@@ -11,10 +11,12 @@ class ClientReceiver: public Thread {
 private:
     uint32_t id;
     ServerProtocol& serverProtocol;
-    Queue<Command>& queueReceiver;
+    Queue<Command>* queueReceiver;
 
 public:
-    ClientReceiver(uint32_t id, ServerProtocol& protocol, Queue<Command>& receiverQueue);
+    ClientReceiver(uint32_t id, ServerProtocol& protocol);
+
+    void setQueue(Queue<Command>* queue);
 
     void join_game(bool& joined);
     void create_game();

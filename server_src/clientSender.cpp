@@ -4,6 +4,9 @@
 ClientSender::ClientSender(uint32_t id,ServerProtocol& protocol): serverProtocol(protocol), id(id) {}
 
 void ClientSender::run() {
+    Contenedor init(2, id, 0, 0, 0, 0, 0, AnimationType::NONE_ANIMATION,
+                    EntityType::NONE_ENTITY, 0, 0, 0);
+    pushDatosObjeto(init);
     while (_keep_running) {
         try {
             Contenedor c = queueSender.pop();

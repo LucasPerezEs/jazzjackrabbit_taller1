@@ -205,7 +205,7 @@ void Personaje::disparar(ListaObjetos& objetos) {
     }
 }
 
-void Personaje::set_id(int i) { id = i; }
+void Personaje::set_id(uint32_t i) { id = i; }
 
 
 Arma::Arma(std::map<std::string, float>& config):

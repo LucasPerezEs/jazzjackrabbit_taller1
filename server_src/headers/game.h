@@ -54,7 +54,7 @@ public:
     void run() override;
     void stop() override;
 
-    void addPlayer(int clientId);
+    void addPlayer(uint32_t clientId);
 
     bool is_running() { return _is_alive; }
 

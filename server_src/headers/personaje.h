@@ -80,7 +80,7 @@ public:
     void stoprunning();
     void jump();
     virtual void special_action() = 0;
-    void set_id(int i);
+    void set_id(uint32_t i);
     void add_score(int score);
     bool has_special_action_active();
     virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) override;

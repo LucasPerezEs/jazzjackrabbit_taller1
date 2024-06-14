@@ -70,34 +70,24 @@ void Server::run() {
 
     int c;
 
-    Queue<Command> actionQueue;
-    Queue<Contenedor> stateQueue;
-
     std::list<ClientHandler*> clients;
 
     std::map<std::string, float> config = this->load_config("../config.yml");
 
+    GameManager game_manager;
+    Acceptor thread_acceptador(srv, clients, game_manager);
 
-    Game game(actionQueue, stateQueue, config);
-    Acceptor thread_acceptador(srv, clients, actionQueue, game);
-    Broadcaster br(clients, stateQueue);
-
-
-    game.start();
+    game_manager.start();
     thread_acceptador.start();
-    br.start();
-
 
     do {
         c = getchar();
     } while (c != 'q');
 
     thread_acceptador.stop();
-
-    game.stop();
-    br.stop();
+    game_manager.stop();
 
     thread_acceptador.join();
-    game.join();
-    br.join();
+    game_manager.join();
+
 }

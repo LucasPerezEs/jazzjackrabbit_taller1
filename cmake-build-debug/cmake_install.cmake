@@ -1,4 +1,4 @@
-# Install script for directory: /home/pablo/Escritorio/jazzjackrabbit_taller1
+# Install script for directory: /home/moko/Escritorio/jazzjackrabbit_taller1
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -44,9 +44,9 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/pablo/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/client_src/cmake_install.cmake")
-  include("/home/pablo/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/server_src/cmake_install.cmake")
-  include("/home/pablo/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/client_src/setupscreen/cmake_install.cmake")
+  include("/home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/client_src/cmake_install.cmake")
+  include("/home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/server_src/cmake_install.cmake")
+  include("/home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/client_src/setupscreen/cmake_install.cmake")
 
 endif()
 
@@ -58,5 +58,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/pablo/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
