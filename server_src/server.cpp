@@ -74,7 +74,7 @@ void Server::run() {
 
     std::map<std::string, float> config = this->load_config("../config.yml");
 
-    GameManager game_manager;
+    GamesManager game_manager;
     Acceptor thread_acceptador(srv, clients, game_manager);
 
     game_manager.start();
@@ -87,7 +87,9 @@ void Server::run() {
     thread_acceptador.stop();
     game_manager.stop();
 
+
     thread_acceptador.join();
     game_manager.join();
+
 
 }

@@ -10,17 +10,17 @@
 #include "../../common_src/headers/socket.h"
 #include "../../common_src/headers/thread.h"
 
-#include "GameManager.h"
+#include "GamesManager.h"
 #include "client.h"
 
 class Acceptor: public Thread {
 private:
     Socket& sk;
     std::list<ClientHandler*>& clients;
-    GameManager& gameManager;
+    GamesManager& gameManager;
 
 public:
-    Acceptor(Socket& socket, std::list<ClientHandler*>& clients, GameManager& game);
+    Acceptor(Socket& socket, std::list<ClientHandler*>& clients, GamesManager& game);
     void run() override;
     void reap_offline_clients();
     void kill_all();

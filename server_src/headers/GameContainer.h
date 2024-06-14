@@ -16,7 +16,7 @@ public:
     void start();
 
     void stop();
-
+void join();
     bool is_running();
 
 private:

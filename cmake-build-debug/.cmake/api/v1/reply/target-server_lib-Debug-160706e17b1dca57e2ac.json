@@ -32,13 +32,13 @@
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 37,
+				"line" : 40,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 38,
+				"line" : 41,
 				"parent" : 0
 			}
 		]
@@ -104,7 +104,10 @@
 				27,
 				28,
 				29,
-				31
+				30,
+				31,
+				32,
+				34
 			]
 		}
 	],
@@ -152,15 +155,18 @@
 				27,
 				28,
 				29,
-				31
+				30,
+				31,
+				32,
+				34
 			]
 		},
 		{
 			"name" : "Header Files",
 			"sourceIndexes" : 
 			[
-				30,
-				32
+				33,
+				35
 			]
 		}
 	],
@@ -313,6 +319,24 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
+			"path" : "server_src/jazz.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "server_src/lori.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "server_src/spaz.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
 			"path" : "common_src/liberror.cpp",
 			"sourceGroupIndex" : 0
 		},
@@ -359,7 +383,7 @@
 		},
 		{
 			"backtrace" : 1,
-			"path" : "server_src/GameContainer.h",
+			"path" : "server_src/headers/GameContainer.h",
 			"sourceGroupIndex" : 1
 		}
 	],

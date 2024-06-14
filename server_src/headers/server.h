@@ -8,13 +8,14 @@
 #include <string>
 #include <utility>
 #include <vector>
-#include "GameManager.h"
+
 #include <yaml-cpp/yaml.h>
 
 #include "../../common_src/headers/desconection.h"
 #include "../../common_src/headers/protocol.h"
 #include "../../common_src/headers/socket.h"
 
+#include "GamesManager.h"
 #include "acceptor.h"
 #include "broadcaster.h"
 #include "game.h"

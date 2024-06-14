@@ -19,6 +19,11 @@ void GameContainer::stop() {
     broadcaster.stop();
 }
 
+void GameContainer::join() {
+    game.join();
+    broadcaster.join();
+}
+
 bool GameContainer::is_running(){
     return game.is_running();
 }

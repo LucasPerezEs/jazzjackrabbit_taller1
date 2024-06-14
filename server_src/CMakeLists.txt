@@ -31,8 +31,8 @@ add_library(server_lib
     ../common_src/resolver.cpp
     ../common_src/resolvererror.cpp
     ../common_src/socket.cpp
-        GameManager.cpp
-        headers/GameManager.h
+        GamesManager.cpp
+        headers/GamesManager.h
         GameContainer.cpp
         headers/GameContainer.h
 )

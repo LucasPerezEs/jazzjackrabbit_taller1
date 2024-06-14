@@ -64,7 +64,7 @@ std::map<std::string, float> load_config(const std::string& path) {
     return config;
 }
 
-Acceptor::Acceptor(Socket& socket, std::list<ClientHandler*>& clients, GameManager& game_manager):
+Acceptor::Acceptor(Socket& socket, std::list<ClientHandler*>& clients, GamesManager& game_manager):
         sk(socket), clients(clients), gameManager(game_manager) {}
 
 void Acceptor::reap_offline_clients() {
@@ -109,7 +109,6 @@ void Acceptor::run() {
 }
 
 void Acceptor::stop() {
-
     _keep_running = false;
     kill_all();
     sk.shutdown(SHUT_RDWR);
