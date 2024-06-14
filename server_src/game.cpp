@@ -73,11 +73,11 @@ void Game::run() {
 void Game::addPlayer(uint32_t clientId) {
     std::lock_guard<std::mutex> lock(clientCharactersMutex);
 
-    Lori* lori = new Lori(4 + clientId * 20, 2, config);
-    lori->set_id(clientId);
-    clientCharacters[clientId] = lori;
-    objetos.agregar_objeto(lori);
-    entes.push_back(lori);
+    Spaz* spaz = new Spaz(4 + clientId * 20, 2, config);
+    spaz->set_id(clientId);
+    clientCharacters[clientId] = spaz;
+    objetos.agregar_objeto(spaz);
+    entes.push_back(spaz);
 
     // Para mas adelante, el reloj deberia empezar cuando hay dos jugadores
     if (clientCharacters.size() == 1) {

@@ -59,8 +59,8 @@ protected:
     Arma arma;
 
     void check_idle();
-    void update_position();
-    void check_colisions(Mapa& m, int aux_x, int aux_y);
+    virtual void update_position();
+    virtual void check_colisions(Mapa& m, int aux_x, int aux_y);
 
 public:
     int danio_ataque_especial;

@@ -25,6 +25,7 @@ add_library(server_lib
     banana.cpp
     jazz.cpp
     lori.cpp
+    spaz.cpp
     ../common_src/liberror.cpp
     ../common_src/protocol.cpp
     ../common_src/resolver.cpp

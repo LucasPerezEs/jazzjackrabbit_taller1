@@ -45,6 +45,7 @@
 #include "lori.h"
 #include "monkey.h"
 #include "personaje.h"
+#include "spaz.h"
 
 class Game: public Thread {
 public:

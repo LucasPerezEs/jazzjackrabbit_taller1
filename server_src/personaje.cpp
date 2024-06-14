@@ -74,7 +74,8 @@ void Personaje::stoprunning() {
 }
 
 void Personaje::jump() {
-    if (!jumping) {  // Esto es para evitar que se pueda spamear el jump y volar
+    if (!jumping &&
+        !special_action_active) {  // Esto es para evitar que se pueda spamear el jump y volar
         vely = config["player_jump"];
         jumping = true;
         an_type = AnimationType::JUMP;
