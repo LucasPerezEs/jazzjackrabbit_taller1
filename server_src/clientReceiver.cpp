@@ -1,7 +1,7 @@
 #include "headers/clientReceiver.h"
 
-ClientReceiver::ClientReceiver(uint32_t id,ServerProtocol& protocol, Queue<Command>& receiverQueue):
-        id(id),serverProtocol(protocol), queueReceiver(receiverQueue) {}
+ClientReceiver::ClientReceiver(uint32_t id,ServerProtocol& protocol):
+        id(id),serverProtocol(protocol){}
 
 void ClientReceiver::run() {
     bool joined = false;
@@ -9,6 +9,7 @@ void ClientReceiver::run() {
         try {
             //recibir comando de un cliente
             auto action = serverProtocol.receive_command();
+            std::cout << "action:"  << action << std::endl;
             if (action == Command::CREATE_GAME){
                 create_game();
             }else if (action == Command::JOIN_GAME){
@@ -17,7 +18,7 @@ void ClientReceiver::run() {
                 //std::cout << "GET_GAME_LIST" << std::endl;
             } else{
             Command command = { action, id };
-            queueReceiver.push(command);
+            queueReceiver->push(command);
             }
         } catch (ProtocolDesconection& d) {
             break;
@@ -50,3 +51,4 @@ void ClientReceiver::send_game_list() {
     //serverProtocol.send_games_ids(gameIDs);
 }
 
+void ClientReceiver::setQueue(Queue<Command>* queue) { queueReceiver = queue; }

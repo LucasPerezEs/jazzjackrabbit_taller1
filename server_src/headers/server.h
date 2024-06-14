@@ -8,7 +8,7 @@
 #include <string>
 #include <utility>
 #include <vector>
-
+#include "GameManager.h"
 #include <yaml-cpp/yaml.h>
 
 #include "../../common_src/headers/desconection.h"

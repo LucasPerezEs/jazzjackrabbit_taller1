@@ -71,7 +71,7 @@ void Game::run() {
 
 }
 
-void Game::addPlayer(int clientId) {
+void Game::addPlayer(uint32_t clientId) {
     std::lock_guard<std::mutex> lock(clientCharactersMutex);
     Personaje* personaje = new Personaje(4 + clientId * 20, 2, 2, 4, EntityType::JAZZ,
                                          AnimationType::SHOOT_IDLE, config);

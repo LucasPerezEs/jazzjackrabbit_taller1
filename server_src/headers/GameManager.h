@@ -6,7 +6,7 @@
 #include "GameContainer.h"
 #include "client.h"
 
-class GameManager {
+class GameManager: public Thread {
 public:
     GameManager();
     ~GameManager();
@@ -23,7 +23,6 @@ private:
 
     std::map<std::string, GameContainer*> games;
     std::mutex gamesMutex;
-    uint32_t nextGameId;
     bool _keep_running;
 };
 
