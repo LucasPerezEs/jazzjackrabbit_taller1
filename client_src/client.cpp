@@ -51,7 +51,7 @@ bool Client::createGame(const std::string& gameId) {
 
 bool Client::joinGame(const std::string& gameId) {
     client_protocol.send_join_game();
-    client_protocol.sendString(gameId);
+    //client_protocol.sendString(gameId);
     // recibir confirmacion del server
     return true;
 }

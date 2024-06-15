@@ -91,7 +91,7 @@ void Acceptor::kill_all() {
 void Acceptor::run() {
     std::map<std::string, float> config = load_config("../config.yml");
     gameManager.createGame("PruebaManager", config);
-    int id = 0;
+    uint32_t id = 0;
     while (_keep_running) {
         try {
             id++;
@@ -99,7 +99,10 @@ void Acceptor::run() {
             ClientHandler* client = new ClientHandler(id, std::move(peer));
             client->go_online();
             clients.push_back(client);
-            gameManager.joinGame("PruebaManager", client);
+
+            gameManager.addClient(id,client);
+            //gameManager.joinGame("PruebaManager", client);
+
             reap_offline_clients();
         } catch (LibError& err) {
             break;

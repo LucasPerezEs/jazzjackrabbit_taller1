@@ -84,12 +84,17 @@ void Server::run() {
         c = getchar();
     } while (c != 'q');
 
+
     thread_acceptador.stop();
+    std::cout << "thread_acceptador.stop();" << std::endl;
     game_manager.stop();
+    std::cout << "game_manager.stop();" << std::endl;
 
 
     thread_acceptador.join();
+    std::cout << "thread_acceptador.join();" << std::endl;
     game_manager.join();
+    std::cout << "game_manager.join();" << std::endl;
 
 
 }

@@ -4,7 +4,7 @@ GameContainer::GameContainer(std::map<std::string, float>& config)
         : actionQueue(), stateQueue(), game(actionQueue, stateQueue, config), broadcaster(clients, stateQueue) {}
 
 void GameContainer::addPlayer(ClientHandler* client) {
-    client->setQueues(&actionQueue);
+    client->setReceiverQueue(&actionQueue);
     clients.push_back(client);
     game.addPlayer(client->getId());
 }

@@ -42,9 +42,9 @@ void ClientHandler::pushState(const Contenedor& c) { senderThread.pushDatosObjet
 
 ClientHandler::~ClientHandler() {}
 
-void ClientHandler::setQueues(Queue<Command>* actionQueue) {
+
+void ClientHandler::setReceiverQueue(Queue<Command>* actionQueue) {
     receiverThread.setQueue(actionQueue);
 }
-
 
 uint32_t ClientHandler::getId() { return id; }
