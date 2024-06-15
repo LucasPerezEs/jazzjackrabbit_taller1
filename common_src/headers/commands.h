@@ -5,7 +5,7 @@
 
 // En este archivo se pueden crear nuevos comandos.
 
-#define GAME_TIME 90  // En segundos
+#define GAME_TIME 300  // En segundos
 
 struct Command {
     enum ActionType {

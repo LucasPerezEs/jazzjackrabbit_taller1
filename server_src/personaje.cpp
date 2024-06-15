@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <map>
+#include <cmath>
 
 #include "headers/enemigo.h"
 #include "headers/lista_objetos.h"
@@ -24,6 +25,7 @@ Personaje::Personaje(float x, float y, float w, float h, int vida, EntityType en
     espera_shoot = 250;  // Misma que la del arma
     score = 0;
     danio_ataque_especial = 100;
+    direccion_movimientox = 1;
 }
 
 void Personaje::moveRigth() {
@@ -83,7 +85,7 @@ void Personaje::special_action() {
         special_action_active = true;
         movingleft = false;
         movingright = false;
-        vely = 2;
+        vely = 1.5;
         jumping = true;
         an_type = AnimationType::SPECIAL_ACTION;
         tiempo = std::chrono::system_clock::now();
@@ -115,50 +117,119 @@ void Personaje::check_idle() {
 
 void Personaje::update_position() {
 
-    // float auxw = width;
-    // float auxh = height;
     if (!(movingleft && movingright) &&
         (movingleft || movingright)) {  // mientras se este apretando una tecla de mover el jugador
         if (movingleft) {
-            x += velx * -1;  // se actualiza la posicin en x
-            // width += velx * -1;
+            x += velx * -1 * direccion_movimientox;
+            y += velx * -1 * direccion_movimientoy; // se actualiza la posicin en x
         }
         if (movingright) {
-            x += velx;  // se actualiza la posicin en x
-            // width += velx;
+            x += velx * direccion_movimientox;  // se actualiza la posicin en x
+            y += velx * direccion_movimientoy;
         }
     }
     y += vely;
-    // height += vely;
     vely -= 0.1;  // esto es la aceleracion de la gravedad, se tiene que poner un limite de vely
 }
 
-void Personaje::check_colisions(Mapa& m, int aux_x, int aux_y) {
+void Personaje::check_colisions(Mapa& m, float aux_x, float aux_y) {
 
-    bool colisionx;
-    bool colisiony;
-    colisionx = m.CheckColision(x, aux_y, width, height);
-    colisiony = m.CheckColision(aux_x, y, width, height);
+    bool colisionx = false;
+    bool colisiony = false;
+    bool colisiondiagonal = false;
 
-    if (colisionx) {  // si colisiona con la pos x actualizada
-        x = aux_x;    // se pone la pos x anterior
-        // width = auxw;  // lo mismo con la pos y
-    }
-    if (colisiony) {
-        jumping = false;  // esta en el piso se puede saltar
-        vely = 0;
-        y = aux_y;
-        // height = auxh;
-        if (this->en_type == EntityType::JAZZ) {
+    for (auto diagonal: m.diagonalesDer) {
+
+        if (diagonal->x <= x + width && x + width <= diagonal->x + diagonal->w && y <= diagonal->y + diagonal->h - (diagonal->x + diagonal->w - (x + width)) && diagonal->y + diagonal->h - (diagonal->x + diagonal->w - (x + width)) <= y + height/2) {
+            jumping = false;
+            vely = 0;
+            y = diagonal->y + diagonal->h - (diagonal->x + diagonal->w - (x + width));
             special_action_active = false;
+            colisiony = true;
+            colisionx = true;
+            direccion_movimientox = sqrt(2)/2;
+            direccion_movimientoy = sqrt(2)/2;
+            colisiondiagonal = true;
+        }
+        else {
+            if (aux_x < (diagonal->x + diagonal->w) && (aux_x + width) > diagonal->x && (y + 2*height/3) < diagonal->y && diagonal->y < y + height) {
+                vely = 0;
+                y = diagonal->y - height;
+                special_action_active = false;
+                colisiony = true;
+            }
+            if (x < (diagonal->x + diagonal->w) && (diagonal->x + diagonal->w) < x + width/2 && aux_y < (diagonal->y + diagonal->h) && (aux_y + height) > diagonal->y) {
+                x = diagonal->x + diagonal->w;
+                colisionx = true;
+            }
+        }
+
+    }
+
+    for (auto diagonal: m.diagonalesIzq) {
+
+        if (diagonal->x <= x && x <= diagonal->x + diagonal->w && y <= diagonal->y + diagonal->h - (x - diagonal->x) && diagonal->y + diagonal->h - (x - diagonal->x) <= y + height/2) {
+            jumping = false;
+            vely = 0;
+            y = diagonal->y + diagonal->h - (x - diagonal->x);
+            special_action_active = false;
+            colisiony = true;
+            colisionx = true;
+            direccion_movimientox = sqrt(2)/2;
+            direccion_movimientoy = -sqrt(2)/2;
+            colisiondiagonal = true;
+        }
+        else {
+            if (aux_x < (diagonal->x + diagonal->w) && (aux_x + width) > diagonal->x && (y + 2*height/3) < diagonal->y && diagonal->y < y + height) {
+                vely = 0;
+                y = diagonal->y - height;
+                special_action_active = false;
+                colisiony = true;
+            }
+            if (x + width/2 < diagonal->x && diagonal->x < x + width && aux_y < (diagonal->y + diagonal->h) && (aux_y + height) > diagonal->y) {
+                x = diagonal->x - width;
+                colisionx = true;
+            }
         }
     }
+
+    if (!colisiondiagonal) {
+        direccion_movimientox = 1;
+        direccion_movimientoy = 0;
+    }
+
+    for (auto terreno: m.objetos) {
+        if (aux_x < (terreno->x + terreno->w) && (aux_x + width) > terreno->x && (y + 2*height/3) < (terreno->y + terreno->h) && (y + height) > terreno->y) {
+            vely = 0;
+            y = terreno->y - height;
+            special_action_active = false;
+            colisiony = true;
+        }
+        else if (aux_x < (terreno->x + terreno->w) && (aux_x + width) > terreno->x && y < (terreno->y + terreno->h) && (y + height/4) > terreno->y) {
+            jumping = false;
+            vely = 0;
+            y = terreno->y + terreno->h;
+            special_action_active = false;
+            colisiony = true;
+        }
+
+        if (x < (terreno->x + terreno->w) && (x + width/2) > terreno->x && aux_y < (terreno->y + terreno->h) && (aux_y + height) > terreno->y) {
+            x = terreno->x + terreno->w;
+            colisionx = true;
+        }
+        else if ((x + width/2) < (terreno->x + terreno->w) && (x + width) > terreno->x && aux_y < (terreno->y + terreno->h) && (aux_y + height) > terreno->y) {
+            x = terreno->x - width;
+            colisionx = true;
+        }
+    }
+
     if (!(colisionx && colisiony)) {  // me fijo si justo se da el caso que solo choca en diagonal
         if (m.CheckColision(x, y, width, height)) {
             x = aux_x;  // se pone la pos x anterior
-            // width = auxw;
         }
     }
+
+
 }
 
 void Personaje::update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) {

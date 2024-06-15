@@ -51,10 +51,12 @@ protected:
     float vely;
     Arma arma;
     bool special_action_active;
+    float direccion_movimientox;
+    float direccion_movimientoy;
 
     void check_idle();
     void update_position();
-    void check_colisions(Mapa& m, int aux_x, int aux_y);
+    void check_colisions(Mapa& m, float aux_x, float aux_y);
 
 public:
     int danio_ataque_especial;
