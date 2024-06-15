@@ -1,6 +1,7 @@
 #ifndef GAMEMANAGER_H
 #define GAMEMANAGER_H
 
+#include <yaml-cpp/yaml.h>
 #include <map>
 #include <vector>
 #include "GameContainer.h"

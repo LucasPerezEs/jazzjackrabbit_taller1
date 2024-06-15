@@ -16,7 +16,7 @@ void MultiplayerMenu::init() {
     joinGameButton = new QPushButton("Join", this);
     refreshButton = new QPushButton("Refresh", this);
 
-    createGameButton->setEnabled(false);
+    //createGameButton->setEnabled(false);
     refreshButton->setEnabled(false);
 
     layout->addWidget(createGameButton);
