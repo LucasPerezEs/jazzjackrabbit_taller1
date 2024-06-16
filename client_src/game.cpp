@@ -66,18 +66,44 @@ void Game::run() {
     this->close();
 }
 
-const int MAP_WIDTH = 20;
-const int MAP_HEIGHT = 80;
-const int TILE_SIZE = 16;
-
 
 // Modifica SaveMapToCSV para guardar los IDs de los tiles
 void Game::SaveMapToCSV(const std::vector<Tile>& tiles, const std::string& filename) {
     std::ofstream file(filename);
+
+    int contador = 0;
+    int contador_multiplo = 0;
+
     if (file.is_open()) {
         for (const auto& tile : tiles) {
-            file << tile.id << "," << tile.destRect.x << "," << tile.destRect.y << "\n";
+
+            if(contador_multiplo == 80){
+                file << tile.id << "," << "\n";
+                contador++;
+                contador_multiplo = 0;
+
+            } else {
+                file << tile.id << ",";
+                contador++;
+                contador_multiplo++;
+            }
         }
+
+        while((80*20) >= contador){
+
+            if(contador_multiplo == 80){
+                file << "-1" << "," << "\n";
+                contador++;
+                contador_multiplo = 0;
+
+            } else {
+                file << "-1" << ",";
+                contador++;
+                contador_multiplo++;
+            }
+        
+        } 
+
         file.close();
     } else {
         std::cerr << "No se pudo abrir el archivo para guardar." << std::endl;
@@ -98,7 +124,7 @@ void Game::create_map(){
 
     // Crear una cuadrícula de tiles (ejemplo: 10x10)
     std::vector<Tile> tiles_mapa;
-    std::vector<Tile> tiles_asset;;
+    std::vector<Tile> tiles_asset;
 
     // Cargar la imagen de assets
     SDL_Surface* tilesetSurface =
@@ -214,6 +240,9 @@ void Game::create_map(){
                         } else if (newY > minY) {
                             newY = minY;
                         }
+
+                        //Esto es para que los bloques de las texturas se posiciones siempre en una posicion de 16x16 y no que puedas poner
+                        //la mitad de un asset sobre la mitad de otro. Si no crear un mapa con esta herramienta es un quilombo.
                         int multiploX = static_cast<int>((newX) / 16) * 16;
                         int multiploY = static_cast<int>((newY) / 16) * 16;
 
