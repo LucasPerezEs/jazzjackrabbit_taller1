@@ -85,7 +85,7 @@ void Game::run() {
 void Game::addPlayer(uint32_t clientId) {
     std::lock_guard<std::mutex> lock(clientCharactersMutex);
 
-    Spaz* spaz = new Spaz(4 + clientId * 20, 2, config);
+    Spaz* spaz = new Spaz(20 + clientId , 2, config);
     spaz->set_id(clientId);
     clientCharacters[clientId] = spaz;
     objetos.agregar_objeto(spaz);
