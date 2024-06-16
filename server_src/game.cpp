@@ -2,8 +2,9 @@
 
 #include "headers/partida.h"
 
-Game::Game(Queue<Message>& actionQueue, Queue<Contenedor>& stateQueue,
+Game::Game(Queue<Message>& actionQueue, Queue<Contenedor>& stateQueue,uint32_t maxPlayers,
            std::map<std::string, float>& config):
+        maxPlayers(maxPlayers),
         actionQueue(actionQueue),
         stateQueue(stateQueue),
         config(config),

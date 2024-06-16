@@ -1,11 +1,14 @@
 #ifndef GAMEMANAGER_H
 #define GAMEMANAGER_H
 
-#include <yaml-cpp/yaml.h>
 #include <map>
 #include <vector>
-#include "GameContainer.h"
+
+#include <yaml-cpp/yaml.h>
+
 #include "../../common_src/headers/Message.h"
+
+#include "GameContainer.h"
 #include "client.h"
 
 class GamesManager: public Thread {
@@ -15,7 +18,8 @@ public:
 
     void addClient(uint32_t clientId, ClientHandler* client);
 
-    std::string createGame(std::string gameId, std::map<std::string, float>& config);
+    std::string createGame(std::string gameId, uint32_t maxPlayers,
+                           std::map<std::string, float>& config);
     bool joinGame(const std::string& gameId, ClientHandler* client);
     std::vector<std::string> listGames();
     void run();
@@ -32,7 +36,6 @@ private:
 
     void reap_offline_games();
     void kill_all_games();
-
 };
 
 #endif  // GAMEMANAGER_H

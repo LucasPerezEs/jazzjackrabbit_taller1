@@ -1,13 +1,21 @@
 #include "headers/GameContainer.h"
 
-GameContainer::GameContainer(std::map<std::string, float>& config)
-        : actionQueue(), stateQueue(), game(actionQueue, stateQueue, config), broadcaster(clients, stateQueue) {}
+GameContainer::GameContainer(std::map<std::string, float>& config, uint32_t maxPlayers):
+        maxPlayers(maxPlayers),
+        actionQueue(),
+        stateQueue(),
+        game(actionQueue, stateQueue,maxPlayers, config),
+        broadcaster(clients, stateQueue) {}
 
 void GameContainer::addPlayer(ClientHandler* client) {
-    client->setReceiverQueue(&actionQueue);
-    clients.push_back(client);
-    game.addPlayer(client->getId());
+    if (canAddPlayer()) {
+        client->setReceiverQueue(&actionQueue);
+        clients.push_back(client);
+        game.addPlayer(client->getId());
+    }
 }
+
+bool GameContainer::canAddPlayer() const { return clients.size() < maxPlayers; }
 
 void GameContainer::start() {
     game.start();
@@ -24,6 +32,4 @@ void GameContainer::join() {
     broadcaster.join();
 }
 
-bool GameContainer::is_running(){
-    return game.is_running();
-}
+bool GameContainer::is_running() { return game.is_running(); }

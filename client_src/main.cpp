@@ -52,7 +52,7 @@ int main(int argc, char* argv[]) {
                     // multiplayerMenu.updateGameList(gameList);
                 });
                 QObject::connect(&multiplayerMenu, &MultiplayerMenu::createGameRequested, [&](const QString& gameID) {
-                    if (client.createGame(gameID.toStdString(), 10)) {}
+                    if (client.createGame(gameID.toStdString(), 2)) {}
                     //   multiplayerMenu.showGameCreatedMessage();
                     //} else {
                     //  multiplayerMenu.showGameCreationFailedMessage();

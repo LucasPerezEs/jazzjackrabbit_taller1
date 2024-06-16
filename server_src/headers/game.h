@@ -49,7 +49,7 @@
 
 class Game: public Thread {
 public:
-    explicit Game(Queue<Message>& actionQueue, Queue<Contenedor>& eventQueue,
+    explicit Game(Queue<Message>& actionQueue, Queue<Contenedor>& eventQueue, uint32_t maxPlayers,
                   std::map<std::string, float>& config);
 
     void run() override;
@@ -60,6 +60,7 @@ public:
     bool is_running() { return _is_alive; }
 
 private:
+    uint32_t maxPlayers;
     std::unordered_map<uint32_t, Personaje*> clientCharacters;
     ListaObjetos objetos;
     std::vector<Ente*> entes;
@@ -71,6 +72,7 @@ private:
 
     std::mutex clientCharactersMutex;
     Clock clock;
+    bool gameStarted;
 };
 
 #endif  // SERVER_GAME_H
