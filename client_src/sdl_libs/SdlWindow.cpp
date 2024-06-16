@@ -39,7 +39,10 @@ void SdlWindow::fill(int r, int g, int b, int alpha) {
     SDL_RenderClear(this->renderer);
 }
 
-void SdlWindow::fill() { this->fill(0x33, 0x33, 0x33, 0xFF); }
+
+//ANTES: void SdlWindow::fill() { this->fill(0x33, 0x33, 0x33, 0xFF); }
+//AHORA:
+void SdlWindow::fill() { this->fill(0, 0, 0, SDL_ALPHA_OPAQUE); }
 
 void SdlWindow::render() { SDL_RenderPresent(this->renderer); }
 

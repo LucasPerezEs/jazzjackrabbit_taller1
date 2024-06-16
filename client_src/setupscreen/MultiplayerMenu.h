@@ -10,6 +10,7 @@
 #include "CreateGame.h"
 #include "JoinGame.h"
 #include "GameList.h"
+#include "CreateMap.h"
 
 class MultiplayerMenu : public QDialog {
     Q_OBJECT
@@ -22,11 +23,13 @@ signals:
     void refreshRequested();
     void createGameRequested(const QString &gameName);
     void joinGameRequested(const QString &gameID);
+    void createMapRequested();
 
 private:
     QPushButton *createGameButton;
     QPushButton *joinGameButton;
     QPushButton *refreshButton;
+    QPushButton *createMapButton;
 
     CreateGame *createGameWidget;
     JoinGame  *joinGameWidget;
@@ -36,6 +39,7 @@ private:
     void onCreateGameClicked();
     void onJoinGameClicked();
     void onRefreshClicked();
+    void onCreateMapClicked();
 };
 
 #endif // JAZZJACKRABBIT_MULTIPLAYERMENU_H

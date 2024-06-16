@@ -20,8 +20,8 @@ int main(int argc, char* argv[]) {
         setup.ShowConnectMenu();
 
         if (setup.AcceptedConnection()) {
-            std::string ip = setup.getIp().toStdString();
-            std::string port = setup.getPort().toStdString();
+            //std::string ip = setup.getIp().toStdString();
+            //std::string port = setup.getPort().toStdString();
 
 
             SdlWindow window(800, 600);
@@ -40,7 +40,8 @@ int main(int argc, char* argv[]) {
             std::map<int, Player*> personajes;
             UIManager ui_manager(personajes, window);
 
-            Client client(ip, port, receiverQueue, window, entidades, personajes, ui_manager);
+            //Deberia enviarse ip y port (respectivamente);
+            Client client("127.0.1", "8080", receiverQueue, window, entidades, personajes, ui_manager);
 
 
             if (client.is_online()) {
@@ -72,12 +73,20 @@ int main(int argc, char* argv[]) {
                                      //  multiplayerMenu.showJoinGameFailedMessage();
                                      //}
                                  });
+                std::cout << "Trato de crear mapa" << std::endl;
+                QObject::connect(&multiplayerMenu, &MultiplayerMenu::createMapRequested, [&]() {
+                                     multiplayerMenu.close();
+
+                                     if (true) {
+                                         Game game(client, window, entidades, personajes,
+                                                   ui_manager);
+                                         game.create_map();
+                                     }
+
+                                 });
                 multiplayerMenu.show();
                 multiplayerMenu.exec();
             }
-
-            // Game game(client, window, entidades, personajes);
-            // game.run();
         }
 
         TTF_Quit();
