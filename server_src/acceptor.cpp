@@ -26,16 +26,16 @@ void Acceptor::kill_all() {
 
 void Acceptor::run() {
 
-    uint32_t id = 0;
+    uint32_t id = 1;
     while (_keep_running) {
         try {
-            id++;
             Socket peer = sk.accept();
             ClientHandler* client = new ClientHandler(id, std::move(peer));
             client->go_online();
             clients.push_back(client);
             gameManager.addClient(id,client);
             reap_offline_clients();
+            id++;
         } catch (LibError& err) {
             break;
         }

@@ -10,11 +10,11 @@
 class Broadcaster: public Thread {
 private:
     std::list<ClientHandler*>& clients;
-    Queue<Contenedor>& stateQueue;
+    Queue<Container>& stateQueue;
 
 
 public:
-    explicit Broadcaster(std::list<ClientHandler*>& clients, Queue<Contenedor>& stateQueue);
+    explicit Broadcaster(std::list<ClientHandler*>& clients, Queue<Container>& stateQueue);
     void run() override;
     void stop() override;
 };

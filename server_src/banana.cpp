@@ -23,13 +23,13 @@ void Banana::colision(Personaje& p) { p.RecibirDanio(danio); }
 
 void Banana::update(
         Mapa& mapa, ListaObjetos& objetos,
-        Queue<Contenedor>& q) {  // actualiza la posicion, si choca con el mapa se tiene que borrar
+        Queue<Container>& q) {  // actualiza la posicion, si choca con el mapa se tiene que borrar
     x += vel;
     // width += vel;
     if (mapa.CheckColision(x, y, width, height)) {
         this->borrar = true;
     }
-    Contenedor c(0, this->id, this->x, this->y, this->width, this->height, 0, this->an_type,
+    Container c(0, this->id, this->x, this->y, this->width, this->height, 0, this->an_type,
                  this->en_type, 0, 0, 0);
     q.try_push(c);
 }

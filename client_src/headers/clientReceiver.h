@@ -5,17 +5,17 @@
 #include "../../common_src/headers/liberror.h"
 #include "../../common_src/headers/queue.h"
 #include "../../common_src/headers/thread.h"
-#include "../../server_src/headers/contenedor.h"
+
 
 #include "protocol.h"
 
 class ClientReceiver: public Thread {
 private:
     ClientProtocol& clientProtocol;
-    Queue<Contenedor>& queueReceiver;
+    Queue<Container>& queueReceiver;
 
 public:
-    ClientReceiver(ClientProtocol& protocol, Queue<Contenedor>& receiverQueue);
+    ClientReceiver(ClientProtocol& protocol, Queue<Container>& receiverQueue);
     void run() override;
 };
 

@@ -38,12 +38,12 @@ void ClientHandler::go_online() {
     receiverThread.start();
 }
 
-void ClientHandler::pushState(const Contenedor& c) { senderThread.pushDatosObjeto(c); }
+void ClientHandler::pushState(const Container& c) { senderThread.pushDatosObjeto(c); }
 
 ClientHandler::~ClientHandler() {}
 
 
-void ClientHandler::setReceiverQueue(Queue<Command>* actionQueue) {
+void ClientHandler::setReceiverQueue(Queue<Message>* actionQueue) {
     receiverThread.setQueue(actionQueue);
 }
 

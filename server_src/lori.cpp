@@ -14,3 +14,9 @@ void Lori::special_action() {
         tiempo = std::chrono::system_clock::now();
     }
 }
+
+void Lori::check_special_action(bool col_x, bool col_y) {
+    if (col_x || col_y) {
+        special_action_active = false;
+    }
+}

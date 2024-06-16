@@ -1,10 +1,10 @@
 #include "headers/broadcaster.h"
 
-Broadcaster::Broadcaster(std::list<ClientHandler*>& clients, Queue<Contenedor>& stateQueue):
+Broadcaster::Broadcaster(std::list<ClientHandler*>& clients, Queue<Container>& stateQueue):
         clients(clients), stateQueue(stateQueue) {}
 
 void Broadcaster::run() {
-    Contenedor c(0, 0, 0, 0, 0, 0, 0, AnimationType::NONE_ANIMATION, EntityType::NONE_ENTITY, 0, 0,
+    Container c(0, 0, 0, 0, 0, 0, 0, AnimationType::NONE_ANIMATION, EntityType::NONE_ENTITY, 0, 0,
                  0);
 
     while (_keep_running) {
@@ -12,7 +12,6 @@ void Broadcaster::run() {
         try {
             c = stateQueue.pop();
             for (auto& client: clients) {
-                // std::cout << "Pusheo estados" << std::endl;
                 client->pushState(c);
             }
         } catch (const ClosedQueue&) {

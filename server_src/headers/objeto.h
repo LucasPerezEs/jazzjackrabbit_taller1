@@ -3,11 +3,11 @@
 
 #include <map>
 #include <vector>
-
+#include "../../common_src/headers/Container.h"
 #include "../../common_src/headers/entity_commands.h"
 #include "../../common_src/headers/queue.h"
 
-#include "contenedor.h"
+
 
 class Enemigo;
 class Personaje;
@@ -31,7 +31,7 @@ public:
 public:
     Objeto(float x, float y, float w, float h, EntityType en_type, AnimationType an_type);
 
-    virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q);
+    virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q);
     virtual void eliminar();
     bool check_colision(Objeto& o);
     virtual void colision(Objeto& o) = 0;
@@ -53,7 +53,7 @@ public:
     Ente(float x, float y, float w, float h, int vida, EntityType en_type, AnimationType an_type);
     void RecibirDanio(int d);
     bool vivo();
-    virtual void update_vivo(ListaObjetos& objetos, Queue<Contenedor>& q);
+    virtual void update_vivo(ListaObjetos& objetos, Queue<Container>& q);
 };
 
 

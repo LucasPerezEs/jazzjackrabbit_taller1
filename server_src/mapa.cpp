@@ -16,6 +16,35 @@ bool Piso::colision(float posx, float posy, float width, float height) {
 }
 
 
+DiagonalIzquierda::DiagonalIzquierda(float posx, float posy, float width, float height) {
+    x = posx;
+    y = posy;  //hitbox
+    w = width;
+    h = height;
+}
+
+bool DiagonalIzquierda::colision(float posx, float posy, float width, float height) {
+    if (x < (posx + width) && (x + w) > posx && y < (posy + height) && (y + h) > posy) {
+        return true;
+    }
+    return false;
+}
+
+
+DiagonalDerecha::DiagonalDerecha(float posx, float posy, float width, float height) {
+    x = posx;
+    y = posy;  //hitbox
+    w = width;
+    h = height;
+}
+
+bool DiagonalDerecha::colision(float posx, float posy, float width, float height) {
+    if (x < (posx + width) && (x + w) > posx && y < (posy + height) && (y + h) > posy) {
+        return true;
+    }
+    return false;
+}
+
 std::vector<std::vector<int>> Mapa::cargarCSV(const std::string& ruta) {
     std::vector<std::vector<int>> matriz;
     std::ifstream archivo(ruta);
@@ -44,9 +73,19 @@ Mapa::Mapa() {
 for (std::vector<int>::size_type i = tilemap.size()-1; i >= 1; --i) {
     for (std::vector<int>::size_type j = 0; j < tilemap[i].size(); j++) {
         if (tilemap[i][j] != -1) {
-            Piso* piso = new Piso(j, (tilemap.size()-1-i), 1, 1); // cada numero en la matriz representa un espacio de 1x1
-            objetos.push_back(piso);
-            if ((tilemap[i][j] == 256 || tilemap[i][j] == 257) && piso->x > 8 && piso->x < 30 && piso->y > 3 && piso->y > 15);
+            if (tilemap[i][j] == 2) {
+                DiagonalIzquierda* diagonal = new DiagonalIzquierda(j, (tilemap.size()-1-i), 1, 1);
+                diagonalesIzq.push_back(diagonal);
+            }
+            else if (tilemap[i][j] == 3) {
+                DiagonalDerecha* diagonal = new DiagonalDerecha(j, (tilemap.size()-1-i), 1, 1);
+                diagonalesDer.push_back(diagonal);
+            }
+            else {
+                Piso* piso = new Piso(j, (tilemap.size()-1-i), 1, 1); // cada numero en la matriz representa un espacio de 1x1
+                objetos.push_back(piso);
+            }
+
         }
     }
 }
@@ -59,6 +98,18 @@ bool Mapa::CheckColision(
     for (auto p: objetos) {
         // cppcheck-suppress useStlAlgorithm
         if (p->colision(x, y, w, h)) {
+            return true;
+        }
+    }
+    for (auto d: diagonalesIzq) {
+        // cppcheck-suppress useStlAlgorithm
+        if (d->colision(x, y, w, h)) {
+            return true;
+        }
+    }
+    for (auto d: diagonalesDer) {
+        // cppcheck-suppress useStlAlgorithm
+        if (d->colision(x, y, w, h)) {
             return true;
         }
     }

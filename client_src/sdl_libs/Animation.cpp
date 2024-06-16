@@ -30,7 +30,6 @@ Animation::Animation(const SdlTexture* texture, int numFrames, int animation_spe
 Animation::~Animation() {}
 
 int Animation::update(int current_frame, int& counter) {
-    std::cout << counter << std::endl;
     if (counter == animation_speed) {
         counter = 1;
         return this->advanceFrame(current_frame);

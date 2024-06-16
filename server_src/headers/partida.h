@@ -12,7 +12,7 @@
 #include "../../common_src/headers/queue.h"
 #include "../../common_src/headers/thread.h"
 
-#include "contenedor.h"
+
 #include "enemigo.h"
 #include "lista_objetos.h"
 #include "mapa.h"

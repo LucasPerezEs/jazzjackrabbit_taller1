@@ -14,7 +14,7 @@
 #include "protocol.h"
 #include "camara.h"
 
-#define FRAME_RATE 1000000.0f / 20.0f
+//#define FRAME_RATE 1000000.0f / 20.0f
 
 class EventHandler: public Thread {
 

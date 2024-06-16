@@ -66,10 +66,11 @@ std::map<std::string, float> load_config_YAML(const std::string& path) {
 
 GamesManager::GamesManager(): setupQueue(), stateQueue() {}
 
-std::string GamesManager::createGame(std::string gameId, std::map<std::string, float>& config) {
+std::string GamesManager::createGame(std::string gameId, uint32_t maxPlayers,
+                                     std::map<std::string, float>& config) {
     std::lock_guard<std::mutex> lock(gamesMutex);
 
-    GameContainer* newGame = new GameContainer(config);
+    GameBroadcasterContainer* newGame = new GameBroadcasterContainer(config, maxPlayers);
     games[gameId] = newGame;
 
     newGame->start();
@@ -79,48 +80,50 @@ std::string GamesManager::createGame(std::string gameId, std::map<std::string, f
 
 bool GamesManager::joinGame(const std::string& gameId, ClientHandler* client) {
     std::lock_guard<std::mutex> lock(gamesMutex);
+
     auto it = games.find(gameId);
-    if (it != games.end()) {
+    if (it != games.end() && it->second->canAddPlayer()) {
         it->second->addPlayer(client);
         return true;
     }
+
     return false;
 }
 
 std::vector<std::string> GamesManager::listGames() {
     std::lock_guard<std::mutex> lock(gamesMutex);
+
     std::vector<std::string> gameList;
     for (const auto& game: games) {
+        std::cout << game.first << std::endl;
         gameList.push_back(game.first);
     }
+
     return gameList;
 }
 
 
 void GamesManager::run() {
 
-    Command command;
+    Message msg(Setup::ActionType::NONE);
     std::map<std::string, float> config = load_config_YAML("../config.yml");
     while (_keep_running) {
-        command = setupQueue.pop();
-        uint32_t clientId = command.clientId;
-        switch (command.action) {
-            case Command::JOIN_GAME:
-                std::cout << "case Command::JOIN_GAME:" << std::endl;
-                // gameId = command.gameId;
-                joinGame("PruebaManager", clients[clientId]);
+        msg = setupQueue.pop();
+        uint32_t clientId = msg.id();
+        switch (msg.setup.action) {
+            case Setup::JOIN_GAME:
+                joinGame(msg.setup.gameId, clients[clientId]);
+                // push join
                 break;
-            case Command::CREATE_GAME:
-                std::cout << "case Command::CREATE_GAME:" << std::endl;
-                // gameId = command.gameId;
-                createGame("PruebaManager", config);
+            case Setup::CREATE_GAME:
+                createGame(msg.setup.gameId, msg.setup.maxPlayers, config);
+                std::cout << "maxPlayers " << msg.setup.maxPlayers << std::endl;
+                std::cout << "gameId " << msg.setup.gameId << std::endl;
                 // push create
                 break;
-            case Command::GET_GAME_LIST:
-                std::cout << "case Command::GET_GAME_LIST:" << std::endl;
-                //std::cout << "case Command::JOIN_GAME:" << std::endl;
+            case Setup::GET_GAME_LIST:
                 listGames();
-                // push gameList
+                // push gamelist
                 break;
             default:
                 std::cout << "Comando desconocido" << std::endl;
@@ -171,6 +174,7 @@ GamesManager::~GamesManager() {
 
 void GamesManager::addClient(uint32_t clientId, ClientHandler* client) {
     std::lock_guard<std::mutex> lock(gamesMutex);
+
     clients[clientId] = client;
     client->setReceiverQueue(&setupQueue);
 }

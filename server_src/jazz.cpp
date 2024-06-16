@@ -14,3 +14,9 @@ void Jazz::special_action() {
         tiempo = std::chrono::system_clock::now();
     }
 }
+
+void Jazz::check_special_action(bool col_x, bool col_y) {
+    if (col_y) {
+        special_action_active = false;
+    }
+}

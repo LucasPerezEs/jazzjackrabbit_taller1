@@ -6,7 +6,7 @@
 
 #include "../../common_src/headers/queue.h"
 
-#include "contenedor.h"
+
 #include "gold_coin.h"
 #include "lista_objetos.h"
 #include "municion.h"
@@ -33,9 +33,9 @@ public:
     virtual void colision(Objeto& o) override;
     virtual void colision(Personaje& p) override;
     virtual void colision(Bala& b) override;
-    virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) override = 0;
-    virtual void update_vivo(ListaObjetos& objetos, Queue<Contenedor>& q) override = 0;
-    virtual void drop_item(ListaObjetos& objetos, Queue<Contenedor>& q);
+    virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) override = 0;
+    virtual void update_vivo(ListaObjetos& objetos, Queue<Container>& q) override = 0;
+    virtual void drop_item(ListaObjetos& objetos, Queue<Container>& q);
 };
 
 

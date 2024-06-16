@@ -7,7 +7,6 @@
 #include "../../common_src/headers/queue.h"
 
 #include "banana.h"
-#include "contenedor.h"
 #include "enemigo.h"
 #include "gold_coin.h"
 #include "lista_objetos.h"
@@ -27,8 +26,8 @@ protected:
 
 public:
     Monkey(float x, float y, std::map<std::string, float>& config);
-    virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) override;
-    virtual void update_vivo(ListaObjetos& objetos, Queue<Contenedor>& q) override;
+    virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) override;
+    virtual void update_vivo(ListaObjetos& objetos, Queue<Container>& q) override;
     void throw_banana(ListaObjetos& objetos);
 };
 

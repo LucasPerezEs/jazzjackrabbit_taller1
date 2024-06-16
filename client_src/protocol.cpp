@@ -1,12 +1,7 @@
 #include "headers/protocol.h"
 
-ClientProtocol::ClientProtocol(const std::string& hostname, const std::string& servicename)
-        : Protocol(Socket(hostname.c_str(), servicename.c_str())) {}
-
-
-void ClientProtocol::send_command(Command& cmd) {
-    sendUChar(static_cast<unsigned char>(cmd.action));
-}
+ClientProtocol::ClientProtocol(const std::string& hostname, const std::string& servicename):
+        Protocol(Socket(hostname.c_str(), servicename.c_str())) {}
 
 
 std::pair<State::StateType, SpecialAction::SpecialActionType> ClientProtocol::receive_update() {
@@ -20,28 +15,88 @@ std::pair<State::StateType, SpecialAction::SpecialActionType> ClientProtocol::re
     return {stateType, actionType};
 }
 
+//////////////SEND
 
-Contenedor ClientProtocol::receive_info() {
-    bool was_closed = false;
-    int msg_code;
-    socket.recvall(&msg_code, sizeof(msg_code), &was_closed);
-    if (msg_code == 2) {
-        int id;
-        socket.recvall(&id, sizeof(id), &was_closed);
-        Contenedor c(msg_code, id, 0, 0, 0, 0, 0, AnimationType::NONE_ANIMATION,
-                     EntityType::NONE_ENTITY, 0, 0, 0);
-        return c;
-    } else {
-        Contenedor aux = receiveDatosObjeto();
-        Contenedor c(msg_code, aux.id(), aux.posx(), aux.posy(), aux.width(), aux.height(),
-                     aux.direccion(), aux.animation_type(), aux.entity_type(), aux.vida(),
-                     aux.municion(), aux.score());
-        return c;
+void ClientProtocol::send_message(const Message& message) {
+
+    if (message.type() == Message::Type::SETUP) {
+        sendUChar(static_cast<unsigned char>(message.type()));
+        send_setup(message.setup);
+    }
+
+    if (message.type() == Message::Type::COMMAND) {
+        sendUChar(static_cast<unsigned char>(message.type()));
+        send_command(message.command);
     }
 }
 
-Contenedor ClientProtocol::receiveDatosObjeto() {
+void ClientProtocol::send_command(const Command& cmd) {
+    sendUChar(static_cast<unsigned char>(cmd.action));
+}
 
+void ClientProtocol::send_setup(const Setup& setup) {
+
+    if (setup.action == Setup::ActionType::CREATE_GAME) {
+        send_create_game(setup.gameId, setup.maxPlayers);
+    }
+
+    if (setup.action == Setup::ActionType::JOIN_GAME) {
+        send_join_game(setup.gameId);
+    }
+
+    if (setup.action == Setup::ActionType::GET_GAME_LIST) {
+        send_get_game_list();
+    }
+}
+
+
+void ClientProtocol::send_join_game(const std::string& gameId) {
+    sendUChar(static_cast<unsigned char>(Setup::JOIN_GAME));
+    sendString(gameId);
+}
+
+void ClientProtocol::send_create_game(const std::string& gameId, const uint32_t& maxPlayers) {
+    sendUChar(static_cast<unsigned char>(Setup::CREATE_GAME));
+    sendString(gameId);
+    send32(maxPlayers);
+}
+
+void ClientProtocol::send_get_game_list() {
+    sendUChar(static_cast<unsigned char>(Setup::GET_GAME_LIST));
+}
+
+//////////////RECEIVE
+
+Container ClientProtocol::receive_container() {
+    unsigned char containerType = receiveUChar();
+    Container::Type type = static_cast<Container::Type>(containerType);
+
+    switch (type) {
+        case Container::Type::SETUP:
+            return receive_setup_container();
+        case Container::Type::GAME:
+            return receive_game_container();
+        default:
+            throw std::runtime_error("Unknown message type");
+    }
+}
+
+Container ClientProtocol::receive_setup_container() {
+
+    uint32_t msg_code = receiveUInt32();
+    std::string gameId = receiveString();
+    uint32_t maxPlayers = receiveUInt32();
+    // receiveBool
+    // listgames
+
+    Container container(msg_code, gameId, maxPlayers, true);
+
+    return container;
+}
+
+
+Container ClientProtocol::receive_game_container() {
+    int msg_code;
     int id;
     float x;
     float y;
@@ -55,6 +110,16 @@ Contenedor ClientProtocol::receiveDatosObjeto() {
     int municion;
     int score;
 
+    socket.recvall(&msg_code, sizeof(msg_code), &was_closed);
+
+    if (msg_code == 2) {
+        socket.recvall(&id, sizeof(id), &was_closed);
+        Container c(msg_code, id, 0, 0, 0, 0, 0, AnimationType::NONE_ANIMATION,
+                     EntityType::NONE_ENTITY, 0, 0, 0);
+        return c;
+    }
+
+
     socket.recvall(&id, sizeof(id), &was_closed);
     socket.recvall(&x, sizeof(x), &was_closed);
     socket.recvall(&y, sizeof(y), &was_closed);
@@ -67,20 +132,9 @@ Contenedor ClientProtocol::receiveDatosObjeto() {
     socket.recvall(&municion, sizeof(municion), &was_closed);
     socket.recvall(&score, sizeof(score), &was_closed);
 
-    Contenedor c(0, id, x, y, w, h, direccion, an, en, vida, municion, score);
+    Container c(msg_code, id, x, y, w, h, direccion, an, en, vida, municion, score);
     return c;
 }
 
-void ClientProtocol::send_join_game() {
-    sendUChar(static_cast<unsigned char>(Command::JOIN_GAME));
-}
-
-void ClientProtocol::send_create_game() {
-    sendUChar(static_cast<unsigned char>(Command::CREATE_GAME));
-}
-
-void ClientProtocol::send_get_game_list() {
-    sendUChar(static_cast<unsigned char>(Command::GET_GAME_LIST));
-}
 
 void ClientProtocol::stop() { Protocol::stop(); }

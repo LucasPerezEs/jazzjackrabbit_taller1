@@ -12,8 +12,7 @@ add_library(server_lib
     clientSender.cpp
     acceptor.cpp
     server.cpp
-    contenedor.cpp
-    lista_objetos.cpp
+        lista_objetos.cpp
     municion.cpp
     pickup.cpp
     zanahoria.cpp
@@ -26,6 +25,7 @@ add_library(server_lib
     jazz.cpp
     lori.cpp
     spaz.cpp
+        ../common_src/Container.cpp
     ../common_src/liberror.cpp
     ../common_src/protocol.cpp
     ../common_src/resolver.cpp
@@ -33,8 +33,8 @@ add_library(server_lib
     ../common_src/socket.cpp
         GamesManager.cpp
         headers/GamesManager.h
-        GameContainer.cpp
-        headers/GameContainer.h
+        GameBroadcasterContainer.cpp
+        headers/GameBroadcasterContainer.h
 )
 
 target_include_directories(server_lib PRIVATE headers/*)

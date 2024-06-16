@@ -1,6 +1,6 @@
 #include "headers/client.h"
 
-Client::Client(const std::string& hostname, const std::string& servername, Queue<Contenedor>& queue,
+Client::Client(const std::string& hostname, const std::string& servername, Queue<Container>& queue,
                SdlWindow& window, std::map<int, Entity*>& entidades,
                std::map<int, Player*>& personajes, UIManager& ui_manager):
         client_protocol(hostname.c_str(), servername.c_str()),
@@ -15,9 +15,10 @@ void Client::go_online() {
 
     online = true;
 
-    this->event_handler.start();
-    this->updater.start();
-    this->client_receiver.start();
+    //se inicia una vez entrado al juego
+    //this->event_handler.start();
+    //this->updater.start();
+    //this->client_receiver.start();
 }
 
 bool Client::is_online() {
@@ -42,23 +43,32 @@ void Client::close() {
     this->updater.join();
 }
 
-bool Client::createGame(const std::string& gameId) {
-    client_protocol.send_create_game();
-    //client_protocol.sendString(gameId);
-    // recibir confirmacion del server
+bool Client::createGame(const std::string& gameId, const uint32_t maxPlayers) {
+    Message msg(Setup::ActionType::CREATE_GAME,gameId,maxPlayers);
+    client_protocol.send_message(msg);
+    //recibir confirmacion
     return true;
 }
 
 bool Client::joinGame(const std::string& gameId) {
-    client_protocol.send_join_game();
-    //client_protocol.sendString(gameId);
-    // recibir confirmacion del server
+
+
+    Message msg(Setup::ActionType::JOIN_GAME,gameId);
+    client_protocol.send_message(msg);
+    //recibir confirmacion
+
+    this->event_handler.start();
+    this->updater.start();
+    this->client_receiver.start();
     return true;
+
+    //return false
 }
 
 std::vector<std::string> Client::refreshGameList() {
-    client_protocol.send_get_game_list();
-
+    Message msg(Setup::ActionType::GET_GAME_LIST);
+    client_protocol.send_message(msg);
+    //recibir gamelist
     return std::vector<std::string>();
 }
 

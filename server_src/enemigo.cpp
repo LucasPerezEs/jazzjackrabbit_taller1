@@ -36,7 +36,7 @@ void Enemigo::colision(Bala& b) {
     RecibirDanio(b.danio);
 }
 
-void Enemigo::drop_item(ListaObjetos& objetos, Queue<Contenedor>& q) {
+void Enemigo::drop_item(ListaObjetos& objetos, Queue<Container>& q) {
     srand(time(nullptr));
     int random_int = rand() % 100 + 1;
 
@@ -56,7 +56,7 @@ void Enemigo::drop_item(ListaObjetos& objetos, Queue<Contenedor>& q) {
     }
 
     objetos.agregar_objeto(static_cast<Pickup*>(drop));
-    Contenedor c(0, drop->id, drop->x, drop->y, drop->width, drop->height, 0, drop->an_type,
+    Container c(0, drop->id, drop->x, drop->y, drop->width, drop->height, 0, drop->an_type,
                  drop->en_type, 0, 0, 0);
     q.try_push(c);
 }

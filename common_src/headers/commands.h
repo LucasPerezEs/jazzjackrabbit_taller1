@@ -1,11 +1,12 @@
 #ifndef COMMON_COMMANDS_H
 #define COMMON_COMMANDS_H
+
 #include <map>
 #include <cstdint>
-
+#include <string>
 // En este archivo se pueden crear nuevos comandos.
 
-#define GAME_TIME 90  // En segundos
+#define GAME_TIME 300  // En segundos
 
 struct Command {
     enum ActionType {
@@ -23,13 +24,27 @@ struct Command {
         STOPFIRE = 0x11,
         SPECIAL = 0x12,
         QUIT = 0x13,
+    };
+    ActionType action;
+
+    uint32_t clientId;
+
+
+};
+
+struct Setup {
+    enum ActionType {
+        NONE = 0x00,
         JOIN_GAME = 0x31,
         CREATE_GAME = 0x32,
         GET_GAME_LIST = 0x33,
     };
     ActionType action;
-    // cppcheck-suppress unusedStructMember
+
     uint32_t clientId;
+    std::string gameId;
+    uint32_t maxPlayers;
+
 };
 
 

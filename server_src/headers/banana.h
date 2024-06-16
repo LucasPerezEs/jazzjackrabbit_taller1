@@ -7,7 +7,7 @@
 #include "../../common_src/headers/entity_commands.h"
 #include "../../common_src/headers/queue.h"
 
-#include "contenedor.h"
+
 #include "mapa.h"
 #include "objeto.h"
 #include "personaje.h"
@@ -24,7 +24,7 @@ public:
     virtual void colision(Personaje& o) override;
     virtual void colision(Enemigo& o) override;
     virtual void colision(Pickup& o) override;
-    virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) override;
+    virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) override;
     virtual void eliminar() override;
 };
 

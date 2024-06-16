@@ -8,7 +8,7 @@
 
 #include "../../common_src/headers/queue.h"
 
-#include "contenedor.h"
+
 #include "mapa.h"
 #include "objeto.h"
 #include "personaje.h"
@@ -18,6 +18,7 @@ class Jazz: public Personaje {
 public:
     Jazz(float x, float y, std::map<std::string, float>& config);
     virtual void special_action() override;
+    virtual void check_special_action(bool col_x, bool col_y) override;
 };
 
 #endif

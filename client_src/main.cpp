@@ -34,7 +34,7 @@ int main(int argc, char* argv[]) {
                 std::cout << "Error al iniciar Audio subsystem: " << SDL_GetError() << std::endl;
             }
 
-            Queue<Contenedor> receiverQueue;
+            Queue<Container> receiverQueue;
 
             std::map<int, Entity*> entidades;
             std::map<int, Player*> personajes;
@@ -47,20 +47,18 @@ int main(int argc, char* argv[]) {
             if (client.is_online()) {
                 MultiplayerMenu multiplayerMenu;
 
-                std::cout << "Refresh antes" << std::endl;
                 QObject::connect(&multiplayerMenu, &MultiplayerMenu::refreshRequested, [&]() {
-                    std::cout << "Refresh" << std::endl;
+                    client.refreshGameList();
                     // auto gameList = client.refreshGameList();
                     // multiplayerMenu.updateGameList(gameList);
                 });
-                QObject::connect(&multiplayerMenu, &MultiplayerMenu::createGameRequested, [&]() {
-                    if (client.createGame("Juego 1")) {}
+                QObject::connect(&multiplayerMenu, &MultiplayerMenu::createGameRequested, [&](const QString& gameID) {
+                    if (client.createGame(gameID.toStdString(), 2)) {}
                     //   multiplayerMenu.showGameCreatedMessage();
                     //} else {
                     //  multiplayerMenu.showGameCreationFailedMessage();
                     // }
                 });
-                std::cout << "Join antes" << std::endl;
                 QObject::connect(&multiplayerMenu, &MultiplayerMenu::joinGameRequested,
                                  [&](const QString& gameID) {
                                      multiplayerMenu.close();

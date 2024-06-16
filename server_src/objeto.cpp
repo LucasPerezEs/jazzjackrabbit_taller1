@@ -25,7 +25,7 @@ Ente::Ente(float x, float y, float w, float h, int vida, EntityType en_type, Ani
 }
 
 
-void Objeto::update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) {}
+void Objeto::update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) {}
 void Objeto::eliminar() {}
 
 bool Objeto::check_colision(Objeto& o) {
@@ -55,7 +55,7 @@ void Ente::RecibirDanio(int d) {
 
 bool Ente::vivo() { return vida > 0; }
 
-void Ente::update_vivo(ListaObjetos& objetos, Queue<Contenedor>& q) {
+void Ente::update_vivo(ListaObjetos& objetos, Queue<Container>& q) {
     if (vida <= 0) {
         if (contador ==
             240) {  // revive despues de tantos ciclos y lo agrego al vector de colisiones
@@ -63,7 +63,7 @@ void Ente::update_vivo(ListaObjetos& objetos, Queue<Contenedor>& q) {
             borrar = false;
             objetos.agregar_objeto(this);
             contador = 0;
-            Contenedor c(0, this->id, this->x, this->y, this->width, this->height, this->direccion,
+            Container c(0, this->id, this->x, this->y, this->width, this->height, this->direccion,
                          this->an_type, this->en_type, 0, 0, 0);
             q.try_push(c);
         }

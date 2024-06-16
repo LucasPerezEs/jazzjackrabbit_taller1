@@ -18,7 +18,7 @@ void MultiplayerMenu::init() {
     createMapButton = new QPushButton("CreatMap", this);
 
     //createGameButton->setEnabled(false);
-    refreshButton->setEnabled(false);
+    //refreshButton->setEnabled(false);
 
     layout->addWidget(createGameButton);
     layout->addWidget(joinGameButton);

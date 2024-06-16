@@ -14,8 +14,7 @@ add_library(client_lib
     ../common_src/resolver.cpp
     ../common_src/resolvererror.cpp
     ../common_src/socket.cpp
-    ../server_src/contenedor.cpp
-    sdl_libs/Animation.cpp
+        sdl_libs/Animation.cpp
     sdl_libs/Area.cpp
     sdl_libs/Exception.cpp
     sdl_libs/SdlException.cpp
@@ -25,6 +24,9 @@ add_library(client_lib
     sdl_libs/Music.cpp
     sdl_libs/Sound.cpp
     setupscreen/ConnectMenu.cpp
+        ../common_src/headers/Message.h
+        ../common_src/Container.cpp
+        ../common_src/headers/Container.h
 )
 
 target_link_libraries(client_lib setupscreen)

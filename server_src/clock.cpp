@@ -9,7 +9,7 @@ void Clock::start() {
     this->game_ended = false;
 }
 
-void Clock::update(Queue<Contenedor>& q) {
+void Clock::update(Queue<Container>& q) {
     if (!game_started && !game_ended) {
         return;
     }
@@ -21,7 +21,7 @@ void Clock::update(Queue<Contenedor>& q) {
         this->clock = std::chrono::system_clock::now();
 
         // No esta muy bien conceptualmente mandar los segundos en el campo id
-        Contenedor c(4, seconds, 0, 0, 0, 0, 0, AnimationType::NONE_ANIMATION,
+        Container c(4, seconds, 0, 0, 0, 0, 0, AnimationType::NONE_ANIMATION,
                      EntityType::NONE_ENTITY, 0, 0, 0);
         q.try_push(c);
     }

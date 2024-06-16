@@ -29,7 +29,7 @@ void Spaz::stop_special_action() {
     }
 }
 
-void Spaz::check_colisions(Mapa& m, int aux_x, int aux_y) {
+/*void Spaz::check_colisions(Mapa& m, int aux_x, int aux_y) {
 
     bool colisionx;
     bool colisiony;
@@ -51,10 +51,12 @@ void Spaz::check_colisions(Mapa& m, int aux_x, int aux_y) {
             // width = auxw;
         }
     }
-}
+}*/
 
 void Spaz::update_position() {
-
+    //std::cout << "Tiempo que pasó: " << std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - tiempo).count() << "\n";
+    //std::cout << (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - tiempo).count() > wait_sidekick) << "\n";
+    //std::cout << "Accion especial activa: " << special_action_active << "\n";
     if (special_action_active && std::chrono::duration_cast<std::chrono::milliseconds>(
                                          std::chrono::system_clock::now() - tiempo)
                                                  .count() > wait_sidekick) {
@@ -64,16 +66,21 @@ void Spaz::update_position() {
     if (!(movingleft && movingright) &&
         (movingleft || movingright)) {  // mientras se este apretando una tecla de mover el jugador
         if (movingleft) {
-            x += velx * -1;  // se actualiza la posicin en x
-            // width += velx * -1;
+            x += velx * -1 * direccion_movimientox;
+            y += velx * -1 * direccion_movimientoy; // se actualiza la posicin en x
         }
         if (movingright) {
-            x += velx;  // se actualiza la posicin en x
-            // width += velx;
+            x += velx * direccion_movimientox;  // se actualiza la posicin en x
+            y += velx * direccion_movimientoy;
         }
     }
     y += vely;
-    // height += vely;
     vely -= config["gravity"];  // esto es la aceleracion de la gravedad, se tiene que poner un
-                                // limite de vely
+                                    // limite de vely
+}
+
+void Spaz::check_special_action(bool col_x, bool col_y) {
+    if (col_x && special_action_active) {
+        stop_special_action();
+    }
 }

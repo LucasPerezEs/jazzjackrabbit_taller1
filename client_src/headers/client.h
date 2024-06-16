@@ -20,11 +20,11 @@
 
 class Client {
 public:
-    Client(const std::string& hostname, const std::string& servername, Queue<Contenedor>& queue,
+    Client(const std::string& hostname, const std::string& servername, Queue<Container>& queue,
            SdlWindow& window, std::map<int, Entity*>& entidades, std::map<int, Player*>& personajes,
            UIManager& ui_manager);
 
-    bool createGame(const std::string& gameId);
+    bool createGame(const std::string& gameId, const uint32_t maxPlayers);
     bool joinGame(const std::string& gameId);
     std::vector<std::string> refreshGameList();
 

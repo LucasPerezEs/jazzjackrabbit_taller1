@@ -11,7 +11,7 @@ Monkey::Monkey(float x, float y, std::map<std::string, float>& config):
     direccion = -1;
 }
 
-void Monkey::update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) {
+void Monkey::update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) {
 
     if (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() -
                                                               tiempo)
@@ -27,12 +27,12 @@ void Monkey::update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) {
         throw_banana(objetos);
     }
 
-    Contenedor c(0, this->id, this->x, this->y, this->width, this->height, this->direccion,
+    Container c(0, this->id, this->x, this->y, this->width, this->height, this->direccion,
                  this->an_type, this->en_type, 0, 0, 0);
     q.try_push(c);
 }
 
-void Monkey::update_vivo(ListaObjetos& objetos, Queue<Contenedor>& q) {
+void Monkey::update_vivo(ListaObjetos& objetos, Queue<Container>& q) {
     if (vida <= 0) {
         if (contador == 1) {  // si acaba de morir dropea una municion o moneda o zanahoria
             drop_item(objetos, q);
@@ -42,7 +42,7 @@ void Monkey::update_vivo(ListaObjetos& objetos, Queue<Contenedor>& q) {
             borrar = false;
             objetos.agregar_objeto(this);
             contador = 0;
-            Contenedor c(0, this->id, this->x, this->y, this->width, this->height, this->direccion,
+            Container c(0, this->id, this->x, this->y, this->width, this->height, this->direccion,
                          AnimationType::IDLE, EntityType::MONKEY, 0, 0, 0);
             q.try_push(c);
         }

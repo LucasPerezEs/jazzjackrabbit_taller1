@@ -25,11 +25,11 @@ private:
 
 public:
     ClientHandler(uint32_t id,Socket peer);
-    void setReceiverQueue(Queue<Command>* actionQueue);
+    void setReceiverQueue(Queue<Message>* actionQueue);
     uint32_t getId();
     bool is_online();
     void kill();
-    void pushState(const Contenedor& c);
+    void pushState(const Container& c);
     void go_online();
     ~ClientHandler();
 };
