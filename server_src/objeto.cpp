@@ -42,6 +42,7 @@ void Objeto::colision(Personaje& o) {}  //       Por defecto los objetos no hace
 void Objeto::colision(Enemigo& o) {
 }  //       Le decis vos que queres que hagan o con que pueden interacturar
 void Objeto::colision(Bala& o) {}
+void Objeto::colision(Pickup& o) {}
 void Objeto::colision(Municion& m) {}
 Objeto::~Objeto() {}
 

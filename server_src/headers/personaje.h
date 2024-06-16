@@ -2,6 +2,8 @@
 #define PERSONAJE_H_
 
 #include <chrono>
+#include <map>
+#include <string>
 #include <vector>
 
 #include "../../common_src/headers/queue.h"
@@ -19,7 +21,7 @@ protected:
 
 public:
     int danio;
-    Bala(float x, float y, int d);
+    Bala(float x, float y, int d, std::map<std::string, float>& config);
     virtual void colision(Objeto& o) override;
     virtual void colision(Enemigo& o) override;
     virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) override;
@@ -31,10 +33,12 @@ protected:
     int espera;
     std::chrono::system_clock::time_point tiempo;
     int municion;
+    std::map<std::string, float>& config;
+
     virtual void disminuir_municion();
 
 public:
-    Arma();
+    explicit Arma(std::map<std::string, float>& config);
     void disparar(ListaObjetos& objetos, float x, float w, float y, float h, int d);
 };
 
@@ -49,21 +53,24 @@ protected:
     bool jumping;
     float velx;
     float vely;
-    Arma arma;
     bool special_action_active;
     float direccion_movimientox;
     float direccion_movimientoy;
+    float jump_speed;
+    std::map<std::string, float>& config;
+    Arma arma;
 
     void check_idle();
-    void update_position();
+    virtual void update_position();
     void check_colisions(Mapa& m, float aux_x, float aux_y);
+    virtual void check_special_action(bool col_x, bool col_y) = 0;
 
 public:
     int danio_ataque_especial;
     int municion;
     bool disparando;
-    Personaje(float x, float y, float w, float h, int vida, EntityType en_type,
-              AnimationType an_type);
+    Personaje(float x, float y, float w, float h, EntityType en_type, AnimationType an_type,
+              std::map<std::string, float>& config);
     virtual void colision(Objeto& o) override;
     virtual void colision(Enemigo& e) override;
     virtual void colision(Municion& m) override;
@@ -75,8 +82,8 @@ public:
     void run();
     void stoprunning();
     void jump();
-    void special_action();
-    void set_id(int i);
+    virtual void special_action() = 0;
+    void set_id(uint32_t i);
     void add_score(int score);
     bool has_special_action_active();
     virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) override;

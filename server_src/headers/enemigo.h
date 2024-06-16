@@ -2,6 +2,7 @@
 #define ENEMIGO_H_
 
 #include <map>
+#include <string>
 
 #include "../../common_src/headers/queue.h"
 
@@ -17,20 +18,24 @@ class ListaObjetos;
 
 class Enemigo: public Ente {
 protected:
-    float limxizq;
-    float limxder;
-    float limy;
-    int danio;
+    float max_life;
+    int damage;
+    float speed;
+    float prob_carrot;
+    float prob_ammo;
+    float prob_goldcoin;
+    std::map<std::string, float>& config;
 
 public:
-    Enemigo(float x, float y, float w, float h, int vida, EntityType en_type,
-            AnimationType an_type);
+    Enemigo(float x, float y, float w, float h, float max_life, float speed, float damage,
+            float prob_carrot, float prob_ammo, float prob_goldcoin, EntityType en_type,
+            AnimationType an_type, std::map<std::string, float>& config);
     virtual void colision(Objeto& o) override;
     virtual void colision(Personaje& p) override;
     virtual void colision(Bala& b) override;
-    virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) override;
-    virtual void update_vivo(ListaObjetos& objetos, Queue<Contenedor>& q) override;
-    Pickup* drop_item();
+    virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) override = 0;
+    virtual void update_vivo(ListaObjetos& objetos, Queue<Contenedor>& q) override = 0;
+    virtual void drop_item(ListaObjetos& objetos, Queue<Contenedor>& q);
 };
 
 

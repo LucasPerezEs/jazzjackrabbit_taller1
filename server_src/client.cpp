@@ -1,10 +1,10 @@
 #include "headers/client.h"
 
-ClientHandler::ClientHandler(uint32_t id ,Socket peer, Queue<Command>& receiverQueue):
+ClientHandler::ClientHandler(uint32_t id, Socket peer):
         id(id),
         serverProtocol(std::move(peer)),
-        receiverThread(id,serverProtocol, receiverQueue),
-        senderThread(id,serverProtocol),
+        receiverThread(id, serverProtocol),
+        senderThread(id, serverProtocol),
         online(true) {}
 
 bool ClientHandler::is_online() { return online; }
@@ -41,3 +41,10 @@ void ClientHandler::go_online() {
 void ClientHandler::pushState(const Contenedor& c) { senderThread.pushDatosObjeto(c); }
 
 ClientHandler::~ClientHandler() {}
+
+
+void ClientHandler::setReceiverQueue(Queue<Command>* actionQueue) {
+    receiverThread.setQueue(actionQueue);
+}
+
+uint32_t ClientHandler::getId() { return id; }

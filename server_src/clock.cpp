@@ -1,10 +1,10 @@
 #include "headers/clock.h"
 
-Clock::Clock(): seconds(GAME_TIME), game_started(false), game_ended(false) {}
+Clock::Clock(std::map<std::string, float>& config):
+        seconds(config["game_time"]), game_started(false), game_ended(false) {}
 
 void Clock::start() {
     this->clock = std::chrono::system_clock::now();
-    this->seconds = GAME_TIME;
     this->game_started = true;
     this->game_ended = false;
 }

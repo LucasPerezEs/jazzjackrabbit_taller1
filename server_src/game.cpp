@@ -2,16 +2,27 @@
 
 #include "headers/partida.h"
 
-Game::Game(Queue<Command>& actionQueue, Queue<Contenedor>& stateQueue):
-        actionQueue(actionQueue), stateQueue(stateQueue), clientCharactersMutex() {}
+Game::Game(Queue<Command>& actionQueue, Queue<Contenedor>& stateQueue,
+           std::map<std::string, float>& config):
+        actionQueue(actionQueue),
+        stateQueue(stateQueue),
+        config(config),
+        clientCharactersMutex(),
+        clock(config) {}
 
 void Game::run() {
     // Queue<Contenedor> q; // esta queue tiene que ir al sender
     Mapa m = Mapa();
-    Enemigo enemigo = Enemigo(50, 2, 2, 4, 100, EntityType::ENEMY, AnimationType::WALK);
-    objetos.agregar_objeto(&enemigo);
+    Ghost ghost = Ghost(50, 2, config);
+    Bat bat = Bat(75, 4, config);
+    Monkey monkey = Monkey(20, 1, config);
+    objetos.agregar_objeto(&ghost);
+    objetos.agregar_objeto(&bat);
+    objetos.agregar_objeto(&monkey);
+    entes.push_back(&ghost);
+    entes.push_back(&bat);
     // cppcheck-suppress danglingLifetime
-    entes.push_back(&enemigo);
+    entes.push_back(&monkey);
 
 
     while (_keep_running && !clock.times_up()) {
@@ -59,14 +70,14 @@ void Game::run() {
     }
 }
 
-void Game::addPlayer(int clientId) {
+void Game::addPlayer(uint32_t clientId) {
     std::lock_guard<std::mutex> lock(clientCharactersMutex);
-    Personaje* personaje = new Personaje(4 + clientId * 20, 2, 2, 4, 100, EntityType::JAZZ,
-                                         AnimationType::SHOOT_IDLE);
-    personaje->set_id(clientId);
-    clientCharacters[clientId] = personaje;
-    objetos.agregar_objeto(personaje);
-    entes.push_back(personaje);
+
+    Spaz* spaz = new Spaz(4 + clientId * 20, 2, config);
+    spaz->set_id(clientId);
+    clientCharacters[clientId] = spaz;
+    objetos.agregar_objeto(spaz);
+    entes.push_back(spaz);
 
     // Para mas adelante, el reloj deberia empezar cuando hay dos jugadores
     if (clientCharacters.size() == 1) {

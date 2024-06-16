@@ -25,6 +25,7 @@
 #ifndef SERVER_GAME_H
 #define SERVER_GAME_H
 #include <iostream>
+#include <map>
 #include <memory>
 #include <mutex>
 #include <string>
@@ -35,19 +36,26 @@
 #include "../../common_src/headers/queue.h"
 #include "../../common_src/headers/thread.h"
 
+#include "bat.h"
 #include "clock.h"
 #include "contenedor.h"
+#include "ghost.h"
+#include "jazz.h"
 #include "lista_objetos.h"
+#include "lori.h"
+#include "monkey.h"
 #include "personaje.h"
+#include "spaz.h"
 
 class Game: public Thread {
 public:
-    explicit Game(Queue<Command>& actionQueue, Queue<Contenedor>& eventQueue);
+    explicit Game(Queue<Command>& actionQueue, Queue<Contenedor>& eventQueue,
+                  std::map<std::string, float>& config);
 
     void run() override;
     void stop() override;
 
-    void addPlayer(int clientId);
+    void addPlayer(uint32_t clientId);
 
     bool is_running() { return _is_alive; }
 
@@ -57,8 +65,10 @@ private:
     std::vector<Ente*> entes;
 
     Queue<Command>& actionQueue;
-
     Queue<Contenedor>& stateQueue;
+
+    std::map<std::string, float>& config;
+
     std::mutex clientCharactersMutex;
     Clock clock;
 };

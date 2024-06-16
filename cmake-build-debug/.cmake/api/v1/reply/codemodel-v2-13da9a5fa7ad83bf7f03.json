@@ -112,35 +112,35 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "client::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-client-Debug-8fad47840a50449455a3.json",
+					"jsonFile" : "target-client-Debug-1e109b38b6b97b680040.json",
 					"name" : "client",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 1,
 					"id" : "client_lib::@eafd6e3045e1d2452d18",
-					"jsonFile" : "target-client_lib-Debug-71f2d72d1a6dc462a2b2.json",
+					"jsonFile" : "target-client_lib-Debug-0c3996268a55917be914.json",
 					"name" : "client_lib",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
 					"id" : "server::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-server-Debug-01cf5809f9f8ec0f8f50.json",
+					"jsonFile" : "target-server-Debug-5522c9967147e768afdf.json",
 					"name" : "server",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 2,
 					"id" : "server_lib::@afa1b295bad524b51d90",
-					"jsonFile" : "target-server_lib-Debug-86eceeecda4a5298671d.json",
+					"jsonFile" : "target-server_lib-Debug-05cb2ae38ca42126951d.json",
 					"name" : "server_lib",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 3,
 					"id" : "setupscreen::@5facb4b79328fbd2ad45",
-					"jsonFile" : "target-setupscreen-Debug-8f3a60ded94d61c5bcfa.json",
+					"jsonFile" : "target-setupscreen-Debug-087326cc9d5e0bbf7d08.json",
 					"name" : "setupscreen",
 					"projectIndex" : 1
 				}
@@ -150,8 +150,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "/home/pablo/Escritorio/jazzjackrabbit_taller1/cmake-build-debug",
-		"source" : "/home/pablo/Escritorio/jazzjackrabbit_taller1"
+		"build" : "/home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug",
+		"source" : "/home/moko/Escritorio/jazzjackrabbit_taller1"
 	},
 	"version" : 
 	{

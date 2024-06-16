@@ -8,10 +8,15 @@
 #include "headers/lista_objetos.h"
 #include "headers/municion.h"
 
-Personaje::Personaje(float x, float y, float w, float h, int vida, EntityType en_type,
-                     AnimationType an_type):
-        Ente(x, y, w, h, vida, en_type, an_type), tiempo(std::chrono::system_clock::now()) {
-    velx = 0.5;
+Personaje::Personaje(float x, float y, float w, float h, EntityType en_type, AnimationType an_type,
+                     std::map<std::string, float>& config):
+        Ente(x, y, w, h, config["player_life"], en_type, an_type),
+        tiempo(std::chrono::system_clock::now()),
+        config(config),
+        arma(config) {
+    velx = config["player_speed"];
+    jump_speed = config["player_jump"];
+    danio_ataque_especial = config["player_special_attack_dmg"];
     vely = 0;
     direccion = 1;
     jumping = false;
@@ -24,7 +29,6 @@ Personaje::Personaje(float x, float y, float w, float h, int vida, EntityType en
     espera_idle = 2000;  // en milisegundos
     espera_shoot = 250;  // Misma que la del arma
     score = 0;
-    danio_ataque_especial = 100;
     direccion_movimientox = 1;
 }
 
@@ -44,7 +48,7 @@ void Personaje::moveLeft() {
     }
     movingleft = true;
     direccion = -1;
-    an_type = AnimationType::INTOXICATED_WALK;  // Prueba
+    an_type = AnimationType::WALK;
     tiempo = std::chrono::system_clock::now();
 }
 void Personaje::stopMovingRight() {
@@ -62,25 +66,26 @@ void Personaje::stopMovingLeft() {
 }
 
 void Personaje::run() {
-    velx = 1;
+    velx = config["player_run_speed"];
     // an_type = AnimationType::RUN;
 }
 
 void Personaje::stoprunning() {
-    velx = 0.5;
+    velx = config["player_speed"];
     // an_type = AnimationType::IDLE;
 }
 
 void Personaje::jump() {
-    if (!jumping) {  // Esto es para evitar que se pueda spamear el jump y volar
-        vely = 1;
+    if (!jumping &&
+        !special_action_active) {  // Esto es para evitar que se pueda spamear el jump y volar
+        vely = config["player_jump"];
         jumping = true;
         an_type = AnimationType::JUMP;
         tiempo = std::chrono::system_clock::now();
     }
 }
 
-void Personaje::special_action() {
+/*void Personaje::special_action() {
     if (!special_action_active) {
         special_action_active = true;
         movingleft = false;
@@ -90,7 +95,7 @@ void Personaje::special_action() {
         an_type = AnimationType::SPECIAL_ACTION;
         tiempo = std::chrono::system_clock::now();
     }
-}
+}*/
 
 bool Personaje::has_special_action_active() { return special_action_active; }
 
@@ -129,7 +134,9 @@ void Personaje::update_position() {
         }
     }
     y += vely;
-    vely -= 0.1;  // esto es la aceleracion de la gravedad, se tiene que poner un limite de vely
+    // height += vely;
+    vely -= config["gravity"];  // esto es la aceleracion de la gravedad, se tiene que poner un
+                                // limite de vely
 }
 
 void Personaje::check_colisions(Mapa& m, float aux_x, float aux_y) {
@@ -144,7 +151,7 @@ void Personaje::check_colisions(Mapa& m, float aux_x, float aux_y) {
             jumping = false;
             vely = 0;
             y = diagonal->y + diagonal->h - (diagonal->x + diagonal->w - (x + width));
-            special_action_active = false;
+            //special_action_active = false;
             colisiony = true;
             colisionx = true;
             direccion_movimientox = sqrt(2)/2;
@@ -155,7 +162,7 @@ void Personaje::check_colisions(Mapa& m, float aux_x, float aux_y) {
             if (aux_x < (diagonal->x + diagonal->w) && (aux_x + width) > diagonal->x && (y + 2*height/3) < diagonal->y && diagonal->y < y + height) {
                 vely = 0;
                 y = diagonal->y - height;
-                special_action_active = false;
+                //special_action_active = false;
                 colisiony = true;
             }
             if (x < (diagonal->x + diagonal->w) && (diagonal->x + diagonal->w) < x + width/2 && aux_y < (diagonal->y + diagonal->h) && (aux_y + height) > diagonal->y) {
@@ -172,7 +179,7 @@ void Personaje::check_colisions(Mapa& m, float aux_x, float aux_y) {
             jumping = false;
             vely = 0;
             y = diagonal->y + diagonal->h - (x - diagonal->x);
-            special_action_active = false;
+            //special_action_active = false;
             colisiony = true;
             colisionx = true;
             direccion_movimientox = sqrt(2)/2;
@@ -183,7 +190,7 @@ void Personaje::check_colisions(Mapa& m, float aux_x, float aux_y) {
             if (aux_x < (diagonal->x + diagonal->w) && (aux_x + width) > diagonal->x && (y + 2*height/3) < diagonal->y && diagonal->y < y + height) {
                 vely = 0;
                 y = diagonal->y - height;
-                special_action_active = false;
+                //special_action_active = false;
                 colisiony = true;
             }
             if (x + width/2 < diagonal->x && diagonal->x < x + width && aux_y < (diagonal->y + diagonal->h) && (aux_y + height) > diagonal->y) {
@@ -202,14 +209,14 @@ void Personaje::check_colisions(Mapa& m, float aux_x, float aux_y) {
         if (aux_x < (terreno->x + terreno->w) && (aux_x + width) > terreno->x && (y + 2*height/3) < (terreno->y + terreno->h) && (y + height) > terreno->y) {
             vely = 0;
             y = terreno->y - height;
-            special_action_active = false;
+            //special_action_active = false;
             colisiony = true;
         }
         else if (aux_x < (terreno->x + terreno->w) && (aux_x + width) > terreno->x && y < (terreno->y + terreno->h) && (y + height/4) > terreno->y) {
             jumping = false;
             vely = 0;
             y = terreno->y + terreno->h;
-            special_action_active = false;
+            //special_action_active = false;
             colisiony = true;
         }
 
@@ -222,6 +229,8 @@ void Personaje::check_colisions(Mapa& m, float aux_x, float aux_y) {
             colisionx = true;
         }
     }
+
+    check_special_action(colisionx, colisiony);
 
     if (!(colisionx && colisiony)) {  // me fijo si justo se da el caso que solo choca en diagonal
         if (m.CheckColision(x, y, width, height)) {
@@ -255,7 +264,7 @@ void Personaje::update_vivo(ListaObjetos& objetos, Queue<Contenedor>& q) {
     if (vida <= 0) {
         if (contador ==
             240) {  // revive despues de tantos ciclos y lo agrego al vector de colisiones
-            vida = 100;
+            vida = config["player_life"];
             borrar = false;
             objetos.agregar_objeto(this);
             contador = 0;
@@ -285,12 +294,13 @@ void Personaje::disparar(ListaObjetos& objetos) {
     }
 }
 
-void Personaje::set_id(int i) { id = i; }
+void Personaje::set_id(uint32_t i) { id = i; }
 
 
-Arma::Arma(): tiempo(std::chrono::system_clock::now()) {
-    espera = 250;  // en milisegundos
-    municion = 10;
+Arma::Arma(std::map<std::string, float>& config):
+        tiempo(std::chrono::system_clock::now()), config(config) {
+    espera = 1000 / config["weapon_firerate"];  // en milisegundos
+    municion = config["weapon_initial_ammo"];
 }
 
 void Arma::disparar(ListaObjetos& objetos, float x, float w, float y, float h, int d) {
@@ -306,7 +316,7 @@ void Arma::disparar(ListaObjetos& objetos, float x, float w, float y, float h, i
             aux = x + w;
         }
 
-        Bala* b = new Bala(aux, y + h / 2, d);
+        Bala* b = new Bala(aux, y + h / 2, d, config);
         objetos.agregar_objeto(b);  // Se agrega al vector de colisiones
         // disminuir_municion();
     }
@@ -314,13 +324,13 @@ void Arma::disparar(ListaObjetos& objetos, float x, float w, float y, float h, i
 
 void Arma::disminuir_municion() { municion--; }
 
-
-Bala::Bala(float x, float y, int d):
+// cppcheck-suppress constParameter
+Bala::Bala(float x, float y, int d, std::map<std::string, float>& config):
         Objeto(x, y, 1, 1, EntityType::BULLET,
                AnimationType::WALK) {  // se le pasa la direccion a la que va a salir la bala por
                                        // parametro
-    vel = 1.5 * d;
-    danio = 10;
+    vel = config["bullet_speed"] * d;
+    danio = config["bullet_damage"];
 }
 
 void Bala::colision(Objeto& o) {

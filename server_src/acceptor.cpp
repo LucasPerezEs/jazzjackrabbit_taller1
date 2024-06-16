@@ -1,9 +1,7 @@
 #include "headers/acceptor.h"
 
-
-Acceptor::Acceptor(Socket& socket, std::list<ClientHandler*>& clients, Queue<Command>& actionQueue,
-                   Game& game):
-        sk(socket), clients(clients), actionQueue(actionQueue), game(game) {}
+Acceptor::Acceptor(Socket& socket, std::list<ClientHandler*>& clients, GamesManager& game_manager):
+        sk(socket), clients(clients), gameManager(game_manager) {}
 
 void Acceptor::reap_offline_clients() {
     clients.remove_if([](ClientHandler* c) {
@@ -27,18 +25,16 @@ void Acceptor::kill_all() {
 }
 
 void Acceptor::run() {
-    int id = 0;
+
+    uint32_t id = 0;
     while (_keep_running) {
         try {
             id++;
             Socket peer = sk.accept();
-            ClientHandler* client = new ClientHandler(id, std::move(peer), actionQueue);
+            ClientHandler* client = new ClientHandler(id, std::move(peer));
             client->go_online();
-            Contenedor c(2, id, 0, 0, 0, 0, 0, AnimationType::NONE_ANIMATION,
-                         EntityType::NONE_ENTITY, 0, 0, 0);
-            client->pushState(c);
             clients.push_back(client);
-            game.addPlayer(id);
+            gameManager.addClient(id,client);
             reap_offline_clients();
         } catch (LibError& err) {
             break;
@@ -48,7 +44,6 @@ void Acceptor::run() {
 }
 
 void Acceptor::stop() {
-
     _keep_running = false;
     kill_all();
     sk.shutdown(SHUT_RDWR);

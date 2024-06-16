@@ -1,4 +1,4 @@
-# Install script for directory: /home/pablo/Escritorio/jazzjackrabbit_taller1/client_src
+# Install script for directory: /home/moko/Escritorio/jazzjackrabbit_taller1/client_src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

@@ -19,11 +19,22 @@ add_library(server_lib
     zanahoria.cpp
     gold_coin.cpp
     clock.cpp
+    ghost.cpp
+    bat.cpp
+    monkey.cpp
+    banana.cpp
+    jazz.cpp
+    lori.cpp
+    spaz.cpp
     ../common_src/liberror.cpp
     ../common_src/protocol.cpp
     ../common_src/resolver.cpp
     ../common_src/resolvererror.cpp
     ../common_src/socket.cpp
+        GamesManager.cpp
+        headers/GamesManager.h
+        GameContainer.cpp
+        headers/GameContainer.h
 )
 
 target_include_directories(server_lib PRIVATE headers/*)

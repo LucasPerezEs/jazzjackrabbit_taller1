@@ -1,0 +1,69 @@
+# Configuration file
+
+# Segundos hasta Respawn (ahora mismo reviven en base a un contador, que puede no siempre ser los mismos segs)
+# respawn_time: 5
+
+# Game
+game_time: 100
+gravity: 0.1
+
+# Personaje
+player:
+  life: 100
+  special_attack_dmg: 100
+  speed: 0.5
+  run_speed: 1
+  jump: 1
+
+# Fantasma 
+ghost:
+  life: 10
+  damage: 1
+  speed: 0.25
+  prob_carrot: 25 # sobre 100
+  prob_ammo: 25 
+  prob_goldcoin: 25 
+
+# Murcielago
+bat:
+ life: 10
+ damage: 2
+ speed: 0.25
+ prob_carrot: 25
+ prob_ammo: 0
+ prob_goldcoin: 50
+
+# Mono
+monkey:
+ life: 10
+ damage: 1
+ speed: 0
+ prob_carrot: 25
+ prob_ammo: 25
+ prob_goldcoin: 25
+
+# GoldCoin
+goldcoin:
+  add_score: 10
+
+# Zanahoria
+carrot:
+  add_life: 25
+
+# Municion
+ammo:
+  add_ammo: 1
+
+# Armas
+weapon:
+  fire_rate: 4 # 4 tiros/seg (250ms de espera)
+  initial_ammo: 9999
+
+# Balas
+bullet:
+  speed: 1.5
+  damage: 10
+
+banana:
+  speed: 1
+  damage: 1
