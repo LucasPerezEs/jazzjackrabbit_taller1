@@ -41,7 +41,6 @@ private:
     std::vector<std::vector<int>> tilemap_terreno_solido;
     UIManager& ui_manager;
 
-    SDL_Texture* getTileTextureFromID(int id);
     std::vector<std::vector<int>> cargarCSV(const std::string& ruta);
     void SaveMapToCSV(const std::vector<Tile>& tiles, const std::string& filename);
     void draw(const std::vector<std::vector<int>>& tilemap, SDL_Texture* tilesetTexture);

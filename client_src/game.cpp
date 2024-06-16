@@ -85,19 +85,6 @@ void Game::SaveMapToCSV(const std::vector<Tile>& tiles, const std::string& filen
 }
 
 
-SDL_Texture* Game::getTileTextureFromID(int id) {
-    // Asumiendo que 'tileTextures' es accesible aquí
-    if (tileTextures.find(id) != tileTextures.end()) {
-        return tileTextures[id];
-
-    } else {
-
-        // Manejar el caso en que el ID no exista
-        return nullptr;
-    }
-}
-
-
 /*
 Hay dos formas en la que se hizo esto. La primera solo requiere el uso de los case: SDL_MOUSEBUTTONDOWN y case: SDL_MOUSEBUTTONUP,
 en este caso no se ve como se arrastra cada cuadricula hacia su posicion.
