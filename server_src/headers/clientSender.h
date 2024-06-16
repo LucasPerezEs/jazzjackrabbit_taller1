@@ -6,7 +6,7 @@
 #include "../../common_src/headers/queue.h"
 #include "../../common_src/headers/thread.h"
 
-#include "contenedor.h"
+
 #include "game.h"
 #include "protocol.h"
 

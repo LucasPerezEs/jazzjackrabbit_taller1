@@ -12,7 +12,7 @@
 #include "../../common_src/headers/protocol.h"
 #include "../../common_src/headers/socket.h"
 
-#include "contenedor.h"
+
 
 class ServerProtocol: private Protocol {
 private:
@@ -34,13 +34,13 @@ public:
     void send_container(const Container& container);
 
 
-            void send_id(Contenedor c);
+
     std::string receive_game_id();
     uint32_t receive_max_players();
-    void send_datos_objeto(Contenedor c);
+
     void send_games_ids(const std::vector<std::string>& gameIDs);
 
-    void send_info(Contenedor c);
+
 
     ServerProtocol(const ServerProtocol&) = delete;
     ServerProtocol& operator=(const ServerProtocol&) = delete;

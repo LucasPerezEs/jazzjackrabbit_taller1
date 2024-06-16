@@ -6,7 +6,7 @@
 
 #include "../../common_src/headers/queue.h"
 
-#include "contenedor.h"
+
 #include "gold_coin.h"
 #include "lista_objetos.h"
 #include "municion.h"

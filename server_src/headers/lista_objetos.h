@@ -5,7 +5,7 @@
 
 #include "../../common_src/headers/queue.h"
 #include "../../common_src/headers/Container.h"
-#include "contenedor.h"
+
 #include "objeto.h"
 
 class ListaObjetos {

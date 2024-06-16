@@ -29,7 +29,7 @@ private:
     std::mutex gamesMutex;
 
     Queue<Message> setupQueue;
-    Queue<Contenedor> stateQueue;
+    Queue<Container> stateQueue;
 
     std::map<std::string, GameBroadcasterContainer*> games;
     std::map<uint32_t, ClientHandler*> clients;

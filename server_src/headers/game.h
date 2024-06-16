@@ -39,7 +39,6 @@
 #include "../../common_src/headers/Container.h"
 #include "bat.h"
 #include "clock.h"
-#include "contenedor.h"
 #include "ghost.h"
 #include "jazz.h"
 #include "lista_objetos.h"

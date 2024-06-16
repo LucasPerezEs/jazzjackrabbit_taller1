@@ -7,7 +7,6 @@
 #include "../../common_src/headers/queue.h"
 
 #include "banana.h"
-#include "contenedor.h"
 #include "enemigo.h"
 #include "gold_coin.h"
 #include "lista_objetos.h"

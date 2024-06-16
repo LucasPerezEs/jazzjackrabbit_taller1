@@ -7,7 +7,7 @@
 #include "../../common_src/headers/entity_commands.h"
 #include "../../common_src/headers/queue.h"
 
-#include "contenedor.h"
+
 #include "mapa.h"
 #include "objeto.h"
 #include "personaje.h"

@@ -14,8 +14,7 @@ add_library(client_lib
     ../common_src/resolver.cpp
     ../common_src/resolvererror.cpp
     ../common_src/socket.cpp
-    ../server_src/contenedor.cpp
-    sdl_libs/Animation.cpp
+        sdl_libs/Animation.cpp
     sdl_libs/Area.cpp
     sdl_libs/Exception.cpp
     sdl_libs/SdlException.cpp

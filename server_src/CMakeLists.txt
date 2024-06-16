@@ -12,8 +12,7 @@ add_library(server_lib
     clientSender.cpp
     acceptor.cpp
     server.cpp
-    contenedor.cpp
-    lista_objetos.cpp
+        lista_objetos.cpp
     municion.cpp
     pickup.cpp
     zanahoria.cpp
