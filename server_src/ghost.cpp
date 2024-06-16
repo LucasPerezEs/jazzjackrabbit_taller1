@@ -9,7 +9,7 @@ Ghost::Ghost(float x, float y, std::map<std::string, float>& config):
     lim_y = y + 0;  // por si lo queremos hacer volador
 }
 
-void Ghost::update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) {
+void Ghost::update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) {
     float auxx = x;
     float auxy = y;  // se guarda la posicion actual
     // float auxw = width;
@@ -26,12 +26,12 @@ void Ghost::update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) {
         x = auxx;                    // se pone la pos x anterior
         // width = auxw;
     }
-    Contenedor c(0, this->id, this->x, this->y, this->width, this->height, this->direccion,
+    Container c(0, this->id, this->x, this->y, this->width, this->height, this->direccion,
                  this->an_type, this->en_type, 0, 0, 0);
     q.try_push(c);
 }
 
-void Ghost::update_vivo(ListaObjetos& objetos, Queue<Contenedor>& q) {
+void Ghost::update_vivo(ListaObjetos& objetos, Queue<Container>& q) {
     if (vida <= 0) {
         if (contador == 1) {  // si acaba de morir dropea una municion o moneda o zanahoria
             drop_item(objetos, q);
@@ -41,7 +41,7 @@ void Ghost::update_vivo(ListaObjetos& objetos, Queue<Contenedor>& q) {
             borrar = false;
             objetos.agregar_objeto(this);
             contador = 0;
-            Contenedor c(0, this->id, this->x, this->y, this->width, this->height, this->direccion,
+            Container c(0, this->id, this->x, this->y, this->width, this->height, this->direccion,
                          AnimationType::WALK, EntityType::GHOST, 0, 0, 0);
             q.try_push(c);
         }

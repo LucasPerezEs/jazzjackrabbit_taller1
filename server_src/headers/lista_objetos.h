@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "../../common_src/headers/queue.h"
-
+#include "../../common_src/headers/Container.h"
 #include "contenedor.h"
 #include "objeto.h"
 
@@ -14,8 +14,8 @@ public:
     std::vector<Objeto*> objetos;
     ListaObjetos();
     void agregar_objeto(Objeto* o);
-    void eliminar_borrados(Queue<Contenedor>& q);
-    void update(Mapa& mapa, Queue<Contenedor>& q);
+    void eliminar_borrados(Queue<Container>& q);
+    void update(Mapa& mapa, Queue<Container>& q);
     void correr_colisiones();
 };
 

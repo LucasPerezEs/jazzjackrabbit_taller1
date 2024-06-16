@@ -8,7 +8,7 @@ ListaObjetos::ListaObjetos() {}
 
 void ListaObjetos::agregar_objeto(Objeto* o) { objetos.push_back(o); }
 
-void ListaObjetos::update(Mapa& mapa, Queue<Contenedor>& q) {
+void ListaObjetos::update(Mapa& mapa, Queue<Container>& q) {
     int size = objetos.size();
     for (int i = 0; i < size; i++) {
         objetos[i]->update(mapa, *this, q);
@@ -23,11 +23,11 @@ void ListaObjetos::correr_colisiones() {
     }
 }
 
-void ListaObjetos::eliminar_borrados(Queue<Contenedor>& q) {
+void ListaObjetos::eliminar_borrados(Queue<Container>& q) {
     objetos.erase(std::remove_if(objetos.begin(), objetos.end(),
                                  [&](Objeto* o) {
                                      if (o->borrar) {
-                                         Contenedor c(1, o->id, 0, 0, 0, 0, 0,
+                                         Container c(1, o->id, 0, 0, 0, 0, 0,
                                                       AnimationType::NONE_ANIMATION,
                                                       EntityType::NONE_ENTITY, 0, 0, 0);
                                          // Al borrar solo hace falta el id

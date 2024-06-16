@@ -25,7 +25,7 @@ private:
     uint32_t maxPlayers;
 
     Queue<Message> actionQueue;
-    Queue<Contenedor> stateQueue;
+    Queue<Container> stateQueue;
 
     Game game;
     Broadcaster broadcaster;

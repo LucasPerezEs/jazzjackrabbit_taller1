@@ -5,7 +5,7 @@
 #include <map>
 #include <string>
 #include <vector>
-
+#include "../../common_src/headers/Container.h"
 #include "../../common_src/headers/queue.h"
 
 #include "contenedor.h"
@@ -24,7 +24,7 @@ public:
     Bala(float x, float y, int d, std::map<std::string, float>& config);
     virtual void colision(Objeto& o) override;
     virtual void colision(Enemigo& o) override;
-    virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) override;
+    virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) override;
     virtual void eliminar() override;
 };
 
@@ -86,8 +86,8 @@ public:
     void set_id(uint32_t i);
     void add_score(int score);
     bool has_special_action_active();
-    virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) override;
-    virtual void update_vivo(ListaObjetos& objetos, Queue<Contenedor>& q) override;
+    virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) override;
+    virtual void update_vivo(ListaObjetos& objetos, Queue<Container>& q) override;
 };
 
 #endif

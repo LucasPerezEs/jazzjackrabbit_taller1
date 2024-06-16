@@ -15,11 +15,11 @@ private:
 
     ServerProtocol& serverProtocol;
     uint32_t id;
-    Queue<Contenedor> queueSender;
+    Queue<Container> queueSender;
 
 public:
     explicit ClientSender(uint32_t id,ServerProtocol& protocol);
-    void pushDatosObjeto(const Contenedor& c);
+    void pushDatosObjeto(const Container& c);
     void run() override;
     void close();
 };

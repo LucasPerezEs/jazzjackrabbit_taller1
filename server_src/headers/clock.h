@@ -5,7 +5,7 @@
 #include <iostream>
 #include <map>
 #include <string>
-
+#include "../../common_src/headers/Container.h"
 #include "../../common_src/headers/queue.h"
 
 #include "contenedor.h"
@@ -22,7 +22,7 @@ public:
 
     void start();
 
-    void update(Queue<Contenedor>& q);
+    void update(Queue<Container>& q);
 
     bool times_up();
 };

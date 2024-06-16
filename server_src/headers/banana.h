@@ -24,7 +24,7 @@ public:
     virtual void colision(Personaje& o) override;
     virtual void colision(Enemigo& o) override;
     virtual void colision(Pickup& o) override;
-    virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) override;
+    virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) override;
     virtual void eliminar() override;
 };
 

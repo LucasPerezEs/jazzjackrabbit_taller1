@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "../../common_src/headers/Message.h"
+#include "../../common_src/headers/Container.h"
 #include "../../common_src/headers/commands.h"
 #include "../../common_src/headers/entity_commands.h"
 #include "../../common_src/headers/protocol.h"
@@ -22,12 +23,18 @@ private:
     Message receive_join_game();
     Message receive_get_game_list();
 
+    void send_setup_container(const SetupContainer& setupContainer);
+    void send_game_container(const GameContainer& gameContainer);
+
 
 public:
     explicit ServerProtocol(Socket peer);
-    Message receive_message();
 
-    void send_id(Contenedor c);
+    Message receive_message();
+    void send_container(const Container& container);
+
+
+            void send_id(Contenedor c);
     std::string receive_game_id();
     uint32_t receive_max_players();
     void send_datos_objeto(Contenedor c);

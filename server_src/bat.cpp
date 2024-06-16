@@ -8,7 +8,7 @@ Bat::Bat(float x, float y, std::map<std::string, float>& config):
     lim_y_inf = y - 20;
 }
 
-void Bat::update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) {
+void Bat::update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) {
     float auxx = x;
     float auxy = y;  // se guarda la posicion actual
     bool colisiony;
@@ -22,12 +22,12 @@ void Bat::update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) {
         y = auxy;
     }
 
-    Contenedor c(0, this->id, this->x, this->y, this->width, this->height, this->direccion,
+    Container c(0, this->id, this->x, this->y, this->width, this->height, this->direccion,
                  this->an_type, this->en_type, 0, 0, 0);
     q.try_push(c);
 }
 
-void Bat::update_vivo(ListaObjetos& objetos, Queue<Contenedor>& q) {
+void Bat::update_vivo(ListaObjetos& objetos, Queue<Container>& q) {
     if (vida <= 0) {
         if (contador == 1) {  // si acaba de morir dropea una municion o moneda o zanahoria
             drop_item(objetos, q);
@@ -37,7 +37,7 @@ void Bat::update_vivo(ListaObjetos& objetos, Queue<Contenedor>& q) {
             borrar = false;
             objetos.agregar_objeto(this);
             contador = 0;
-            Contenedor c(0, this->id, this->x, this->y, this->width, this->height, this->direccion,
+            Container c(0, this->id, this->x, this->y, this->width, this->height, this->direccion,
                          AnimationType::FLY, EntityType::BAT, 0, 0, 0);
             q.try_push(c);
         }

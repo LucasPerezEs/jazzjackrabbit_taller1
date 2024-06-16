@@ -29,7 +29,7 @@ public:
     uint32_t getId();
     bool is_online();
     void kill();
-    void pushState(const Contenedor& c);
+    void pushState(const Container& c);
     void go_online();
     ~ClientHandler();
 };

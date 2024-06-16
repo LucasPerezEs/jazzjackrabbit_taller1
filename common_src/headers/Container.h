@@ -41,7 +41,7 @@ class Container {
 public:
     enum class Type { SETUP = 0x00, GAME = 0x01 };
 
-    // Game container constructor
+    // Game container constructor./
     Container(uint32_t msg_code, int id, float x, float y, float w, float h, int direction,
               AnimationType an_type, EntityType en_type, int health, int ammo, int score);
 

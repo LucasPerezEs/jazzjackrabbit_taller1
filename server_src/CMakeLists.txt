@@ -26,6 +26,7 @@ add_library(server_lib
     jazz.cpp
     lori.cpp
     spaz.cpp
+        ../common_src/Container.cpp
     ../common_src/liberror.cpp
     ../common_src/protocol.cpp
     ../common_src/resolver.cpp

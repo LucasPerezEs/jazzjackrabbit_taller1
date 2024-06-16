@@ -241,7 +241,7 @@ void Personaje::check_colisions(Mapa& m, float aux_x, float aux_y) {
 
 }
 
-void Personaje::update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) {
+void Personaje::update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) {
     if (disparando) {
         disparar(objetos);  // Creo que ahora con sender y receiver esto se puede poner afuera
     }
@@ -255,12 +255,12 @@ void Personaje::update(Mapa& m, ListaObjetos& objetos, Queue<Contenedor>& q) {
 
     check_colisions(m, aux_x, aux_y);
 
-    Contenedor c(3, this->id, this->x, this->y, this->width, this->height, this->direccion,
+    Container c(3, this->id, this->x, this->y, this->width, this->height, this->direccion,
                  this->an_type, this->en_type, this->vida, this->municion, this->score);
     q.try_push(c);
 }
 
-void Personaje::update_vivo(ListaObjetos& objetos, Queue<Contenedor>& q) {
+void Personaje::update_vivo(ListaObjetos& objetos, Queue<Container>& q) {
     if (vida <= 0) {
         if (contador ==
             240) {  // revive despues de tantos ciclos y lo agrego al vector de colisiones
@@ -268,7 +268,7 @@ void Personaje::update_vivo(ListaObjetos& objetos, Queue<Contenedor>& q) {
             borrar = false;
             objetos.agregar_objeto(this);
             contador = 0;
-            Contenedor c(3, this->id, this->x, this->y, this->width, this->height, this->direccion,
+            Container c(3, this->id, this->x, this->y, this->width, this->height, this->direccion,
                          this->an_type, this->en_type, this->vida, this->municion, this->score);
             q.try_push(c);
         }
@@ -343,13 +343,13 @@ void Bala::colision(Enemigo& o) { o.colision(*this); }
 
 void Bala::update(
         Mapa& mapa, ListaObjetos& objetos,
-        Queue<Contenedor>& q) {  // actualiza la posicion, si choca con el mapa se tiene que borrar
+        Queue<Container>& q) {  // actualiza la posicion, si choca con el mapa se tiene que borrar
     x += vel;
     // width += vel;
     if (mapa.CheckColision(x, y, width, height)) {
         this->borrar = true;
     }
-    Contenedor c(0, this->id, this->x, this->y, this->width, this->height, 0, this->an_type,
+    Container c(0, this->id, this->x, this->y, this->width, this->height, 0, this->an_type,
                  this->en_type, 0, 0, 0);
     q.try_push(c);
 }

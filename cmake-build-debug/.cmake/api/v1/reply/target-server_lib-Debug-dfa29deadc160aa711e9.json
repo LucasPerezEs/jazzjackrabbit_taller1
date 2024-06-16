@@ -3,7 +3,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "client_src/libclient_lib.a"
+			"path" : "server_src/libserver_lib.a"
 		}
 	],
 	"backtrace" : 1,
@@ -12,12 +12,11 @@
 		"commands" : 
 		[
 			"add_library",
-			"target_link_libraries",
 			"target_include_directories"
 		],
 		"files" : 
 		[
-			"client_src/CMakeLists.txt"
+			"server_src/CMakeLists.txt"
 		],
 		"nodes" : 
 		[
@@ -33,19 +32,13 @@
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 33,
+				"line" : 41,
 				"parent" : 0
 			},
 			{
-				"command" : 2,
+				"command" : 1,
 				"file" : 0,
-				"line" : 34,
-				"parent" : 0
-			},
-			{
-				"command" : 2,
-				"file" : 0,
-				"line" : 35,
+				"line" : 42,
 				"parent" : 0
 			}
 		]
@@ -57,69 +50,17 @@
 			[
 				{
 					"fragment" : " -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always"
-				},
-				{
-					"backtrace" : 2,
-					"fragment" : "-fPIC"
-				}
-			],
-			"defines" : 
-			[
-				{
-					"backtrace" : 2,
-					"define" : "QT_CORE_LIB"
-				},
-				{
-					"backtrace" : 2,
-					"define" : "QT_GUI_LIB"
-				},
-				{
-					"backtrace" : 2,
-					"define" : "QT_WIDGETS_LIB"
 				}
 			],
 			"includes" : 
 			[
 				{
+					"backtrace" : 2,
+					"path" : "/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*"
+				},
+				{
 					"backtrace" : 3,
-					"path" : "/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/headers/*"
-				},
-				{
-					"backtrace" : 4,
-					"path" : "/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/../common_src/headers/*"
-				},
-				{
-					"backtrace" : 4,
-					"path" : "/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen"
-				},
-				{
-					"backtrace" : 2,
-					"path" : "/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.."
-				},
-				{
-					"backtrace" : 2,
-					"isSystem" : true,
-					"path" : "/usr/include/x86_64-linux-gnu/qt5"
-				},
-				{
-					"backtrace" : 2,
-					"isSystem" : true,
-					"path" : "/usr/include/x86_64-linux-gnu/qt5/QtWidgets"
-				},
-				{
-					"backtrace" : 2,
-					"isSystem" : true,
-					"path" : "/usr/include/x86_64-linux-gnu/qt5/QtGui"
-				},
-				{
-					"backtrace" : 2,
-					"isSystem" : true,
-					"path" : "/usr/include/x86_64-linux-gnu/qt5/QtCore"
-				},
-				{
-					"backtrace" : 2,
-					"isSystem" : true,
-					"path" : "/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++"
+					"path" : "/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
 				}
 			],
 			"language" : "CXX",
@@ -127,7 +68,7 @@
 			{
 				"backtraces" : 
 				[
-					2
+					1
 				],
 				"standard" : "17"
 			},
@@ -159,24 +100,25 @@
 				23,
 				24,
 				25,
-				27
+				26,
+				27,
+				28,
+				29,
+				30,
+				31,
+				32,
+				33,
+				35
 			]
 		}
 	],
-	"dependencies" : 
-	[
-		{
-			"backtrace" : 2,
-			"id" : "setupscreen::@5facb4b79328fbd2ad45"
-		}
-	],
-	"id" : "client_lib::@eafd6e3045e1d2452d18",
-	"name" : "client_lib",
-	"nameOnDisk" : "libclient_lib.a",
+	"id" : "server_lib::@afa1b295bad524b51d90",
+	"name" : "server_lib",
+	"nameOnDisk" : "libserver_lib.a",
 	"paths" : 
 	{
-		"build" : "client_src",
-		"source" : "client_src"
+		"build" : "server_src",
+		"source" : "server_src"
 	},
 	"sourceGroups" : 
 	[
@@ -210,15 +152,23 @@
 				23,
 				24,
 				25,
-				27
+				26,
+				27,
+				28,
+				29,
+				30,
+				31,
+				32,
+				33,
+				35
 			]
 		},
 		{
 			"name" : "Header Files",
 			"sourceIndexes" : 
 			[
-				26,
-				28
+				34,
+				36
 			]
 		}
 	],
@@ -227,61 +177,169 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "client_src/event_handler.cpp",
+			"path" : "server_src/enemigo.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "client_src/model_updater.cpp",
+			"path" : "server_src/game.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "client_src/game.cpp",
+			"path" : "server_src/mapa.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "client_src/protocol.cpp",
+			"path" : "server_src/objeto.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "client_src/client.cpp",
+			"path" : "server_src/partida.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "client_src/clientReceiver.cpp",
+			"path" : "server_src/personaje.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "client_src/entity.cpp",
+			"path" : "server_src/protocol.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "client_src/player.cpp",
+			"path" : "server_src/broadcaster.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "client_src/camara.cpp",
+			"path" : "server_src/client.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "client_src/UIManager.cpp",
+			"path" : "server_src/clientReceiver.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "server_src/clientSender.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "server_src/acceptor.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "server_src/server.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "server_src/contenedor.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "server_src/lista_objetos.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "server_src/municion.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "server_src/pickup.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "server_src/zanahoria.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "server_src/gold_coin.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "server_src/clock.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "server_src/ghost.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "server_src/bat.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "server_src/monkey.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "server_src/banana.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "server_src/jazz.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "server_src/lori.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "server_src/spaz.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "common_src/Container.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
@@ -317,83 +375,23 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "server_src/contenedor.cpp",
+			"path" : "server_src/GamesManager.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "client_src/sdl_libs/Animation.cpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "client_src/sdl_libs/Area.cpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "client_src/sdl_libs/Exception.cpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "client_src/sdl_libs/SdlException.cpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "client_src/sdl_libs/SdlTexture.cpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "client_src/sdl_libs/SdlWindow.cpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "client_src/sdl_libs/Fuente.cpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "client_src/sdl_libs/Music.cpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "client_src/sdl_libs/Sound.cpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "client_src/setupscreen/ConnectMenu.cpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"path" : "common_src/headers/Message.h",
+			"path" : "server_src/headers/GamesManager.h",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "common_src/Container.cpp",
+			"path" : "server_src/GameBroadcasterContainer.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
-			"path" : "common_src/Container.h",
+			"path" : "server_src/headers/GameBroadcasterContainer.h",
 			"sourceGroupIndex" : 1
 		}
 	],
