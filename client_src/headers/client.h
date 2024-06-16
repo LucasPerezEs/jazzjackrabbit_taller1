@@ -20,7 +20,7 @@
 
 class Client {
 public:
-    Client(const std::string& hostname, const std::string& servername, Queue<Contenedor>& queue,
+    Client(const std::string& hostname, const std::string& servername, Queue<Container>& queue,
            SdlWindow& window, std::map<int, Entity*>& entidades, std::map<int, Player*>& personajes,
            UIManager& ui_manager);
 

@@ -10,6 +10,7 @@ Command::ActionType ServerProtocol::receive_command() {
 
 
 void ServerProtocol::send_info(Contenedor c) {
+    sendUChar(0x01);
     if (c.msg_code() == 2) {
         send_id(c);
     } else {

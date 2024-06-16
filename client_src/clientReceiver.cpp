@@ -1,13 +1,13 @@
 #include "headers/clientReceiver.h"
 
-ClientReceiver::ClientReceiver(ClientProtocol& protocol, Queue<Contenedor>& receiverQueue):
+ClientReceiver::ClientReceiver(ClientProtocol& protocol, Queue<Container>& receiverQueue):
         clientProtocol(protocol), queueReceiver(receiverQueue) {}
 
 void ClientReceiver::run() {
     while (_keep_running) {
         try {
             // recibir comando de un cliente
-            Contenedor c = clientProtocol.receive_info();
+            Container c = clientProtocol.receive_container();
             queueReceiver.push(c);
         } catch (ProtocolDesconection& d) {
             break;

@@ -34,7 +34,7 @@ int main(int argc, char* argv[]) {
                 std::cout << "Error al iniciar Audio subsystem: " << SDL_GetError() << std::endl;
             }
 
-            Queue<Contenedor> receiverQueue;
+            Queue<Container> receiverQueue;
 
             std::map<int, Entity*> entidades;
             std::map<int, Player*> personajes;

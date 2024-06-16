@@ -3,7 +3,7 @@
 #include "headers/client.h"
 // cppcheck-suppress uninitMemberVar
 ModelUpdater::ModelUpdater(ClientProtocol& protocol, SdlWindow& window,
-                           std::map<int, Entity*>& entidades, Queue<Contenedor>& reciever_queue,
+                           std::map<int, Entity*>& entidades, Queue<Container>& reciever_queue,
                            std::map<int, Player*>& personajes, UIManager& ui_manager):
         protocol(protocol),
         was_closed(false),
@@ -162,38 +162,39 @@ void ModelUpdater::run() {
     }
 }
 
-void ModelUpdater::update_entity(Contenedor& c) {
-    if (entidades.count(c.id()) > 0) {
-        entidades[c.id()]->update_stats(c.posx(), c.posy(), c.width(), c.height(), c.direccion());
-        entidades[c.id()]->modify_animation(this->animations[c.entity_type()][c.animation_type()],
-                                            c.animation_type());
+void ModelUpdater::update_entity(Container& c) {
+
+    if (entidades.count(c.game_container->id) > 0) {
+        entidades[c.game_container->id]->update_stats(c.game_container->x, c.game_container->y, c.game_container->w, c.game_container->h, c.game_container->direction);
+        entidades[c.game_container->id]->modify_animation(this->animations[c.game_container->en_type][c.game_container->an_type],
+                                                          c.game_container->an_type);
     } else {
-        entidades[c.id()] =
-                new Entity(c.id(), c.posx(), c.posy(), c.width(), c.height(), c.direccion(),
-                           c.animation_type(),
-                           this->animations[c.entity_type()][c.animation_type()], c.entity_type());
+        entidades[c.game_container->id] =
+                new Entity(c.game_container->id, c.game_container->x, c.game_container->y, c.game_container->w, c.game_container->h, c.game_container->direction,
+                           c.game_container->an_type,
+                           this->animations[c.game_container->en_type][c.game_container->an_type], c.game_container->en_type);
     }
 }
 
-void ModelUpdater::update_player(Contenedor& c) {
-    if (personajes.count(c.id()) > 0) {
-        personajes[c.id()]->update_player_stats(c.posx(), c.posy(), c.width(), c.height(),
-                                                c.direccion(), c.vida(), c.municion(), c.score());
-        personajes[c.id()]->modify_animation(this->animations[c.entity_type()][c.animation_type()],
-                                             c.animation_type());
+void ModelUpdater::update_player(Container& c) {
+    if (personajes.count(c.game_container->id) > 0) {
+        personajes[c.game_container->id]->update_player_stats(c.game_container->x, c.game_container->y, c.game_container->w, c.game_container->h,
+                                                              c.game_container->direction, c.game_container->health, c.game_container->ammo, c.game_container->score);
+        personajes[c.game_container->id]->modify_animation(this->animations[c.game_container->en_type][c.game_container->an_type],
+                                                           c.game_container->an_type);
     } else {
-        personajes[c.id()] = new Player(c.id(), c.posx(), c.posy(), c.width(), c.height(),
-                                        c.direccion(), c.animation_type(),
-                                        this->animations[c.entity_type()][c.animation_type()],
-                                        c.entity_type(), c.vida(), c.municion(), c.score());
+        personajes[c.game_container->id] = new Player(c.game_container->id, c.game_container->x, c.game_container->y, c.game_container->w, c.game_container->h,
+                                                      c.game_container->direction, c.game_container->an_type,
+                                        this->animations[c.game_container->en_type][c.game_container->an_type],
+                                                      c.game_container->en_type, c.game_container->health, c.game_container->ammo, c.game_container->score);
     }
 }
 
-void ModelUpdater::despawn_entity(Contenedor& c) {
-    if (personajes.count(c.id()) > 0) {
-        personajes.erase(c.id());
+void ModelUpdater::despawn_entity(Container& c) {
+    if (personajes.count(c.game_container->id) > 0) {
+        personajes.erase(c.game_container->id);
     } else {
-        entidades.erase(c.id());
+        entidades.erase(c.game_container->id);
     }
 }
 
@@ -201,10 +202,10 @@ void ModelUpdater::update(float dt) {
 
     try {
 
-        Contenedor c = this->reciever_queue.pop();
+        Container c = this->reciever_queue.pop();
 
 
-        switch (c.msg_code()) {
+        switch (c.code()) {
             case 0:  // Actualiza un objeto, si no existe, lo crea.
                 update_entity(c);
                 break;
@@ -214,7 +215,7 @@ void ModelUpdater::update(float dt) {
                 break;
 
             case 2:  // Setea el ID al cliente
-                cliente->set_id(c.id());
+                cliente->set_id(c.game_container->id);
                 break;
 
             case 3:  // Actualiza un personaje, si no existe, lo crea.
@@ -222,7 +223,7 @@ void ModelUpdater::update(float dt) {
                 break;
 
             case 4:  // Actualiza el reloj de partida
-                ui_manager.update_clock(c.id());
+                ui_manager.update_clock(c.game_container->id);
                 break;
 
             default:

@@ -30,22 +30,22 @@ private:
     bool was_closed;
     std::map<int, Entity*>& entidades;
     std::map<int, std::map<int, Animation*>> animations;
-    Queue<Contenedor>& reciever_queue;
+    Queue<Container>& reciever_queue;
     Client* cliente;
     std::map<int, Player*>& personajes;
     UIManager& ui_manager;
 
     void init_animations(SdlWindow& window);
 
-    void update_entity(Contenedor& c);
+    void update_entity(Container& c);
 
-    void update_player(Contenedor& c);
+    void update_player(Container& c);
 
-    void despawn_entity(Contenedor& c);
+    void despawn_entity(Container& c);
 
 public:
     ModelUpdater(ClientProtocol& protocol, SdlWindow& window, std::map<int, Entity*>& entidades,
-                 Queue<Contenedor>& reciever_queue, std::map<int, Player*>& personajes,
+                 Queue<Container>& reciever_queue, std::map<int, Player*>& personajes,
                  UIManager& ui_manager);
 
     virtual void run() override;
