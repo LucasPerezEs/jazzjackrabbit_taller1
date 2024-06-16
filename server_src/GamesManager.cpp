@@ -70,7 +70,7 @@ std::string GamesManager::createGame(std::string gameId, uint32_t maxPlayers,
                                      std::map<std::string, float>& config) {
     std::lock_guard<std::mutex> lock(gamesMutex);
 
-    GameContainer* newGame = new GameContainer(config, maxPlayers);
+    GameBroadcasterContainer* newGame = new GameBroadcasterContainer(config, maxPlayers);
     games[gameId] = newGame;
 
     newGame->start();

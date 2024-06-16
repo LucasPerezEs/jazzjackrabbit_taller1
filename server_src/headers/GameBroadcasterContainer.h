@@ -1,5 +1,5 @@
-#ifndef GAMECONTAINER_H
-#define GAMECONTAINER_H
+#ifndef GAMEBROADCASTERCONTAINER_H
+#define GAMEBROADCASTERCONTAINER_H
 
 #include <list>
 #include <map>
@@ -8,9 +8,9 @@
 #include "client.h"
 #include "game.h"
 
-class GameContainer {
+class GameBroadcasterContainer {
 public:
-    GameContainer(std::map<std::string, float>& config, uint32_t maxPlayers);
+    GameBroadcasterContainer(std::map<std::string, float>& config, uint32_t maxPlayers);
 
     void addPlayer(ClientHandler* client);
     bool canAddPlayer() const;
@@ -31,4 +31,4 @@ private:
     Broadcaster broadcaster;
 };
 
-#endif  // GAMECONTAINER_H
+#endif  // GAMEBROADCASTERCONTAINER_H

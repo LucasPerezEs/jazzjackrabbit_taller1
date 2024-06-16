@@ -33,8 +33,8 @@ add_library(server_lib
     ../common_src/socket.cpp
         GamesManager.cpp
         headers/GamesManager.h
-        GameContainer.cpp
-        headers/GameContainer.h
+        GameBroadcasterContainer.cpp
+        headers/GameBroadcasterContainer.h
 )
 
 target_include_directories(server_lib PRIVATE headers/*)

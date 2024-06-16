@@ -8,7 +8,7 @@
 
 #include "../../common_src/headers/Message.h"
 
-#include "GameContainer.h"
+#include "GameBroadcasterContainer.h"
 #include "client.h"
 
 class GamesManager: public Thread {
@@ -31,7 +31,7 @@ private:
     Queue<Message> setupQueue;
     Queue<Contenedor> stateQueue;
 
-    std::map<std::string, GameContainer*> games;
+    std::map<std::string, GameBroadcasterContainer*> games;
     std::map<uint32_t, ClientHandler*> clients;
 
     void reap_offline_games();
