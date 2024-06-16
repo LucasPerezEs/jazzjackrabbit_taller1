@@ -20,7 +20,7 @@ void join();
     bool is_running();
 
 private:
-    Queue<Command> actionQueue;
+    Queue<Message> actionQueue;
     Queue<Contenedor> stateQueue;
     std::list<ClientHandler*> clients;
     Game game;

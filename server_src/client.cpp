@@ -43,7 +43,7 @@ void ClientHandler::pushState(const Contenedor& c) { senderThread.pushDatosObjet
 ClientHandler::~ClientHandler() {}
 
 
-void ClientHandler::setReceiverQueue(Queue<Command>* actionQueue) {
+void ClientHandler::setReceiverQueue(Queue<Message>* actionQueue) {
     receiverThread.setQueue(actionQueue);
 }
 

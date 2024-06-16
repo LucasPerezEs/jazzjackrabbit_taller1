@@ -91,6 +91,7 @@ std::vector<std::string> GamesManager::listGames() {
     std::lock_guard<std::mutex> lock(gamesMutex);
     std::vector<std::string> gameList;
     for (const auto& game: games) {
+        std::cout << game.first << std::endl;
         gameList.push_back(game.first);
     }
     return gameList;
@@ -99,28 +100,23 @@ std::vector<std::string> GamesManager::listGames() {
 
 void GamesManager::run() {
 
-    Command command;
+    Message msg(Setup::ActionType::NONE);
     std::map<std::string, float> config = load_config_YAML("../config.yml");
     while (_keep_running) {
-        command = setupQueue.pop();
-        uint32_t clientId = command.clientId;
-        switch (command.action) {
-            case Command::JOIN_GAME:
-                std::cout << "case Command::JOIN_GAME:" << std::endl;
-                // gameId = command.gameId;
-                joinGame("PruebaManager", clients[clientId]);
+        msg = setupQueue.pop();
+        uint32_t clientId = msg.id();
+        switch (msg.setup.action) {
+            case Setup::JOIN_GAME:
+                joinGame(msg.setup.gameId, clients[clientId]);
+                //push join
                 break;
-            case Command::CREATE_GAME:
-                std::cout << "case Command::CREATE_GAME:" << std::endl;
-                // gameId = command.gameId;
-                createGame("PruebaManager", config);
+            case Setup::CREATE_GAME:
+                createGame(msg.setup.gameId, config);
                 // push create
                 break;
-            case Command::GET_GAME_LIST:
-                std::cout << "case Command::GET_GAME_LIST:" << std::endl;
-                //std::cout << "case Command::JOIN_GAME:" << std::endl;
+            case Setup::GET_GAME_LIST:
                 listGames();
-                // push gameList
+                //push gamelist
                 break;
             default:
                 std::cout << "Comando desconocido" << std::endl;

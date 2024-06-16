@@ -25,7 +25,7 @@ private:
 
 public:
     ClientHandler(uint32_t id,Socket peer);
-    void setReceiverQueue(Queue<Command>* actionQueue);
+    void setReceiverQueue(Queue<Message>* actionQueue);
     uint32_t getId();
     bool is_online();
     void kill();

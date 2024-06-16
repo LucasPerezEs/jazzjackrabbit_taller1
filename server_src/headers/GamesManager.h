@@ -5,6 +5,7 @@
 #include <map>
 #include <vector>
 #include "GameContainer.h"
+#include "../../common_src/headers/Message.h"
 #include "client.h"
 
 class GamesManager: public Thread {
@@ -23,7 +24,7 @@ public:
 private:
     std::mutex gamesMutex;
 
-    Queue<Command> setupQueue;
+    Queue<Message> setupQueue;
     Queue<Contenedor> stateQueue;
 
     std::map<std::string, GameContainer*> games;

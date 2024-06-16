@@ -11,7 +11,6 @@ void ClientSender::run() {
         try {
             Contenedor c = queueSender.pop();
             serverProtocol.send_info(c);
-            // enviar estados a todos los clientes
         } catch (ProtocolDesconection& d) {
             break;
         } catch (LibError& e) {

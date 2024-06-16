@@ -77,8 +77,6 @@ bool EventHandler::is_running() { return not was_closed; }
 // Pre: -
 // Post: Se momemento los controles son: W, S, A, D, barra espaciadora y shift.
 void EventHandler::run() {
-
-    Command cmd;
     SDL_Event event;
 
     jump_effect.SetupDevice();
@@ -89,19 +87,26 @@ void EventHandler::run() {
         SDL_WaitEvent(&event);
 
         switch (event.type) {
-            case SDL_KEYDOWN:
+            case SDL_KEYDOWN: {
+                Command cmd;
                 this->handle_keydown(event, cmd);
-                this->protocol.send_command(cmd);
+                Message msg(cmd.action);
+                this->protocol.send_message(msg);
                 break;
-            case SDL_KEYUP:
+            }
+            case SDL_KEYUP: {
+                Command cmd;
                 this->handle_keyup(event, cmd);
-                this->protocol.send_command(cmd);
+                Message msg(cmd.action);
+                this->protocol.send_message(msg);
                 break;
+            }
             case SDL_QUIT:
                 std::cout << "Ha salido del juego" << std::endl;
-                cmd.action = Command::QUIT;
-                this->protocol.send_command(cmd);
+                Message quitMessage(Command::QUIT);
+                this->protocol.send_message(quitMessage);
                 this->was_closed = true;
+                break;
         }
     }
 }

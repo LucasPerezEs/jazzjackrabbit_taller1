@@ -5,6 +5,7 @@
 #include <utility>
 #include <vector>
 
+#include "../../common_src/headers/Message.h"
 #include "../../common_src/headers/commands.h"
 #include "../../common_src/headers/entity_commands.h"
 #include "../../common_src/headers/protocol.h"
@@ -14,10 +15,18 @@
 
 class ServerProtocol: private Protocol {
 private:
+    Command::ActionType receive_command();
+    Message receive_setup_message();
+    Message receive_command_message();
+    Message receive_create_game();
+    Message receive_join_game();
+    Message receive_get_game_list();
+
+
 public:
     explicit ServerProtocol(Socket peer);
+    Message receive_message();
 
-    Command::ActionType receive_command();
     void send_id(Contenedor c);
     std::string receive_game_id();
     uint32_t receive_max_players();

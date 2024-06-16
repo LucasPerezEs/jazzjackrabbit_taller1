@@ -203,6 +203,7 @@ void ModelUpdater::update(float dt) {
 
         Contenedor c = this->reciever_queue.pop();
 
+
         switch (c.msg_code()) {
             case 0:  // Actualiza un objeto, si no existe, lo crea.
                 update_entity(c);

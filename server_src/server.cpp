@@ -86,9 +86,7 @@ void Server::run() {
 
 
     thread_acceptador.stop();
-    std::cout << "thread_acceptador.stop();" << std::endl;
     game_manager.stop();
-    std::cout << "game_manager.stop();" << std::endl;
 
 
     thread_acceptador.join();

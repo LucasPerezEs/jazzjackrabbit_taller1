@@ -59,15 +59,60 @@ void ServerProtocol::stop() { Protocol::stop(); }
 
 void ServerProtocol::close() { Protocol::close(); }
 
+Message ServerProtocol::receive_message(){
+    unsigned char type = receiveUChar();
+    Message::Type messageType = static_cast<Message::Type>(type);
 
+    switch (messageType) {
+        case Message::Type::SETUP:
+            return receive_setup_message();
+        case Message::Type::COMMAND:
+            return receive_command_message();
+        default:
+            throw std::runtime_error("Unknown message type");
+    }
 
-std::string ServerProtocol::receive_game_id() {
-    return receiveString();
 }
 
-uint32_t ServerProtocol::receive_max_players() {
-    return receiveUInt32();
+Message ServerProtocol::receive_setup_message() {
+    unsigned char setupType = receiveUChar();
+    Setup::ActionType actionType = static_cast<Setup::ActionType>(setupType);
+
+    switch (actionType) {
+        case Setup::ActionType::CREATE_GAME:
+            return receive_create_game();
+        case Setup::ActionType::JOIN_GAME:
+            return receive_join_game();
+        case Setup::ActionType::GET_GAME_LIST:
+            return receive_get_game_list();
+        default:
+            throw std::runtime_error("Unknown setup action type");
+    }
 }
+
+Message ServerProtocol::receive_command_message() {
+    unsigned char commandType = receiveUChar();
+    Command::ActionType actionType = static_cast<Command::ActionType>(commandType);
+
+    return Message(actionType);
+}
+
+Message ServerProtocol::receive_create_game() {
+    std::string gameId = receiveString();
+    uint32_t maxPlayers = receiveUInt32();
+    return Message(Setup::ActionType::CREATE_GAME,gameId,maxPlayers);
+}
+
+Message ServerProtocol::receive_join_game() {
+    std::string gameId = receiveString();
+    return Message(Setup::ActionType::JOIN_GAME, gameId);
+}
+
+Message ServerProtocol::receive_get_game_list() {
+    // No additional data needed for GET_GAME_LIST setup
+    return Message(Setup::ActionType::GET_GAME_LIST);
+}
+
 
 void ServerProtocol::send_games_ids(const std::vector<std::string>& gameIDs) {
     //send_vector_string(gameIDs);

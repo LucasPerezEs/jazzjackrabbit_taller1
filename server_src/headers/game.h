@@ -35,7 +35,7 @@
 #include "../../common_src/headers/commands.h"
 #include "../../common_src/headers/queue.h"
 #include "../../common_src/headers/thread.h"
-
+#include "../../common_src/headers/Message.h"
 #include "bat.h"
 #include "clock.h"
 #include "contenedor.h"
@@ -49,7 +49,7 @@
 
 class Game: public Thread {
 public:
-    explicit Game(Queue<Command>& actionQueue, Queue<Contenedor>& eventQueue,
+    explicit Game(Queue<Message>& actionQueue, Queue<Contenedor>& eventQueue,
                   std::map<std::string, float>& config);
 
     void run() override;
@@ -64,7 +64,7 @@ private:
     ListaObjetos objetos;
     std::vector<Ente*> entes;
 
-    Queue<Command>& actionQueue;
+    Queue<Message>& actionQueue;
     Queue<Contenedor>& stateQueue;
 
     std::map<std::string, float>& config;

@@ -2,7 +2,7 @@
 
 #include "headers/partida.h"
 
-Game::Game(Queue<Command>& actionQueue, Queue<Contenedor>& stateQueue,
+Game::Game(Queue<Message>& actionQueue, Queue<Contenedor>& stateQueue,
            std::map<std::string, float>& config):
         actionQueue(actionQueue),
         stateQueue(stateQueue),
@@ -24,39 +24,50 @@ void Game::run() {
     // cppcheck-suppress danglingLifetime
     entes.push_back(&monkey);
 
-
     while (_keep_running && !clock.times_up()) {
-        Command command;
-        while (actionQueue.try_pop(command)) {
-
-            uint32_t clientId = command.clientId;
+        Message msg(Command::ActionType::NONE);
+        while (actionQueue.try_pop(msg)) {
+            uint32_t clientId = msg.id();
             Personaje* personaje = clientCharacters[clientId];
 
-            if (command.action == Command::ActionType::LEFT) {
-                personaje->moveLeft();
-            } else if (command.action == Command::ActionType::RIGHT) {
-                personaje->moveRigth();
-            } else if (command.action == Command::ActionType::RUNFAST) {
-                personaje->run();
-            } else if (command.action == Command::ActionType::JUMP) {
-                personaje->jump();
-            } else if (command.action == Command::ActionType::SPECIAL) {
-                personaje->special_action();
-            } else if (command.action == Command::ActionType::FIRE) {
-                personaje->disparando = true;
-            } else if (command.action == Command::ActionType::STOPLEFT) {
-                personaje->stopMovingLeft();
-            } else if (command.action == Command::ActionType::STOPRIGHT) {
-                personaje->stopMovingRight();
-            } else if (command.action == Command::ActionType::RUN) {
-                personaje->stoprunning();
-            } else if (command.action == Command::ActionType::STOPFIRE) {
-                personaje->disparando = false;
-            } else if (command.action == Command::ActionType::QUIT) {
-                personaje->borrar = true;
+            switch (msg.command.action) {
+                case Command::ActionType::LEFT:
+                    personaje->moveLeft();
+                    break;
+                case Command::ActionType::RIGHT:
+                    personaje->moveRigth();
+                    break;
+                case Command::ActionType::RUNFAST:
+                    personaje->run();
+                    break;
+                case Command::ActionType::JUMP:
+                    personaje->jump();
+                    break;
+                case Command::ActionType::SPECIAL:
+                    personaje->special_action();
+                    break;
+                case Command::ActionType::FIRE:
+                    personaje->disparando = true;
+                    break;
+                case Command::ActionType::STOPLEFT:
+                    personaje->stopMovingLeft();
+                    break;
+                case Command::ActionType::STOPRIGHT:
+                    personaje->stopMovingRight();
+                    break;
+                case Command::ActionType::RUN:
+                    personaje->stoprunning();
+                    break;
+                case Command::ActionType::STOPFIRE:
+                    personaje->disparando = false;
+                    break;
+                case Command::ActionType::QUIT:
+                    personaje->borrar = true;
+                    break;
+                default:
+                    break;
             }
         }
-
         objetos.eliminar_borrados(stateQueue);
         objetos.correr_colisiones();
         for (auto e: entes) {
@@ -69,6 +80,7 @@ void Game::run() {
         std::this_thread::sleep_for(std::chrono::milliseconds(17));
     }
 }
+
 
 void Game::addPlayer(uint32_t clientId) {
     std::lock_guard<std::mutex> lock(clientCharactersMutex);

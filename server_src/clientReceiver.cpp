@@ -7,10 +7,9 @@ ClientReceiver::ClientReceiver(uint32_t id, ServerProtocol& protocol):
 void ClientReceiver::run() {
     while (_keep_running) {
         try {
-            auto action = serverProtocol.receive_command();
-            Command command = {action, id};
-            queueReceiver->push(command);
-
+            Message msg = serverProtocol.receive_message();
+            msg.setId(id);
+            queueReceiver->push(msg);
         } catch (ProtocolDesconection& d) {
             break;
         } catch (LibError& e) {
@@ -25,4 +24,6 @@ void ClientReceiver::run() {
 }
 
 
-void ClientReceiver::setQueue(Queue<Command>* queue) { queueReceiver = queue; }
+void ClientReceiver::setQueue(Queue<Message>* queue) {
+    queueReceiver = queue;
+}

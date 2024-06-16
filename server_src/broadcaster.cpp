@@ -12,7 +12,6 @@ void Broadcaster::run() {
         try {
             c = stateQueue.pop();
             for (auto& client: clients) {
-                // std::cout << "Pusheo estados" << std::endl;
                 client->pushState(c);
             }
         } catch (const ClosedQueue&) {

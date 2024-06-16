@@ -1,12 +1,7 @@
 #include "headers/protocol.h"
 
-ClientProtocol::ClientProtocol(const std::string& hostname, const std::string& servicename)
-        : Protocol(Socket(hostname.c_str(), servicename.c_str())) {}
-
-
-void ClientProtocol::send_command(Command& cmd) {
-    sendUChar(static_cast<unsigned char>(cmd.action));
-}
+ClientProtocol::ClientProtocol(const std::string& hostname, const std::string& servicename):
+        Protocol(Socket(hostname.c_str(), servicename.c_str())) {}
 
 
 std::pair<State::StateType, SpecialAction::SpecialActionType> ClientProtocol::receive_update() {
@@ -71,16 +66,54 @@ Contenedor ClientProtocol::receiveDatosObjeto() {
     return c;
 }
 
-void ClientProtocol::send_join_game() {
-    sendUChar(static_cast<unsigned char>(Command::JOIN_GAME));
+
+void ClientProtocol::send_message(const Message& message) {
+
+    if (message.type() == Message::Type::SETUP) {
+        sendUChar(static_cast<unsigned char>(message.type()));
+        send_setup(message.setup);
+    }
+
+    if (message.type() == Message::Type::COMMAND) {
+        sendUChar(static_cast<unsigned char>(message.type()));
+        send_command(message.command);
+    }
 }
 
-void ClientProtocol::send_create_game() {
-    sendUChar(static_cast<unsigned char>(Command::CREATE_GAME));
+void ClientProtocol::send_command(const Command& cmd) {
+    sendUChar(static_cast<unsigned char>(cmd.action));
+}
+
+void ClientProtocol::send_setup(const Setup& setup) {
+
+    if (setup.action == Setup::ActionType::CREATE_GAME) {
+        send_create_game(setup.gameId, setup.maxPlayers);
+    }
+
+    if (setup.action == Setup::ActionType::JOIN_GAME) {
+        send_join_game(setup.gameId);
+    }
+
+    if (setup.action == Setup::ActionType::GET_GAME_LIST) {
+        send_get_game_list();
+    }
+}
+
+
+void ClientProtocol::send_join_game(const std::string& gameId) {
+    sendUChar(static_cast<unsigned char>(Setup::JOIN_GAME));
+    sendString(gameId);
+}
+
+void ClientProtocol::send_create_game(const std::string& gameId,const uint32_t& maxPlayers) {
+    sendUChar(static_cast<unsigned char>(Setup::CREATE_GAME));
+    sendString(gameId);
+    send32(maxPlayers);
 }
 
 void ClientProtocol::send_get_game_list() {
-    sendUChar(static_cast<unsigned char>(Command::GET_GAME_LIST));
+    sendUChar(static_cast<unsigned char>(Setup::GET_GAME_LIST));
 }
+
 
 void ClientProtocol::stop() { Protocol::stop(); }
