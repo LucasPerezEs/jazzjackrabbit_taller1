@@ -350,13 +350,27 @@ void Personaje::colision(Bala& b) {
         b.borrar = true;
     }
 
-    if (vida <= 0) {
-        killed_by_id = b.get_shooter_id();  // Me guardo el id de quien me mato
-        std::cout << "Me mato: " << killed_by_id << std::endl;
-    }
+    check_dead(b.get_shooter_id());
 }
 
 void Personaje::colision(Municion& m) { m.colision(*this); }
+
+void Personaje::colision(Personaje& p) {
+    if (p.has_special_action_active()) {
+        RecibirDanio(p.danio_ataque_especial);
+        check_dead(p.id);
+    } else if (this->special_action_active) {
+        p.RecibirDanio(danio_ataque_especial);
+        p.check_dead(this->id);
+    }
+}
+
+void Personaje::check_dead(int killer_id) {
+    if (vida <= 0) {
+        killed_by_id = killer_id;  // Me guardo el id de quien me mato
+        std::cout << "Me mato: " << killed_by_id << std::endl;
+    }
+}
 
 void Personaje::disparar(ListaObjetos& objetos) {
     tiempo = std::chrono::system_clock::now();

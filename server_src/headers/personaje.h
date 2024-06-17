@@ -82,12 +82,15 @@ public:
     bool disparando;
     Personaje(float x, float y, float w, float h, EntityType en_type, AnimationType an_type,
               std::map<std::string, float>& config);
+
     virtual void colision(Objeto& o) override;
     virtual void colision(Enemigo& e) override;
     virtual void colision(Municion& m) override;
     virtual void colision(
             Banana& b) override;  // Banana y Bala deberian pertenecer a una clase 'Proyectil'
     virtual void colision(Bala& b) override;
+    virtual void colision(Personaje& p) override;
+
     void disparar(ListaObjetos& objetos);
     void moveRigth();
     void moveLeft();
@@ -99,6 +102,7 @@ public:
     virtual void special_action() = 0;
     void set_id(uint32_t i);
     void add_score(int score);
+    void check_dead(int killer_id);
     bool has_special_action_active();
     virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) override;
     virtual void update_vivo(ListaObjetos& objetos, Queue<Container>& q,
