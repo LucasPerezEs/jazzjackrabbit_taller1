@@ -65,66 +65,20 @@ void Game::run() {
     this->close();
 }
 
-
-/*
-VERSION ANTERIOR
-// Modifica SaveMapToCSV para guardar los IDs de los tiles
-void Game::SaveMapToCSV(const std::vector<Tile>& tiles, const std::string& filename) {
-    std::ofstream file(filename);
-
-    int contador = 0;
-    int contador_multiplo = 0;
-
-    if (file.is_open()) {
-        for (const auto& tile : tiles) {
-
-            if(contador_multiplo == 80){
-                file << tile.id << "," << "\n";
-                contador++;
-                contador_multiplo = 0;
-
-            } else {
-                file << tile.id << ",";
-                contador++;
-                contador_multiplo++;
-            }
-        }
-
-        while((80*20) >= contador){
-
-            if(contador_multiplo == 80){
-                file << "-1" << "," << "\n";
-                contador++;
-                contador_multiplo = 0;
-
-            } else {
-                file << "-1" << ",";
-                contador++;
-                contador_multiplo++;
-            }
-        
-        } 
-
-        file.close();
-    } else {
-        std::cerr << "No se pudo abrir el archivo para guardar." << std::endl;
-    }
-}
-*/
-
 // Modifica SaveMapToCSV para guardar los IDs de los tiles
 void Game::SaveMapToCSV(const std::string& filename) {
     std::ofstream file(filename);
+    // cppcheck-suppress variableScope
     int fila_anterior = -1;
 
     if (file.is_open()) {
-        for (const auto& pair : mapTiles) {
+        for (const auto& pair: mapTiles) {
             const std::tuple<int, int>& key = pair.first;
             const Tile& value = pair.second;
             int fila_actual = std::get<0>(key);
 
-            if(fila_actual != fila_anterior) {
-                if(fila_anterior != -1) {
+            if (fila_actual != fila_anterior) {
+                if (fila_anterior != -1) {
                     file << "\n";
                 }
                 fila_anterior = fila_actual;
@@ -159,6 +113,9 @@ void Game::save_values(Tile& selectedTile, int& width_texture, int& window_width
     if (newY < maxY || newY > minY)
         return;
 
+void Game::create_map() {
+
+
     int multiploX = std::floor(newX / TILE_MAP_CREATED) * TILE_MAP_CREATED;
     int multiploY = std::floor(newY / TILE_MAP_CREATED) * TILE_MAP_CREATED;
 
@@ -176,6 +133,7 @@ void Game::create_map(){
     std::tuple<int, int> posicion;
     SDL_Renderer* renderer = this->window.getRenderer();
 
+
     SDL_Surface* tilesetSurface =
             IMG_Load("../client_src/assets/background/medivo_map/ASSETS_MEDIVO.png");
     if (tilesetSurface == nullptr) {
@@ -192,7 +150,8 @@ void Game::create_map(){
 
     int window_width, window_height;
     SDL_GetRendererOutputSize(renderer, &window_width, &window_height);
-    std::cout << "El ancho de la ventana es: " << window_width << " y el alto es: " << window_height << std::endl;
+    std::cout << "El ancho de la ventana es: " << window_width << " y el alto es: " << window_height
+              << std::endl;
 
     int width_texture, height_texture;
     SDL_QueryTexture(assetTexture, NULL, NULL, &width_texture, &height_texture);
@@ -205,6 +164,7 @@ void Game::create_map(){
         tile.id = i;
         tile.srcRect = {(i % tilesPerRow)*TILE_MAP_ASSETS, (i / tilesPerRow)*TILE_MAP_ASSETS, TILE_MAP_ASSETS, TILE_MAP_ASSETS};
         tile.selected = false;
+        // cppcheck-suppress uninitStructMember
         tiles_asset.push_back(tile);
     }
     SDL_Rect destRectAsset = {0, 0, width_texture, height_texture};
@@ -239,7 +199,7 @@ void Game::create_map(){
                         }
                     }
 
-                    if(!selectedTile.selected)
+                    if (!selectedTile.selected)
                         break;
 
                     save_values(selectedTile, width_texture, window_width, window_height, event);
@@ -317,7 +277,6 @@ void Game::render() {
 }
 
 void Game::close() { client.close(); }
-
 
 
 std::vector<std::vector<int>> Game::cargarCSV(const std::string& ruta) {
