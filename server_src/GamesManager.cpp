@@ -112,7 +112,7 @@ void GamesManager::run() {
     Message msg(Setup::ActionType::NONE);
     Container container({}, {}, {}, {});
     bool ok;
-    std::vector<std::string> gameList;
+
 
     std::map<std::string, float> config = load_config_YAML("../config.yml");
     while (_keep_running) {
@@ -130,12 +130,14 @@ void GamesManager::run() {
                         Container(Setup::CREATE_GAME, msg.setup.gameId, msg.setup.maxPlayers, ok);
                 clients[clientId]->pushState(container);
                 break;
-            case Setup::GET_GAME_LIST:
+            case Setup::GET_GAME_LIST: {
+                std::vector<std::string> gameList;
                 ok = listGames(gameList);
                 container =
                         Container(Setup::GET_GAME_LIST, gameList, ok);
                 clients[clientId]->pushState(container);
                 break;
+            }
             default:
                 std::cout << "Comando desconocido" << std::endl;
                 break;
