@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include <string>
+#include <vector>
 
 #include <arpa/inet.h>
 
@@ -31,6 +32,10 @@ public:
     void sendBool(bool value);
     bool receiveBool();
 
+    void sendVectorString(const std::vector<std::string>& vec);
+    std::vector<std::string> receiveVectorString();
+
+
     Protocol(const Protocol&) = delete;
 
     Protocol& operator=(const Protocol&) = delete;
@@ -40,6 +45,7 @@ public:
     virtual void close();
 
     virtual ~Protocol() = default;
+
 };
 
 

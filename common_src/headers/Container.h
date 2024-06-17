@@ -14,9 +14,12 @@ public:
     SetupContainer(Setup::ActionType setupType, const std::string gameId, uint32_t maxPlayers,
                    bool ok);
 
+    SetupContainer(Setup::ActionType setupType, std::vector<std::string> gameList, bool ok);
+
     Setup::ActionType setupType;
     std::string gameId;
     uint32_t maxPlayers;
+    std::vector<std::string> gameList;
     bool ok;
 };
 
@@ -46,6 +49,7 @@ public:
 
     // Setup container constructor
     Container(Setup::ActionType setupType, const std::string gameId, uint32_t maxPlayers, bool ok);
+    Container(Setup::ActionType setupType, std::vector<std::string> gameList, bool ok);
 
     Type type() const { return _type; }
 

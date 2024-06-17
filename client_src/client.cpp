@@ -70,11 +70,15 @@ bool Client::joinGame(const std::string& gameId) {
     return container.setup_container->ok;
 }
 
-std::vector<std::string> Client::refreshGameList() {
+bool Client::refreshGameList(std::vector<std::string>& gameList) {
     Message msg(Setup::ActionType::GET_GAME_LIST);
     client_protocol.send_message(msg);
     //recibir gamelist
-    return std::vector<std::string>();
+
+    Container container = client_protocol.receive_container();
+    gameList = container.setup_container->gameList;
+
+    return container.setup_container->ok;
 }
 
 EventHandler* Client::get_EventHandler() { return &event_handler; }

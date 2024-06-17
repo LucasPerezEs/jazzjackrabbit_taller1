@@ -15,7 +15,7 @@
 #include "model_updater.h"
 #include "player.h"
 #include "protocol.h"
-//#include "SdlWindow.h"
+// #include "SdlWindow.h"
 
 
 class Client {
@@ -26,7 +26,7 @@ public:
 
     bool createGame(const std::string& gameId, const uint32_t maxPlayers);
     bool joinGame(const std::string& gameId);
-    std::vector<std::string> refreshGameList();
+    bool refreshGameList(std::vector<std::string>& gameList);
 
     void go_online();
     bool is_online();

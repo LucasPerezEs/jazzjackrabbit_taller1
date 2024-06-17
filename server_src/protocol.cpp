@@ -25,19 +25,18 @@ void ServerProtocol::send_setup_container(const SetupContainer& setupContainer) 
 
     switch (actionType) {
         case Setup::ActionType::CREATE_GAME:
-            sendBool(true);
+            sendBool(setupContainer.ok);
             sendString(setupContainer.gameId);
             send32(setupContainer.maxPlayers);
-            // send_create_game();
             break;
         case Setup::ActionType::JOIN_GAME:
-            sendBool(true);
+            sendBool(setupContainer.ok);
             sendString(setupContainer.gameId);
             send32(setupContainer.maxPlayers);
-            // send_join_game();
             break;
         case Setup::ActionType::GET_GAME_LIST:
-            // send_get_game_list();
+            sendBool(setupContainer.ok);
+            sendVectorString(setupContainer.gameList);
             break;
         default:
             throw std::runtime_error("Unknown setup action type to send");

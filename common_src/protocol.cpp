@@ -5,6 +5,7 @@
 #include "headers/desconection.h"
 #include "headers/liberror.h"
 
+
 #define CHAR_SIZE 1
 #define SHORT_SIZE 2
 
@@ -120,6 +121,25 @@ bool Protocol::receiveBool() {
     unsigned char byte = receiveUChar();
     return byte != 0;
 }
+
+
+std::vector<std::string> Protocol::receiveVectorString() {
+    std::vector<std::string> vec;
+    uint16_t size = receive16();
+    vec.reserve(size);
+    for (uint16_t i = 0; i < size; ++i) {
+        vec.push_back(receiveString());
+    }
+    return vec;
+}
+
+void Protocol::sendVectorString(const std::vector<std::string>& vec){
+    send16(vec.size());
+    for (const auto& str : vec) {
+        sendString(str);
+    }
+}
+
 
 
 void Protocol::close() { socket.close(); }

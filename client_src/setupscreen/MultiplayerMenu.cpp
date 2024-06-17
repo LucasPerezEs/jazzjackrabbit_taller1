@@ -69,4 +69,14 @@ void MultiplayerMenu::onCreateMapClicked() {
     emit createMapRequested();
 }
 
-MultiplayerMenu::~MultiplayerMenu() {}
+void MultiplayerMenu::updateGameList(const std::vector<std::string>& gameList){
+    QStringList qStringList;
+    for (const auto& str : gameList) {
+        qStringList.append(QString::fromStdString(str));
+    }
+    gameListWidget-> updateGameList(qStringList);
+}
+
+MultiplayerMenu::~MultiplayerMenu() {
+
+}

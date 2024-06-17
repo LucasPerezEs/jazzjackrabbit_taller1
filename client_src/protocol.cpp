@@ -103,7 +103,8 @@ Container ClientProtocol::receive_join_game() {
 
 Container ClientProtocol::receive_get_game_list() {
     bool ok = receiveBool();
-    return Container(Setup::ActionType::GET_GAME_LIST, {}, {}, ok);
+    std::vector<std::string> gameList = receiveVectorString();
+    return Container(Setup::ActionType::GET_GAME_LIST, gameList,ok);
 }
 
 
