@@ -33,6 +33,7 @@
 struct Tile {
     int id; // ID del tile en el tileset
     int type; //Si es tipo SOLIDO-DECORACION-ITEM
+    std::tuple<int, int> posicion;
     SDL_Rect srcRect; // Rectángulo de la imagen de assets
     SDL_Rect destRect; // Rectángulo de destino en la pantalla
     bool selected; // Indica si el tile está seleccionado

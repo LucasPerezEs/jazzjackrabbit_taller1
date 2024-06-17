@@ -67,6 +67,8 @@ void Game::run() {
 }
 
 
+/*
+VERSION ANTERIOR
 // Modifica SaveMapToCSV para guardar los IDs de los tiles
 void Game::SaveMapToCSV(const std::vector<Tile>& tiles, const std::string& filename) {
     std::ofstream file(filename);
@@ -109,6 +111,35 @@ void Game::SaveMapToCSV(const std::vector<Tile>& tiles, const std::string& filen
         std::cerr << "No se pudo abrir el archivo para guardar." << std::endl;
     }
 }
+*/
+
+// Modifica SaveMapToCSV para guardar los IDs de los tiles
+void Game::SaveMapToCSV(const std::vector<Tile>& tiles, const std::string& filename) {
+    std::ofstream file(filename);
+    int fila_anterior = -1;
+
+    if (file.is_open()) {
+        for (const auto& pair : mapTiles) {
+            const std::tuple<int, int>& key = pair.first;
+            const Tile& value = pair.second;
+            int fila_actual = std::get<0>(key);
+
+            if(fila_actual != fila_anterior) {
+                if(fila_anterior != -1) {
+                    file << "\n";
+                }
+                fila_anterior = fila_actual;
+            } else {
+                file << ",";
+            }
+
+            file << value.id;
+        }
+        file.close();
+    } else {
+        std::cerr << "No se pudo abrir el archivo y por lo tanto no se creo el mapa." << std::endl;
+    }
+}
 
 
 /*
@@ -129,7 +160,7 @@ void Game::create_map(){
 
     // Cargar la imagen de assets
     SDL_Surface* tilesetSurface =
-            IMG_Load("../client_src/assets/background/medivo_map/TILESET_Medivo.png");
+            IMG_Load("../client_src/assets/background/medivo_map/ASSETS_MEDIVO.png");
     if (tilesetSurface == nullptr) {
         std::cout << "Error al cargar la imagen: " << IMG_GetError() << std::endl;
         return;
@@ -160,6 +191,7 @@ void Game::create_map(){
     for (int i = 0; i < numTiles; i++) {
         Tile tile;
         tile.id = i;
+        tile.posicion = {{i % tilesPerRow}, {i / tilesPerRow}};
         tile.srcRect = {(i % tilesPerRow)*16, (i / tilesPerRow)*16, 16, 16};
         tile.selected = false;
         tiles_asset.push_back(tile);
@@ -220,14 +252,14 @@ void Game::create_map(){
 
                     //Esto es para que los bloques de las texturas se posiciones siempre en una posicion de 16x16 y no que puedas poner
                     //la mitad de un asset sobre la mitad de otro. Si no crear un mapa con esta herramienta es un quilombo.
-                    int multiploX = static_cast<int>((newX) / 16) * 16;
-                    int multiploY = static_cast<int>((newY) / 16) * 16;
+                    int multiploX = std::floor(newX / 16) * 16;
+                    int multiploY = std::floor(newY / 16) * 16;
 
-                    posicion = { multiploX, multiploY };
+                    posicion = std::make_tuple(multiploY, multiploX);
                     selectedTile.destRect = { multiploX, multiploY, 16, 16 };
                     tiles_mapa.push_back(selectedTile);
 
-                    mapTiles.insert({posicion, selectedTile}); //Si uso este ya no necesito usar tiles_map (Creo)
+                    mapTiles[posicion] = selectedTile; //({posicion, selectedTile}); //Si uso este ya no necesito usar tiles_map (Creo)
 
                     mouseHeldDown = true;
                     break;
@@ -260,10 +292,10 @@ void Game::create_map(){
 
                         //Esto es para que los bloques de las texturas se posiciones siempre en una posicion de 16x16 y no que puedas poner
                         //la mitad de un asset sobre la mitad de otro. Si no crear un mapa con esta herramienta es un quilombo.
-                        int multiploX = static_cast<int>((newX) / 16) * 16;
-                        int multiploY = static_cast<int>((newY) / 16) * 16;
+                        int multiploX = std::floor(newX / 16) * 16;
+                        int multiploY = std::floor(newY / 16) * 16;
 
-                        posicion = { multiploX, multiploY };
+                        posicion = std::make_tuple(multiploY, multiploX);
                         selectedTile.destRect = { multiploX, multiploY, 16, 16 };
                         tiles_mapa.push_back(selectedTile);
 
