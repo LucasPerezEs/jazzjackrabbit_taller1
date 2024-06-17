@@ -12,7 +12,7 @@ class GameBroadcasterContainer {
 public:
     GameBroadcasterContainer(std::map<std::string, float>& config, uint32_t maxPlayers);
 
-    void addPlayer(ClientHandler* client);
+    void addPlayer(ClientHandler* client, uint32_t character);
     bool canAddPlayer() const;
 
     void start();

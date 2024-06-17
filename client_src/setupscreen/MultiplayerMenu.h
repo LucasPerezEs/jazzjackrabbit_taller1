@@ -23,7 +23,7 @@ public:
 signals:
     void refreshRequested();
     void createGameRequested(const QString &gameName);
-    void joinGameRequested(const QString &gameID);
+    void joinGameRequested(const QString &gameID, const int elegido);
     void createMapRequested();
 
 private:

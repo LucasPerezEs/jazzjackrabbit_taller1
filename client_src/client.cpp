@@ -54,9 +54,9 @@ bool Client::createGame(const std::string& gameId, const uint32_t maxPlayers) {
     return container.setup_container->ok;
 }
 
-bool Client::joinGame(const std::string& gameId) {
+bool Client::joinGame(const std::string& gameId, const int character) {
 
-    Message msg(Setup::ActionType::JOIN_GAME,gameId);
+    Message msg(Setup::ActionType::JOIN_GAME, character, gameId);
     client_protocol.send_message(msg);
     //recibir confirmacion
 

@@ -15,15 +15,15 @@ public:
             command({commandType}), type_(Type::COMMAND) {}
 
     // cppcheck-suppress uninitMemberVar
-    explicit Message(Setup::ActionType setupType): setup({setupType, {}, {}}), type_(Type::SETUP) {}
+    explicit Message(Setup::ActionType setupType): setup({setupType, {}, {}, {}}), type_(Type::SETUP) {}
 
     // cppcheck-suppress uninitMemberVar
     Message(Setup::ActionType setupType, const std::string& gameId, uint32_t maxPlayers):
-            setup({setupType, {}, gameId, maxPlayers}), type_(Type::SETUP) {}
+            setup({setupType, {}, gameId, maxPlayers, {}}), type_(Type::SETUP) {}
 
     // cppcheck-suppress uninitMemberVar
-    Message(Setup::ActionType setupType, const std::string& gameId):
-            setup({setupType, {}, gameId, {}}), type_(Type::SETUP) {}
+    Message(Setup::ActionType setupType, uint32_t character, const std::string& gameId):
+            setup({setupType, {}, gameId, {}, character}), type_(Type::SETUP) {}
 
     Type type() const { return type_; }
     uint32_t id() const { return clientId; }

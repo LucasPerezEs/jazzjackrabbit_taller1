@@ -70,13 +70,13 @@ void JoinGame::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         auto *_t = static_cast<JoinGame *>(_o);
         (void)_t;
         switch (_id) {
-        case 0: _t->joinGameRequested((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 0: _t->joinGameRequested((*reinterpret_cast< const QString(*)>(_a[1])), (*reinterpret_cast< const int(*)>(_a[2]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            using _t = void (JoinGame::*)(const QString & );
+            using _t = void (JoinGame::*)(const QString &, const int );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&JoinGame::joinGameRequested)) {
                 *result = 0;
                 return;
@@ -126,9 +126,9 @@ int JoinGame::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void JoinGame::joinGameRequested(const QString & _t1)
+void JoinGame::joinGameRequested(const QString & _t1, const int _t2)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 QT_WARNING_POP

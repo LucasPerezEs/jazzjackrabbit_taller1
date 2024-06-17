@@ -84,7 +84,7 @@ void MultiplayerMenu::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         switch (_id) {
         case 0: _t->refreshRequested(); break;
         case 1: _t->createGameRequested((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 2: _t->joinGameRequested((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 2: _t->joinGameRequested((*reinterpret_cast< const QString(*)>(_a[1])), (*reinterpret_cast< const int(*)>(_a[2]))); break;
         case 3: _t->createMapRequested(); break;
         default: ;
         }
@@ -105,7 +105,7 @@ void MultiplayerMenu::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
             }
         }
         {
-            using _t = void (MultiplayerMenu::*)(const QString & );
+            using _t = void (MultiplayerMenu::*)(const QString &, const int );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&MultiplayerMenu::joinGameRequested)) {
                 *result = 2;
                 return;
@@ -175,9 +175,9 @@ void MultiplayerMenu::createGameRequested(const QString & _t1)
 }
 
 // SIGNAL 2
-void MultiplayerMenu::joinGameRequested(const QString & _t1)
+void MultiplayerMenu::joinGameRequested(const QString & _t1, const int  _t2)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))) };
     QMetaObject::activate(this, &staticMetaObject, 2, _a);
 }
 

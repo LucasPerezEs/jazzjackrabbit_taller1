@@ -71,7 +71,7 @@ void ServerProtocol::send_game_container(const GameContainer& gameContainer) {
         socket.sendall(&msg_code, sizeof(msg_code), &was_closed);
         socket.sendall(&id, sizeof(id), &was_closed);
         socket.sendall(&x, sizeof(x), &was_closed);
-        socket.sendall(&y, sizeof(y), &was_closed);
+        socket.sendall(&y, sizeof(y), &was_closed);               // esto hay que cambiarlo
         socket.sendall(&w, sizeof(w), &was_closed);
         socket.sendall(&h, sizeof(h), &was_closed);
         socket.sendall(&direccion, sizeof(direccion), &was_closed);
@@ -132,7 +132,8 @@ Message ServerProtocol::receive_create_game() {
 
 Message ServerProtocol::receive_join_game() {
     std::string gameId = receiveString();
-    return Message(Setup::ActionType::JOIN_GAME, gameId);
+    uint32_t character = receiveUInt32();
+    return Message(Setup::ActionType::JOIN_GAME, character, gameId);
 }
 
 Message ServerProtocol::receive_get_game_list() {

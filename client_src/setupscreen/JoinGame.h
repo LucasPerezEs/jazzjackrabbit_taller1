@@ -14,11 +14,15 @@ public:
     virtual ~JoinGame();
 
 signals:
-    void joinGameRequested(const QString &gameID);
+    void joinGameRequested(const QString &gameID, const int elegido);
 
 private:
     QLineEdit *gameIdInput;
     QPushButton *joinButton;
+    QPushButton *jazz;
+    QPushButton *lori;
+    QPushButton *spaz;
+    int elegido;
 
     void init();
 };

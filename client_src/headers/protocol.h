@@ -18,7 +18,7 @@ class ClientProtocol: public Protocol {
 private:
     void send_setup(const Setup& setup);
     void send_command(const Command& cmd);
-    void send_join_game(const std::string& gameId);
+    void send_join_game(const std::string& gameId, const int character);
     void send_create_game(const std::string& gameId, const uint32_t& maxPlayers);
     void send_get_game_list();
 

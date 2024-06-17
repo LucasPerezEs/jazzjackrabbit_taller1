@@ -30,7 +30,7 @@ void ClientProtocol::send_setup(const Setup& setup) {
     }
 
     if (setup.action == Setup::ActionType::JOIN_GAME) {
-        send_join_game(setup.gameId);
+        send_join_game(setup.gameId, setup.character);
     }
 
     if (setup.action == Setup::ActionType::GET_GAME_LIST) {
@@ -39,9 +39,10 @@ void ClientProtocol::send_setup(const Setup& setup) {
 }
 
 
-void ClientProtocol::send_join_game(const std::string& gameId) {
+void ClientProtocol::send_join_game(const std::string& gameId, const int character) {
     sendUChar(static_cast<unsigned char>(Setup::JOIN_GAME));
     sendString(gameId);
+    send32(character);
 }
 
 void ClientProtocol::send_create_game(const std::string& gameId, const uint32_t& maxPlayers) {

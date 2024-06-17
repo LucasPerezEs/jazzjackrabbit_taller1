@@ -25,7 +25,7 @@ public:
            UIManager& ui_manager);
 
     bool createGame(const std::string& gameId, const uint32_t maxPlayers);
-    bool joinGame(const std::string& gameId);
+    bool joinGame(const std::string& gameId, const int elegido);
     bool refreshGameList(std::vector<std::string>& gameList);
 
     void go_online();
