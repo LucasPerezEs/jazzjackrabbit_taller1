@@ -3,15 +3,16 @@
 
 #include <map>
 #include <vector>
+
 #include "../../common_src/headers/Container.h"
 #include "../../common_src/headers/entity_commands.h"
 #include "../../common_src/headers/queue.h"
 
 
-
 class Enemigo;
 class Personaje;
 class Bala;
+class Banana;
 class Mapa;
 class Municion;
 class ListaObjetos;
@@ -39,6 +40,7 @@ public:
     virtual void colision(Personaje& o);
     virtual void colision(Enemigo& o);
     virtual void colision(Bala& o);
+    virtual void colision(Banana& o);
     virtual void colision(Municion& m);
     virtual ~Objeto();
 };

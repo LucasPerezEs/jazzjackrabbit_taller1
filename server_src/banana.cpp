@@ -19,7 +19,7 @@ void Banana::colision(Enemigo& o) {}
 
 void Banana::colision(Pickup& o) {}
 
-void Banana::colision(Personaje& p) { p.RecibirDanio(danio); }
+void Banana::colision(Personaje& p) { p.colision(*this); }
 
 void Banana::update(
         Mapa& mapa, ListaObjetos& objetos,
@@ -30,7 +30,7 @@ void Banana::update(
         this->borrar = true;
     }
     Container c(0, this->id, this->x, this->y, this->width, this->height, 0, this->an_type,
-                 this->en_type, 0, 0, 0);
+                this->en_type, 0, 0, 0);
     q.try_push(c);
 }
 

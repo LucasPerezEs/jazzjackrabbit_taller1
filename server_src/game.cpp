@@ -2,14 +2,15 @@
 
 #include "headers/partida.h"
 
-Game::Game(Queue<Message>& actionQueue, Queue<Container>& stateQueue,uint32_t maxPlayers,
+Game::Game(Queue<Message>& actionQueue, Queue<Container>& stateQueue, uint32_t maxPlayers,
            std::map<std::string, float>& config):
         maxPlayers(maxPlayers),
         actionQueue(actionQueue),
         stateQueue(stateQueue),
         config(config),
         clientCharactersMutex(),
-        clock(config) {}
+        clock(config),
+        gameStarted(false) {}
 
 void Game::run() {
     // Queue<Contenedor> q; // esta queue tiene que ir al sender
@@ -86,11 +87,11 @@ void Game::run() {
 void Game::addPlayer(uint32_t clientId) {
     std::lock_guard<std::mutex> lock(clientCharactersMutex);
 
-    Spaz* spaz = new Spaz(20 + clientId , 2, config);
-    spaz->set_id(clientId);
-    clientCharacters[clientId] = spaz;
-    objetos.agregar_objeto(spaz);
-    entes.push_back(spaz);
+    Lori* lori = new Lori(20 + clientId, 2, config);
+    lori->set_id(clientId);
+    clientCharacters[clientId] = lori;
+    objetos.agregar_objeto(lori);
+    entes.push_back(lori);
 
     // Para mas adelante, el reloj deberia empezar cuando hay dos jugadores
     if (clientCharacters.size() == 1) {

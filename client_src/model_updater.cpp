@@ -27,7 +27,7 @@ void ModelUpdater::init_animations(SdlWindow& window) {
 
     this->animations[EntityType::JAZZ][AnimationType::IDLE] = new Animation(
             new SdlTexture("../client_src/assets/jazz_idle.png", window, Color{0x2C, 0x66, 0x96}),
-            13, AnimationSpeed::NORMAL);
+            13, AnimationSpeed::DEFAULT);
 
     this->animations[EntityType::JAZZ][AnimationType::SHOOT] =
             new Animation(new SdlTexture("../client_src/assets/jazz_shooting.png", window,
@@ -47,12 +47,16 @@ void ModelUpdater::init_animations(SdlWindow& window) {
     this->animations[EntityType::JAZZ][AnimationType::FALL] =
             new Animation(new SdlTexture("../client_src/assets/jazz_falling.png", window,
                                          Color{0x2C, 0x66, 0x96}),
-                          3, AnimationSpeed::NORMAL);
+                          3, AnimationSpeed::DEFAULT);
 
     this->animations[EntityType::JAZZ][AnimationType::SPECIAL_ACTION] =
             new Animation(new SdlTexture("../client_src/assets/jazz_uppercut.png", window,
                                          Color{0x2C, 0x66, 0x96}),
                           12, AnimationSpeed::FAST);
+
+    this->animations[EntityType::JAZZ][AnimationType::HURT] = new Animation(
+            new SdlTexture("../client_src/assets/jazz_hurt.png", window, Color{0x2C, 0x66, 0x96}),
+            9, AnimationSpeed::FAST);
 
     this->animations[EntityType::GHOST][AnimationType::WALK] =
             new Animation(new SdlTexture("../client_src/assets/fantasma_walking.png", window,
@@ -72,7 +76,7 @@ void ModelUpdater::init_animations(SdlWindow& window) {
     this->animations[EntityType::CARROT][AnimationType::PICKUP] =
             new Animation(new SdlTexture("../client_src/assets/carrot_pickup.png", window,
                                          Color{0x2C, 0x66, 0x96}),
-                          10, AnimationSpeed::NORMAL);
+                          10, AnimationSpeed::DEFAULT);
 
     this->animations[EntityType::GOLD_COIN][AnimationType::PICKUP] =
             new Animation(new SdlTexture("../client_src/assets/goldcoin_pickup.png", window,
@@ -85,12 +89,12 @@ void ModelUpdater::init_animations(SdlWindow& window) {
 
     this->animations[EntityType::MONKEY][AnimationType::IDLE] = new Animation(
             new SdlTexture("../client_src/assets/monkey_idle.png", window, Color{0x2C, 0x66, 0x96}),
-            12, AnimationSpeed::NORMAL);
+            12, AnimationSpeed::DEFAULT);
 
     this->animations[EntityType::MONKEY][AnimationType::SHOOT] =
             new Animation(new SdlTexture("../client_src/assets/monkey_shoot.png", window,
                                          Color{0x2C, 0x66, 0x96}),
-                          16, AnimationSpeed::NORMAL);
+                          16, AnimationSpeed::DEFAULT);
 
     this->animations[EntityType::BANANA][AnimationType::WALK] =
             new Animation(new SdlTexture("../client_src/assets/banana_shoot.png", window,
@@ -126,6 +130,10 @@ void ModelUpdater::init_animations(SdlWindow& window) {
                                          Color{0x2C, 0x66, 0x96}),
                           10, AnimationSpeed::FAST);
 
+    this->animations[EntityType::LORI][AnimationType::HURT] = new Animation(
+            new SdlTexture("../client_src/assets/lori_hurt.png", window, Color{0x2C, 0x66, 0x96}),
+            11, AnimationSpeed::FAST);
+
     this->animations[EntityType::SPAZ][AnimationType::WALK] =
             new Animation(new SdlTexture("../client_src/assets/spaz_walking.png", window,
                                          Color{0x2C, 0x66, 0x96}),
@@ -154,6 +162,10 @@ void ModelUpdater::init_animations(SdlWindow& window) {
             new Animation(new SdlTexture("../client_src/assets/spaz_sidekick.png", window,
                                          Color{0x2C, 0x66, 0x96}),
                           12, AnimationSpeed::FAST);
+
+    this->animations[EntityType::SPAZ][AnimationType::HURT] = new Animation(
+            new SdlTexture("../client_src/assets/spaz_hurt.png", window, Color{0x2C, 0x66, 0x96}),
+            11, AnimationSpeed::FAST);
 }
 
 void ModelUpdater::run() {
@@ -165,28 +177,37 @@ void ModelUpdater::run() {
 void ModelUpdater::update_entity(Container& c) {
 
     if (entidades.count(c.game_container->id) > 0) {
-        entidades[c.game_container->id]->update_stats(c.game_container->x, c.game_container->y, c.game_container->w, c.game_container->h, c.game_container->direction);
-        entidades[c.game_container->id]->modify_animation(this->animations[c.game_container->en_type][c.game_container->an_type],
-                                                          c.game_container->an_type);
+        entidades[c.game_container->id]->update_stats(c.game_container->x, c.game_container->y,
+                                                      c.game_container->w, c.game_container->h,
+                                                      c.game_container->direction);
+        entidades[c.game_container->id]->modify_animation(
+                this->animations[c.game_container->en_type][c.game_container->an_type],
+                c.game_container->an_type);
     } else {
-        entidades[c.game_container->id] =
-                new Entity(c.game_container->id, c.game_container->x, c.game_container->y, c.game_container->w, c.game_container->h, c.game_container->direction,
-                           c.game_container->an_type,
-                           this->animations[c.game_container->en_type][c.game_container->an_type], c.game_container->en_type);
+        entidades[c.game_container->id] = new Entity(
+                c.game_container->id, c.game_container->x, c.game_container->y, c.game_container->w,
+                c.game_container->h, c.game_container->direction, c.game_container->an_type,
+                this->animations[c.game_container->en_type][c.game_container->an_type],
+                c.game_container->en_type);
     }
 }
 
 void ModelUpdater::update_player(Container& c) {
     if (personajes.count(c.game_container->id) > 0) {
-        personajes[c.game_container->id]->update_player_stats(c.game_container->x, c.game_container->y, c.game_container->w, c.game_container->h,
-                                                              c.game_container->direction, c.game_container->health, c.game_container->ammo, c.game_container->score);
-        personajes[c.game_container->id]->modify_animation(this->animations[c.game_container->en_type][c.game_container->an_type],
-                                                           c.game_container->an_type);
+        personajes[c.game_container->id]->update_player_stats(
+                c.game_container->x, c.game_container->y, c.game_container->w, c.game_container->h,
+                c.game_container->direction, c.game_container->health, c.game_container->ammo,
+                c.game_container->score);
+        personajes[c.game_container->id]->modify_animation(
+                this->animations[c.game_container->en_type][c.game_container->an_type],
+                c.game_container->an_type);
     } else {
-        personajes[c.game_container->id] = new Player(c.game_container->id, c.game_container->x, c.game_container->y, c.game_container->w, c.game_container->h,
-                                                      c.game_container->direction, c.game_container->an_type,
-                                        this->animations[c.game_container->en_type][c.game_container->an_type],
-                                                      c.game_container->en_type, c.game_container->health, c.game_container->ammo, c.game_container->score);
+        personajes[c.game_container->id] = new Player(
+                c.game_container->id, c.game_container->x, c.game_container->y, c.game_container->w,
+                c.game_container->h, c.game_container->direction, c.game_container->an_type,
+                this->animations[c.game_container->en_type][c.game_container->an_type],
+                c.game_container->en_type, c.game_container->health, c.game_container->ammo,
+                c.game_container->score);
     }
 }
 

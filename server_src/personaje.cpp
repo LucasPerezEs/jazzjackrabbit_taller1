@@ -1,8 +1,8 @@
 #include "headers/personaje.h"
 
+#include <cmath>
 #include <iostream>
 #include <map>
-#include <cmath>
 
 #include "headers/enemigo.h"
 #include "headers/lista_objetos.h"
@@ -12,8 +12,10 @@ Personaje::Personaje(float x, float y, float w, float h, EntityType en_type, Ani
                      std::map<std::string, float>& config):
         Ente(x, y, w, h, config["player_life"], en_type, an_type),
         tiempo(std::chrono::system_clock::now()),
+        last_hurt(std::chrono::system_clock::now()),
         config(config),
-        arma(config) {
+        arma(config),
+        state(PlayerState::NORMAL) {
     velx = config["player_speed"];
     jump_speed = config["player_jump"];
     danio_ataque_especial = config["player_special_attack_dmg"];
@@ -28,12 +30,15 @@ Personaje::Personaje(float x, float y, float w, float h, EntityType en_type, Ani
     municion = 20;
     espera_idle = 2000;  // en milisegundos
     espera_shoot = 250;  // Misma que la del arma
+    espera_hurt =
+            1000;  // Cuando el personaje es atacado, se debe esperar 1s para volver a recibir danio
     score = 0;
     direccion_movimientox = 1;
+    direccion_movimientoy = 0;
 }
 
 void Personaje::moveRigth() {
-    if (special_action_active) {
+    if (special_action_active || state == PlayerState::HURTED) {
         return;
     }
 
@@ -43,7 +48,7 @@ void Personaje::moveRigth() {
     tiempo = std::chrono::system_clock::now();
 }
 void Personaje::moveLeft() {
-    if (special_action_active) {
+    if (special_action_active || state == PlayerState::HURTED) {
         return;
     }
     movingleft = true;
@@ -53,19 +58,23 @@ void Personaje::moveLeft() {
 }
 void Personaje::stopMovingRight() {
     movingright = false;
-    if (!jumping && !special_action_active) {
+    if (!jumping && !special_action_active && state == PlayerState::HURTED) {
         an_type = AnimationType::SHOOT_IDLE;
     }
 }
 
 void Personaje::stopMovingLeft() {
     movingleft = false;
-    if (!jumping && !special_action_active) {
+    if (!jumping && !special_action_active && state == PlayerState::HURTED) {
         an_type = AnimationType::SHOOT_IDLE;
     }
 }
 
 void Personaje::run() {
+    if (state == PlayerState::HURTED) {
+        return;
+    }
+
     velx = config["player_run_speed"];
     // an_type = AnimationType::RUN;
 }
@@ -76,26 +85,14 @@ void Personaje::stoprunning() {
 }
 
 void Personaje::jump() {
-    if (!jumping &&
-        !special_action_active) {  // Esto es para evitar que se pueda spamear el jump y volar
+    if (!jumping && !special_action_active &&
+        state != PlayerState::HURTED) {  // Esto es para evitar que se pueda spamear el jump y volar
         vely = config["player_jump"];
         jumping = true;
         an_type = AnimationType::JUMP;
         tiempo = std::chrono::system_clock::now();
     }
 }
-
-/*void Personaje::special_action() {
-    if (!special_action_active) {
-        special_action_active = true;
-        movingleft = false;
-        movingright = false;
-        vely = 1.5;
-        jumping = true;
-        an_type = AnimationType::SPECIAL_ACTION;
-        tiempo = std::chrono::system_clock::now();
-    }
-}*/
 
 bool Personaje::has_special_action_active() { return special_action_active; }
 
@@ -106,13 +103,19 @@ void Personaje::add_score(int score) {
 
 void Personaje::check_idle() {
 
-    if (!movingleft && !movingright && !disparando && !jumping &&
+    if (state == PlayerState::HURTED && std::chrono::duration_cast<std::chrono::milliseconds>(
+                                                std::chrono::system_clock::now() - last_hurt)
+                                                        .count() > espera_hurt / 2) {
+        state = PlayerState::NORMAL;
+    }
+
+    if (!movingleft && !movingright && !disparando && state != PlayerState::HURTED && !jumping &&
         std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() -
                                                               tiempo)
                         .count() > espera_idle) {
         an_type = AnimationType::IDLE;
 
-    } else if (!movingleft && !movingright && !jumping &&
+    } else if (!movingleft && !movingright && state != PlayerState::HURTED && !jumping &&
                std::chrono::duration_cast<std::chrono::milliseconds>(
                        std::chrono::system_clock::now() - tiempo)
                                .count() > espera_shoot) {
@@ -126,7 +129,7 @@ void Personaje::update_position() {
         (movingleft || movingright)) {  // mientras se este apretando una tecla de mover el jugador
         if (movingleft) {
             x += velx * -1 * direccion_movimientox;
-            y += velx * -1 * direccion_movimientoy; // se actualiza la posicin en x
+            y += velx * -1 * direccion_movimientoy;  // se actualiza la posicin en x
         }
         if (movingright) {
             x += velx * direccion_movimientox;  // se actualiza la posicin en x
@@ -147,53 +150,59 @@ void Personaje::check_colisions(Mapa& m, float aux_x, float aux_y) {
 
     for (auto diagonal: m.diagonalesDer) {
 
-        if (diagonal->x <= x + width && x + width <= diagonal->x + diagonal->w && y <= diagonal->y + diagonal->h - (diagonal->x + diagonal->w - (x + width)) && diagonal->y + diagonal->h - (diagonal->x + diagonal->w - (x + width)) <= y + height/2) {
+        if (diagonal->x <= x + width && x + width <= diagonal->x + diagonal->w &&
+            y <= diagonal->y + diagonal->h - (diagonal->x + diagonal->w - (x + width)) &&
+            diagonal->y + diagonal->h - (diagonal->x + diagonal->w - (x + width)) <=
+                    y + height / 2) {
             jumping = false;
             vely = 0;
             y = diagonal->y + diagonal->h - (diagonal->x + diagonal->w - (x + width));
-            //special_action_active = false;
+            // special_action_active = false;
             colisiony = true;
             colisionx = true;
-            direccion_movimientox = sqrt(2)/2;
-            direccion_movimientoy = sqrt(2)/2;
+            direccion_movimientox = sqrt(2) / 2;
+            direccion_movimientoy = sqrt(2) / 2;
             colisiondiagonal = true;
-        }
-        else {
-            if (aux_x < (diagonal->x + diagonal->w) && (aux_x + width) > diagonal->x && (y + 2*height/3) < diagonal->y && diagonal->y < y + height) {
+        } else {
+            if (aux_x < (diagonal->x + diagonal->w) && (aux_x + width) > diagonal->x &&
+                (y + 2 * height / 3) < diagonal->y && diagonal->y < y + height) {
                 vely = 0;
                 y = diagonal->y - height;
-                //special_action_active = false;
+                // special_action_active = false;
                 colisiony = true;
             }
-            if (x < (diagonal->x + diagonal->w) && (diagonal->x + diagonal->w) < x + width/2 && aux_y < (diagonal->y + diagonal->h) && (aux_y + height) > diagonal->y) {
+            if (x < (diagonal->x + diagonal->w) && (diagonal->x + diagonal->w) < x + width / 2 &&
+                aux_y < (diagonal->y + diagonal->h) && (aux_y + height) > diagonal->y) {
                 x = diagonal->x + diagonal->w;
                 colisionx = true;
             }
         }
-
     }
 
     for (auto diagonal: m.diagonalesIzq) {
 
-        if (diagonal->x <= x && x <= diagonal->x + diagonal->w && y <= diagonal->y + diagonal->h - (x - diagonal->x) && diagonal->y + diagonal->h - (x - diagonal->x) <= y + height/2) {
+        if (diagonal->x <= x && x <= diagonal->x + diagonal->w &&
+            y <= diagonal->y + diagonal->h - (x - diagonal->x) &&
+            diagonal->y + diagonal->h - (x - diagonal->x) <= y + height / 2) {
             jumping = false;
             vely = 0;
             y = diagonal->y + diagonal->h - (x - diagonal->x);
-            //special_action_active = false;
+            // special_action_active = false;
             colisiony = true;
             colisionx = true;
-            direccion_movimientox = sqrt(2)/2;
-            direccion_movimientoy = -sqrt(2)/2;
+            direccion_movimientox = sqrt(2) / 2;
+            direccion_movimientoy = -sqrt(2) / 2;
             colisiondiagonal = true;
-        }
-        else {
-            if (aux_x < (diagonal->x + diagonal->w) && (aux_x + width) > diagonal->x && (y + 2*height/3) < diagonal->y && diagonal->y < y + height) {
+        } else {
+            if (aux_x < (diagonal->x + diagonal->w) && (aux_x + width) > diagonal->x &&
+                (y + 2 * height / 3) < diagonal->y && diagonal->y < y + height) {
                 vely = 0;
                 y = diagonal->y - height;
-                //special_action_active = false;
+                // special_action_active = false;
                 colisiony = true;
             }
-            if (x + width/2 < diagonal->x && diagonal->x < x + width && aux_y < (diagonal->y + diagonal->h) && (aux_y + height) > diagonal->y) {
+            if (x + width / 2 < diagonal->x && diagonal->x < x + width &&
+                aux_y < (diagonal->y + diagonal->h) && (aux_y + height) > diagonal->y) {
                 x = diagonal->x - width;
                 colisionx = true;
             }
@@ -206,25 +215,27 @@ void Personaje::check_colisions(Mapa& m, float aux_x, float aux_y) {
     }
 
     for (auto terreno: m.objetos) {
-        if (aux_x < (terreno->x + terreno->w) && (aux_x + width) > terreno->x && (y + 2*height/3) < (terreno->y + terreno->h) && (y + height) > terreno->y) {
+        if (aux_x < (terreno->x + terreno->w) && (aux_x + width) > terreno->x &&
+            (y + 2 * height / 3) < (terreno->y + terreno->h) && (y + height) > terreno->y) {
             vely = 0;
             y = terreno->y - height;
-            //special_action_active = false;
+            // special_action_active = false;
             colisiony = true;
-        }
-        else if (aux_x < (terreno->x + terreno->w) && (aux_x + width) > terreno->x && y < (terreno->y + terreno->h) && (y + height/4) > terreno->y) {
+        } else if (aux_x < (terreno->x + terreno->w) && (aux_x + width) > terreno->x &&
+                   y < (terreno->y + terreno->h) && (y + height / 4) > terreno->y) {
             jumping = false;
             vely = 0;
             y = terreno->y + terreno->h;
-            //special_action_active = false;
+            // special_action_active = false;
             colisiony = true;
         }
 
-        if (x < (terreno->x + terreno->w) && (x + width/2) > terreno->x && aux_y < (terreno->y + terreno->h) && (aux_y + height) > terreno->y) {
+        if (x < (terreno->x + terreno->w) && (x + width / 2) > terreno->x &&
+            aux_y < (terreno->y + terreno->h) && (aux_y + height) > terreno->y) {
             x = terreno->x + terreno->w;
             colisionx = true;
-        }
-        else if ((x + width/2) < (terreno->x + terreno->w) && (x + width) > terreno->x && aux_y < (terreno->y + terreno->h) && (aux_y + height) > terreno->y) {
+        } else if ((x + width / 2) < (terreno->x + terreno->w) && (x + width) > terreno->x &&
+                   aux_y < (terreno->y + terreno->h) && (aux_y + height) > terreno->y) {
             x = terreno->x - width;
             colisionx = true;
         }
@@ -237,8 +248,6 @@ void Personaje::check_colisions(Mapa& m, float aux_x, float aux_y) {
             x = aux_x;  // se pone la pos x anterior
         }
     }
-
-
 }
 
 void Personaje::update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) {
@@ -256,7 +265,7 @@ void Personaje::update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) {
     check_colisions(m, aux_x, aux_y);
 
     Container c(3, this->id, this->x, this->y, this->width, this->height, this->direccion,
-                 this->an_type, this->en_type, this->vida, this->municion, this->score);
+                this->an_type, this->en_type, this->vida, this->municion, this->score);
     q.try_push(c);
 }
 
@@ -269,7 +278,7 @@ void Personaje::update_vivo(ListaObjetos& objetos, Queue<Container>& q) {
             objetos.agregar_objeto(this);
             contador = 0;
             Container c(3, this->id, this->x, this->y, this->width, this->height, this->direccion,
-                         this->an_type, this->en_type, this->vida, this->municion, this->score);
+                        this->an_type, this->en_type, this->vida, this->municion, this->score);
             q.try_push(c);
         }
         contador++;
@@ -282,7 +291,46 @@ void Personaje::colision(Objeto& o) {
         o.colision(*this);
     }
 }
-void Personaje::colision(Enemigo& e) { e.colision(*this); }
+void Personaje::colision(Enemigo& e) {
+    if (special_action_active) {
+        e.RecibirDanio(danio_ataque_especial);
+
+    } else if (std::chrono::duration_cast<std::chrono::milliseconds>(
+                       std::chrono::system_clock::now() - last_hurt)
+                       .count() > espera_hurt) {
+        RecibirDanio(e.get_damage());
+        state = PlayerState::HURTED;
+        an_type = AnimationType::HURT;
+        last_hurt = std::chrono::system_clock::now();
+        tiempo = std::chrono::system_clock::now();
+    }
+}
+
+void Personaje::colision(Banana& b) {  // Banana y Bala deberian pertenecer a clase 'Proyectil'
+    if (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() -
+                                                              last_hurt)
+                .count() > espera_hurt) {
+        state = PlayerState::HURTED;
+        an_type = AnimationType::HURT;
+        last_hurt = std::chrono::system_clock::now();
+        tiempo = std::chrono::system_clock::now();
+        RecibirDanio(b.danio);
+        b.borrar = true;
+    }
+}
+
+/*void Personaje::colision(Bala& b) {
+    if (std::chrono::duration_cast<std::chrono::milliseconds>(
+                                std::chrono::system_clock::now() - last_hurt)
+                                        .count() > espera_hurt) {
+        state = PlayerState::HURTED;
+        an_type = AnimationType::HURT;
+        last_hurt = std::chrono::system_clock::now();
+        tiempo = std::chrono::system_clock::now();
+        RecibirDanio(b.danio);
+        b.borrar = true;
+    }
+}*/
 
 void Personaje::colision(Municion& m) { m.colision(*this); }
 
@@ -350,7 +398,7 @@ void Bala::update(
         this->borrar = true;
     }
     Container c(0, this->id, this->x, this->y, this->width, this->height, 0, this->an_type,
-                 this->en_type, 0, 0, 0);
+                this->en_type, 0, 0, 0);
     q.try_push(c);
 }
 

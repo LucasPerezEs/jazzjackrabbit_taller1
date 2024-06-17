@@ -6,7 +6,6 @@
 
 #include "../../common_src/headers/queue.h"
 
-
 #include "gold_coin.h"
 #include "lista_objetos.h"
 #include "municion.h"
@@ -36,6 +35,7 @@ public:
     virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) override = 0;
     virtual void update_vivo(ListaObjetos& objetos, Queue<Container>& q) override = 0;
     virtual void drop_item(ListaObjetos& objetos, Queue<Container>& q);
+    int get_damage();
 };
 
 
