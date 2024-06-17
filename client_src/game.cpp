@@ -113,9 +113,6 @@ void Game::save_values(Tile& selectedTile, int& width_texture, int& window_width
     if (newY < maxY || newY > minY)
         return;
 
-void Game::create_map() {
-
-
     int multiploX = std::floor(newX / TILE_MAP_CREATED) * TILE_MAP_CREATED;
     int multiploY = std::floor(newY / TILE_MAP_CREATED) * TILE_MAP_CREATED;
 
