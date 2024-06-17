@@ -8,6 +8,8 @@
 #include <string>
 #include <utility>
 #include <vector>
+#include <map>
+#include <tuple>
 
 #include <SDL2/SDL.h>
 #include <unistd.h>
@@ -23,12 +25,19 @@
 #include "model_updater.h"
 #include "protocol.h"
 
+#define ITEM 0
+#define SOLIDO 1
+#define DECORACION 2
+
 struct Tile {
     int id; // ID del tile en el tileset
+    int type; //Si es tipo SOLIDO-DECORACION-ITEM
     SDL_Rect srcRect; // Rectángulo de la imagen de assets
     SDL_Rect destRect; // Rectángulo de destino en la pantalla
     bool selected; // Indica si el tile está seleccionado
 };
+
+
 
 class Game {
 private:
@@ -36,6 +45,7 @@ private:
     SdlWindow& window;
     std::map<int, Entity*>& entidades;
     std::map<int, Player*>& personajes;
+    std::map<std::tuple<int, int>, Tile> mapTiles;
 
     SDL_Texture* tilesetTexture;
     std::vector<std::vector<int>> tilemap_terreno_solido;

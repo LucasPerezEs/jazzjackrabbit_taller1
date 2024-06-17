@@ -125,6 +125,7 @@ void Game::create_map(){
     // Crear una cuadrícula de tiles (ejemplo: 10x10)
     std::vector<Tile> tiles_mapa;
     std::vector<Tile> tiles_asset;
+    std::tuple<int, int> posicion; //Posicion en el mapa
 
     // Cargar la imagen de assets
     SDL_Surface* tilesetSurface =
@@ -133,10 +134,16 @@ void Game::create_map(){
         std::cout << "Error al cargar la imagen: " << IMG_GetError() << std::endl;
         return;
     }
+
+    SDL_SetColorKey(tilesetSurface, SDL_TRUE, SDL_MapRGB(tilesetSurface->format, 87, 0, 203));
+
     SDL_Texture* assetTexture = SDL_CreateTextureFromSurface(renderer, tilesetSurface);
     if (assetTexture == nullptr)
         std::cout << "Error al crear la textura: " << SDL_GetError() << std::endl;
     SDL_FreeSurface(tilesetSurface);
+
+    // Habilita el blending para transparencia
+    SDL_SetTextureBlendMode(assetTexture, SDL_BLENDMODE_BLEND);
 
     // Obtengo las dimensiones de la ventana
     int window_width, window_height;
@@ -167,8 +174,10 @@ void Game::create_map(){
     this->window.render();
 
     bool running = true;
+
     SDL_Point mousePos;
     Tile selectedTile;
+    bool mouseHeldDown = false;
     selectedTile.selected = false;
 
     while (running) {
@@ -180,10 +189,10 @@ void Game::create_map(){
                     running = false;
                     break;
 
-                case SDL_MOUSEBUTTONDOWN:
+                case SDL_MOUSEBUTTONDOWN: {
+
                     mousePos.x = event.button.x;
                     mousePos.y = event.button.y;
-                    //std::cout << "Posicion x: " << mousePos.x << " posicion y: " << mousePos.y <<  std::endl;
 
                     // Verifica si se hizo clic en un tile de la imagen de assets
                     for (auto& tile : tiles_asset) {
@@ -193,87 +202,97 @@ void Game::create_map(){
                             break;
                         }
                     }
+
+                    if(!selectedTile.selected)
+                        break;
+
+                    //Si ya hay uno seleccionado
+                    double newX = event.button.x;// + width_texture + (selectedTile.srcRect.w);
+                    double newY = event.button.y;// + (selectedTile.srcRect.h);
+                        
+                    // Me aseguro de que newX está por fuera de la imagen del asset y dentro de la ventana en X.
+                    double minX = width_texture;
+                    double maxX = window_width;
+                    if (newX < minX || newX > maxX)
+                        break;
+
+                    // Me aseguro de que newY está dentro de la ventana en Y
+                    double minY = window_height;
+                    double maxY = 0;
+                    if (newY < maxY || newY > minY)
+                        break;
+
+                    //Esto es para que los bloques de las texturas se posiciones siempre en una posicion de 16x16 y no que puedas poner
+                    //la mitad de un asset sobre la mitad de otro. Si no crear un mapa con esta herramienta es un quilombo.
+                    int multiploX = static_cast<int>((newX) / 16) * 16;
+                    int multiploY = static_cast<int>((newY) / 16) * 16;
+
+                    posicion = { multiploX, multiploY };
+                    selectedTile.destRect = { multiploX, multiploY, 16, 16 };
+                    tiles_mapa.push_back(selectedTile);
+
+                    mapTiles.insert({posicion, selectedTile}); //Si uso este ya no necesito usar tiles_map (Creo)
+
+                    mouseHeldDown = true;
                     break;
+                }
 
-                //ESTO SE PUEDE SACAR O MEJORAR (Si se saca se deben remover los TRES set mencionados).
-                //PRIMER SER REMOVIBLE (REMOVER EN CASO DE SER NECESARIO JUNTO CON LOS OTROS DOS SET)
-                case SDL_MOUSEMOTION:
-                    if (selectedTile.selected) {
-                        //std::cout << " Entro a mouse motion " << std::endl;
-
-                        // Actualiza la posición de selectedTile.destRect con la posición actual del ratón
-                        selectedTile.destRect = { event.motion.x, event.motion.y, 16, 16};// - (selectedTile.destRect.w / 2);
-
-                            // Limpieza parcial del mapa
-                            //(Proba sacar esto y fijate que pasa cuando moves el cuadrado jajaja)
-                            SDL_Rect areaToClear = { width_texture, 0, window_width - width_texture, window_height };
-                            SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
-                            SDL_RenderFillRect(renderer, &areaToClear);
-
-                        // Renderiza la imagen en la nueva posición
-                        SDL_RenderCopy(renderer, assetTexture, &selectedTile.srcRect, &selectedTile.destRect);
-                        this->window.render();
-
-                    }
+                case SDL_MOUSEBUTTONUP: {
+                    
+                    // Cuando se suelta el botón del ratón, reinicia la variable de estado
+                    mouseHeldDown = false;
                     break;
+                }
 
-
-                case SDL_MOUSEBUTTONUP:
-                    if (selectedTile.selected) {
+                case SDL_MOUSEMOTION: {
+                    if(mouseHeldDown){
+                        //Si ya hay uno seleccionado
                         double newX = event.button.x;// + width_texture + (selectedTile.srcRect.w);
                         double newY = event.button.y;// + (selectedTile.srcRect.h);
                         
                         // Me aseguro de que newX está por fuera de la imagen del asset y dentro de la ventana en X.
                         double minX = width_texture;
                         double maxX = window_width;
-                        if (newX < minX) {
-                            newX = minX;
-                        } else if (newX > maxX) {
-                            newX = maxX;
-                        }
+                        if (newX < minX || newX > maxX)
+                            break;
+
                         // Me aseguro de que newY está dentro de la ventana en Y
                         double minY = window_height;
                         double maxY = 0;
-
-                        if (newY < maxY) {
-                            newY = maxY;
-                        } else if (newY > minY) {
-                            newY = minY;
-                        }
+                        
+                        if (newY < maxY || newY > minY)
+                            break;
 
                         //Esto es para que los bloques de las texturas se posiciones siempre en una posicion de 16x16 y no que puedas poner
                         //la mitad de un asset sobre la mitad de otro. Si no crear un mapa con esta herramienta es un quilombo.
                         int multiploX = static_cast<int>((newX) / 16) * 16;
                         int multiploY = static_cast<int>((newY) / 16) * 16;
 
+                        posicion = { multiploX, multiploY };
                         selectedTile.destRect = { multiploX, multiploY, 16, 16 };
                         tiles_mapa.push_back(selectedTile);
 
-                        //std::cout << "Posicion x(selected): " << newX << " posicion y(selected): " << newY << std::endl;
-                        selectedTile.selected = false;
+                        mapTiles.insert({posicion, selectedTile}); //Si uso este ya no necesito usar tiles_map (Creo)
                     }
-                break;
+                    break;
+                }
+                
             }
-
-            //SEGUNDO SET REMOVIBLE (REMOVER EN CASO DE SER NECESARIO JUNTO CON LOS OTROS DOS SET)
             this->window.fill();
 
+            //Esto muestra los assets colocados durante la creacion del mapa (es el mapa creado visualmente)
             for(size_t i = 0; i < tiles_mapa.size(); i++)
                 SDL_RenderCopy(renderer, assetTexture, &(tiles_mapa[i].srcRect), &(tiles_mapa[i].destRect));
 
-            //TERCER SET REMOVIBLE
-            //(REMOVER EN CASO DE SER NECESARIO JUNTO CON LOS OTROS DOS SET)
+            //Esto muestra el asset por pantalla (Es como la paleta de pinturas)
             for (int i = 0; i < numTiles; i++) {
                 Tile tile;
                 tile.id = i;
-                int row = i / tilesPerRow; //Numero de fila
-                int col = i % tilesPerRow; //Numero de columna
-                tile.srcRect = {col*16, row*16, 16, 16};
+                tile.srcRect = {(i % tilesPerRow)*16, (i / tilesPerRow)*16, 16, 16};
                 tile.selected = false;
                 tiles_asset.push_back(tile);
                 SDL_RenderCopy(renderer, assetTexture, &tile.srcRect, &tile.srcRect);
             }
-
             this->window.render();
         }
     }
