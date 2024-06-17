@@ -13,6 +13,7 @@
 
 #include <SDL2/SDL.h>
 #include <unistd.h>
+#include <unordered_map>
 
 #include "Fuente.h"
 #include "Music.h"

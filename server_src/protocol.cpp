@@ -18,11 +18,33 @@ void ServerProtocol::send_container(const Container& container) {
     }
 }
 
-void ServerProtocol::send_setup_container(const SetupContainer& setupContainer){
+void ServerProtocol::send_setup_container(const SetupContainer& setupContainer) {
 
+    Setup::ActionType actionType = static_cast<Setup::ActionType>(setupContainer.setupType);
+    sendUChar(actionType);
+
+    switch (actionType) {
+        case Setup::ActionType::CREATE_GAME:
+            sendBool(setupContainer.ok);
+            sendString(setupContainer.gameId);
+            send32(setupContainer.maxPlayers);
+            break;
+        case Setup::ActionType::JOIN_GAME:
+            sendBool(setupContainer.ok);
+            sendString(setupContainer.gameId);
+            send32(setupContainer.maxPlayers);
+            break;
+        case Setup::ActionType::GET_GAME_LIST:
+            sendBool(setupContainer.ok);
+            sendVectorString(setupContainer.gameList);
+            break;
+        default:
+            throw std::runtime_error("Unknown setup action type to send");
+    }
 }
 
-void ServerProtocol::send_game_container(const GameContainer& gameContainer){
+
+void ServerProtocol::send_game_container(const GameContainer& gameContainer) {
 
     if (gameContainer.msg_code == 2) {
         bool was_closed;
@@ -65,7 +87,7 @@ void ServerProtocol::send_game_container(const GameContainer& gameContainer){
 //////////////RECEIVE
 
 
-Message ServerProtocol::receive_message(){
+Message ServerProtocol::receive_message() {
     unsigned char type = receiveUChar();
     Message::Type messageType = static_cast<Message::Type>(type);
 
@@ -77,13 +99,12 @@ Message ServerProtocol::receive_message(){
         default:
             throw std::runtime_error("Unknown message type");
     }
-
 }
 
 Message ServerProtocol::receive_setup_message() {
     unsigned char setupType = receiveUChar();
     Setup::ActionType actionType = static_cast<Setup::ActionType>(setupType);
-
+    std::cout << actionType << std::endl;
     switch (actionType) {
         case Setup::ActionType::CREATE_GAME:
             return receive_create_game();
@@ -106,7 +127,7 @@ Message ServerProtocol::receive_command_message() {
 Message ServerProtocol::receive_create_game() {
     std::string gameId = receiveString();
     uint32_t maxPlayers = receiveUInt32();
-    return Message(Setup::ActionType::CREATE_GAME,gameId,maxPlayers);
+    return Message(Setup::ActionType::CREATE_GAME, gameId, maxPlayers);
 }
 
 Message ServerProtocol::receive_join_game() {
@@ -121,9 +142,8 @@ Message ServerProtocol::receive_get_game_list() {
 
 
 void ServerProtocol::send_games_ids(const std::vector<std::string>& gameIDs) {
-    //send_vector_string(gameIDs);
+    // send_vector_string(gameIDs);
 }
-
 
 
 void ServerProtocol::stop() { Protocol::stop(); }

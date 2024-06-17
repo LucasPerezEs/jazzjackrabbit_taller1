@@ -44,6 +44,7 @@ void Objeto::colision(Enemigo& o) {
 void Objeto::colision(Bala& o) {}
 void Objeto::colision(Pickup& o) {}
 void Objeto::colision(Municion& m) {}
+void Objeto::colision(Banana& b) {}
 Objeto::~Objeto() {}
 
 void Ente::RecibirDanio(int d) {
@@ -55,7 +56,8 @@ void Ente::RecibirDanio(int d) {
 
 bool Ente::vivo() { return vida > 0; }
 
-void Ente::update_vivo(ListaObjetos& objetos, Queue<Container>& q) {
+void Ente::update_vivo(ListaObjetos& objetos, Queue<Container>& q,
+                       std::unordered_map<uint32_t, Personaje*>& clientCharacters) {
     if (vida <= 0) {
         if (contador ==
             240) {  // revive despues de tantos ciclos y lo agrego al vector de colisiones
@@ -64,7 +66,7 @@ void Ente::update_vivo(ListaObjetos& objetos, Queue<Container>& q) {
             objetos.agregar_objeto(this);
             contador = 0;
             Container c(0, this->id, this->x, this->y, this->width, this->height, this->direccion,
-                         this->an_type, this->en_type, 0, 0, 0);
+                        this->an_type, this->en_type, 0, 0, 0);
             q.try_push(c);
         }
         contador++;

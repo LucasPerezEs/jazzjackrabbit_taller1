@@ -47,4 +47,5 @@ void ClientHandler::setReceiverQueue(Queue<Message>* actionQueue) {
     receiverThread.setQueue(actionQueue);
 }
 
+
 uint32_t ClientHandler::getId() { return id; }

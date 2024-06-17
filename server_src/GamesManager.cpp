@@ -66,16 +66,18 @@ std::map<std::string, float> load_config_YAML(const std::string& path) {
 
 GamesManager::GamesManager(): setupQueue(), stateQueue() {}
 
-std::string GamesManager::createGame(std::string gameId, uint32_t maxPlayers,
-                                     std::map<std::string, float>& config) {
+bool GamesManager::createGame(std::string gameId, uint32_t maxPlayers,
+                              std::map<std::string, float>& config) {
     std::lock_guard<std::mutex> lock(gamesMutex);
 
     GameBroadcasterContainer* newGame = new GameBroadcasterContainer(config, maxPlayers);
-    games[gameId] = newGame;
 
-    newGame->start();
-
-    return gameId;
+    if (newGame != nullptr) {
+        games[gameId] = newGame;
+        newGame->start();
+        return true;
+    }
+    return false;
 }
 
 bool GamesManager::joinGame(const std::string& gameId, ClientHandler* client) {
@@ -90,41 +92,52 @@ bool GamesManager::joinGame(const std::string& gameId, ClientHandler* client) {
     return false;
 }
 
-std::vector<std::string> GamesManager::listGames() {
+bool GamesManager::listGames(std::vector<std::string>& gameList) {
     std::lock_guard<std::mutex> lock(gamesMutex);
 
-    std::vector<std::string> gameList;
     for (const auto& game: games) {
-        std::cout << game.first << std::endl;
         gameList.push_back(game.first);
     }
 
-    return gameList;
+    if (gameList.size() > 0) {
+        return true;
+    }
+
+    return false;
 }
 
 
 void GamesManager::run() {
 
     Message msg(Setup::ActionType::NONE);
+    Container container({}, {}, {}, {});
+    bool ok;
+
+
     std::map<std::string, float> config = load_config_YAML("../config.yml");
     while (_keep_running) {
         msg = setupQueue.pop();
         uint32_t clientId = msg.id();
         switch (msg.setup.action) {
             case Setup::JOIN_GAME:
-                joinGame(msg.setup.gameId, clients[clientId]);
-                // push join
+                ok = joinGame(msg.setup.gameId, clients[clientId]);
+                container = Container(Setup::JOIN_GAME, msg.setup.gameId, msg.setup.maxPlayers, ok);
+                clients[clientId]->pushState(container);
                 break;
             case Setup::CREATE_GAME:
-                createGame(msg.setup.gameId, msg.setup.maxPlayers, config);
-                std::cout << "maxPlayers " << msg.setup.maxPlayers << std::endl;
-                std::cout << "gameId " << msg.setup.gameId << std::endl;
-                // push create
+                ok = createGame(msg.setup.gameId, msg.setup.maxPlayers, config);
+                container =
+                        Container(Setup::CREATE_GAME, msg.setup.gameId, msg.setup.maxPlayers, ok);
+                clients[clientId]->pushState(container);
                 break;
-            case Setup::GET_GAME_LIST:
-                listGames();
-                // push gamelist
+            case Setup::GET_GAME_LIST: {
+                std::vector<std::string> gameList;
+                ok = listGames(gameList);
+                container =
+                        Container(Setup::GET_GAME_LIST, gameList, ok);
+                clients[clientId]->pushState(container);
                 break;
+            }
             default:
                 std::cout << "Comando desconocido" << std::endl;
                 break;

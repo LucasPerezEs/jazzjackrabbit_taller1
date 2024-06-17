@@ -3,9 +3,9 @@
 
 #include <map>
 #include <string>
+#include <unordered_map>
 
 #include "../../common_src/headers/queue.h"
-
 
 #include "enemigo.h"
 #include "gold_coin.h"
@@ -25,7 +25,8 @@ protected:
 public:
     Bat(float x, float y, std::map<std::string, float>& config);
     virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) override;
-    virtual void update_vivo(ListaObjetos& objetos, Queue<Container>& q) override;
+    virtual void update_vivo(ListaObjetos& objetos, Queue<Container>& q,
+                             std::unordered_map<uint32_t, Personaje*>& clientCharacters) override;
 };
 
 #endif

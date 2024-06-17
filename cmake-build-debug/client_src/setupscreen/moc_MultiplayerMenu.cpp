@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MultiplayerMenu_t {
-    QByteArrayData data[7];
-    char stringdata0[88];
+    QByteArrayData data[8];
+    char stringdata0[107];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -38,12 +38,13 @@ QT_MOC_LITERAL(2, 33, 0), // ""
 QT_MOC_LITERAL(3, 34, 19), // "createGameRequested"
 QT_MOC_LITERAL(4, 54, 8), // "gameName"
 QT_MOC_LITERAL(5, 63, 17), // "joinGameRequested"
-QT_MOC_LITERAL(6, 81, 6) // "gameID"
+QT_MOC_LITERAL(6, 81, 6), // "gameID"
+QT_MOC_LITERAL(7, 88, 18) // "createMapRequested"
 
     },
     "MultiplayerMenu\0refreshRequested\0\0"
     "createGameRequested\0gameName\0"
-    "joinGameRequested\0gameID"
+    "joinGameRequested\0gameID\0createMapRequested"
 };
 #undef QT_MOC_LITERAL
 
@@ -53,22 +54,24 @@ static const uint qt_meta_data_MultiplayerMenu[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       3,   14, // methods
+       4,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       3,       // signalCount
+       4,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   29,    2, 0x06 /* Public */,
-       3,    1,   30,    2, 0x06 /* Public */,
-       5,    1,   33,    2, 0x06 /* Public */,
+       1,    0,   34,    2, 0x06 /* Public */,
+       3,    1,   35,    2, 0x06 /* Public */,
+       5,    1,   38,    2, 0x06 /* Public */,
+       7,    0,   41,    2, 0x06 /* Public */,
 
  // signals: parameters
     QMetaType::Void,
     QMetaType::Void, QMetaType::QString,    4,
     QMetaType::Void, QMetaType::QString,    6,
+    QMetaType::Void,
 
        0        // eod
 };
@@ -82,6 +85,7 @@ void MultiplayerMenu::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         case 0: _t->refreshRequested(); break;
         case 1: _t->createGameRequested((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 2: _t->joinGameRequested((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 3: _t->createMapRequested(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -104,6 +108,13 @@ void MultiplayerMenu::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
             using _t = void (MultiplayerMenu::*)(const QString & );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&MultiplayerMenu::joinGameRequested)) {
                 *result = 2;
+                return;
+            }
+        }
+        {
+            using _t = void (MultiplayerMenu::*)();
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&MultiplayerMenu::createMapRequested)) {
+                *result = 3;
                 return;
             }
         }
@@ -139,13 +150,13 @@ int MultiplayerMenu::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 3)
+        if (_id < 4)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 3;
+        _id -= 4;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 3)
+        if (_id < 4)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 3;
+        _id -= 4;
     }
     return _id;
 }
@@ -168,6 +179,12 @@ void MultiplayerMenu::joinGameRequested(const QString & _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
     QMetaObject::activate(this, &staticMetaObject, 2, _a);
+}
+
+// SIGNAL 3
+void MultiplayerMenu::createMapRequested()
+{
+    QMetaObject::activate(this, &staticMetaObject, 3, nullptr);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

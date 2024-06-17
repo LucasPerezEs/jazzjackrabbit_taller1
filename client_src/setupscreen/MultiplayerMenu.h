@@ -17,6 +17,7 @@ class MultiplayerMenu : public QDialog {
 
 public:
     explicit MultiplayerMenu(QWidget *parent = nullptr);
+    void updateGameList(const std::vector<std::string>& gameList);
     virtual ~MultiplayerMenu();
 
 signals:

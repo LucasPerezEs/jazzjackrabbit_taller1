@@ -5,6 +5,7 @@
 #include "headers/desconection.h"
 #include "headers/liberror.h"
 
+
 #define CHAR_SIZE 1
 #define SHORT_SIZE 2
 
@@ -106,6 +107,36 @@ void Protocol::send32(uint32_t v) {
     socket.sendall(&vn, sizeof(uint32_t), &was_closed);
     if (was_closed) {
         throw ProtocolDesconection("Escritura en socket cerrado");
+    }
+}
+
+
+void Protocol::sendBool(bool value) {
+    unsigned char byte = value ? 1 : 0;
+    sendUChar(byte);
+}
+
+// Recibir un bool
+bool Protocol::receiveBool() {
+    unsigned char byte = receiveUChar();
+    return byte != 0;
+}
+
+
+std::vector<std::string> Protocol::receiveVectorString() {
+    std::vector<std::string> vec;
+    uint16_t size = receive16();
+    vec.reserve(size);
+    for (uint16_t i = 0; i < size; ++i) {
+        vec.push_back(receiveString());
+    }
+    return vec;
+}
+
+void Protocol::sendVectorString(const std::vector<std::string>& vec){
+    send16(vec.size());
+    for (const auto& str : vec) {
+        sendString(str);
     }
 }
 

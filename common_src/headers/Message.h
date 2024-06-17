@@ -2,6 +2,7 @@
 #define MESSAGE_H
 #include <cstdint>
 #include <iostream>
+#include <string>
 
 #include "commands.h"
 
@@ -9,14 +10,19 @@ class Message {
 public:
     enum class Type { COMMAND = 0x00, SETUP = 0x01 };
 
-    Message(Command::ActionType commandType): command({commandType}), type_(Type::COMMAND) {}
+    // cppcheck-suppress uninitMemberVar
+    explicit Message(Command::ActionType commandType):
+            command({commandType}), type_(Type::COMMAND) {}
 
-    Message(Setup::ActionType setupType): setup({setupType, {}, {}}), type_(Type::SETUP) {}
+    // cppcheck-suppress uninitMemberVar
+    explicit Message(Setup::ActionType setupType): setup({setupType, {}, {}}), type_(Type::SETUP) {}
 
-    Message(Setup::ActionType setupType, std::string gameId, uint32_t maxPlayers):
+    // cppcheck-suppress uninitMemberVar
+    Message(Setup::ActionType setupType, const std::string& gameId, uint32_t maxPlayers):
             setup({setupType, {}, gameId, maxPlayers}), type_(Type::SETUP) {}
 
-    Message(Setup::ActionType setupType, std::string gameId):
+    // cppcheck-suppress uninitMemberVar
+    Message(Setup::ActionType setupType, const std::string& gameId):
             setup({setupType, {}, gameId, {}}), type_(Type::SETUP) {}
 
     Type type() const { return type_; }

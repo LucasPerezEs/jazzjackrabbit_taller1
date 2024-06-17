@@ -44,32 +44,41 @@ void Client::close() {
 }
 
 bool Client::createGame(const std::string& gameId, const uint32_t maxPlayers) {
+
+
     Message msg(Setup::ActionType::CREATE_GAME,gameId,maxPlayers);
     client_protocol.send_message(msg);
-    //recibir confirmacion
-    return true;
+
+    Container container = client_protocol.receive_container();
+
+    return container.setup_container->ok;
 }
 
 bool Client::joinGame(const std::string& gameId) {
-
 
     Message msg(Setup::ActionType::JOIN_GAME,gameId);
     client_protocol.send_message(msg);
     //recibir confirmacion
 
+    Container container = client_protocol.receive_container();
+
+
     this->event_handler.start();
     this->updater.start();
     this->client_receiver.start();
-    return true;
 
-    //return false
+    return container.setup_container->ok;
 }
 
-std::vector<std::string> Client::refreshGameList() {
+bool Client::refreshGameList(std::vector<std::string>& gameList) {
     Message msg(Setup::ActionType::GET_GAME_LIST);
     client_protocol.send_message(msg);
     //recibir gamelist
-    return std::vector<std::string>();
+
+    Container container = client_protocol.receive_container();
+    gameList = container.setup_container->gameList;
+
+    return container.setup_container->ok;
 }
 
 EventHandler* Client::get_EventHandler() { return &event_handler; }

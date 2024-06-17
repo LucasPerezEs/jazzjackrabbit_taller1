@@ -2,16 +2,18 @@
 #define OBJETO_H_
 
 #include <map>
+#include <unordered_map>
 #include <vector>
+
 #include "../../common_src/headers/Container.h"
 #include "../../common_src/headers/entity_commands.h"
 #include "../../common_src/headers/queue.h"
 
 
-
 class Enemigo;
 class Personaje;
 class Bala;
+class Banana;
 class Mapa;
 class Municion;
 class ListaObjetos;
@@ -39,6 +41,7 @@ public:
     virtual void colision(Personaje& o);
     virtual void colision(Enemigo& o);
     virtual void colision(Bala& o);
+    virtual void colision(Banana& o);
     virtual void colision(Municion& m);
     virtual ~Objeto();
 };
@@ -53,7 +56,8 @@ public:
     Ente(float x, float y, float w, float h, int vida, EntityType en_type, AnimationType an_type);
     void RecibirDanio(int d);
     bool vivo();
-    virtual void update_vivo(ListaObjetos& objetos, Queue<Container>& q);
+    virtual void update_vivo(ListaObjetos& objetos, Queue<Container>& q,
+                             std::unordered_map<uint32_t, Personaje*>& clientCharacters);
 };
 
 

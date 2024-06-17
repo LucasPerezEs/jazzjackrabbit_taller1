@@ -57,15 +57,12 @@ Cliente:
 * Sistema de armas y municiones
 * Daño entre jugadores
 * Mas formas de ganar puntos (Gemas, matando jugadores, etc)
-* Mas personajes
-* Mas enemigos
 * Un escenario
 * Menu principal mas desarrollado
 * Mas efectos de sonido
 * Animaciones para explosiones
 * Logica finalizacion de partida
 * Pantalla final con el Scoreboard
-* Configuracion con YAML
 * Editor de mapas
 * Testing
 * Cheats
