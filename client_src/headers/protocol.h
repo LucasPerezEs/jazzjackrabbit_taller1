@@ -24,11 +24,14 @@ private:
 
     Container receive_setup_container();
     Container receive_game_container();
+    Container receive_create_game();
+    Container receive_join_game();
+    Container receive_get_game_list();
 
 public:
     ClientProtocol(const std::string& hostname, const std::string& servicename);
-    void send_message(const Message& message);
 
+    void send_message(const Message& message);
     Container receive_container();
 
     ClientProtocol(const ClientProtocol&) = delete;

@@ -95,7 +95,6 @@ std::vector<std::string> GamesManager::listGames() {
 
     std::vector<std::string> gameList;
     for (const auto& game: games) {
-        std::cout << game.first << std::endl;
         gameList.push_back(game.first);
     }
 
@@ -106,6 +105,7 @@ std::vector<std::string> GamesManager::listGames() {
 void GamesManager::run() {
 
     Message msg(Setup::ActionType::NONE);
+    Container container({},{},{},{});
     std::map<std::string, float> config = load_config_YAML("../config.yml");
     while (_keep_running) {
         msg = setupQueue.pop();
@@ -113,12 +113,14 @@ void GamesManager::run() {
         switch (msg.setup.action) {
             case Setup::JOIN_GAME:
                 joinGame(msg.setup.gameId, clients[clientId]);
+                container = Container(Setup::JOIN_GAME,msg.setup.gameId,msg.setup.maxPlayers, true);
+                clients[clientId]->pushState(container);
                 // push join
                 break;
             case Setup::CREATE_GAME:
                 createGame(msg.setup.gameId, msg.setup.maxPlayers, config);
-                std::cout << "maxPlayers " << msg.setup.maxPlayers << std::endl;
-                std::cout << "gameId " << msg.setup.gameId << std::endl;
+                container = Container(Setup::CREATE_GAME,msg.setup.gameId,msg.setup.maxPlayers, true);
+                clients[clientId]->pushState(container);
                 // push create
                 break;
             case Setup::GET_GAME_LIST:
@@ -177,4 +179,6 @@ void GamesManager::addClient(uint32_t clientId, ClientHandler* client) {
 
     clients[clientId] = client;
     client->setReceiverQueue(&setupQueue);
+
+
 }

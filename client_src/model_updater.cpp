@@ -226,7 +226,7 @@ void ModelUpdater::update(float dt) {
         Container c = this->reciever_queue.pop();
 
 
-        switch (c.code()) {
+        switch (c.game_container->msg_code) {
             case 0:  // Actualiza un objeto, si no existe, lo crea.
                 update_entity(c);
                 break;

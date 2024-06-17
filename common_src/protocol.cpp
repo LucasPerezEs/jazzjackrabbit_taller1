@@ -110,5 +110,16 @@ void Protocol::send32(uint32_t v) {
 }
 
 
+void Protocol::sendBool(bool value) {
+    unsigned char byte = value ? 1 : 0;
+    sendUChar(byte);
+}
+
+// Recibir un bool
+bool Protocol::receiveBool() {
+    unsigned char byte = receiveUChar();
+    return byte != 0;
+}
+
 
 void Protocol::close() { socket.close(); }

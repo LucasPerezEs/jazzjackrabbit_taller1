@@ -1,15 +1,10 @@
 #include "headers/Container.h"
 
 // SetupContainer implementation
-SetupContainer::SetupContainer(uint32_t msg_code, const std::string& gameId, uint32_t maxPlayers,
-                               bool ok):
-        _gameId(gameId), _maxPlayers(maxPlayers), _ok(ok) {}
+SetupContainer::SetupContainer(Setup::ActionType setupType, const std::string gameId,
+                               uint32_t maxPlayers, bool ok):
+        setupType(setupType), gameId(gameId), maxPlayers(maxPlayers), ok(ok) {}
 
-std::string SetupContainer::gameId() const { return _gameId; }
-
-uint32_t SetupContainer::maxPlayers() const { return _maxPlayers; }
-
-bool SetupContainer::ok() const { return _ok; }
 
 // GameContainer implementation
 GameContainer::GameContainer(uint32_t msg_code, int id, float x, float y, float w, float h,
@@ -35,11 +30,9 @@ Container::Container(uint32_t msg_code, int id, float x, float y, float w, float
         setup_container(nullptr),
         game_container(new GameContainer(msg_code, id, x, y, w, h, direction, an_type, en_type,
                                          health, ammo, score)),
-        _code(msg_code),
         _type(Type::GAME) {}
 
-Container::Container(uint32_t msg_code, const std::string& gameId, uint32_t maxPlayers, bool ok):
-        setup_container(new SetupContainer(msg_code, gameId, maxPlayers, ok)),
+Container::Container(Setup::ActionType setupType ,const std::string gameId, uint32_t maxPlayers, bool ok):
+        setup_container(new SetupContainer(setupType,gameId, maxPlayers, ok)),
         game_container(nullptr),
-        _code(msg_code),
         _type(Type::SETUP) {}

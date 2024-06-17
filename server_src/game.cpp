@@ -87,6 +87,9 @@ void Game::run() {
 void Game::addPlayer(uint32_t clientId) {
     std::lock_guard<std::mutex> lock(clientCharactersMutex);
 
+    Container init(2, clientId, 0, 0, 0, 0, 0, AnimationType::NONE_ANIMATION,
+                  EntityType::NONE_ENTITY, 0, 0, 0);
+    stateQueue.push(init);
     Lori* lori = new Lori(20 + clientId, 2, config);
     lori->set_id(clientId);
     clientCharacters[clientId] = lori;

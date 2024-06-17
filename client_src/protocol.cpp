@@ -71,16 +71,39 @@ Container ClientProtocol::receive_container() {
 }
 
 Container ClientProtocol::receive_setup_container() {
+    unsigned char setupType = receiveUChar();
+    Setup::ActionType actionType = static_cast<Setup::ActionType>(setupType);
 
-    uint32_t msg_code = receiveUInt32();
+    switch (actionType) {
+        case Setup::ActionType::CREATE_GAME:
+            return receive_create_game();
+        case Setup::ActionType::JOIN_GAME:
+            return receive_join_game();
+        case Setup::ActionType::GET_GAME_LIST:
+            return receive_get_game_list();
+        default:
+            throw std::runtime_error("Unknown setup action type");
+    }
+
+}
+
+Container ClientProtocol::receive_create_game() {
+    bool ok = receiveBool();
     std::string gameId = receiveString();
     uint32_t maxPlayers = receiveUInt32();
-    // receiveBool
-    // listgames
+    return Container(Setup::ActionType::CREATE_GAME, gameId, maxPlayers, ok);
+}
 
-    Container container(msg_code, gameId, maxPlayers, true);
+Container ClientProtocol::receive_join_game() {
+    bool ok = receiveBool();
+    std::string gameId = receiveString();
+    uint32_t maxPlayers = receiveUInt32();
+    return Container(Setup::ActionType::JOIN_GAME, gameId, maxPlayers, ok);
+}
 
-    return container;
+Container ClientProtocol::receive_get_game_list() {
+    bool ok = receiveBool();
+    return Container(Setup::ActionType::GET_GAME_LIST, {}, {}, ok);
 }
 
 
