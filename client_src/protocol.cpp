@@ -4,17 +4,6 @@ ClientProtocol::ClientProtocol(const std::string& hostname, const std::string& s
         Protocol(Socket(hostname.c_str(), servicename.c_str())) {}
 
 
-std::pair<State::StateType, SpecialAction::SpecialActionType> ClientProtocol::receive_update() {
-    unsigned char receivedState = receiveUChar();
-    unsigned char receivedSpecialAction = receiveUChar();
-
-    State::StateType stateType = static_cast<State::StateType>(receivedState);
-    SpecialAction::SpecialActionType actionType =
-            static_cast<SpecialAction::SpecialActionType>(receivedSpecialAction);
-
-    return {stateType, actionType};
-}
-
 //////////////SEND
 
 void ClientProtocol::send_message(const Message& message) {
@@ -115,7 +104,7 @@ Container ClientProtocol::receive_game_container() {
     if (msg_code == 2) {
         socket.recvall(&id, sizeof(id), &was_closed);
         Container c(msg_code, id, 0, 0, 0, 0, 0, AnimationType::NONE_ANIMATION,
-                     EntityType::NONE_ENTITY, 0, 0, 0);
+                    EntityType::NONE_ENTITY, 0, 0, 0);
         return c;
     }
 

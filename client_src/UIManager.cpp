@@ -4,7 +4,7 @@ UIManager::UIManager(std::map<int, Player*>& personajes, SdlWindow& window):
         personajes(personajes),
         window(window),
         fuente("../client_src/assets/ARCADECLASSIC.TTF", 32),
-        clock(GAME_TIME) {
+        clock(-1) {
     this->texturas_ui[0] =
             new SdlTexture("../client_src/assets/ui_vida.png", window, Color{0x2C, 0x66, 0x96});
     this->texturas_ui[1] =
@@ -48,5 +48,7 @@ void UIManager::render_UI(int id_cliente) {
     this->fuente.render(10 + fixed_size, 15 + 2 * fixed_size,
                         std::to_string(personaje->get_score()), window, amarillo);
 
-    this->fuente.render(700, 15, std::to_string(this->clock), window, amarillo);
+    if (this->clock != -1) {
+        this->fuente.render(700, 15, std::to_string(this->clock), window, amarillo);
+    }
 }

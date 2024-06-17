@@ -24,9 +24,7 @@ add_library(client_lib
     sdl_libs/Music.cpp
     sdl_libs/Sound.cpp
     setupscreen/ConnectMenu.cpp
-        ../common_src/headers/Message.h
-        ../common_src/Container.cpp
-        ../common_src/headers/Container.h
+    ../common_src/Container.cpp
 )
 
 target_link_libraries(client_lib setupscreen)

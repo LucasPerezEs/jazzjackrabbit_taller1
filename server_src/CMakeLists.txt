@@ -25,16 +25,14 @@ add_library(server_lib
     jazz.cpp
     lori.cpp
     spaz.cpp
-        ../common_src/Container.cpp
+    ../common_src/Container.cpp
     ../common_src/liberror.cpp
     ../common_src/protocol.cpp
     ../common_src/resolver.cpp
     ../common_src/resolvererror.cpp
     ../common_src/socket.cpp
-        GamesManager.cpp
-        headers/GamesManager.h
-        GameBroadcasterContainer.cpp
-        headers/GameBroadcasterContainer.h
+    GamesManager.cpp
+    GameBroadcasterContainer.cpp
 )
 
 target_include_directories(server_lib PRIVATE headers/*)

@@ -31,9 +31,6 @@ public:
 
     Container receive_container();
 
-    std::pair<State::StateType, SpecialAction::SpecialActionType> receive_update();
-
-
     ClientProtocol(const ClientProtocol&) = delete;
     ClientProtocol& operator=(const ClientProtocol&) = delete;
 
