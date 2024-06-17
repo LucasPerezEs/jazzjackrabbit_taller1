@@ -1,11 +1,12 @@
 #include "headers/Container.h"
 
 // SetupContainer implementation
-SetupContainer::SetupContainer(Setup::ActionType setupType, const std::string gameId,
+SetupContainer::SetupContainer(Setup::ActionType setupType, const std::string& gameId,
                                uint32_t maxPlayers, bool ok):
         setupType(setupType), gameId(gameId), maxPlayers(maxPlayers), ok(ok) {}
 
-SetupContainer::SetupContainer(Setup::ActionType setupType, std::vector<std::string> gameList,
+// cppcheck-suppress uninitMemberVar
+SetupContainer::SetupContainer(Setup::ActionType setupType, std::vector<std::string>& gameList,
                                bool ok):
         setupType(setupType), gameList(gameList), ok(ok) {}
 
@@ -36,13 +37,15 @@ Container::Container(uint32_t msg_code, int id, float x, float y, float w, float
                                          health, ammo, score)),
         _type(Type::GAME) {}
 
-Container::Container(Setup::ActionType setupType, const std::string gameId, uint32_t maxPlayers,
+Container::Container(Setup::ActionType setupType, const std::string& gameId, uint32_t maxPlayers,
                      bool ok):
         setup_container(new SetupContainer(setupType, gameId, maxPlayers, ok)),
         game_container(nullptr),
         _type(Type::SETUP) {}
 
-Container::Container(Setup::ActionType setupType, std::vector<std::string> gameList, bool ok):
+Container::Container(Setup::ActionType setupType, std::vector<std::string>& gameList, bool ok):
+        // cppcheck-suppress noCopyConstructor
+        // cppcheck-suppress noOperatorEq
         setup_container(new SetupContainer(setupType, gameList, ok)),
         game_container(nullptr),
         _type(Type::SETUP) {}

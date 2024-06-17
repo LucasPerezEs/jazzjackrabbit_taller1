@@ -11,10 +11,10 @@
 
 class SetupContainer {
 public:
-    SetupContainer(Setup::ActionType setupType, const std::string gameId, uint32_t maxPlayers,
+    SetupContainer(Setup::ActionType setupType, const std::string& gameId, uint32_t maxPlayers,
                    bool ok);
 
-    SetupContainer(Setup::ActionType setupType, std::vector<std::string> gameList, bool ok);
+    SetupContainer(Setup::ActionType setupType, std::vector<std::string>& gameList, bool ok);
 
     Setup::ActionType setupType;
     std::string gameId;
@@ -48,8 +48,8 @@ public:
               AnimationType an_type, EntityType en_type, int health, int ammo, int score);
 
     // Setup container constructor
-    Container(Setup::ActionType setupType, const std::string gameId, uint32_t maxPlayers, bool ok);
-    Container(Setup::ActionType setupType, std::vector<std::string> gameList, bool ok);
+    Container(Setup::ActionType setupType, const std::string& gameId, uint32_t maxPlayers, bool ok);
+    Container(Setup::ActionType setupType, std::vector<std::string>& gameList, bool ok);
 
     Type type() const { return _type; }
 

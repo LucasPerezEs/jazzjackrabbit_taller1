@@ -7,7 +7,8 @@ Client::Client(const std::string& hostname, const std::string& servername, Queue
         client_receiver(client_protocol, queue),
         event_handler(client_protocol),
         updater(client_protocol, window, entidades, queue, personajes, ui_manager),
-        online(false) {
+        online(false),
+        id(-1) {
     updater.agregar_cliente(this);
 }
 
@@ -15,10 +16,10 @@ void Client::go_online() {
 
     online = true;
 
-    //se inicia una vez entrado al juego
-    //this->event_handler.start();
-    //this->updater.start();
-    //this->client_receiver.start();
+    // se inicia una vez entrado al juego
+    // this->event_handler.start();
+    // this->updater.start();
+    // this->client_receiver.start();
 }
 
 bool Client::is_online() {
@@ -46,7 +47,7 @@ void Client::close() {
 bool Client::createGame(const std::string& gameId, const uint32_t maxPlayers) {
 
 
-    Message msg(Setup::ActionType::CREATE_GAME,gameId,maxPlayers);
+    Message msg(Setup::ActionType::CREATE_GAME, gameId, maxPlayers);
     client_protocol.send_message(msg);
 
     Container container = client_protocol.receive_container();
@@ -58,7 +59,7 @@ bool Client::joinGame(const std::string& gameId, const int character) {
 
     Message msg(Setup::ActionType::JOIN_GAME, character, gameId);
     client_protocol.send_message(msg);
-    //recibir confirmacion
+    // recibir confirmacion
 
     Container container = client_protocol.receive_container();
 
@@ -73,7 +74,7 @@ bool Client::joinGame(const std::string& gameId, const int character) {
 bool Client::refreshGameList(std::vector<std::string>& gameList) {
     Message msg(Setup::ActionType::GET_GAME_LIST);
     client_protocol.send_message(msg);
-    //recibir gamelist
+    // recibir gamelist
 
     Container container = client_protocol.receive_container();
     gameList = container.setup_container->gameList;

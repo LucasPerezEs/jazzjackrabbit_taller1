@@ -235,8 +235,10 @@ void ModelUpdater::update(float dt) {
                 despawn_entity(c);
                 break;
 
-            case 2:  // Setea el ID al cliente
-                cliente->set_id(c.game_container->id);
+            case 2:  // Setea el ID al cliente, si todavia no fue seteado
+                if (cliente->get_id() == -1) {
+                    cliente->set_id(c.game_container->id);
+                }
                 break;
 
             case 3:  // Actualiza un personaje, si no existe, lo crea.
