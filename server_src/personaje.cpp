@@ -319,10 +319,14 @@ void Personaje::colision(Banana& b) {  // Banana y Bala deberian pertenecer a cl
     }
 }
 
-/*void Personaje::colision(Bala& b) {
-    if (std::chrono::duration_cast<std::chrono::milliseconds>(
-                                std::chrono::system_clock::now() - last_hurt)
-                                        .count() > espera_hurt) {
+void Personaje::colision(Bala& b) {
+    if (b.get_shooter_id() == this->id) {
+        return;
+    }
+
+    if (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() -
+                                                              last_hurt)
+                .count() > espera_hurt) {
         state = PlayerState::HURTED;
         an_type = AnimationType::HURT;
         last_hurt = std::chrono::system_clock::now();
@@ -330,13 +334,13 @@ void Personaje::colision(Banana& b) {  // Banana y Bala deberian pertenecer a cl
         RecibirDanio(b.danio);
         b.borrar = true;
     }
-}*/
+}
 
 void Personaje::colision(Municion& m) { m.colision(*this); }
 
 void Personaje::disparar(ListaObjetos& objetos) {
     tiempo = std::chrono::system_clock::now();
-    arma.disparar(objetos, x, width, y, height, direccion);
+    arma.disparar(objetos, id, x, width, y, height, direccion);
     if (!movingleft && !movingright) {
         an_type = AnimationType::SHOOT;
     }
@@ -351,7 +355,8 @@ Arma::Arma(std::map<std::string, float>& config):
     municion = config["weapon_initial_ammo"];
 }
 
-void Arma::disparar(ListaObjetos& objetos, float x, float w, float y, float h, int d) {
+void Arma::disparar(ListaObjetos& objetos, int shooter_id, float x, float w, float y, float h,
+                    int d) {
     if (municion > 0 && std::chrono::duration_cast<std::chrono::milliseconds>(
                                 std::chrono::system_clock::now() - tiempo)
                                         .count() > espera) {
@@ -361,10 +366,10 @@ void Arma::disparar(ListaObjetos& objetos, float x, float w, float y, float h, i
             1) {  // Si se dispara mirando a la derecha la bala sale desde la derecha del objeto
             aux = x + w;  // Si se dispara mirando a la izquierda sale a la izquierda
         } else {
-            aux = x + w;
+            aux = x;
         }
 
-        Bala* b = new Bala(aux, y + h / 2, d, config);
+        Bala* b = new Bala(aux, y + h / 2, d, shooter_id, config);
         objetos.agregar_objeto(b);  // Se agrega al vector de colisiones
         // disminuir_municion();
     }
@@ -373,10 +378,10 @@ void Arma::disparar(ListaObjetos& objetos, float x, float w, float y, float h, i
 void Arma::disminuir_municion() { municion--; }
 
 // cppcheck-suppress constParameter
-Bala::Bala(float x, float y, int d, std::map<std::string, float>& config):
-        Objeto(x, y, 1, 1, EntityType::BULLET,
-               AnimationType::WALK) {  // se le pasa la direccion a la que va a salir la bala por
-                                       // parametro
+Bala::Bala(float x, float y, int d, int shooter_id, std::map<std::string, float>& config):
+        Objeto(x, y, 1, 1, EntityType::BULLET, AnimationType::WALK),
+        shooter_id(shooter_id) {  // se le pasa la direccion a la que va a salir la bala por
+                                  // parametro
     vel = config["bullet_speed"] * d;
     danio = config["bullet_damage"];
 }
@@ -387,7 +392,10 @@ void Bala::colision(Objeto& o) {
     }
 }
 
-void Bala::colision(Enemigo& o) { o.colision(*this); }
+void Bala::colision(Enemigo& e) { e.colision(*this); }
+
+void Bala::colision(Personaje& p) { p.colision(*this); }
+
 
 void Bala::update(
         Mapa& mapa, ListaObjetos& objetos,
@@ -405,3 +413,5 @@ void Bala::update(
 void Bala::eliminar() {  // Para los memory leaks
     delete (this);
 }
+
+int Bala::get_shooter_id() { return this->shooter_id; }

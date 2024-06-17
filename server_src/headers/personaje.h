@@ -19,14 +19,17 @@ class ListaObjetos;
 class Bala: public Objeto {
 protected:
     float vel;
+    int shooter_id;
 
 public:
     int danio;
-    Bala(float x, float y, int d, std::map<std::string, float>& config);
+    Bala(float x, float y, int d, int shooter_id, std::map<std::string, float>& config);
     virtual void colision(Objeto& o) override;
-    virtual void colision(Enemigo& o) override;
+    virtual void colision(Enemigo& e) override;
+    virtual void colision(Personaje& p) override;
     virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) override;
     virtual void eliminar() override;
+    int get_shooter_id();
 };
 
 class Arma {  // No se si es necesaria esta clase
@@ -40,7 +43,7 @@ protected:
 
 public:
     explicit Arma(std::map<std::string, float>& config);
-    void disparar(ListaObjetos& objetos, float x, float w, float y, float h, int d);
+    void disparar(ListaObjetos& objetos, int shooter_id, float x, float w, float y, float h, int d);
 };
 
 enum PlayerState { INTOXICATED = 0x30, HURTED = 0x31, NORMAL = 0x32 };
@@ -82,7 +85,7 @@ public:
     virtual void colision(Municion& m) override;
     virtual void colision(
             Banana& b) override;  // Banana y Bala deberian pertenecer a una clase 'Proyectil'
-    // virtual void colision(Bala& b) override;
+    virtual void colision(Bala& b) override;
     void disparar(ListaObjetos& objetos);
     void moveRigth();
     void moveLeft();
