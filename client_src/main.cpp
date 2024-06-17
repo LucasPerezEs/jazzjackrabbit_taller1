@@ -63,9 +63,10 @@ int main(int argc, char* argv[]) {
                                      // }
                                  });
                 QObject::connect(&multiplayerMenu, &MultiplayerMenu::joinGameRequested,
-                                 [&](const QString& gameID) {
+                                 [&](const QString& gameID, const int& elegido) {
                                      multiplayerMenu.close();
-                                     if (client.joinGame(gameID.toStdString())) {
+                                     std::cout << elegido << "\n";
+                                     if (client.joinGame(gameID.toStdString(), elegido)) {
                                          Game game(client, window, entidades, personajes,
                                                    ui_manager);
                                          game.run();

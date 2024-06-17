@@ -7,11 +7,11 @@ GameBroadcasterContainer::GameBroadcasterContainer(std::map<std::string, float>&
         game(actionQueue, stateQueue,maxPlayers, config),
         broadcaster(clients, stateQueue) {}
 
-void GameBroadcasterContainer::addPlayer(ClientHandler* client) {
+void GameBroadcasterContainer::addPlayer(ClientHandler* client, uint32_t character) {
     if (canAddPlayer()) {
         client->setReceiverQueue(&actionQueue);
         clients.push_back(client);
-        game.addPlayer(client->getId());
+        game.addPlayer(client->getId(), character);
     }
 }
 

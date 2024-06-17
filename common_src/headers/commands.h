@@ -43,6 +43,8 @@ struct Setup {
     std::string gameId;
     // cppcheck-suppress unusedStructMember
     uint32_t maxPlayers;
+    // cppcheck-suppress unusedStructMember
+    uint32_t character;
 };
 
 #endif  // COMMANDS_H

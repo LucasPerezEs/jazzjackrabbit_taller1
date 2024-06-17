@@ -80,12 +80,12 @@ bool GamesManager::createGame(std::string gameId, uint32_t maxPlayers,
     return false;
 }
 
-bool GamesManager::joinGame(const std::string& gameId, ClientHandler* client) {
+bool GamesManager::joinGame(const std::string& gameId, ClientHandler* client, uint32_t character) {
     std::lock_guard<std::mutex> lock(gamesMutex);
 
     auto it = games.find(gameId);
     if (it != games.end() && it->second->canAddPlayer()) {
-        it->second->addPlayer(client);
+        it->second->addPlayer(client, character);
         return true;
     }
 
@@ -120,7 +120,7 @@ void GamesManager::run() {
         uint32_t clientId = msg.id();
         switch (msg.setup.action) {
             case Setup::JOIN_GAME:
-                ok = joinGame(msg.setup.gameId, clients[clientId]);
+                ok = joinGame(msg.setup.gameId, clients[clientId], msg.setup.character);
                 container = Container(Setup::JOIN_GAME, msg.setup.gameId, msg.setup.maxPlayers, ok);
                 clients[clientId]->pushState(container);
                 break;

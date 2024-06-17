@@ -19,7 +19,7 @@ public:
     void addClient(uint32_t clientId, ClientHandler* client);
 
     bool createGame(std::string gameId, uint32_t maxPlayers, std::map<std::string, float>& config);
-    bool joinGame(const std::string& gameId, ClientHandler* client);
+    bool joinGame(const std::string& gameId, ClientHandler* client, uint32_t character);
     bool listGames(std::vector<std::string>& gameList);
     void run();
     void stop();
