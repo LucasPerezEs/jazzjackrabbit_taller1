@@ -2,6 +2,7 @@
 #define OBJETO_H_
 
 #include <map>
+#include <unordered_map>
 #include <vector>
 
 #include "../../common_src/headers/Container.h"
@@ -55,7 +56,8 @@ public:
     Ente(float x, float y, float w, float h, int vida, EntityType en_type, AnimationType an_type);
     void RecibirDanio(int d);
     bool vivo();
-    virtual void update_vivo(ListaObjetos& objetos, Queue<Container>& q);
+    virtual void update_vivo(ListaObjetos& objetos, Queue<Container>& q,
+                             std::unordered_map<uint32_t, Personaje*>& clientCharacters);
 };
 
 

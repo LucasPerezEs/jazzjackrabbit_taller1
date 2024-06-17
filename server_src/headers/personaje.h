@@ -4,6 +4,7 @@
 #include <chrono>
 #include <map>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 #include "../../common_src/headers/Container.h"
@@ -65,6 +66,7 @@ protected:
     float direccion_movimientox;
     float direccion_movimientoy;
     float jump_speed;
+    int killed_by_id;
     std::map<std::string, float>& config;
     Arma arma;
     PlayerState state;
@@ -99,7 +101,8 @@ public:
     void add_score(int score);
     bool has_special_action_active();
     virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) override;
-    virtual void update_vivo(ListaObjetos& objetos, Queue<Container>& q) override;
+    virtual void update_vivo(ListaObjetos& objetos, Queue<Container>& q,
+                             std::unordered_map<uint32_t, Personaje*>& clientCharacters) override;
 };
 
 #endif

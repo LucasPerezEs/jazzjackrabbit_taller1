@@ -73,7 +73,7 @@ void Game::run() {
         objetos.eliminar_borrados(stateQueue);
         objetos.correr_colisiones();
         for (auto e: entes) {
-            e->update_vivo(objetos, stateQueue);
+            e->update_vivo(objetos, stateQueue, clientCharacters);
         }
         objetos.update(m, stateQueue);
 

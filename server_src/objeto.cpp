@@ -56,7 +56,8 @@ void Ente::RecibirDanio(int d) {
 
 bool Ente::vivo() { return vida > 0; }
 
-void Ente::update_vivo(ListaObjetos& objetos, Queue<Container>& q) {
+void Ente::update_vivo(ListaObjetos& objetos, Queue<Container>& q,
+                       std::unordered_map<uint32_t, Personaje*>& clientCharacters) {
     if (vida <= 0) {
         if (contador ==
             240) {  // revive despues de tantos ciclos y lo agrego al vector de colisiones
