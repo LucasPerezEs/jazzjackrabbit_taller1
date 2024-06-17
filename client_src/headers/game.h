@@ -30,12 +30,14 @@
 #define SOLIDO 1
 #define DECORACION 2
 
+#define TILE_MAP_ASSETS 16 //Tamaño en el que se ve el asset al crear.
+#define TILE_MAP_CREATED 8 //Tamaño en el que se ve el mapa al crearlo.
+
 struct Tile {
     int id; // ID del tile en el tileset
     int type; //Si es tipo SOLIDO-DECORACION-ITEM
-    std::tuple<int, int> posicion;
-    SDL_Rect srcRect; // Rectángulo de la imagen de assets
-    SDL_Rect destRect; // Rectángulo de destino en la pantalla
+    SDL_Rect srcRect;
+    SDL_Rect destRect;
     bool selected; // Indica si el tile está seleccionado
 };
 
@@ -54,8 +56,9 @@ private:
     UIManager& ui_manager;
 
     std::vector<std::vector<int>> cargarCSV(const std::string& ruta);
-    void SaveMapToCSV(const std::vector<Tile>& tiles, const std::string& filename);
+    void SaveMapToCSV(const std::string& filename);
     void draw(const std::vector<std::vector<int>>& tilemap, SDL_Texture* tilesetTexture);
+    void save_values(Tile& selectedTile, int& width_texture, int& window_width, int& window_height, SDL_Event& event);
 
     Camara* camara;
 

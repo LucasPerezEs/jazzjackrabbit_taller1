@@ -2,7 +2,6 @@
 
 int escala2x = 26;
 int escala2y = 26;
-std::unordered_map<int, SDL_Texture*> tileTextures;
 
 Game::Game(Client& client, SdlWindow& window, std::map<int, Entity*>& entidades,
            std::map<int, Player*>& personajes, UIManager& ui_manager):
@@ -114,7 +113,7 @@ void Game::SaveMapToCSV(const std::vector<Tile>& tiles, const std::string& filen
 */
 
 // Modifica SaveMapToCSV para guardar los IDs de los tiles
-void Game::SaveMapToCSV(const std::vector<Tile>& tiles, const std::string& filename) {
+void Game::SaveMapToCSV(const std::string& filename) {
     std::ofstream file(filename);
     int fila_anterior = -1;
 
@@ -141,24 +140,42 @@ void Game::SaveMapToCSV(const std::vector<Tile>& tiles, const std::string& filen
     }
 }
 
+//Pre: -
+//Post: -
+void Game::save_values(Tile& selectedTile, int& width_texture, int& window_width, int& window_height, SDL_Event& event){
 
-/*
-Hay dos formas en la que se hizo esto. La primera solo requiere el uso de los case: SDL_MOUSEBUTTONDOWN y case: SDL_MOUSEBUTTONUP,
-en este caso no se ve como se arrastra cada cuadricula hacia su posicion.
+    double newX = event.button.x;
+    double newY = event.button.y;
+                        
+    // Me aseguro de que newX está por fuera de la imagen del asset y dentro de la ventana en X.
+    double minX = width_texture;
+    double maxX = window_width;
+    if (newX < minX || newX > maxX)
+        return;
 
-De la otra forma en la que si se ve es con lo agregado en case: SDL_MOUSEMOTION, pero este metodo requiere de agregar fuera del switch un for que va
-desde 0 a numTiles. Si se saca esta funcionalidad ese for deberia borrarse asi como tambien el this->window.fill(); que se realiza allí. 
-*/
+    // Me aseguro de que newY está dentro de la ventana en Y
+    double minY = window_height;
+    double maxY = 0;
+    if (newY < maxY || newY > minY)
+        return;
+
+    int multiploX = std::floor(newX / TILE_MAP_CREATED) * TILE_MAP_CREATED;
+    int multiploY = std::floor(newY / TILE_MAP_CREATED) * TILE_MAP_CREATED;
+
+    std::tuple<int,int> posicion = std::make_tuple(multiploY, multiploX);
+    selectedTile.destRect = { multiploX, multiploY, TILE_MAP_CREATED, TILE_MAP_CREATED };
+
+    mapTiles[posicion] = selectedTile;
+}
+
+//Pre: -
+//Post: -
 void Game::create_map(){
 
+    std::vector<Tile> tiles_asset;
+    std::tuple<int, int> posicion;
     SDL_Renderer* renderer = this->window.getRenderer();
 
-    // Crear una cuadrícula de tiles (ejemplo: 10x10)
-    std::vector<Tile> tiles_mapa;
-    std::vector<Tile> tiles_asset;
-    std::tuple<int, int> posicion; //Posicion en el mapa
-
-    // Cargar la imagen de assets
     SDL_Surface* tilesetSurface =
             IMG_Load("../client_src/assets/background/medivo_map/ASSETS_MEDIVO.png");
     if (tilesetSurface == nullptr) {
@@ -171,35 +188,28 @@ void Game::create_map(){
     if (assetTexture == nullptr)
         std::cout << "Error al crear la textura: " << SDL_GetError() << std::endl;
     SDL_FreeSurface(tilesetSurface);
-
-    // Habilita el blending para transparencia
     SDL_SetTextureBlendMode(assetTexture, SDL_BLENDMODE_BLEND);
 
-    // Obtengo las dimensiones de la ventana
     int window_width, window_height;
     SDL_GetRendererOutputSize(renderer, &window_width, &window_height);
     std::cout << "El ancho de la ventana es: " << window_width << " y el alto es: " << window_height << std::endl;
 
-    //Obtengo el ancho y alto de la textura
     int width_texture, height_texture;
     SDL_QueryTexture(assetTexture, NULL, NULL, &width_texture, &height_texture);
 
-    int numTiles = (width_texture / 16) * (height_texture / 16); //Numero total de tiles de 16x16 en el asset.
-    int tilesPerRow = (width_texture / 16); //Cantidad de tiles de 16 x 16 en el asset.
+    int numTiles = (width_texture / TILE_MAP_ASSETS) * (height_texture / TILE_MAP_ASSETS);
+    int tilesPerRow = (width_texture / TILE_MAP_ASSETS);
     
-    //Inicializo cada bloque de la paleta de tiles para dibujar (y los hagos de 16x16).
     for (int i = 0; i < numTiles; i++) {
         Tile tile;
         tile.id = i;
-        tile.posicion = {{i % tilesPerRow}, {i / tilesPerRow}};
-        tile.srcRect = {(i % tilesPerRow)*16, (i / tilesPerRow)*16, 16, 16};
+        tile.srcRect = {(i % tilesPerRow)*TILE_MAP_ASSETS, (i / tilesPerRow)*TILE_MAP_ASSETS, TILE_MAP_ASSETS, TILE_MAP_ASSETS};
         tile.selected = false;
         tiles_asset.push_back(tile);
     }
-    SDL_Rect destRect = {0, 0, width_texture, height_texture};
-    SDL_RenderCopy(renderer, assetTexture, NULL, &destRect);
+    SDL_Rect destRectAsset = {0, 0, width_texture, height_texture};
+    SDL_RenderCopy(renderer, assetTexture, NULL, &destRectAsset);
     this->window.render();
-
 
     SDL_Point mousePos;
     Tile selectedTile;
@@ -218,11 +228,9 @@ void Game::create_map(){
                     break;
 
                 case SDL_MOUSEBUTTONDOWN: {
-
                     mousePos.x = event.button.x;
                     mousePos.y = event.button.y;
 
-                    // Verifica si se hizo clic en un tile de la imagen de assets
                     for (auto& tile : tiles_asset) {
                         if (SDL_PointInRect(&mousePos, &tile.srcRect)) {
                             selectedTile = tile;
@@ -234,97 +242,35 @@ void Game::create_map(){
                     if(!selectedTile.selected)
                         break;
 
-                    //Si ya hay uno seleccionado
-                    double newX = event.button.x;
-                    double newY = event.button.y;
-                        
-                    // Me aseguro de que newX está por fuera de la imagen del asset y dentro de la ventana en X.
-                    double minX = width_texture;
-                    double maxX = window_width;
-                    if (newX < minX || newX > maxX)
-                        break;
-
-                    // Me aseguro de que newY está dentro de la ventana en Y
-                    double minY = window_height;
-                    double maxY = 0;
-                    if (newY < maxY || newY > minY)
-                        break;
-
-                    //Esto es para que los bloques de las texturas se posiciones siempre en una posicion de 16x16 y no que puedas poner
-                    //la mitad de un asset sobre la mitad de otro. Si no crear un mapa con esta herramienta es un quilombo.
-                    int multiploX = std::floor(newX / 16) * 16;
-                    int multiploY = std::floor(newY / 16) * 16;
-
-                    posicion = std::make_tuple(multiploY, multiploX);
-                    selectedTile.destRect = { multiploX, multiploY, 16, 16 };
-                    tiles_mapa.push_back(selectedTile);
-
-                    mapTiles[posicion] = selectedTile; //({posicion, selectedTile}); //Si uso este ya no necesito usar tiles_map (Creo)
-
+                    save_values(selectedTile, width_texture, window_width, window_height, event);
                     mouseHeldDown = true;
                     break;
                 }
 
                 case SDL_MOUSEBUTTONUP: {
-                    
-                    // Cuando se suelta el botón del ratón, reinicia la variable de estado
                     mouseHeldDown = false;
                     break;
                 }
 
                 case SDL_MOUSEMOTION: {
+
                     if(mouseHeldDown){
-                        double newX = event.button.x;
-                        double newY = event.button.y;
-                        
-                        // Me aseguro de que newX está por fuera de la imagen del asset y dentro de la ventana en X.
-                        double minX = width_texture;
-                        double maxX = window_width;
-                        if (newX < minX || newX > maxX)
-                            break;
-
-                        // Me aseguro de que newY está dentro de la ventana en Y
-                        double minY = window_height;
-                        double maxY = 0;
-                        
-                        if (newY < maxY || newY > minY)
-                            break;
-
-                        //Esto es para que los bloques de las texturas se posiciones siempre en una posicion de 16x16 y no que puedas poner
-                        //la mitad de un asset sobre la mitad de otro. Si no crear un mapa con esta herramienta es un quilombo.
-                        int multiploX = std::floor(newX / 16) * 16;
-                        int multiploY = std::floor(newY / 16) * 16;
-
-                        posicion = std::make_tuple(multiploY, multiploX);
-                        selectedTile.destRect = { multiploX, multiploY, 16, 16 };
-                        tiles_mapa.push_back(selectedTile);
-
-                        mapTiles.insert({posicion, selectedTile}); //Si uso este ya no necesito usar tiles_map (Creo)
+                        save_values(selectedTile, width_texture, window_width, window_height, event);
                     }
-                    break;
                 }
-                
             }
             this->window.fill();
 
-            //Esto muestra los assets colocados durante la creacion del mapa (es el mapa creado visualmente)
-            for(size_t i = 0; i < tiles_mapa.size(); i++)
-                SDL_RenderCopy(renderer, assetTexture, &(tiles_mapa[i].srcRect), &(tiles_mapa[i].destRect));
-
-            //Esto muestra el asset por pantalla (Es como la paleta de pinturas)
-            for (int i = 0; i < numTiles; i++) {
-                Tile tile;
-                tile.id = i;
-                tile.srcRect = {(i % tilesPerRow)*16, (i / tilesPerRow)*16, 16, 16};
-                tile.selected = false;
-                tiles_asset.push_back(tile);
-                SDL_RenderCopy(renderer, assetTexture, &tile.srcRect, &tile.srcRect);
+            for (const auto& pair : mapTiles) {
+                const Tile& value = pair.second;
+                SDL_RenderCopy(renderer, assetTexture, &(value.srcRect), &(value.destRect));
             }
+
+            SDL_RenderCopy(renderer, assetTexture, NULL, &destRectAsset);
             this->window.render();
         }
     }
-
-    SaveMapToCSV(tiles_mapa, "Nuevo_mapa");
+    SaveMapToCSV("Nuevo_mapa");
     this->close();
 }
 
