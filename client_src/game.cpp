@@ -134,7 +134,6 @@ void Game::create_map(){
         std::cout << "Error al cargar la imagen: " << IMG_GetError() << std::endl;
         return;
     }
-
     SDL_SetColorKey(tilesetSurface, SDL_TRUE, SDL_MapRGB(tilesetSurface->format, 87, 0, 203));
 
     SDL_Texture* assetTexture = SDL_CreateTextureFromSurface(renderer, tilesetSurface);
@@ -156,27 +155,24 @@ void Game::create_map(){
 
     int numTiles = (width_texture / 16) * (height_texture / 16); //Numero total de tiles de 16x16 en el asset.
     int tilesPerRow = (width_texture / 16); //Cantidad de tiles de 16 x 16 en el asset.
-
-    //TENGO QUE PENSAR MEJOR ESTO, QUE DIBUJO Y COMO.
     
-    //Inicializo el vector (no es el de la imagen del asset) con los elementos correspondientes.
+    //Inicializo cada bloque de la paleta de tiles para dibujar (y los hagos de 16x16).
     for (int i = 0; i < numTiles; i++) {
         Tile tile;
         tile.id = i;
-        int row = i / tilesPerRow; //Numero de fila
-        int col = i % tilesPerRow; //Numero de columna
-
-        tile.srcRect = {col*16, row*16, 16, 16};
+        tile.srcRect = {(i % tilesPerRow)*16, (i / tilesPerRow)*16, 16, 16};
         tile.selected = false;
         tiles_asset.push_back(tile);
-        SDL_RenderCopy(renderer, assetTexture, &tile.srcRect, &tile.srcRect);
     }
+    SDL_Rect destRect = {0, 0, width_texture, height_texture};
+    SDL_RenderCopy(renderer, assetTexture, NULL, &destRect);
     this->window.render();
 
-    bool running = true;
 
     SDL_Point mousePos;
     Tile selectedTile;
+
+    bool running = true;
     bool mouseHeldDown = false;
     selectedTile.selected = false;
 
@@ -207,8 +203,8 @@ void Game::create_map(){
                         break;
 
                     //Si ya hay uno seleccionado
-                    double newX = event.button.x;// + width_texture + (selectedTile.srcRect.w);
-                    double newY = event.button.y;// + (selectedTile.srcRect.h);
+                    double newX = event.button.x;
+                    double newY = event.button.y;
                         
                     // Me aseguro de que newX está por fuera de la imagen del asset y dentro de la ventana en X.
                     double minX = width_texture;
@@ -246,9 +242,8 @@ void Game::create_map(){
 
                 case SDL_MOUSEMOTION: {
                     if(mouseHeldDown){
-                        //Si ya hay uno seleccionado
-                        double newX = event.button.x;// + width_texture + (selectedTile.srcRect.w);
-                        double newY = event.button.y;// + (selectedTile.srcRect.h);
+                        double newX = event.button.x;
+                        double newY = event.button.y;
                         
                         // Me aseguro de que newX está por fuera de la imagen del asset y dentro de la ventana en X.
                         double minX = width_texture;
