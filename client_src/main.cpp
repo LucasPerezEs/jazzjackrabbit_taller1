@@ -55,8 +55,8 @@ int main(int argc, char* argv[]) {
                     }
                 });
                 QObject::connect(&multiplayerMenu, &MultiplayerMenu::createGameRequested,
-                                 [&](const QString& gameID) {
-                                     if (client.createGame(gameID.toStdString(), 2)) {}
+                                 [&](const QString& gameID, const uint32_t& maxPlayers) {
+                                     if (client.createGame(gameID.toStdString(), maxPlayers)) {}
                                      //   multiplayerMenu.showGameCreatedMessage();
                                      //} else {
                                      //  multiplayerMenu.showGameCreationFailedMessage();

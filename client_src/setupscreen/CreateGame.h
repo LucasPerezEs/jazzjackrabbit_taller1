@@ -1,26 +1,32 @@
 #ifndef CREATEGAME_H
 #define CREATEGAME_H
 
-#include <QWidget>
-#include <QVBoxLayout>
+#include <QLabel>
 #include <QLineEdit>
 #include <QPushButton>
+#include <QVBoxLayout>
+#include <QWidget>
 
-class CreateGame : public QWidget {
+class CreateGame: public QWidget {
     Q_OBJECT
 
 public:
-    explicit CreateGame(QWidget *parent = nullptr);
+    explicit CreateGame(QWidget* parent = nullptr);
     virtual ~CreateGame();
 
 signals:
-    void createGameRequested(const QString &gameName);
+    void createGameRequested(const QString& gameName, const uint32_t& maxPlayers);
 
 private:
-    QLineEdit *gameNameInput;
-    QPushButton *createButton;
+    QLabel* gameNameLabel;
+    QLineEdit* gameNameInput;
+
+    QLabel* maxPlayersLabel;
+    QLineEdit* maxPlayersInput;
+
+    QPushButton* createButton;
 
     void init();
 };
 
-#endif // CREATEGAME_H
+#endif  // CREATEGAME_H
