@@ -49,6 +49,7 @@ private:
     Container receive_create_game();
     Container receive_join_game();
     Container receive_get_game_list();
+    Container receive_client_id();
 
 public:
     ClientProtocol(const std::string& hostname, const std::string& servicename);

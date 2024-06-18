@@ -82,6 +82,8 @@ Container ClientProtocol::receive_setup_container() {
             return receive_join_game();
         case Setup::ActionType::GET_GAME_LIST:
             return receive_get_game_list();
+        case Setup::ActionType::CLIENT_ID:
+            return receive_client_id();
         default:
             throw std::runtime_error("Unknown setup action type");
     }
@@ -111,6 +113,12 @@ Container ClientProtocol::receive_get_game_list() {
     return Container(Setup::ActionType::GET_GAME_LIST, gameList, ok);
 }
 
+Container ClientProtocol::receive_client_id() {
+    bool ok = receiveBool();
+    uint32_t id = receiveUInt32();
+    return Container(Setup::ActionType::GET_GAME_LIST, id, ok);
+}
+
 
 Container ClientProtocol::receive_game_container() {
     bool was_closed;
@@ -118,13 +126,13 @@ Container ClientProtocol::receive_game_container() {
 
     socket.recvall(&msg_code, sizeof(msg_code), &was_closed);
 
-    if (msg_code == 2) {
+    /*if (msg_code == 2) {
         int id;
         socket.recvall(&id, sizeof(id), &was_closed);
         Container c(msg_code, id, 0, 0, 0, 0, 0, AnimationType::NONE_ANIMATION,
                     EntityType::NONE_ENTITY, 0, 0, 0);
         return c;
-    }
+    }*/
 
     GameData data;
     socket.recvall(&data, sizeof(data), &was_closed);

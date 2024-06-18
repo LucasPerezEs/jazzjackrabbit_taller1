@@ -10,6 +10,10 @@ SetupContainer::SetupContainer(Setup::ActionType setupType, std::vector<std::str
                                bool ok):
         setupType(setupType), gameList(gameList), ok(ok) {}
 
+SetupContainer::SetupContainer(Setup::ActionType setupType, uint32_t id,
+                               bool ok):
+        setupType(setupType), clientId(id), ok(ok) {}
+
 
 // GameContainer implementation
 GameContainer::GameContainer(uint32_t msg_code, int id, float x, float y, float w, float h,
@@ -47,5 +51,12 @@ Container::Container(Setup::ActionType setupType, std::vector<std::string>& game
         // cppcheck-suppress noCopyConstructor
         // cppcheck-suppress noOperatorEq
         setup_container(new SetupContainer(setupType, gameList, ok)),
+        game_container(nullptr),
+        _type(Type::SETUP) {}
+
+Container::Container(Setup::ActionType setupType, uint32_t id, bool ok):
+        // cppcheck-suppress noCopyConstructor
+        // cppcheck-suppress noOperatorEq
+        setup_container(new SetupContainer(setupType, id, ok)),
         game_container(nullptr),
         _type(Type::SETUP) {}

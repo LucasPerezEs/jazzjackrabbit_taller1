@@ -87,9 +87,9 @@ void Game::run() {
 void Game::addPlayer(uint32_t clientId ,uint32_t character) {
     std::lock_guard<std::mutex> lock(clientCharactersMutex);
 
-    Container init(2, clientId, 0, 0, 0, 0, 0, AnimationType::NONE_ANIMATION,
+    /*Container init(2, clientId, 0, 0, 0, 0, 0, AnimationType::NONE_ANIMATION,
                   EntityType::NONE_ENTITY, 0, 0, 0);
-    stateQueue.push(init);
+    stateQueue.push(init);*/
     Personaje* personaje;
     if (character == 0) {
         personaje = new Jazz(20 + clientId, 2, config);

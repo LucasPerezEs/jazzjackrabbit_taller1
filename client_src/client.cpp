@@ -7,8 +7,10 @@ Client::Client(const std::string& hostname, const std::string& servername, Queue
         client_receiver(client_protocol, queue),
         event_handler(client_protocol),
         updater(client_protocol, window, entidades, queue, personajes, ui_manager),
-        online(false),
-        id(-1) {
+        online(false) {
+    Container c = client_protocol.receive_container();
+    id = c.setup_container->clientId;
+    std::cout << "Se esta seteando el id del cliente que es: " << id << "\n";
     updater.agregar_cliente(this);
 }
 

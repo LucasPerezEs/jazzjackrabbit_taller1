@@ -35,6 +35,7 @@ struct Setup {
         JOIN_GAME = 0x31,
         CREATE_GAME = 0x32,
         GET_GAME_LIST = 0x33,
+        CLIENT_ID = 0x34,
     };
     ActionType action;
 
