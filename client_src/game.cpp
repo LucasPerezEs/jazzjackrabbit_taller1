@@ -12,7 +12,7 @@ Game::Game(Client& client, SdlWindow& window, std::map<int, Entity*>& entidades,
         ui_manager(ui_manager) {
 
     SDL_Surface* tilesetSurface =
-            IMG_Load("../client_src/assets/background/medivo_map/TILESET_Medivo.png");
+            IMG_Load("../client_src/assets/background/medivo_map/ASSETS_GENERALES.png");
     if (tilesetSurface == nullptr) {
         std::cout << "Error al cargar la imagen: " << IMG_GetError() << std::endl;
         return;
@@ -132,7 +132,7 @@ void Game::create_map(){
 
 
     SDL_Surface* tilesetSurface =
-            IMG_Load("../client_src/assets/background/medivo_map/ASSETS_MEDIVO.png");
+            IMG_Load("../client_src/assets/background/ASSETS_GENERALES.png");
     if (tilesetSurface == nullptr) {
         std::cout << "Error al cargar la imagen: " << IMG_GetError() << std::endl;
         return;
@@ -147,8 +147,6 @@ void Game::create_map(){
 
     int window_width, window_height;
     SDL_GetRendererOutputSize(renderer, &window_width, &window_height);
-    std::cout << "El ancho de la ventana es: " << window_width << " y el alto es: " << window_height
-              << std::endl;
 
     int width_texture, height_texture;
     SDL_QueryTexture(assetTexture, NULL, NULL, &width_texture, &height_texture);
@@ -211,9 +209,8 @@ void Game::create_map(){
 
                 case SDL_MOUSEMOTION: {
 
-                    if(mouseHeldDown){
+                    if(mouseHeldDown)
                         save_values(selectedTile, width_texture, window_width, window_height, event);
-                    }
                 }
             }
             this->window.fill();
@@ -338,5 +335,3 @@ void Game::draw(const std::vector<std::vector<int>>& tilemap, SDL_Texture* tiles
         }
     }
 }
-
-// tengo que hacer la camara y arreglar las fisicas para que se peguen al terreno

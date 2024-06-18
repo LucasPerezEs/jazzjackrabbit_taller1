@@ -1,0 +1,2 @@
+De la fila 1 a la 4 inclusiva son texturas solidas de mapa medivo.
+De la fila 5 a la 14 inclusiva son texturas decorativas del mapa medivo.
