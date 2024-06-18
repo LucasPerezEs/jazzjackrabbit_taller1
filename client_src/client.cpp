@@ -48,7 +48,6 @@ void Client::close() {
 
 bool Client::createGame(const std::string& gameId, const uint32_t maxPlayers) {
 
-
     Message msg(Setup::ActionType::CREATE_GAME, gameId, maxPlayers);
     client_protocol.send_message(msg);
 

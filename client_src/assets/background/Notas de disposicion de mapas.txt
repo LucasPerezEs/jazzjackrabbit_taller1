@@ -3,9 +3,10 @@ El asset tiene un total de 10 columnas y 32 filas por lo que:
 EJ: Los solidos de medivo_map son los elementos entre 1 y 40 (Ya que los solidos de este mapa ocupan las primeras 4 filas y por lo tanto son 40). 
 EL ELEMENTO ES UN BORRADOR, NO ES UN ELEMENTO SOLIDO.
 
-De la fila 1 a la 4 inclusiva son texturas solidas de mapa medivo.
+De la fila 1 a la 4 inclusiva son texturas solidas de mapa medivo. //Elementos del 1 al 40
 De la fila 5 a la 14 inclusiva son texturas decorativas del mapa medivo.
-De la fila 15 a la 19 inclusiva son texturas solidas de mapa castle_erlong.
+
+De la fila 15 a la 19 inclusiva son texturas solidas de mapa castle_erlong. //Elementos del 140 y 200
 De la fila 20 a la 31 inclusiva son texturas decorativas del mapa castle_erlong.
 
 Los mapas se hicieron considerando un conejo de como mucho 3 pixeles de alto y como mucho dos de ancho.

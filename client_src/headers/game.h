@@ -73,7 +73,6 @@ public:
     void update();
     void render();
     void create_map();
-
     void close();
 
     Game(const Game&) = delete;

@@ -69,6 +69,7 @@ void Game::run() {
                 default:
                     break;
             }
+            std::cout << "X: " << personaje->x << " Y: " << personaje->y << std::endl;
         }
         objetos.eliminar_borrados(stateQueue);
         objetos.correr_colisiones();
@@ -92,13 +93,13 @@ void Game::addPlayer(uint32_t clientId ,uint32_t character) {
     stateQueue.push(init);*/
     Personaje* personaje;
     if (character == 0) {
-        personaje = new Jazz(20 + clientId, 2, config);
+        personaje = new Jazz(20 + clientId, 10, config);
     }
     else if (character == 1) {
-        personaje = new Lori(20 + clientId, 2, config);
+        personaje = new Lori(20 + clientId, 10, config);
     }
     else {
-        personaje = new Spaz(20 + clientId, 2, config);
+        personaje = new Spaz(20 + clientId, 10, config);
     }
     //Lori* lori = new Lori(20 + clientId, 2, config);
     personaje->set_id(clientId);
