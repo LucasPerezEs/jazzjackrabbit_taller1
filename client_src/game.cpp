@@ -25,7 +25,7 @@ Game::Game(Client& client, SdlWindow& window, std::map<int, Entity*>& entidades,
     SDL_FreeSurface(tilesetSurface);
 
     tilemap_terreno_solido = cargarCSV(
-            "../client_src/assets/background/medivo_map/Medivo_model_Terreno_completo.csv");
+            "../client_src/assets/background/medivo_map/medivo_mapa.csv");
 
     // cppcheck-suppress noOperatorEq
     camara = new Camara(0, 0, 800, 600, tilemap_terreno_solido[0].size(),
