@@ -85,7 +85,6 @@ Container ClientProtocol::receive_setup_container() {
         default:
             throw std::runtime_error("Unknown setup action type");
     }
-
 }
 
 Container ClientProtocol::receive_create_game() {
@@ -105,48 +104,29 @@ Container ClientProtocol::receive_join_game() {
 Container ClientProtocol::receive_get_game_list() {
     bool ok = receiveBool();
     std::vector<std::string> gameList = receiveVectorString();
-    return Container(Setup::ActionType::GET_GAME_LIST, gameList,ok);
+    return Container(Setup::ActionType::GET_GAME_LIST, gameList, ok);
 }
 
 
 Container ClientProtocol::receive_game_container() {
+    bool was_closed;
     int msg_code;
-    int id;
-    float x;
-    float y;
-    float w;
-    float h;
-    int direccion;
-    AnimationType an;
-    EntityType en;
-    bool was_closed = false;
-    int vida;
-    int municion;
-    int score;
 
     socket.recvall(&msg_code, sizeof(msg_code), &was_closed);
 
     if (msg_code == 2) {
+        int id;
         socket.recvall(&id, sizeof(id), &was_closed);
         Container c(msg_code, id, 0, 0, 0, 0, 0, AnimationType::NONE_ANIMATION,
                     EntityType::NONE_ENTITY, 0, 0, 0);
         return c;
     }
 
+    GameData data;
+    socket.recvall(&data, sizeof(data), &was_closed);
 
-    socket.recvall(&id, sizeof(id), &was_closed);
-    socket.recvall(&x, sizeof(x), &was_closed);
-    socket.recvall(&y, sizeof(y), &was_closed);
-    socket.recvall(&w, sizeof(w), &was_closed);
-    socket.recvall(&h, sizeof(h), &was_closed);
-    socket.recvall(&direccion, sizeof(direccion), &was_closed);
-    socket.recvall(&an, sizeof(an), &was_closed);
-    socket.recvall(&en, sizeof(en), &was_closed);
-    socket.recvall(&vida, sizeof(vida), &was_closed);
-    socket.recvall(&municion, sizeof(municion), &was_closed);
-    socket.recvall(&score, sizeof(score), &was_closed);
-
-    Container c(msg_code, id, x, y, w, h, direccion, an, en, vida, municion, score);
+    Container c(msg_code, data.id, data.x, data.y, data.width, data.height, data.direction, data.an,
+                data.en, data.health, data.ammo, data.score);
     return c;
 }
 
