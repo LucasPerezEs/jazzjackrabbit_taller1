@@ -36,6 +36,13 @@ struct GameData {
     int score;
 };
 
+struct SoundData {
+    EntityType entity;
+    SoundType sound;
+    // cppcheck-suppress unusedStructMember
+    int id;
+};
+
 class ClientProtocol: public Protocol {
 private:
     void send_setup(const Setup& setup);
@@ -46,6 +53,7 @@ private:
 
     Container receive_setup_container();
     Container receive_game_container();
+    Container receive_sound_container();
     Container receive_create_game();
     Container receive_join_game();
     Container receive_get_game_list();

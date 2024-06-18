@@ -5,12 +5,12 @@ UIManager::UIManager(std::map<int, Player*>& personajes, SdlWindow& window):
         window(window),
         fuente("../client_src/assets/ARCADECLASSIC.TTF", 32),
         clock(-1) {
-    this->texturas_ui[0] =
-            new SdlTexture("../client_src/assets/ui_vida.png", window, Color{0x2C, 0x66, 0x96});
-    this->texturas_ui[1] =
-            new SdlTexture("../client_src/assets/ui_ammo.png", window, Color{0x2C, 0x66, 0x96});
-    this->texturas_ui[2] =
-            new SdlTexture("../client_src/assets/ui_score.png", window, Color{0x2C, 0x66, 0x96});
+    this->texturas_ui[0] = new SdlTexture("../client_src/assets/textures/ui_vida.png", window,
+                                          Color{0x2C, 0x66, 0x96});
+    this->texturas_ui[1] = new SdlTexture("../client_src/assets/textures/ui_ammo.png", window,
+                                          Color{0x2C, 0x66, 0x96});
+    this->texturas_ui[2] = new SdlTexture("../client_src/assets/textures/ui_score.png", window,
+                                          Color{0x2C, 0x66, 0x96});
 }
 
 bool UIManager::player_alive(int id_cliente) { return personajes.count(id_cliente) > 0; }

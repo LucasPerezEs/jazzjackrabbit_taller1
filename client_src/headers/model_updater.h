@@ -14,6 +14,7 @@
 
 #include "SdlTexture.h"
 #include "SdlWindow.h"
+#include "SoundManager.h"
 #include "UIManager.h"
 #include "entity.h"
 #include "player.h"
@@ -34,6 +35,8 @@ private:
     Client* cliente;
     std::map<int, Player*>& personajes;
     UIManager& ui_manager;
+    SoundManager sound_manager;
+
 
     void init_animations(SdlWindow& window);
 
@@ -52,6 +55,8 @@ public:
 
 
     void update(float dt);
+
+    void set_clientId(int clientId);
 
     void close();
 

@@ -16,156 +16,164 @@ ModelUpdater::ModelUpdater(ClientProtocol& protocol, SdlWindow& window,
 
 void ModelUpdater::init_animations(SdlWindow& window) {
     this->animations[EntityType::JAZZ][AnimationType::WALK] =
-            new Animation(new SdlTexture("../client_src/assets/jazz_walking.png", window,
+            new Animation(new SdlTexture("../client_src/assets/textures/jazz_walking.png", window,
                                          Color{0x2C, 0x66, 0x96}),
                           8, AnimationSpeed::FAST);
 
-    this->animations[EntityType::JAZZ][AnimationType::INTOXICATED_WALK] =
-            new Animation(new SdlTexture("../client_src/assets/jazz_intoxicated_walking.png",
-                                         window, Color{0x2C, 0x66, 0x96}),
-                          12, AnimationSpeed::FAST);
+    this->animations[EntityType::JAZZ][AnimationType::INTOXICATED_WALK] = new Animation(
+            new SdlTexture("../client_src/assets/textures/jazz_intoxicated_walking.png", window,
+                           Color{0x2C, 0x66, 0x96}),
+            12, AnimationSpeed::FAST);
 
-    this->animations[EntityType::JAZZ][AnimationType::IDLE] = new Animation(
-            new SdlTexture("../client_src/assets/jazz_idle.png", window, Color{0x2C, 0x66, 0x96}),
-            13, AnimationSpeed::DEFAULT);
+    this->animations[EntityType::JAZZ][AnimationType::IDLE] =
+            new Animation(new SdlTexture("../client_src/assets/textures/jazz_idle.png", window,
+                                         Color{0x2C, 0x66, 0x96}),
+                          13, AnimationSpeed::DEFAULT);
 
     this->animations[EntityType::JAZZ][AnimationType::SHOOT] =
-            new Animation(new SdlTexture("../client_src/assets/jazz_shooting.png", window,
+            new Animation(new SdlTexture("../client_src/assets/textures/jazz_shooting.png", window,
                                          Color{0x2C, 0x66, 0x96}),
                           6, AnimationSpeed::FAST);
 
     this->animations[EntityType::JAZZ][AnimationType::SHOOT_IDLE] =
-            new Animation(new SdlTexture("../client_src/assets/jazz_shoot_idle.png", window,
-                                         Color{0x2C, 0x66, 0x96}),
+            new Animation(new SdlTexture("../client_src/assets/textures/jazz_shoot_idle.png",
+                                         window, Color{0x2C, 0x66, 0x96}),
                           2, AnimationSpeed::SLOW);
 
     this->animations[EntityType::JAZZ][AnimationType::JUMP] =
-            new Animation(new SdlTexture("../client_src/assets/jazz_jumping.png", window,
+            new Animation(new SdlTexture("../client_src/assets/textures/jazz_jumping.png", window,
                                          Color{0x2C, 0x66, 0x96}),
                           17, AnimationSpeed::FAST);
 
     this->animations[EntityType::JAZZ][AnimationType::FALL] =
-            new Animation(new SdlTexture("../client_src/assets/jazz_falling.png", window,
+            new Animation(new SdlTexture("../client_src/assets/textures/jazz_falling.png", window,
                                          Color{0x2C, 0x66, 0x96}),
                           3, AnimationSpeed::DEFAULT);
 
     this->animations[EntityType::JAZZ][AnimationType::SPECIAL_ACTION] =
-            new Animation(new SdlTexture("../client_src/assets/jazz_uppercut.png", window,
+            new Animation(new SdlTexture("../client_src/assets/textures/jazz_uppercut.png", window,
                                          Color{0x2C, 0x66, 0x96}),
                           12, AnimationSpeed::FAST);
 
-    this->animations[EntityType::JAZZ][AnimationType::HURT] = new Animation(
-            new SdlTexture("../client_src/assets/jazz_hurt.png", window, Color{0x2C, 0x66, 0x96}),
-            9, AnimationSpeed::FAST);
+    this->animations[EntityType::JAZZ][AnimationType::HURT] =
+            new Animation(new SdlTexture("../client_src/assets/textures/jazz_hurt.png", window,
+                                         Color{0x2C, 0x66, 0x96}),
+                          9, AnimationSpeed::FAST);
 
     this->animations[EntityType::GHOST][AnimationType::WALK] =
-            new Animation(new SdlTexture("../client_src/assets/fantasma_walking.png", window,
-                                         Color{0x2C, 0x66, 0x96}),
+            new Animation(new SdlTexture("../client_src/assets/textures/fantasma_walking.png",
+                                         window, Color{0x2C, 0x66, 0x96}),
                           5, AnimationSpeed::FAST);
 
     this->animations[EntityType::BULLET][AnimationType::WALK] =
-            new Animation(new SdlTexture("../client_src/assets/bullet_shoot.png", window,
+            new Animation(new SdlTexture("../client_src/assets/textures/bullet_shoot.png", window,
                                          Color{0x2C, 0x66, 0x96}),
                           6, AnimationSpeed::FAST);
 
     this->animations[EntityType::BULLET][AnimationType::PICKUP] =
-            new Animation(new SdlTexture("../client_src/assets/bullet_pickup.png", window,
+            new Animation(new SdlTexture("../client_src/assets/textures/bullet_pickup.png", window,
                                          Color{0x2C, 0x66, 0x96}),
                           10, AnimationSpeed::FAST);
 
     this->animations[EntityType::CARROT][AnimationType::PICKUP] =
-            new Animation(new SdlTexture("../client_src/assets/carrot_pickup.png", window,
+            new Animation(new SdlTexture("../client_src/assets/textures/carrot_pickup.png", window,
                                          Color{0x2C, 0x66, 0x96}),
                           10, AnimationSpeed::DEFAULT);
 
     this->animations[EntityType::GOLD_COIN][AnimationType::PICKUP] =
-            new Animation(new SdlTexture("../client_src/assets/goldcoin_pickup.png", window,
-                                         Color{0x2C, 0x66, 0x96}),
+            new Animation(new SdlTexture("../client_src/assets/textures/goldcoin_pickup.png",
+                                         window, Color{0x2C, 0x66, 0x96}),
                           20, AnimationSpeed::FAST);
 
-    this->animations[EntityType::BAT][AnimationType::FLY] = new Animation(
-            new SdlTexture("../client_src/assets/bat_flying.png", window, Color{0x2C, 0x66, 0x96}),
-            8, AnimationSpeed::FAST);
+    this->animations[EntityType::BAT][AnimationType::FLY] =
+            new Animation(new SdlTexture("../client_src/assets/textures/bat_flying.png", window,
+                                         Color{0x2C, 0x66, 0x96}),
+                          8, AnimationSpeed::FAST);
 
-    this->animations[EntityType::MONKEY][AnimationType::IDLE] = new Animation(
-            new SdlTexture("../client_src/assets/monkey_idle.png", window, Color{0x2C, 0x66, 0x96}),
-            12, AnimationSpeed::DEFAULT);
+    this->animations[EntityType::MONKEY][AnimationType::IDLE] =
+            new Animation(new SdlTexture("../client_src/assets/textures/monkey_idle.png", window,
+                                         Color{0x2C, 0x66, 0x96}),
+                          12, AnimationSpeed::DEFAULT);
 
     this->animations[EntityType::MONKEY][AnimationType::SHOOT] =
-            new Animation(new SdlTexture("../client_src/assets/monkey_shoot.png", window,
+            new Animation(new SdlTexture("../client_src/assets/textures/monkey_shoot.png", window,
                                          Color{0x2C, 0x66, 0x96}),
                           16, AnimationSpeed::DEFAULT);
 
     this->animations[EntityType::BANANA][AnimationType::WALK] =
-            new Animation(new SdlTexture("../client_src/assets/banana_shoot.png", window,
+            new Animation(new SdlTexture("../client_src/assets/textures/banana_shoot.png", window,
                                          Color{0x2C, 0x66, 0x96}),
                           8, AnimationSpeed::FAST);
 
     this->animations[EntityType::LORI][AnimationType::WALK] =
-            new Animation(new SdlTexture("../client_src/assets/lori_walking.png", window,
+            new Animation(new SdlTexture("../client_src/assets/textures/lori_walking.png", window,
                                          Color{0x2C, 0x66, 0x96}),
                           8, AnimationSpeed::FAST);
 
-    this->animations[EntityType::LORI][AnimationType::IDLE] = new Animation(
-            new SdlTexture("../client_src/assets/lori_idle.png", window, Color{0x2C, 0x66, 0x96}),
-            16, AnimationSpeed::FAST);
+    this->animations[EntityType::LORI][AnimationType::IDLE] =
+            new Animation(new SdlTexture("../client_src/assets/textures/lori_idle.png", window,
+                                         Color{0x2C, 0x66, 0x96}),
+                          16, AnimationSpeed::FAST);
 
     this->animations[EntityType::LORI][AnimationType::SHOOT_IDLE] =
-            new Animation(new SdlTexture("../client_src/assets/lori_shoot_idle.png", window,
-                                         Color{0x2C, 0x66, 0x96}),
+            new Animation(new SdlTexture("../client_src/assets/textures/lori_shoot_idle.png",
+                                         window, Color{0x2C, 0x66, 0x96}),
                           2, AnimationSpeed::SLOW);
 
     this->animations[EntityType::LORI][AnimationType::SHOOT] =
-            new Animation(new SdlTexture("../client_src/assets/lori_shooting.png", window,
+            new Animation(new SdlTexture("../client_src/assets/textures/lori_shooting.png", window,
                                          Color{0x2C, 0x66, 0x96}),
                           4, AnimationSpeed::FAST);
 
     this->animations[EntityType::LORI][AnimationType::JUMP] =
-            new Animation(new SdlTexture("../client_src/assets/lori_jumping.png", window,
+            new Animation(new SdlTexture("../client_src/assets/textures/lori_jumping.png", window,
                                          Color{0x2C, 0x66, 0x96}),
                           18, AnimationSpeed::FAST);
 
     this->animations[EntityType::LORI][AnimationType::SPECIAL_ACTION] =
-            new Animation(new SdlTexture("../client_src/assets/lori_highkick.png", window,
+            new Animation(new SdlTexture("../client_src/assets/textures/lori_highkick.png", window,
                                          Color{0x2C, 0x66, 0x96}),
                           10, AnimationSpeed::FAST);
 
-    this->animations[EntityType::LORI][AnimationType::HURT] = new Animation(
-            new SdlTexture("../client_src/assets/lori_hurt.png", window, Color{0x2C, 0x66, 0x96}),
-            11, AnimationSpeed::FAST);
+    this->animations[EntityType::LORI][AnimationType::HURT] =
+            new Animation(new SdlTexture("../client_src/assets/textures/lori_hurt.png", window,
+                                         Color{0x2C, 0x66, 0x96}),
+                          11, AnimationSpeed::FAST);
 
     this->animations[EntityType::SPAZ][AnimationType::WALK] =
-            new Animation(new SdlTexture("../client_src/assets/spaz_walking.png", window,
+            new Animation(new SdlTexture("../client_src/assets/textures/spaz_walking.png", window,
                                          Color{0x2C, 0x66, 0x96}),
                           8, AnimationSpeed::FAST);
 
-    this->animations[EntityType::SPAZ][AnimationType::IDLE] = new Animation(
-            new SdlTexture("../client_src/assets/spaz_idle.png", window, Color{0x2C, 0x66, 0x96}),
-            20, AnimationSpeed::FAST);
+    this->animations[EntityType::SPAZ][AnimationType::IDLE] =
+            new Animation(new SdlTexture("../client_src/assets/textures/spaz_idle.png", window,
+                                         Color{0x2C, 0x66, 0x96}),
+                          20, AnimationSpeed::FAST);
 
     this->animations[EntityType::SPAZ][AnimationType::SHOOT_IDLE] =
-            new Animation(new SdlTexture("../client_src/assets/spaz_shoot_idle.png", window,
-                                         Color{0x2C, 0x66, 0x96}),
+            new Animation(new SdlTexture("../client_src/assets/textures/spaz_shoot_idle.png",
+                                         window, Color{0x2C, 0x66, 0x96}),
                           2, AnimationSpeed::SLOW);
 
     this->animations[EntityType::SPAZ][AnimationType::SHOOT] =
-            new Animation(new SdlTexture("../client_src/assets/spaz_shooting.png", window,
+            new Animation(new SdlTexture("../client_src/assets/textures/spaz_shooting.png", window,
                                          Color{0x2C, 0x66, 0x96}),
                           8, AnimationSpeed::FAST);
 
     this->animations[EntityType::SPAZ][AnimationType::JUMP] =
-            new Animation(new SdlTexture("../client_src/assets/spaz_jumping.png", window,
+            new Animation(new SdlTexture("../client_src/assets/textures/spaz_jumping.png", window,
                                          Color{0x2C, 0x66, 0x96}),
                           17, AnimationSpeed::FAST);
 
     this->animations[EntityType::SPAZ][AnimationType::SPECIAL_ACTION] =
-            new Animation(new SdlTexture("../client_src/assets/spaz_sidekick.png", window,
+            new Animation(new SdlTexture("../client_src/assets/textures/spaz_sidekick.png", window,
                                          Color{0x2C, 0x66, 0x96}),
                           12, AnimationSpeed::FAST);
 
-    this->animations[EntityType::SPAZ][AnimationType::HURT] = new Animation(
-            new SdlTexture("../client_src/assets/spaz_hurt.png", window, Color{0x2C, 0x66, 0x96}),
-            11, AnimationSpeed::FAST);
+    this->animations[EntityType::SPAZ][AnimationType::HURT] =
+            new Animation(new SdlTexture("../client_src/assets/textures/spaz_hurt.png", window,
+                                         Color{0x2C, 0x66, 0x96}),
+                          11, AnimationSpeed::FAST);
 }
 
 void ModelUpdater::run() {
@@ -225,6 +233,11 @@ void ModelUpdater::update(float dt) {
 
         Container c = this->reciever_queue.pop();
 
+        if (c.sound_container != nullptr) {
+            sound_manager.play_sound(c.sound_container->entity, c.sound_container->sound,
+                                     c.sound_container->id);
+            return;
+        }
 
         switch (c.game_container->msg_code) {
             case 0:  // Actualiza un objeto, si no existe, lo crea.
@@ -257,6 +270,8 @@ void ModelUpdater::update(float dt) {
         std::cerr << "Protocolo cerrado" << e.what() << "\n";
     }
 }
+
+void ModelUpdater::set_clientId(int clientId) { this->sound_manager.set_clientId(clientId); }
 
 bool ModelUpdater::is_running() { return not was_closed; }
 

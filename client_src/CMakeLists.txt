@@ -9,12 +9,14 @@ add_library(client_lib
     player.cpp
     camara.cpp
     UIManager.cpp
+    SoundManager.cpp
     ../common_src/liberror.cpp
     ../common_src/protocol.cpp
     ../common_src/resolver.cpp
     ../common_src/resolvererror.cpp
     ../common_src/socket.cpp
-        sdl_libs/Animation.cpp
+    ../common_src/Container.cpp
+    sdl_libs/Animation.cpp
     sdl_libs/Area.cpp
     sdl_libs/Exception.cpp
     sdl_libs/SdlException.cpp
@@ -24,7 +26,6 @@ add_library(client_lib
     sdl_libs/Music.cpp
     sdl_libs/Sound.cpp
     setupscreen/ConnectMenu.cpp
-    ../common_src/Container.cpp
 )
 
 target_link_libraries(client_lib setupscreen)

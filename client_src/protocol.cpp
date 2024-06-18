@@ -66,6 +66,8 @@ Container ClientProtocol::receive_container() {
             return receive_setup_container();
         case Container::Type::GAME:
             return receive_game_container();
+        case Container::Type::SOUND:
+            return receive_sound_container();
         default:
             throw std::runtime_error("Unknown message type");
     }
@@ -130,5 +132,13 @@ Container ClientProtocol::receive_game_container() {
     return c;
 }
 
+Container ClientProtocol::receive_sound_container() {
+    bool was_closed;
+    SoundData data;
+
+    socket.recvall(&data, sizeof(data), &was_closed);
+    Container c(data.entity, data.sound, data.id);
+    return c;
+}
 
 void ClientProtocol::stop() { Protocol::stop(); }

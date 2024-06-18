@@ -2,12 +2,8 @@
 
 // Pre: -
 // Post: -
-EventHandler::EventHandler(ClientProtocol& protocol):
-        protocol(protocol),
-        was_closed(false),
-        jump_effect("../client_src/assets/music/jump_sound.wav"),
-        shot_effect("../client_src/assets/music/shot_sound.wav"),
-        run_effect("../client_src/assets/music/run_sound.wav") {}
+// cppcheck-suppress uninitMemberVar
+EventHandler::EventHandler(ClientProtocol& protocol): protocol(protocol), was_closed(false) {}
 
 void EventHandler::handle_keydown(const SDL_Event& event, Command& cmd) {
     const SDL_KeyboardEvent& keyEvent = (SDL_KeyboardEvent&)event;
@@ -27,15 +23,12 @@ void EventHandler::handle_keydown(const SDL_Event& event, Command& cmd) {
             break;
         case SDLK_SPACE:
             cmd.action = Command::JUMP;
-            jump_effect.PlaySound();
             break;
         case SDLK_LSHIFT:  // Suponiendo que SHIFT es el comando para correr
             cmd.action = Command::RUNFAST;
-            run_effect.PlaySound();
             break;
         case SDLK_f:
             cmd.action = Command::FIRE;
-            shot_effect.PlaySound();
             break;
         case SDLK_k:
             cmd.action = Command::SPECIAL;
@@ -79,10 +72,6 @@ bool EventHandler::is_running() { return not was_closed; }
 void EventHandler::run() {
     SDL_Event event;
 
-    jump_effect.SetupDevice();
-    shot_effect.SetupDevice();
-    run_effect.SetupDevice();
-
     while (not was_closed) {
         SDL_WaitEvent(&event);
 
@@ -113,6 +102,4 @@ void EventHandler::run() {
 
 void EventHandler::close() { this->was_closed = true; }
 
-void EventHandler::set_camara(Camara *c) {
-    camara = c;
-}
+void EventHandler::set_camara(Camara* c) { camara = c; }

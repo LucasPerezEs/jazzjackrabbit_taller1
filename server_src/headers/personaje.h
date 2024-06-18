@@ -9,6 +9,7 @@
 
 #include "../../common_src/headers/Container.h"
 #include "../../common_src/headers/queue.h"
+#include "../../common_src/headers/sound_commands.h"
 
 #include "banana.h"
 #include "mapa.h"
@@ -44,7 +45,8 @@ protected:
 
 public:
     explicit Arma(std::map<std::string, float>& config);
-    void disparar(ListaObjetos& objetos, int shooter_id, float x, float w, float y, float h, int d);
+    void disparar(ListaObjetos& objetos, int shooter_id, float x, float w, float y, float h, int d,
+                  Queue<Container>& q);
 };
 
 enum PlayerState { INTOXICATED = 0x30, HURTED = 0x31, NORMAL = 0x32 };
@@ -70,6 +72,7 @@ protected:
     std::map<std::string, float>& config;
     Arma arma;
     PlayerState state;
+    Queue<Container>& q;
 
     void check_idle();
     virtual void update_position();
@@ -81,7 +84,7 @@ public:
     int municion;
     bool disparando;
     Personaje(float x, float y, float w, float h, EntityType en_type, AnimationType an_type,
-              std::map<std::string, float>& config);
+              std::map<std::string, float>& config, Queue<Container>& q);
 
     virtual void colision(Objeto& o) override;
     virtual void colision(Enemigo& e) override;

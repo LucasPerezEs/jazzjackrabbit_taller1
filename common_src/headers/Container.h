@@ -7,6 +7,7 @@
 
 #include "commands.h"
 #include "entity_commands.h"
+#include "sound_commands.h"
 
 
 class SetupContainer {
@@ -38,12 +39,20 @@ public:
     int score;
 };
 
+class SoundContainer {
+public:
+    SoundContainer(EntityType entity, SoundType sound, int id);
+    EntityType entity;
+    SoundType sound;
+    int id;
+};
+
 
 class Container {
 public:
-    enum class Type { SETUP = 0x00, GAME = 0x01 };
+    enum class Type { SETUP = 0x00, GAME = 0x01, SOUND = 0x02 };
 
-    // Game container constructor./
+    // Game container constructor
     Container(uint32_t msg_code, int id, float x, float y, float w, float h, int direction,
               AnimationType an_type, EntityType en_type, int health, int ammo, int score);
 
@@ -51,10 +60,14 @@ public:
     Container(Setup::ActionType setupType, const std::string& gameId, uint32_t maxPlayers, bool ok);
     Container(Setup::ActionType setupType, std::vector<std::string>& gameList, bool ok);
 
+    // Sound container constructor
+    Container(EntityType entity, SoundType sound, int id);
+
     Type type() const { return _type; }
 
     SetupContainer* setup_container;
     GameContainer* game_container;
+    SoundContainer* sound_container;
 
 private:
     Type _type;

@@ -9,13 +9,14 @@
 #include "headers/municion.h"
 
 Personaje::Personaje(float x, float y, float w, float h, EntityType en_type, AnimationType an_type,
-                     std::map<std::string, float>& config):
+                     std::map<std::string, float>& config, Queue<Container>& q):
         Ente(x, y, w, h, config["player_life"], en_type, an_type),
         tiempo(std::chrono::system_clock::now()),
         last_hurt(std::chrono::system_clock::now()),
         config(config),
         arma(config),
-        state(PlayerState::NORMAL) {
+        state(PlayerState::NORMAL),
+        q(q) {
     velx = config["player_speed"];
     jump_speed = config["player_jump"];
     danio_ataque_especial = config["player_special_attack_dmg"];
@@ -77,6 +78,8 @@ void Personaje::run() {
     }
 
     velx = config["player_run_speed"];
+    Container c(this->en_type, SoundType::RUN_SOUND, id);
+    q.try_push(c);
     // an_type = AnimationType::RUN;
 }
 
@@ -92,6 +95,9 @@ void Personaje::jump() {
         jumping = true;
         an_type = AnimationType::JUMP;
         tiempo = std::chrono::system_clock::now();
+
+        Container c(this->en_type, SoundType::JUMP_SOUND, id);
+        q.try_push(c);
     }
 }
 
@@ -318,6 +324,8 @@ void Personaje::colision(Enemigo& e) {
         an_type = AnimationType::HURT;
         last_hurt = std::chrono::system_clock::now();
         tiempo = std::chrono::system_clock::now();
+        Container c(en_type, SoundType::HURT1_SOUND, id);
+        q.try_push(c);
     }
 }
 
@@ -331,6 +339,8 @@ void Personaje::colision(Banana& b) {  // Banana y Bala deberian pertenecer a cl
         tiempo = std::chrono::system_clock::now();
         RecibirDanio(b.danio);
         b.borrar = true;
+        Container c(en_type, SoundType::HURT2_SOUND, id);
+        q.try_push(c);
     }
 }
 
@@ -348,6 +358,8 @@ void Personaje::colision(Bala& b) {
         tiempo = std::chrono::system_clock::now();
         RecibirDanio(b.danio);
         b.borrar = true;
+        Container c(en_type, SoundType::HURT1_SOUND, id);
+        q.try_push(c);
     }
 
     check_dead(b.get_shooter_id());
@@ -358,6 +370,8 @@ void Personaje::colision(Municion& m) { m.colision(*this); }
 void Personaje::colision(Personaje& p) {
     if (p.has_special_action_active()) {
         RecibirDanio(p.danio_ataque_especial);
+        Container c(en_type, SoundType::HURT2_SOUND, id);
+        q.try_push(c);
         check_dead(p.id);
     } else if (this->special_action_active) {
         p.RecibirDanio(danio_ataque_especial);
@@ -374,7 +388,7 @@ void Personaje::check_dead(int killer_id) {
 
 void Personaje::disparar(ListaObjetos& objetos) {
     tiempo = std::chrono::system_clock::now();
-    arma.disparar(objetos, id, x, width, y, height, direccion);
+    arma.disparar(objetos, id, x, width, y, height, direccion, q);
     if (!movingleft && !movingright) {
         an_type = AnimationType::SHOOT;
     }
@@ -390,7 +404,7 @@ Arma::Arma(std::map<std::string, float>& config):
 }
 
 void Arma::disparar(ListaObjetos& objetos, int shooter_id, float x, float w, float y, float h,
-                    int d) {
+                    int d, Queue<Container>& q) {
     if (municion > 0 && std::chrono::duration_cast<std::chrono::milliseconds>(
                                 std::chrono::system_clock::now() - tiempo)
                                         .count() > espera) {
@@ -403,6 +417,8 @@ void Arma::disparar(ListaObjetos& objetos, int shooter_id, float x, float w, flo
             aux = x;
         }
 
+        Container c(EntityType::BULLET, SoundType::SHOT_SOUND, shooter_id);
+        q.try_push(c);
         Bala* b = new Bala(aux, y + h / 2, d, shooter_id, config);
         objetos.agregar_objeto(b);  // Se agrega al vector de colisiones
         // disminuir_municion();
