@@ -33,3 +33,11 @@ void GameBroadcasterContainer::join() {
 }
 
 bool GameBroadcasterContainer::is_running() { return game.is_running(); }
+
+int GameBroadcasterContainer::max_players() {
+    return maxPlayers;
+}
+
+int GameBroadcasterContainer::number_of_players() {
+    return clients.size();
+}

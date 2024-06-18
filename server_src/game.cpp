@@ -69,6 +69,7 @@ void Game::run() {
                 default:
                     break;
             }
+            std::cout << "X: " << personaje->x << " Y: " << personaje->y << std::endl;
         }
         objetos.eliminar_borrados(stateQueue);
         objetos.correr_colisiones();

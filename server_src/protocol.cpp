@@ -43,6 +43,10 @@ void ServerProtocol::send_setup_container(const SetupContainer& setupContainer) 
             sendBool(setupContainer.ok);
             sendVectorString(setupContainer.gameList);
             break;
+        case Setup::ActionType::CLIENT_ID:
+            sendBool(setupContainer.ok);
+            send32(setupContainer.clientId);
+            break;
         default:
             throw std::runtime_error("Unknown setup action type to send");
     }

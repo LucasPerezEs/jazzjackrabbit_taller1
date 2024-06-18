@@ -1,6 +1,7 @@
 #include "headers/Container.h"
 
 // SetupContainer implementation
+// cppcheck-suppress uninitMemberVar
 SetupContainer::SetupContainer(Setup::ActionType setupType, const std::string& gameId,
                                uint32_t maxPlayers, bool ok):
         setupType(setupType), gameId(gameId), maxPlayers(maxPlayers), ok(ok) {}
@@ -9,6 +10,10 @@ SetupContainer::SetupContainer(Setup::ActionType setupType, const std::string& g
 SetupContainer::SetupContainer(Setup::ActionType setupType, std::vector<std::string>& gameList,
                                bool ok):
         setupType(setupType), gameList(gameList), ok(ok) {}
+
+// cppcheck-suppress uninitMemberVar
+SetupContainer::SetupContainer(Setup::ActionType setupType, uint32_t id, bool ok):
+        setupType(setupType), clientId(id), ok(ok) {}
 
 
 // GameContainer implementation

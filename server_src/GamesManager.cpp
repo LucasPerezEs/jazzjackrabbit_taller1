@@ -1,4 +1,5 @@
 #include "headers/GamesManager.h"
+#include "iostream"
 
 std::map<std::string, float> load_config_YAML(const std::string& path) {
     std::map<std::string, float> config;
@@ -96,7 +97,9 @@ bool GamesManager::listGames(std::vector<std::string>& gameList) {
     std::lock_guard<std::mutex> lock(gamesMutex);
 
     for (const auto& game: games) {
-        gameList.push_back(game.first);
+        std::stringstream stm;
+        stm << game.first << " " << game.second->number_of_players() << "/" << game.second->max_players() << "\n";
+        gameList.push_back(stm.str());
     }
 
     if (gameList.size() > 0) {

@@ -7,8 +7,10 @@ Client::Client(const std::string& hostname, const std::string& servername, Queue
         client_receiver(client_protocol, queue),
         event_handler(client_protocol),
         updater(client_protocol, window, entidades, queue, personajes, ui_manager),
-        online(false),
-        id(-1) {
+        online(false) {
+    Container c = client_protocol.receive_container();
+    id = c.setup_container->clientId;
+    std::cout << "Se esta seteando el id del cliente que es: " << id << "\n";
     updater.agregar_cliente(this);
 }
 
@@ -49,7 +51,6 @@ void Client::close() {
 
 bool Client::createGame(const std::string& gameId, const uint32_t maxPlayers) {
 
-
     Message msg(Setup::ActionType::CREATE_GAME, gameId, maxPlayers);
     client_protocol.send_message(msg);
 
@@ -66,10 +67,11 @@ bool Client::joinGame(const std::string& gameId, const int character) {
 
     Container container = client_protocol.receive_container();
 
-
-    this->event_handler.start();
-    this->updater.start();
-    this->client_receiver.start();
+    if (container.setup_container->ok) {
+        this->event_handler.start();
+        this->updater.start();
+        this->client_receiver.start();
+    }
 
     return container.setup_container->ok;
 }

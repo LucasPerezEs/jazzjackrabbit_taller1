@@ -4,6 +4,7 @@ ConnectMenu::ConnectMenu(QWidget *parent)
         : QDialog(parent)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
+
     ipEdit = new QLineEdit(this);
     portEdit = new QLineEdit(this);
     QPushButton *connectButton = new QPushButton("Connect", this);

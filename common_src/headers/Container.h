@@ -16,11 +16,13 @@ public:
                    bool ok);
 
     SetupContainer(Setup::ActionType setupType, std::vector<std::string>& gameList, bool ok);
+    SetupContainer(Setup::ActionType setupType, uint32_t id, bool ok);
 
     Setup::ActionType setupType;
     std::string gameId;
     uint32_t maxPlayers;
     std::vector<std::string> gameList;
+    uint32_t clientId;
     bool ok;
 };
 
@@ -59,6 +61,7 @@ public:
     // Setup container constructor
     Container(Setup::ActionType setupType, const std::string& gameId, uint32_t maxPlayers, bool ok);
     Container(Setup::ActionType setupType, std::vector<std::string>& gameList, bool ok);
+    Container(Setup::ActionType setupType, uint32_t id, bool ok);
 
     // Sound container constructor
     Container(EntityType entity, SoundType sound, int id);

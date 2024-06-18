@@ -6,6 +6,7 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QString>
+#include <QMessageBox>
 
 #include "CreateGame.h"
 #include "JoinGame.h"
@@ -18,6 +19,9 @@ class MultiplayerMenu : public QDialog {
 public:
     explicit MultiplayerMenu(QWidget *parent = nullptr);
     void updateGameList(const std::vector<std::string>& gameList);
+    void showGameCreatedMessage();
+    void showGameCreationFailedMessage();
+    void showJoinGameFailedMessage();
     virtual ~MultiplayerMenu();
 
 signals:
@@ -26,11 +30,14 @@ signals:
     void joinGameRequested(const QString &gameID, const int elegido);
     void createMapRequested();
 
+
+
 private:
     QPushButton *createGameButton;
     QPushButton *joinGameButton;
     QPushButton *refreshButton;
     QPushButton *createMapButton;
+    QPushButton *back;
 
     CreateGame *createGameWidget;
     JoinGame  *joinGameWidget;
@@ -41,6 +48,7 @@ private:
     void onJoinGameClicked();
     void onRefreshClicked();
     void onCreateMapClicked();
+    void onReturnClicked();
 };
-
+    
 #endif // JAZZJACKRABBIT_MULTIPLAYERMENU_H

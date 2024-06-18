@@ -68,22 +68,25 @@ std::vector<std::vector<int>> Mapa::cargarCSV(const std::string& ruta) {
 
 Mapa::Mapa() {
 
-    std::vector<std::vector<int>> tilemap = cargarCSV("../client_src/assets/background/medivo_map/Medivo_model_Terreno_solido.csv");
+    std::vector<std::vector<int>> tilemap = cargarCSV("../client_src/assets/background/castle_erlong_map/castle_earlong_mapa.csv");
 
 for (std::vector<int>::size_type i = tilemap.size()-1; i >= 1; --i) {
     for (std::vector<int>::size_type j = 0; j < tilemap[i].size(); j++) {
         if (tilemap[i][j] != -1) {
-            if (tilemap[i][j] == 2) {
+
+            /*if (tilemap[i][j] == 20000) {
                 DiagonalIzquierda* diagonal = new DiagonalIzquierda(j, (tilemap.size()-1-i), 1, 1);
                 diagonalesIzq.push_back(diagonal);
             }
-            else if (tilemap[i][j] == 3) {
+            else if (tilemap[i][j] == 22000) {
                 DiagonalDerecha* diagonal = new DiagonalDerecha(j, (tilemap.size()-1-i), 1, 1);
                 diagonalesDer.push_back(diagonal);
             }
-            else {
+            */
+            if( (tilemap[i][j] < 40 && tilemap[i][j] > 0) || (tilemap[i][j] >= 140 && tilemap[i][j] < 200) ) {
                 Piso* piso = new Piso(j, (tilemap.size()-1-i), 1, 1); // cada numero en la matriz representa un espacio de 1x1
                 objetos.push_back(piso);
+                std::cout << "Entro al creador de piso con fila" << i << " y columna: " << j << std::endl;
             }
 
         }
