@@ -22,7 +22,7 @@ public:
 
 signals:
     void refreshRequested();
-    void createGameRequested(const QString &gameName);
+    void createGameRequested(const QString &gameName, const uint32_t maxPlayers);
     void joinGameRequested(const QString &gameID, const int elegido);
     void createMapRequested();
 
