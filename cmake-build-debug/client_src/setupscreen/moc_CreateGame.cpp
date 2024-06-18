@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_CreateGame_t {
-    QByteArrayData data[4];
-    char stringdata0[41];
+    QByteArrayData data[6];
+    char stringdata0[61];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -35,11 +35,13 @@ static const qt_meta_stringdata_CreateGame_t qt_meta_stringdata_CreateGame = {
 QT_MOC_LITERAL(0, 0, 10), // "CreateGame"
 QT_MOC_LITERAL(1, 11, 19), // "createGameRequested"
 QT_MOC_LITERAL(2, 31, 0), // ""
-QT_MOC_LITERAL(3, 32, 8) // "gameName"
+QT_MOC_LITERAL(3, 32, 8), // "gameName"
+QT_MOC_LITERAL(4, 41, 8), // "uint32_t"
+QT_MOC_LITERAL(5, 50, 10) // "maxPlayers"
 
     },
     "CreateGame\0createGameRequested\0\0"
-    "gameName"
+    "gameName\0uint32_t\0maxPlayers"
 };
 #undef QT_MOC_LITERAL
 
@@ -57,10 +59,10 @@ static const uint qt_meta_data_CreateGame[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   19,    2, 0x06 /* Public */,
+       1,    2,   19,    2, 0x06 /* Public */,
 
  // signals: parameters
-    QMetaType::Void, QMetaType::QString,    3,
+    QMetaType::Void, QMetaType::QString, 0x80000000 | 4,    3,    5,
 
        0        // eod
 };
@@ -71,13 +73,13 @@ void CreateGame::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         auto *_t = static_cast<CreateGame *>(_o);
         (void)_t;
         switch (_id) {
-        case 0: _t->createGameRequested((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 0: _t->createGameRequested((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const uint32_t(*)>(_a[2]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            using _t = void (CreateGame::*)(const QString & );
+            using _t = void (CreateGame::*)(const QString & , const uint32_t & );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&CreateGame::createGameRequested)) {
                 *result = 0;
                 return;
@@ -127,9 +129,9 @@ int CreateGame::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void CreateGame::createGameRequested(const QString & _t1)
+void CreateGame::createGameRequested(const QString & _t1, const uint32_t & _t2)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 QT_WARNING_POP

@@ -89,16 +89,20 @@ Container ClientProtocol::receive_setup_container() {
 }
 
 Container ClientProtocol::receive_create_game() {
+
     bool ok = receiveBool();
     std::string gameId = receiveString();
     uint32_t maxPlayers = receiveUInt32();
+
     return Container(Setup::ActionType::CREATE_GAME, gameId, maxPlayers, ok);
 }
 
 Container ClientProtocol::receive_join_game() {
+    std::cout << "receive_join_game" << std::endl;
     bool ok = receiveBool();
     std::string gameId = receiveString();
     uint32_t maxPlayers = receiveUInt32();
+    std::cout << maxPlayers << std::endl;
     return Container(Setup::ActionType::JOIN_GAME, gameId, maxPlayers, ok);
 }
 

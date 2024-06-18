@@ -63,10 +63,11 @@ bool Client::joinGame(const std::string& gameId, const int character) {
 
     Container container = client_protocol.receive_container();
 
-
-    this->event_handler.start();
-    this->updater.start();
-    this->client_receiver.start();
+    if (container.setup_container->ok){
+        this->event_handler.start();
+        this->updater.start();
+        this->client_receiver.start();
+    }
 
     return container.setup_container->ok;
 }

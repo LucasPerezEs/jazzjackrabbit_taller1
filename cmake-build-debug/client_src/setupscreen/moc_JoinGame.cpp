@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_JoinGame_t {
-    QByteArrayData data[4];
-    char stringdata0[35];
+    QByteArrayData data[5];
+    char stringdata0[43];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -35,10 +35,12 @@ static const qt_meta_stringdata_JoinGame_t qt_meta_stringdata_JoinGame = {
 QT_MOC_LITERAL(0, 0, 8), // "JoinGame"
 QT_MOC_LITERAL(1, 9, 17), // "joinGameRequested"
 QT_MOC_LITERAL(2, 27, 0), // ""
-QT_MOC_LITERAL(3, 28, 6) // "gameID"
+QT_MOC_LITERAL(3, 28, 6), // "gameID"
+QT_MOC_LITERAL(4, 35, 7) // "elegido"
 
     },
-    "JoinGame\0joinGameRequested\0\0gameID"
+    "JoinGame\0joinGameRequested\0\0gameID\0"
+    "elegido"
 };
 #undef QT_MOC_LITERAL
 
@@ -56,10 +58,10 @@ static const uint qt_meta_data_JoinGame[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   19,    2, 0x06 /* Public */,
+       1,    2,   19,    2, 0x06 /* Public */,
 
  // signals: parameters
-    QMetaType::Void, QMetaType::QString,    3,
+    QMetaType::Void, QMetaType::QString, QMetaType::Int,    3,    4,
 
        0        // eod
 };
@@ -70,13 +72,13 @@ void JoinGame::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         auto *_t = static_cast<JoinGame *>(_o);
         (void)_t;
         switch (_id) {
-        case 0: _t->joinGameRequested((*reinterpret_cast< const QString(*)>(_a[1])), (*reinterpret_cast< const int(*)>(_a[2]))); break;
+        case 0: _t->joinGameRequested((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const int(*)>(_a[2]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            using _t = void (JoinGame::*)(const QString &, const int );
+            using _t = void (JoinGame::*)(const QString & , const int );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&JoinGame::joinGameRequested)) {
                 *result = 0;
                 return;

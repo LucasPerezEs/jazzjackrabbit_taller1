@@ -77,6 +77,20 @@ void MultiplayerMenu::updateGameList(const std::vector<std::string>& gameList){
     gameListWidget-> updateGameList(qStringList);
 }
 
+void MultiplayerMenu::showGameCreatedMessage() {
+    QMessageBox::information(this, "Game Created", "The game was created successfully!");
+}
+
+void MultiplayerMenu::showGameCreationFailedMessage() {
+    QMessageBox::critical(this, "Game Creation Failed", "Failed to create the game.");
+}
+
+void MultiplayerMenu::showJoinGameFailedMessage() {
+    QMessageBox::critical(this, "Join Game Failed", "Failed to join the game.");
+}
+
+
+
 MultiplayerMenu::~MultiplayerMenu() {
 
 }
