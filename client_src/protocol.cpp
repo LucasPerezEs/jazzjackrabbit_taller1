@@ -116,7 +116,7 @@ Container ClientProtocol::receive_get_game_list() {
 Container ClientProtocol::receive_client_id() {
     bool ok = receiveBool();
     uint32_t id = receiveUInt32();
-    return Container(Setup::ActionType::GET_GAME_LIST, id, ok);
+    return Container(Setup::ActionType::CLIENT_ID, id, ok);
 }
 
 

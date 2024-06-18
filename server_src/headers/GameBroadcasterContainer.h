@@ -19,6 +19,8 @@ public:
     void stop();
     void join();
     bool is_running();
+    int max_players();
+    int number_of_players();
 
 private:
     std::list<ClientHandler*> clients;
