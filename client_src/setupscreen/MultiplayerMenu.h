@@ -37,6 +37,7 @@ private:
     QPushButton *joinGameButton;
     QPushButton *refreshButton;
     QPushButton *createMapButton;
+    QPushButton *back;
 
     CreateGame *createGameWidget;
     JoinGame  *joinGameWidget;
@@ -47,6 +48,7 @@ private:
     void onJoinGameClicked();
     void onRefreshClicked();
     void onCreateMapClicked();
+    void onReturnClicked();
 };
-
+    
 #endif // JAZZJACKRABBIT_MULTIPLAYERMENU_H

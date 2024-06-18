@@ -16,49 +16,78 @@ void MultiplayerMenu::init() {
     joinGameButton = new QPushButton("Join", this);
     refreshButton = new QPushButton("Refresh", this);
     createMapButton = new QPushButton("CreatMap", this);
+    back = new QPushButton("Return", this);
 
     //createGameButton->setEnabled(false);
     //refreshButton->setEnabled(false);
 
     layout->addWidget(createGameButton);
     layout->addWidget(joinGameButton);
-    layout->addWidget(refreshButton);
     layout->addWidget(createMapButton);
+    layout->addWidget(back);
+    //layout->addWidget(refreshButton);
 
     layout->addWidget(createGameWidget);
-    layout->addWidget(joinGameWidget);
     layout->addWidget(gameListWidget);
+    layout->addWidget(joinGameWidget);
 
+    refreshButton->hide();
+    back->hide();
     createGameWidget->hide();
-    joinGameWidget->hide();
     gameListWidget->hide();
+    joinGameWidget->hide();
+
 
     connect(createGameButton, &QPushButton::clicked, this, &MultiplayerMenu::onCreateGameClicked);
     connect(joinGameButton, &QPushButton::clicked, this, &MultiplayerMenu::onJoinGameClicked);
     connect(refreshButton, &QPushButton::clicked, this, &MultiplayerMenu::onRefreshClicked);
     connect(createMapButton, &QPushButton::clicked, this, &MultiplayerMenu::onCreateMapClicked);
+    connect(back, &QPushButton::clicked, this, &MultiplayerMenu::onReturnClicked);
 
     connect(createGameWidget, &CreateGame::createGameRequested, this, &MultiplayerMenu::createGameRequested);
     connect(joinGameWidget, &JoinGame::joinGameRequested, this, &MultiplayerMenu::joinGameRequested);
     connect(gameListWidget, &GameList::refreshRequested, this, &MultiplayerMenu::refreshRequested);
 }
 
-void MultiplayerMenu::onCreateGameClicked() {
-    createGameWidget->show();
+void MultiplayerMenu::onReturnClicked() {
+    createGameButton->show();
+    joinGameButton->show();
+    createMapButton->show();
+
+    back->hide();
+    refreshButton->hide();
+    createGameWidget->hide();
     joinGameWidget->hide();
     gameListWidget->hide();
+}
+
+
+void MultiplayerMenu::onCreateGameClicked() {
+    back->show();
+    createGameWidget->show();
+
+    createGameButton->hide();
+    joinGameButton->hide();
+    createMapButton->hide();
+    //joinGameWidget->hide();
+    //gameListWidget->hide();
 }
 
 void MultiplayerMenu::onJoinGameClicked() {
-    createGameWidget->hide();
+    back->show();
+    //refreshButton->show();
+    gameListWidget->show();
     joinGameWidget->show();
-    gameListWidget->hide();
+
+    createGameButton->hide();
+    joinGameButton->hide();
+    createMapButton->hide();
 }
 
 void MultiplayerMenu::onRefreshClicked() {
-    createGameWidget->hide();
-    joinGameWidget->hide();
-    gameListWidget->show();
+    //createGameWidget->hide();
+    //joinGameWidget->hide();
+    //gameListWidget->show();
     emit refreshRequested();
 }
 

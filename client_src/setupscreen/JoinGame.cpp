@@ -19,7 +19,7 @@ void JoinGame::init() {
     layout->addWidget(spaz);
     layout->addWidget(gameIdInput);
     layout->addWidget(joinButton);
-    joinButton->hide();
+    joinButton->setEnabled(false);
 
     connect(joinButton, &QPushButton::clicked, this, [this]() {
         QString gameId = gameIdInput->text();
@@ -28,17 +28,17 @@ void JoinGame::init() {
     });
     connect(jazz, &QPushButton::clicked, this, [this]() {
         elegido = 0;
-        joinButton->show();
+        joinButton->setEnabled(true);
 
     });
     connect(lori, &QPushButton::clicked, this, [this]() {
         elegido = 1;
-        joinButton->show();
+        joinButton->setEnabled(true);
 
     });
     connect(spaz, &QPushButton::clicked, this, [this]() {
         elegido = 2;
-        joinButton->show();
+        joinButton->setEnabled(true);
 
     });
 }

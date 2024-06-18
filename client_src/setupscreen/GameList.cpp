@@ -8,11 +8,11 @@ void GameList::init() {
     QVBoxLayout *layout = new QVBoxLayout(this);
 
     gameList = new QListWidget(this);
-    joinButton = new QPushButton("Join", this);
+    //joinButton = new QPushButton("Join", this);
     refreshButton = new QPushButton("Refresh", this);
 
     layout->addWidget(gameList);
-    layout->addWidget(joinButton);
+    //layout->addWidget(joinButton);
     layout->addWidget(refreshButton);
 
     connect(refreshButton, &QPushButton::clicked, this, [this]() {
