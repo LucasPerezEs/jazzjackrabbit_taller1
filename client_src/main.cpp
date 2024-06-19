@@ -2,6 +2,7 @@
 #include <fstream>
 #include <iostream>
 
+#include "SDL2/SDL_mixer.h"
 #include "SDL2/SDL_ttf.h"
 #include "headers/SdlTexture.h"
 #include "headers/UIManager.h"
@@ -29,6 +30,13 @@ int main(int argc, char* argv[]) {
                                             SDL_GetError());
             }
 
+            // TODO: Could configure some options
+            // for our playback.
+            if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) == -1) {
+                throw std::runtime_error(std::string("Error al iniciar Audio subsystem: ") +
+                                         Mix_GetError());
+            }
+
             // Deberia enviarse ip y port (respectivamente);
             Client client("127.0.1", "8080");
             client.go_online();
@@ -54,9 +62,7 @@ int main(int argc, char* argv[]) {
                 QObject::connect(
                         &multiplayerMenu, &MultiplayerMenu::joinGameRequested,
                         [&](const QString& gameID, const int& elegido) {
-                            std::cout << elegido << "\n";
                             if (client.joinGame(gameID.toStdString(), elegido)) {
-                                std::cout << "Entrando a game\n";
                                 try {
                                     multiplayerMenu.exit = 0;
                                     multiplayerMenu.hide();
@@ -64,7 +70,6 @@ int main(int argc, char* argv[]) {
                                     std::cout << "Corriendo game\n";
                                     game.run();
                                     //multiplayerMenu.show();
-                                    std::cout << "Se termino todo amigos\n";
                                 } catch (const std::exception& e) {
                                     std::cerr << "Exception during game run: " << e.what()
                                               << std::endl;
@@ -96,7 +101,10 @@ int main(int argc, char* argv[]) {
                 }
             }
         }
-        std::cout << "Casi afuera\n";
+
+        Mix_CloseAudio();
+        TTF_Quit();
+        SDL_Quit();
         return 0;
 
     } catch (const std::exception& err) {

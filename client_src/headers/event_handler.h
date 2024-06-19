@@ -10,9 +10,9 @@
 
 #include "../../common_src/headers/commands.h"
 #include "../../common_src/headers/thread.h"
-#include "Sound.h"
-#include "protocol.h"
+
 #include "camara.h"
+#include "protocol.h"
 
 //#define FRAME_RATE 1000000.0f / 20.0f
 
@@ -23,11 +23,7 @@ private:
 
     bool was_closed;
 
-    Sound jump_effect;
-    Sound shot_effect;
-    Sound run_effect;
-
-    Camara *camara;
+    Camara* camara;
 
     void handle_keydown(const SDL_Event& event, Command& cmd);
 
@@ -42,7 +38,7 @@ public:
 
     void close();
 
-    void set_camara(Camara *c);
+    void set_camara(Camara* c);
 
     EventHandler(const EventHandler&) = delete;
     EventHandler& operator=(const EventHandler&) = delete;

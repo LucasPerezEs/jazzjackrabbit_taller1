@@ -16,6 +16,11 @@ void ServerProtocol::send_container(const Container& container) {
         sendUChar(static_cast<unsigned char>(container.type()));
         send_game_container(*container.game_container);
     }
+
+    if (container.type() == Container::Type::SOUND) {
+        sendUChar(static_cast<unsigned char>(container.type()));
+        send_sound_container(*container.sound_container);
+    }
 }
 
 void ServerProtocol::send_setup_container(const SetupContainer& setupContainer) {
@@ -76,7 +81,7 @@ void ServerProtocol::send_game_container(const GameContainer& gameContainer) {
         socket.sendall(&msg_code, sizeof(msg_code), &was_closed);
         socket.sendall(&id, sizeof(id), &was_closed);
         socket.sendall(&x, sizeof(x), &was_closed);
-        socket.sendall(&y, sizeof(y), &was_closed);               // esto hay que cambiarlo
+        socket.sendall(&y, sizeof(y), &was_closed);  // esto hay que cambiarlo
         socket.sendall(&w, sizeof(w), &was_closed);
         socket.sendall(&h, sizeof(h), &was_closed);
         socket.sendall(&direccion, sizeof(direccion), &was_closed);
@@ -86,6 +91,16 @@ void ServerProtocol::send_game_container(const GameContainer& gameContainer) {
         socket.sendall(&municion, sizeof(municion), &was_closed);
         socket.sendall(&score, sizeof(score), &was_closed);
     }
+}
+
+void ServerProtocol::send_sound_container(const SoundContainer& soundContainer) {
+    bool was_closed;
+    EntityType entity = soundContainer.entity;
+    SoundType sound = soundContainer.sound;
+    int id = soundContainer.id;
+    socket.sendall(&entity, sizeof(entity), &was_closed);
+    socket.sendall(&sound, sizeof(sound), &was_closed);
+    socket.sendall(&id, sizeof(id), &was_closed);
 }
 
 

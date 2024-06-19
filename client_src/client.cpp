@@ -22,7 +22,10 @@ bool Client::is_online() {
     return online;
 }
 
-void Client::set_id(int i) { id = i; }
+/*void Client::set_id(int i) {
+    id = i;
+    updater.set_clientId(i);
+}*/
 
 int Client::get_id() { return id; }
 
@@ -40,7 +43,6 @@ void Client::close() {
 }
 
 bool Client::createGame(const std::string& gameId, const uint32_t maxPlayers) {
-
 
     Message msg(Setup::ActionType::CREATE_GAME, gameId, maxPlayers);
     client_protocol.send_message(msg);

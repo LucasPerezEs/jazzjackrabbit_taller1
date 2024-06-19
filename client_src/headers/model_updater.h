@@ -14,6 +14,7 @@
 
 #include "SdlTexture.h"
 #include "SdlWindow.h"
+#include "SoundManager.h"
 #include "UIManager.h"
 #include "entity.h"
 #include "player.h"
@@ -33,6 +34,7 @@ private:
     Queue<Container>& reciever_queue;
     std::map<int, Player*>& personajes;
     UIManager& ui_manager;
+    SoundManager sound_manager;
     int id;
 
     void init_animations(SdlWindow& window);
@@ -52,6 +54,8 @@ public:
 
 
     void update(float dt);
+
+    void set_clientId(int clientId);
 
     void close();
 

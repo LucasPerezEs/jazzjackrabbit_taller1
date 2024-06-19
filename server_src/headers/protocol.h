@@ -5,13 +5,12 @@
 #include <utility>
 #include <vector>
 
-#include "../../common_src/headers/Message.h"
 #include "../../common_src/headers/Container.h"
+#include "../../common_src/headers/Message.h"
 #include "../../common_src/headers/commands.h"
 #include "../../common_src/headers/entity_commands.h"
 #include "../../common_src/headers/protocol.h"
 #include "../../common_src/headers/socket.h"
-
 
 
 class ServerProtocol: private Protocol {
@@ -25,6 +24,7 @@ private:
 
     void send_setup_container(const SetupContainer& setupContainer);
     void send_game_container(const GameContainer& gameContainer);
+    void send_sound_container(const SoundContainer& soundContainer);
 
 
 public:
@@ -34,12 +34,10 @@ public:
     void send_container(const Container& container);
 
 
-
     std::string receive_game_id();
     uint32_t receive_max_players();
 
     void send_games_ids(const std::vector<std::string>& gameIDs);
-
 
 
     ServerProtocol(const ServerProtocol&) = delete;

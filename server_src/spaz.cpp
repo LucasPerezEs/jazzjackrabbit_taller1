@@ -1,7 +1,7 @@
 #include "headers/spaz.h"
 
-Spaz::Spaz(float x, float y, std::map<std::string, float>& config):
-        Personaje(x, y, 2, 4, EntityType::SPAZ, AnimationType::SHOOT_IDLE, config),
+Spaz::Spaz(float x, float y, std::map<std::string, float>& config, Queue<Container>& q):
+        Personaje(x, y, 2, 4, EntityType::SPAZ, AnimationType::SHOOT_IDLE, config, q),
         wait_sidekick(800) {}
 
 void Spaz::special_action() {
@@ -54,9 +54,12 @@ void Spaz::stop_special_action() {
 }*/
 
 void Spaz::update_position() {
-    //std::cout << "Tiempo que pasó: " << std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - tiempo).count() << "\n";
-    //std::cout << (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - tiempo).count() > wait_sidekick) << "\n";
-    //std::cout << "Accion especial activa: " << special_action_active << "\n";
+    // std::cout << "Tiempo que pasó: " <<
+    // std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() -
+    // tiempo).count() << "\n"; std::cout <<
+    // (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() -
+    // tiempo).count() > wait_sidekick) << "\n"; std::cout << "Accion especial activa: " <<
+    // special_action_active << "\n";
     if (special_action_active && std::chrono::duration_cast<std::chrono::milliseconds>(
                                          std::chrono::system_clock::now() - tiempo)
                                                  .count() > wait_sidekick) {
@@ -67,7 +70,7 @@ void Spaz::update_position() {
         (movingleft || movingright)) {  // mientras se este apretando una tecla de mover el jugador
         if (movingleft) {
             x += velx * -1 * direccion_movimientox;
-            y += velx * -1 * direccion_movimientoy; // se actualiza la posicin en x
+            y += velx * -1 * direccion_movimientoy;  // se actualiza la posicin en x
         }
         if (movingright) {
             x += velx * direccion_movimientox;  // se actualiza la posicin en x
@@ -76,7 +79,7 @@ void Spaz::update_position() {
     }
     y += vely;
     vely -= config["gravity"];  // esto es la aceleracion de la gravedad, se tiene que poner un
-                                    // limite de vely
+                                // limite de vely
 }
 
 void Spaz::check_special_action(bool col_x, bool col_y) {

@@ -66,6 +66,8 @@ Container ClientProtocol::receive_container() {
             return receive_setup_container();
         case Container::Type::GAME:
             return receive_game_container();
+        case Container::Type::SOUND:
+            return receive_sound_container();
         default:
             throw std::runtime_error("Unknown message type");
     }
@@ -90,7 +92,6 @@ Container ClientProtocol::receive_setup_container() {
 }
 
 Container ClientProtocol::receive_create_game() {
-
     bool ok = receiveBool();
     std::string gameId = receiveString();
     uint32_t maxPlayers = receiveUInt32();
@@ -99,7 +100,6 @@ Container ClientProtocol::receive_create_game() {
 }
 
 Container ClientProtocol::receive_join_game() {
-    std::cout << "receive_join_game" << std::endl;
     bool ok = receiveBool();
     std::string gameId = receiveString();
     uint32_t maxPlayers = receiveUInt32();
@@ -143,5 +143,13 @@ Container ClientProtocol::receive_game_container() {
     return c;
 }
 
+Container ClientProtocol::receive_sound_container() {
+    bool was_closed;
+    SoundData data;
+
+    socket.recvall(&data, sizeof(data), &was_closed);
+    Container c(data.entity, data.sound, data.id);
+    return c;
+}
 
 void ClientProtocol::stop() { Protocol::stop(); }
