@@ -3,43 +3,27 @@
 
 #include <string>
 
-// Third Party
-#include <SDL2/SDL.h>
+#include <SDL2/SDL_mixer.h>
 
-// Interface for Audio
-class ISound {
+class Sound {
 public:
-    // Destructor is virtual for our interface
-    virtual ~ISound() {}
-    // Member functions that should be implemented
-    virtual void PlaySound() = 0;
-    virtual void StopSound() = 0;
-};
+    // Constructor: Loads a sound file
+    explicit Sound(const std::string& filepath);
 
-class Sound: public ISound {
-
-public:
-    // Constructor
-    explicit Sound(std::string filepath);
-    // Destructor
+    // Destructor: Frees the sound resource
     ~Sound();
-    // PlaySound
-    virtual void PlaySound() override;
-    // Stop the sound
-    virtual void StopSound() override;
-    // Specific to SDL_Audio API
-    void SetupDevice();
 
-private:  // (private member variables)
-    // Device the Sound will play on
-    // NOTE: This could be moved to some configuration,
-    //       i.e., a higher level 'AudioManager' class
-    SDL_AudioDeviceID m_device;
+    // Plays the sound with specified number of loops (-1 for infinite loops)
+    void PlaySound(int loops = 0);
 
-    // Properties of the Wave File that is loaded
-    SDL_AudioSpec m_audioSpec;
-    Uint8* m_waveStart;
-    Uint32 m_waveLength;
+    // Stops the sound playback
+    void StopSound();
+
+    // Sets the volume of the sound (0 to MIX_MAX_VOLUME)
+    void SetVolume(int volume);
+
+private:
+    Mix_Chunk* m_chunk;  // Pointer to the loaded sound chunk
 };
 
-#endif
+#endif  // SOUND_H

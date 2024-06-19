@@ -2,6 +2,7 @@
 #include <fstream>
 #include <iostream>
 
+#include "SDL2/SDL_mixer.h"
 #include "SDL2/SDL_ttf.h"
 #include "headers/SdlTexture.h"
 #include "headers/UIManager.h"
@@ -27,6 +28,13 @@ int main(int argc, char* argv[]) {
             if (SDL_Init(SDL_INIT_AUDIO) < 0) {
                 throw std::runtime_error(std::string("Error al iniciar Audio subsystem: ") +
                                          SDL_GetError());
+            }
+
+            // TODO: Could configure some options
+            // for our playback.
+            if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) == -1) {
+                throw std::runtime_error(std::string("Error al iniciar Audio subsystem: ") +
+                                         Mix_GetError());
             }
 
             Queue<Container> receiverQueue;
@@ -96,6 +104,7 @@ int main(int argc, char* argv[]) {
             }
         }
 
+        Mix_CloseAudio();
         TTF_Quit();
         SDL_Quit();
         return 0;

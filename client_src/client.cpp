@@ -11,6 +11,7 @@ Client::Client(const std::string& hostname, const std::string& servername, Queue
     Container c = client_protocol.receive_container();
     id = c.setup_container->clientId;
     std::cout << "Se esta seteando el id del cliente que es: " << id << "\n";
+    updater.set_clientId(id);
     updater.agregar_cliente(this);
 }
 

@@ -1,5 +1,7 @@
 #include "headers/SoundManager.h"
 
+#include <iostream>
+
 SoundManager::SoundManager(): clientId(-1) { this->init_sounds(); }
 
 void SoundManager::init_sounds() {
@@ -23,15 +25,6 @@ void SoundManager::init_sounds() {
     this->sounds[GOLD_COIN][PICKUP_SOUND] =
             new Sound("../client_src/assets/music/goldcoin_sound.wav");
     this->sounds[BULLET][PICKUP_SOUND] = new Sound("../client_src/assets/music/ammo_sound.wav");
-
-    for (const auto& entityPair: sounds) {
-        const std::map<SoundType, Sound*>& soundMap = entityPair.second;
-
-        for (const auto& soundPair: soundMap) {
-            Sound* sound = soundPair.second;
-            sound->SetupDevice();
-        }
-    }
 }
 
 void SoundManager::set_clientId(int clientId) { this->clientId = clientId; }
