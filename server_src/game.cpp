@@ -13,7 +13,6 @@ Game::Game(Queue<Message>& actionQueue, Queue<Container>& stateQueue, uint32_t m
         gameStarted(false) {}
 
 void Game::run() {
-    // Queue<Contenedor> q; // esta queue tiene que ir al sender
     Mapa m = Mapa();
     Ghost ghost = Ghost(50, 2, config);
     Bat bat = Bat(75, 4, config);
@@ -69,7 +68,6 @@ void Game::run() {
                 default:
                     break;
             }
-            std::cout << "X: " << personaje->x << " Y: " << personaje->y << std::endl;
         }
         objetos.eliminar_borrados(stateQueue);
         objetos.correr_colisiones();
@@ -93,13 +91,13 @@ void Game::addPlayer(uint32_t clientId, uint32_t character) {
     stateQueue.push(init);
     Personaje* personaje;
     if (character == 0) {
-        personaje = new Jazz(20 + clientId, 2, config, stateQueue);
+        personaje = new Jazz(20 + clientId, 10, config, stateQueue);
     } else if (character == 1) {
-        personaje = new Lori(20 + clientId, 2, config, stateQueue);
+        personaje = new Lori(20 + clientId, 10, config, stateQueue);
     } else {
-        personaje = new Spaz(20 + clientId, 2, config, stateQueue);
+        personaje = new Spaz(20 + clientId, 10, config, stateQueue);
     }
-    // Lori* lori = new Lori(20 + clientId, 2, config);
+
     personaje->set_id(clientId);
     clientCharacters[clientId] = personaje;
     objetos.agregar_objeto(personaje);

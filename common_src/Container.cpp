@@ -54,9 +54,15 @@ Container::Container(Setup::ActionType setupType, const std::string& gameId, uin
         _type(Type::SETUP) {}
 
 Container::Container(Setup::ActionType setupType, std::vector<std::string>& gameList, bool ok):
+        setup_container(new SetupContainer(setupType, gameList, ok)),
+        game_container(nullptr),
+        sound_container(nullptr),
+        _type(Type::SETUP) {}
+
+Container::Container(Setup::ActionType setupType, uint32_t id, bool ok):
         // cppcheck-suppress noCopyConstructor
         // cppcheck-suppress noOperatorEq
-        setup_container(new SetupContainer(setupType, gameList, ok)),
+        setup_container(new SetupContainer(setupType, id, ok)),
         game_container(nullptr),
         sound_container(nullptr),
         _type(Type::SETUP) {}
