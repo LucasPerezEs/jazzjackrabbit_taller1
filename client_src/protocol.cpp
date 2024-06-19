@@ -103,7 +103,8 @@ Container ClientProtocol::receive_join_game() {
     bool ok = receiveBool();
     std::string gameId = receiveString();
     uint32_t maxPlayers = receiveUInt32();
-    std::cout << maxPlayers << std::endl;
+    //std::cout << maxPlayers << std::endl;
+    std::cout << "Devolviendo container del protocolo\n" << std::endl;
     return Container(Setup::ActionType::JOIN_GAME, gameId, maxPlayers, ok);
 }
 
@@ -126,13 +127,13 @@ Container ClientProtocol::receive_game_container() {
 
     socket.recvall(&msg_code, sizeof(msg_code), &was_closed);
 
-    /*if (msg_code == 2) {
+    if (msg_code == 2) {
         int id;
         socket.recvall(&id, sizeof(id), &was_closed);
         Container c(msg_code, id, 0, 0, 0, 0, 0, AnimationType::NONE_ANIMATION,
                     EntityType::NONE_ENTITY, 0, 0, 0);
         return c;
-    }*/
+    }
 
     GameData data;
     socket.recvall(&data, sizeof(data), &was_closed);

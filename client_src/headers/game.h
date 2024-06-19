@@ -45,15 +45,20 @@ struct Tile {
 
 class Game {
 private:
+    Queue<Container> receiverQueue;
     Client& client;
-    SdlWindow& window;
-    std::map<int, Entity*>& entidades;
-    std::map<int, Player*>& personajes;
+    SdlWindow window;
+    std::map<int, Entity*> entidades;
+    std::map<int, Player*> personajes;
     std::map<std::tuple<int, int>, Tile> mapTiles;
 
     SDL_Texture* tilesetTexture;
     std::vector<std::vector<int>> tilemap_terreno_solido;
-    UIManager& ui_manager;
+    UIManager ui_manager;
+
+    ClientReceiver client_receiver;
+    EventHandler event_handler;  // eventos teclado (sender)
+    ModelUpdater updater;        // actualizar modelos (receiver)
 
     std::vector<std::vector<int>> cargarCSV(const std::string& ruta);
     void SaveMapToCSV(const std::string& filename);
@@ -64,8 +69,7 @@ private:
 
 
 public:
-    Game(Client& client, SdlWindow& window, std::map<int, Entity*>& entidades,
-         std::map<int, Player*>& personajes, UIManager& ui_manager);
+    Game(Client& client);
 
     void run();
 
@@ -74,15 +78,13 @@ public:
     void render();
     void create_map();
 
-    void close();
-
     Game(const Game&) = delete;
     Game& operator=(const Game&) = delete;
 
     Game(Game&&) = default;
     Game& operator=(Game&&) = default;
 
-    virtual ~Game() = default;
+    ~Game();
 };
 
 #endif

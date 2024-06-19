@@ -77,13 +77,14 @@ bool EventHandler::is_running() { return not was_closed; }
 // Pre: -
 // Post: Se momemento los controles son: W, S, A, D, barra espaciadora y shift.
 void EventHandler::run() {
+    std::cout << "Entrando al loop del event handler\n";
     SDL_Event event;
 
     jump_effect.SetupDevice();
     shot_effect.SetupDevice();
     run_effect.SetupDevice();
-
     while (not was_closed) {
+        std::cout << "Estoy en el loop del event handler\n";
         SDL_WaitEvent(&event);
 
         switch (event.type) {
@@ -109,6 +110,7 @@ void EventHandler::run() {
                 break;
         }
     }
+    std::cout << "Saliendo del event handler\n";
 }
 
 void EventHandler::close() { this->was_closed = true; }

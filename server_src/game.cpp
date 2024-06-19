@@ -1,19 +1,19 @@
 #include "headers/game.h"
-
+#include "headers/broadcaster.h"
 #include "headers/partida.h"
 
 Game::Game(Queue<Message>& actionQueue, Queue<Container>& stateQueue, uint32_t maxPlayers,
-           std::map<std::string, float>& config):
+           std::map<std::string, float>& config, Broadcaster& broadcaster):
         maxPlayers(maxPlayers),
         actionQueue(actionQueue),
         stateQueue(stateQueue),
         config(config),
+        broadcaster(broadcaster),
         clientCharactersMutex(),
         clock(config),
         gameStarted(false) {}
 
 void Game::run() {
-    // Queue<Contenedor> q; // esta queue tiene que ir al sender
     Mapa m = Mapa();
     Ghost ghost = Ghost(50, 2, config);
     Bat bat = Bat(75, 4, config);
@@ -65,6 +65,7 @@ void Game::run() {
                     break;
                 case Command::ActionType::QUIT:
                     personaje->borrar = true;
+                    broadcaster.erase_client(clientId);
                     break;
                 default:
                     break;

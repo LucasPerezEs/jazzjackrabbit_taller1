@@ -11,6 +11,7 @@
 #include "setupscreen/SetupScreen.h"
 
 int main(int argc, char* argv[]) {
+
     try {
         QApplication app(argc, argv);
 
@@ -18,7 +19,6 @@ int main(int argc, char* argv[]) {
         setup.ShowConnectMenu();
 
         if (setup.AcceptedConnection()) {
-            SdlWindow window(800, 600);
 
             if (TTF_Init() < 0) {
                 throw std::runtime_error(std::string("Error al iniciar TTF: ") + TTF_GetError());
@@ -26,19 +26,12 @@ int main(int argc, char* argv[]) {
 
             if (SDL_Init(SDL_INIT_AUDIO) < 0) {
                 throw std::runtime_error(std::string("Error al iniciar Audio subsystem: ") +
-                                         SDL_GetError());
+                                            SDL_GetError());
             }
 
-            Queue<Container> receiverQueue;
-
-            std::map<int, Entity*> entidades;
-            std::map<int, Player*> personajes;
-            UIManager ui_manager(personajes, window);
-
             // Deberia enviarse ip y port (respectivamente);
-            Client client("127.0.1", "8080", receiverQueue, window, entidades, personajes,
-                          ui_manager);
-
+            Client client("127.0.1", "8080");
+            client.go_online();
             if (client.is_online()) {
                 MultiplayerMenu multiplayerMenu;
 
@@ -63,10 +56,15 @@ int main(int argc, char* argv[]) {
                         [&](const QString& gameID, const int& elegido) {
                             std::cout << elegido << "\n";
                             if (client.joinGame(gameID.toStdString(), elegido)) {
+                                std::cout << "Entrando a game\n";
                                 try {
-                                    multiplayerMenu.close();
-                                    Game game(client, window, entidades, personajes, ui_manager);
+                                    multiplayerMenu.exit = 0;
+                                    multiplayerMenu.hide();
+                                    Game game(client);
+                                    std::cout << "Corriendo game\n";
                                     game.run();
+                                    //multiplayerMenu.show();
+                                    std::cout << "Se termino todo amigos\n";
                                 } catch (const std::exception& e) {
                                     std::cerr << "Exception during game run: " << e.what()
                                               << std::endl;
@@ -82,7 +80,7 @@ int main(int argc, char* argv[]) {
                     multiplayerMenu.close();
 
                     try {
-                        Game game(client, window, entidades, personajes, ui_manager);
+                        Game game(client);
                         game.create_map();
                     } catch (const std::exception& e) {
                         std::cerr << "Exception during map creation: " << e.what() << std::endl;
@@ -91,13 +89,14 @@ int main(int argc, char* argv[]) {
                     }
                 });
 
-                multiplayerMenu.show();
                 multiplayerMenu.exec();
+                while(multiplayerMenu.exit == 0) {
+                    multiplayerMenu.exit = 1;
+                    multiplayerMenu.exec();
+                }
             }
         }
-
-        TTF_Quit();
-        SDL_Quit();
+        std::cout << "Casi afuera\n";
         return 0;
 
     } catch (const std::exception& err) {

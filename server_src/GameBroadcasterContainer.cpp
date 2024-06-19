@@ -1,21 +1,21 @@
 #include "headers/GameBroadcasterContainer.h"
 
-GameBroadcasterContainer::GameBroadcasterContainer(std::map<std::string, float>& config, uint32_t maxPlayers):
+GameBroadcasterContainer::GameBroadcasterContainer(std::map<std::string, float>& config, uint32_t maxPlayers, Queue<Message>& setupQueue):
         maxPlayers(maxPlayers),
         actionQueue(),
         stateQueue(),
-        game(actionQueue, stateQueue,maxPlayers, config),
-        broadcaster(clients, stateQueue) {}
+        broadcaster(clients, stateQueue, setupQueue),
+        game(actionQueue, stateQueue,maxPlayers, config, broadcaster) {}
 
 void GameBroadcasterContainer::addPlayer(ClientHandler* client, uint32_t character) {
     if (canAddPlayer()) {
         client->setReceiverQueue(&actionQueue);
-        clients.push_back(client);
+        clients.add_client(client);
         game.addPlayer(client->getId(), character);
     }
 }
 
-bool GameBroadcasterContainer::canAddPlayer() const { return clients.size() < maxPlayers; }
+bool GameBroadcasterContainer::canAddPlayer() { return (uint32_t)clients.size() < maxPlayers; }
 
 void GameBroadcasterContainer::start() {
     game.start();

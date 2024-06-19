@@ -31,9 +31,9 @@ private:
     std::map<int, Entity*>& entidades;
     std::map<int, std::map<int, Animation*>> animations;
     Queue<Container>& reciever_queue;
-    Client* cliente;
     std::map<int, Player*>& personajes;
     UIManager& ui_manager;
+    int id;
 
     void init_animations(SdlWindow& window);
 
@@ -46,7 +46,7 @@ private:
 public:
     ModelUpdater(ClientProtocol& protocol, SdlWindow& window, std::map<int, Entity*>& entidades,
                  Queue<Container>& reciever_queue, std::map<int, Player*>& personajes,
-                 UIManager& ui_manager);
+                 UIManager& ui_manager, int id);
 
     virtual void run() override;
 
@@ -56,8 +56,6 @@ public:
     void close();
 
     bool is_running();
-
-    void agregar_cliente(Client* c);
 
     ModelUpdater(const ModelUpdater&) = delete;
     ModelUpdater& operator=(const ModelUpdater&) = delete;

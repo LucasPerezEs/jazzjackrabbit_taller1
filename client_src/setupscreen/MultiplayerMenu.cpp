@@ -6,6 +6,7 @@ MultiplayerMenu::MultiplayerMenu(QWidget *parent) :
         joinGameWidget(new JoinGame()),
         gameListWidget(new GameList())
 {
+    exit = 1;
     init();
 }
 

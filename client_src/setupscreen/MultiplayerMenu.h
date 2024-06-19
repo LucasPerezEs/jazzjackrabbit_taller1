@@ -1,6 +1,7 @@
 #ifndef JAZZJACKRABBIT_MULTIPLAYERMENU_H
 #define JAZZJACKRABBIT_MULTIPLAYERMENU_H
 
+#include <QMainWindow>
 #include <QDialog>
 #include <QLabel>
 #include <QPushButton>
@@ -17,6 +18,7 @@ class MultiplayerMenu : public QDialog {
     Q_OBJECT
 
 public:
+    int exit;
     explicit MultiplayerMenu(QWidget *parent = nullptr);
     void updateGameList(const std::vector<std::string>& gameList);
     void showGameCreatedMessage();

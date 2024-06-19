@@ -19,7 +19,7 @@ void ServerProtocol::send_container(const Container& container) {
 }
 
 void ServerProtocol::send_setup_container(const SetupContainer& setupContainer) {
-
+    std::cout << "\n";
     Setup::ActionType actionType = static_cast<Setup::ActionType>(setupContainer.setupType);
     sendUChar(actionType);
 
@@ -56,6 +56,7 @@ void ServerProtocol::send_game_container(const GameContainer& gameContainer) {
         int id = gameContainer.id;
         socket.sendall(&msg_code, sizeof(msg_code), &was_closed);
         socket.sendall(&id, sizeof(id), &was_closed);
+        std::cout << "enviando salida\n";
 
     } else {
         bool was_closed;
@@ -106,6 +107,7 @@ Message ServerProtocol::receive_message() {
 }
 
 Message ServerProtocol::receive_setup_message() {
+    std::cout << "Recibiendo mensaje de setup\n";
     unsigned char setupType = receiveUChar();
     Setup::ActionType actionType = static_cast<Setup::ActionType>(setupType);
     std::cout << actionType << std::endl;
@@ -129,8 +131,10 @@ Message ServerProtocol::receive_command_message() {
 }
 
 Message ServerProtocol::receive_create_game() {
+    std::cout << "Recibiendo mensaje de create game\n";
     std::string gameId = receiveString();
     uint32_t maxPlayers = receiveUInt32();
+    std::cout << "Return mensaje\n";
     return Message(Setup::ActionType::CREATE_GAME, gameId, maxPlayers);
 }
 

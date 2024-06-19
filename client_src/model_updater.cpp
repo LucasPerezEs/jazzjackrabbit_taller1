@@ -4,13 +4,14 @@
 // cppcheck-suppress uninitMemberVar
 ModelUpdater::ModelUpdater(ClientProtocol& protocol, SdlWindow& window,
                            std::map<int, Entity*>& entidades, Queue<Container>& reciever_queue,
-                           std::map<int, Player*>& personajes, UIManager& ui_manager):
+                           std::map<int, Player*>& personajes, UIManager& ui_manager, int id):
         protocol(protocol),
         was_closed(false),
         entidades(entidades),
         reciever_queue(reciever_queue),
         personajes(personajes),
-        ui_manager(ui_manager) {
+        ui_manager(ui_manager),
+        id(id) {
     this->init_animations(window);
 }
 
@@ -169,9 +170,12 @@ void ModelUpdater::init_animations(SdlWindow& window) {
 }
 
 void ModelUpdater::run() {
+        std::cout << "Entrando al loop del updater\n";
     while (this->is_running()) {
+        std::cout << "Estoy en el loop del updater\n";
         this->update(FRAME_RATE);
     }
+    std::cout << "Saliendo del updater\n";
 }
 
 void ModelUpdater::update_entity(Container& c) {
@@ -222,9 +226,9 @@ void ModelUpdater::despawn_entity(Container& c) {
 void ModelUpdater::update(float dt) {
 
     try {
-
+        //std::cout << "Popeando container de la queue en updater\n";
         Container c = this->reciever_queue.pop();
-
+        //std::cout << "Container popeado en el updater\n";
 
         switch (c.game_container->msg_code) {
             case 0:  // Actualiza un objeto, si no existe, lo crea.
@@ -236,8 +240,8 @@ void ModelUpdater::update(float dt) {
                 break;
 
             case 2:  // Setea el ID al cliente, si todavia no fue seteado
-                if (cliente->get_id() == -1) {
-                    cliente->set_id(c.game_container->id);
+                if (c.game_container->id == -1 || c.game_container->id == id) {
+                        close();
                 }
                 break;
 
@@ -259,8 +263,6 @@ void ModelUpdater::update(float dt) {
 }
 
 bool ModelUpdater::is_running() { return not was_closed; }
-
-void ModelUpdater::agregar_cliente(Client* c) { this->cliente = c; }
 
 void ModelUpdater::close() {
     this->reciever_queue.close();

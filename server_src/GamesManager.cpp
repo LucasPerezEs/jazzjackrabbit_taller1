@@ -70,8 +70,8 @@ GamesManager::GamesManager(): setupQueue(), stateQueue() {}
 bool GamesManager::createGame(std::string gameId, uint32_t maxPlayers,
                               std::map<std::string, float>& config) {
     std::lock_guard<std::mutex> lock(gamesMutex);
-
-    GameBroadcasterContainer* newGame = new GameBroadcasterContainer(config, maxPlayers);
+    std::cout << "Creando juego\n";
+    GameBroadcasterContainer* newGame = new GameBroadcasterContainer(config, maxPlayers, setupQueue);
 
     if (newGame != nullptr) {
         games[gameId] = newGame;
@@ -120,6 +120,7 @@ void GamesManager::run() {
     std::map<std::string, float> config = load_config_YAML("../config.yml");
     while (_keep_running) {
         msg = setupQueue.pop();
+        std::cout << "Tipo de mensaje: " << (int)msg.type() << "\n";
         uint32_t clientId = msg.id();
         switch (msg.setup.action) {
             case Setup::JOIN_GAME:
@@ -131,7 +132,9 @@ void GamesManager::run() {
                 ok = createGame(msg.setup.gameId, msg.setup.maxPlayers, config);
                 container =
                         Container(Setup::CREATE_GAME, msg.setup.gameId, msg.setup.maxPlayers, ok);
+                std::cout << "Pusheando container a cliente\n";
                 clients[clientId]->pushState(container);
+                std::cout << "Terminando de crear juego\n";
                 break;
             case Setup::GET_GAME_LIST: {
                 std::vector<std::string> gameList;

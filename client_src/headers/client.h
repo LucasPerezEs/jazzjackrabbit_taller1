@@ -20,9 +20,7 @@
 
 class Client {
 public:
-    Client(const std::string& hostname, const std::string& servername, Queue<Container>& queue,
-           SdlWindow& window, std::map<int, Entity*>& entidades, std::map<int, Player*>& personajes,
-           UIManager& ui_manager);
+    Client(const std::string& hostname, const std::string& servername);
 
     bool createGame(const std::string& gameId, const uint32_t maxPlayers);
     bool joinGame(const std::string& gameId, const int elegido);
@@ -32,18 +30,18 @@ public:
     bool is_online();
 
     void set_id(int i);
-
     int get_id();
 
-    EventHandler* get_EventHandler();
+
+    ClientProtocol& get_protocol();
 
     void close();
 
 private:
     ClientProtocol client_protocol;
-    ClientReceiver client_receiver;
-    EventHandler event_handler;  // eventos teclado (sender)
-    ModelUpdater updater;        // actualizar modelos (receiver)
+    //ClientReceiver client_receiver;
+    //EventHandler event_handler;  // eventos teclado (sender)
+    //ModelUpdater updater;        // actualizar modelos (receiver)
     bool online;
     int id;
 

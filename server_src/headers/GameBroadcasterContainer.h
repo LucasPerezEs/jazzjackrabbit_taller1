@@ -7,13 +7,15 @@
 #include "broadcaster.h"
 #include "client.h"
 #include "game.h"
+#include "monitor_clients.h"
+
 
 class GameBroadcasterContainer {
 public:
-    GameBroadcasterContainer(std::map<std::string, float>& config, uint32_t maxPlayers);
+    GameBroadcasterContainer(std::map<std::string, float>& config, uint32_t maxPlayers, Queue<Message>& setupQueue);
 
     void addPlayer(ClientHandler* client, uint32_t character);
-    bool canAddPlayer() const;
+    bool canAddPlayer();
 
     void start();
     void stop();
@@ -23,14 +25,14 @@ public:
     int number_of_players();
 
 private:
-    std::list<ClientHandler*> clients;
+    Monitor_clients clients;
     uint32_t maxPlayers;
 
     Queue<Message> actionQueue;
     Queue<Container> stateQueue;
 
-    Game game;
     Broadcaster broadcaster;
+    Game game;
 };
 
 #endif  // GAMEBROADCASTERCONTAINER_H
