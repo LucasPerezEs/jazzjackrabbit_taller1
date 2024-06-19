@@ -10,3 +10,6 @@ De la fila 15 a la 19 inclusiva son texturas solidas de mapa castle_erlong. //El
 De la fila 20 a la 31 inclusiva son texturas decorativas del mapa castle_erlong.
 
 Los mapas se hicieron considerando un conejo de como mucho 3 pixeles de alto y como mucho dos de ancho.
+
+
+Las puntas diagonales del castle  erlong son 142 y 147.
