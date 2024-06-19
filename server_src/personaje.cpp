@@ -78,6 +78,7 @@ void Personaje::run() {
     }
 
     velx = config["player_run_speed"];
+    an_type = AnimationType::RUN;
     Container c(this->en_type, SoundType::RUN_SOUND, id);
     q.try_push(c);
     // an_type = AnimationType::RUN;
@@ -85,7 +86,9 @@ void Personaje::run() {
 
 void Personaje::stoprunning() {
     velx = config["player_speed"];
-    // an_type = AnimationType::IDLE;
+    if (!jumping && !special_action_active && state == PlayerState::HURTED) {
+        an_type = AnimationType::SHOOT_IDLE;
+    }
 }
 
 void Personaje::jump() {

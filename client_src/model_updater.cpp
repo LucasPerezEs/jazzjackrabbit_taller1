@@ -60,6 +60,11 @@ void ModelUpdater::init_animations(SdlWindow& window) {
                                          Color{0x2C, 0x66, 0x96}),
                           9, AnimationSpeed::FAST);
 
+    this->animations[EntityType::JAZZ][AnimationType::RUN] =
+            new Animation(new SdlTexture("../client_src/assets/textures/jazz_running.png", window,
+                                         Color{0x2C, 0x66, 0x96}),
+                          8, AnimationSpeed::FAST);
+
     this->animations[EntityType::GHOST][AnimationType::WALK] =
             new Animation(new SdlTexture("../client_src/assets/textures/fantasma_walking.png",
                                          window, Color{0x2C, 0x66, 0x96}),
@@ -140,6 +145,11 @@ void ModelUpdater::init_animations(SdlWindow& window) {
                                          Color{0x2C, 0x66, 0x96}),
                           11, AnimationSpeed::FAST);
 
+    this->animations[EntityType::LORI][AnimationType::RUN] =
+            new Animation(new SdlTexture("../client_src/assets/textures/lori_running.png", window,
+                                         Color{0x2C, 0x66, 0x96}),
+                          8, AnimationSpeed::FAST);
+
     this->animations[EntityType::SPAZ][AnimationType::WALK] =
             new Animation(new SdlTexture("../client_src/assets/textures/spaz_walking.png", window,
                                          Color{0x2C, 0x66, 0x96}),
@@ -174,6 +184,11 @@ void ModelUpdater::init_animations(SdlWindow& window) {
             new Animation(new SdlTexture("../client_src/assets/textures/spaz_hurt.png", window,
                                          Color{0x2C, 0x66, 0x96}),
                           11, AnimationSpeed::FAST);
+
+    this->animations[EntityType::SPAZ][AnimationType::RUN] =
+            new Animation(new SdlTexture("../client_src/assets/textures/spaz_running.png", window,
+                                         Color{0x2C, 0x66, 0x96}),
+                          8, AnimationSpeed::FAST);
 }
 
 void ModelUpdater::run() {
