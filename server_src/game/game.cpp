@@ -1,7 +1,7 @@
-#include "headers/game.h"
+#include "../headers/game.h"
 
-#include "headers/broadcaster.h"
-#include "headers/partida.h"
+#include "../headers/broadcaster.h"
+
 
 Game::Game(Queue<Message>& actionQueue, Queue<Container>& stateQueue, uint32_t maxPlayers,
            // cppcheck-suppress passedByValue

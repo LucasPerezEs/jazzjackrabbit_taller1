@@ -1,4 +1,4 @@
-#include "headers/clock.h"
+#include "../headers/clock.h"
 
 Clock::Clock(std::map<std::string, float>& config):
         seconds(config["game_time"]), game_started(false), game_ended(false) {}
@@ -22,7 +22,7 @@ void Clock::update(Queue<Container>& q) {
 
         // No esta muy bien conceptualmente mandar los segundos en el campo id
         Container c(4, seconds, 0, 0, 0, 0, 0, AnimationType::NONE_ANIMATION,
-                     EntityType::NONE_ENTITY, 0, 0, 0);
+                    EntityType::NONE_ENTITY, 0, 0, 0);
         q.try_push(c);
     }
 

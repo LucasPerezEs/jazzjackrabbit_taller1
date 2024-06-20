@@ -1,4 +1,4 @@
-#include "headers/jazz.h"
+#include "../headers/jazz.h"
 
 Jazz::Jazz(float x, float y, std::map<std::string, float>& config, Queue<Container>& q):
         Personaje(x, y, 2, 4, EntityType::JAZZ, AnimationType::SHOOT_IDLE, config, q) {}

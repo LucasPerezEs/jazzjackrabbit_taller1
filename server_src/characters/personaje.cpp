@@ -1,12 +1,8 @@
-#include "headers/personaje.h"
+#include "../headers/personaje.h"
 
 #include <cmath>
 #include <iostream>
 #include <map>
-
-#include "headers/enemigo.h"
-#include "headers/lista_objetos.h"
-#include "headers/municion.h"
 
 Personaje::Personaje(float x, float y, float w, float h, EntityType en_type, AnimationType an_type,
                      std::map<std::string, float>& config, Queue<Container>& q):
@@ -157,8 +153,8 @@ void Personaje::check_colisions(Mapa& m, float aux_x, float aux_y) {
     bool colisionx = false;
     bool colisiony = false;
     bool colisiondiagonal = false;
-    //float x_modificado = x;
-    //float y_modificado = y;
+    // float x_modificado = x;
+    // float y_modificado = y;
     for (auto diagonal: m.diagonalesDer) {
 
         if (diagonal->x <= x + width && x + width <= diagonal->x + diagonal->w &&
@@ -187,7 +183,8 @@ void Personaje::check_colisions(Mapa& m, float aux_x, float aux_y) {
                 x = diagonal->x + diagonal->w;
                 colisionx = true;
             }
-            if (x < diagonal->x + diagonal->w && diagonal->x + diagonal->w < x + width && y < diagonal->y + diagonal->h && diagonal->y + diagonal->h < y + height) {
+            if (x < diagonal->x + diagonal->w && diagonal->x + diagonal->w < x + width &&
+                y < diagonal->y + diagonal->h && diagonal->y + diagonal->h < y + height) {
                 y = diagonal->y + diagonal->h;
                 vely = 0;
                 colisiony = true;
@@ -222,7 +219,8 @@ void Personaje::check_colisions(Mapa& m, float aux_x, float aux_y) {
                 x = diagonal->x - width;
                 colisionx = true;
             }
-            if (x < diagonal->x && diagonal->x < x + width && y < diagonal->y + diagonal->h && diagonal->y + diagonal->h < y + height) {
+            if (x < diagonal->x && diagonal->x < x + width && y < diagonal->y + diagonal->h &&
+                diagonal->y + diagonal->h < y + height) {
                 y = diagonal->y + diagonal->h;
                 vely = 0;
                 colisiony = true;

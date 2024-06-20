@@ -1,10 +1,23 @@
 add_library(server_lib
-    enemigo.cpp
-    game.cpp
-    mapa.cpp
-    objeto.cpp
-    partida.cpp
-    personaje.cpp
+    enemies/enemigo.cpp
+    enemies/bat.cpp
+    enemies/ghost.cpp
+    enemies/monkey.cpp
+    pickups/municion.cpp
+    pickups/pickup.cpp
+    pickups/zanahoria.cpp
+    pickups/gold_coin.cpp
+    characters/personaje.cpp
+    characters/jazz.cpp
+    characters/lori.cpp
+    characters/spaz.cpp
+    game/game.cpp
+    game/mapa.cpp
+    game/objeto.cpp
+    game/lista_objetos.cpp
+    game/clock.cpp
+    GamesManager.cpp
+    GameBroadcasterContainer.cpp
     protocol.cpp
     broadcaster.cpp
     client.cpp
@@ -12,27 +25,13 @@ add_library(server_lib
     clientSender.cpp
     acceptor.cpp
     server.cpp
-    lista_objetos.cpp
-    municion.cpp
-    pickup.cpp
-    zanahoria.cpp
-    gold_coin.cpp
-    clock.cpp
-    ghost.cpp
-    bat.cpp
-    monkey.cpp
     banana.cpp
-    jazz.cpp
-    lori.cpp
-    spaz.cpp
     ../common_src/Container.cpp
     ../common_src/liberror.cpp
     ../common_src/protocol.cpp
     ../common_src/resolver.cpp
     ../common_src/resolvererror.cpp
     ../common_src/socket.cpp
-    GamesManager.cpp
-    GameBroadcasterContainer.cpp
     monitor_clients.cpp
 )
 

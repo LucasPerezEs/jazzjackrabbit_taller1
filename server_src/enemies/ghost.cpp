@@ -1,4 +1,4 @@
-#include "headers/ghost.h"
+#include "../headers/ghost.h"
 
 Ghost::Ghost(float x, float y, std::map<std::string, float>& config):
         Enemigo(x, y, 2, 4, config["ghost_life"], config["ghost_speed"], config["ghost_damage"],
