@@ -34,7 +34,7 @@ private:
     Queue<Container>& reciever_queue;
     std::map<int, Player*>& personajes;
     UIManager& ui_manager;
-    SoundManager sound_manager;
+    SoundManager& sound_manager;
     int id;
 
     void init_animations(SdlWindow& window);
@@ -48,14 +48,14 @@ private:
 public:
     ModelUpdater(ClientProtocol& protocol, SdlWindow& window, std::map<int, Entity*>& entidades,
                  Queue<Container>& reciever_queue, std::map<int, Player*>& personajes,
-                 UIManager& ui_manager, int id);
+                 UIManager& ui_manager, int id, SoundManager& sound_manager);
 
     virtual void run() override;
 
 
     void update(float dt);
 
-    void set_clientId(int clientId);
+    //void set_clientId(int clientId);
 
     void close();
 

@@ -13,6 +13,7 @@
 
 #include "camara.h"
 #include "protocol.h"
+#include "SoundManager.h"
 
 //#define FRAME_RATE 1000000.0f / 20.0f
 
@@ -23,14 +24,18 @@ private:
 
     bool was_closed;
 
+    bool& in_menu;
+
     Camara* camara;
+
+    SoundManager& sound_manager;
 
     void handle_keydown(const SDL_Event& event, Command& cmd);
 
     void handle_keyup(const SDL_Event& event, Command& cmd);
 
 public:
-    explicit EventHandler(ClientProtocol& protocol);
+    explicit EventHandler(ClientProtocol& protocol, bool& menu, SoundManager& sound_manager);
 
     virtual void run() override;
 

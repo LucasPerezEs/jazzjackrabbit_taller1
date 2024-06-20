@@ -3,7 +3,7 @@
 // Pre: -
 // Post: -
 // cppcheck-suppress uninitMemberVar
-EventHandler::EventHandler(ClientProtocol& protocol): protocol(protocol), was_closed(false) {}
+EventHandler::EventHandler(ClientProtocol& protocol, bool& menu, SoundManager& sound_manager): protocol(protocol), was_closed(false), in_menu(menu), sound_manager(sound_manager) {}
 
 void EventHandler::handle_keydown(const SDL_Event& event, Command& cmd) {
     const SDL_KeyboardEvent& keyEvent = (SDL_KeyboardEvent&)event;
@@ -41,6 +41,10 @@ void EventHandler::handle_keydown(const SDL_Event& event, Command& cmd) {
             cmd.action = Command::NONE;
             camara->zoomOut();
             break;
+        case SDLK_ESCAPE:
+            cmd.action = Command::NONE;
+            in_menu = !in_menu;
+            break;
         default:  // Para el caso que toque una tecla no asignada.
             cmd.action = Command::NONE;
             break;
@@ -76,6 +80,14 @@ void EventHandler::run() {
         SDL_WaitEvent(&event);
 
         switch (event.type) {
+            case SDL_MOUSEBUTTONDOWN:
+                if (in_menu && event.button.button == SDL_BUTTON_LEFT) {
+                    if (800/4 + 800/4 - 70 < event.button.x && event.button.x < 800/4 + 800/4 + 70
+                     && 600/4 + 600/4 - 15 < event.button.y && event.button.y < 600/4 + 600/4 + 15) {
+                        sound_manager.change_music_volume();
+                        continue;
+                    }
+                }
             case SDL_KEYDOWN: {
                 Command cmd;
                 this->handle_keydown(event, cmd);

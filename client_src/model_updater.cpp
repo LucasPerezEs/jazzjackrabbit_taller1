@@ -4,16 +4,17 @@
 // cppcheck-suppress uninitMemberVar
 ModelUpdater::ModelUpdater(ClientProtocol& protocol, SdlWindow& window,
                            std::map<int, Entity*>& entidades, Queue<Container>& reciever_queue,
-                           std::map<int, Player*>& personajes, UIManager& ui_manager, int id):
+                           std::map<int, Player*>& personajes, UIManager& ui_manager, int id, SoundManager& sound_manager):
         protocol(protocol),
         was_closed(false),
         entidades(entidades),
         reciever_queue(reciever_queue),
         personajes(personajes),
         ui_manager(ui_manager),
+        sound_manager(sound_manager),
         id(id) {
     this->init_animations(window);
-    this->sound_manager.set_clientId(id);
+    //this->sound_manager.set_clientId(id);
 }
 
 void ModelUpdater::init_animations(SdlWindow& window) {
@@ -251,6 +252,7 @@ void ModelUpdater::update(float dt) {
         Container c = this->reciever_queue.pop();
 
         if (c.sound_container != nullptr) {
+                std::cout << "llego container de sonido\n";
             sound_manager.play_sound(c.sound_container->entity, c.sound_container->sound,
                                      c.sound_container->id);
             return;
@@ -288,7 +290,7 @@ void ModelUpdater::update(float dt) {
     }
 }
 
-void ModelUpdater::set_clientId(int clientId) { this->sound_manager.set_clientId(clientId); }
+//void ModelUpdater::set_clientId(int clientId) { this->sound_manager.set_clientId(clientId); }
 
 bool ModelUpdater::is_running() { return not was_closed; }
 

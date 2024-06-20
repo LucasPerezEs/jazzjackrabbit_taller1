@@ -8,8 +8,10 @@ Game::Game(Client& client):
         window(800, 600),
         ui_manager(personajes, window), 
         client_receiver(client.get_protocol(), receiverQueue),
-        event_handler(client.get_protocol()),
-        updater(client.get_protocol(), window, entidades, receiverQueue, personajes, ui_manager, client.get_id()) {
+        in_menu(false),
+        sound_manager(client.get_id()),
+        event_handler(client.get_protocol(), in_menu, sound_manager),
+        updater(client.get_protocol(), window, entidades, receiverQueue, personajes, ui_manager, client.get_id(), sound_manager) {
 
     SDL_Surface* tilesetSurface =
             IMG_Load("../client_src/assets/background/ASSETS_GENERALES.png");
@@ -43,10 +45,12 @@ void Game::run() {
     time1 = SDL_GetTicks();
 
     client.go_online();
+
     std::cout << "Iniciando musica\n";
-    Music musica("../client_src/assets/music/Its_Pizza_Time.wav");
+    sound_manager.play_music();
+    /*Music musica("../client_src/assets/music/Its_Pizza_Time.wav");
     musica.PlayMusic(-1);
-    musica.SetVolume(20);
+    musica.SetVolume(20);*/
 
     while (updater.is_running()) {
 
@@ -174,6 +178,24 @@ void Game::render() {
     }
 
     ui_manager.render_UI(this->client.get_id());
+
+    if (in_menu) {
+        SDL_Rect background;
+        background.x = 800/4;
+        background.w = 800*2/4;
+        background.y = 600/4;
+        background.h = 600*2/4;
+        SDL_SetRenderDrawColor(window.getRenderer(), 70, 130, 180, 255);
+        SDL_RenderFillRect(window.getRenderer(), &background);
+
+        SDL_Rect button;
+        button.x = 800/4 + 800/4 - 70;
+        button.w = 140;
+        button.y = 600/4 + 600/4 - 15;
+        button.h = 30;
+        SDL_SetRenderDrawColor(window.getRenderer(), 255, 255, 255, 255);
+        SDL_RenderFillRect(window.getRenderer(), &button);
+    }
 
     this->window.render();
 }
