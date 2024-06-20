@@ -11,6 +11,7 @@ class JoinGame : public QWidget {
 
 public:
     explicit JoinGame(QWidget *parent = nullptr);
+    void setGameId(const QString &gameId);
     virtual ~JoinGame();
 
 signals:

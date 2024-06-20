@@ -43,4 +43,13 @@ void JoinGame::init() {
     });
 }
 
+void JoinGame::setGameId(const QString &gameId) {
+    QString gameName = gameId.split(' ').first();
+    gameIdInput->setText(gameName);
+    joinButton->setEnabled(true);
+}
+
+
+
+
 JoinGame::~JoinGame() {}

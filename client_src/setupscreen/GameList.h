@@ -18,6 +18,7 @@ public:
 
 signals:
     void refreshRequested();
+    void gameSelected(const QString &gameId);
 
 
 private:
