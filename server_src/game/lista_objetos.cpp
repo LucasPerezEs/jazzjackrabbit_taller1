@@ -1,4 +1,4 @@
-#include "headers/lista_objetos.h"
+#include "../headers/lista_objetos.h"
 
 #include <algorithm>
 #include <iostream>
@@ -28,8 +28,8 @@ void ListaObjetos::eliminar_borrados(Queue<Container>& q) {
                                  [&](Objeto* o) {
                                      if (o->borrar) {
                                          Container c(1, o->id, 0, 0, 0, 0, 0,
-                                                      AnimationType::NONE_ANIMATION,
-                                                      EntityType::NONE_ENTITY, 0, 0, 0);
+                                                     AnimationType::NONE_ANIMATION,
+                                                     EntityType::NONE_ENTITY, 0, 0, 0);
                                          // Al borrar solo hace falta el id
                                          q.try_push(c);
                                          return true;

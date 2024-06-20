@@ -1,8 +1,8 @@
-#include "headers/pickup.h"
+#include "../headers/pickup.h"
 
 #include <iostream>
 
-#include "headers/personaje.h"
+#include "../headers/personaje.h"
 
 Pickup::Pickup(float x, float y, float width, float height, EntityType entity_type,
                AnimationType animation_type, Queue<Container>& q):

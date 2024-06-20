@@ -1,4 +1,4 @@
-#include "headers/monkey.h"
+#include "../headers/monkey.h"
 
 Monkey::Monkey(float x, float y, std::map<std::string, float>& config):
         Enemigo(x, y, 4, 6, config["monkey_life"], config["monkey_speed"], config["monkey_damage"],

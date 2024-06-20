@@ -1,4 +1,4 @@
-#include "headers/spaz.h"
+#include "../headers/spaz.h"
 
 Spaz::Spaz(float x, float y, std::map<std::string, float>& config, Queue<Container>& q):
         Personaje(x, y, 2, 4, EntityType::SPAZ, AnimationType::SHOOT_IDLE, config, q),
@@ -29,37 +29,8 @@ void Spaz::stop_special_action() {
     }
 }
 
-/*void Spaz::check_colisions(Mapa& m, int aux_x, int aux_y) {
-
-    bool colisionx;
-    bool colisiony;
-    colisionx = m.CheckColision(x, aux_y, width, height);
-    colisiony = m.CheckColision(aux_x, y, width, height);
-
-    if (colisionx) {  // si colisiona con la pos x actualizada
-        x = aux_x;    // se pone la pos x anterior
-        // width = auxw;  // lo mismo con la pos y
-    }
-    if (colisiony) {
-        jumping = false;  // esta en el piso se puede saltar
-        vely = 0;
-        y = aux_y;
-    }
-    if (!(colisionx && colisiony)) {  // me fijo si justo se da el caso que solo choca en diagonal
-        if (m.CheckColision(x, y, width, height)) {
-            x = aux_x;  // se pone la pos x anterior
-            // width = auxw;
-        }
-    }
-}*/
-
 void Spaz::update_position() {
-    // std::cout << "Tiempo que pasó: " <<
-    // std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() -
-    // tiempo).count() << "\n"; std::cout <<
-    // (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() -
-    // tiempo).count() > wait_sidekick) << "\n"; std::cout << "Accion especial activa: " <<
-    // special_action_active << "\n";
+
     if (special_action_active && std::chrono::duration_cast<std::chrono::milliseconds>(
                                          std::chrono::system_clock::now() - tiempo)
                                                  .count() > wait_sidekick) {

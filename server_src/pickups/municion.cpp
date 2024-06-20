@@ -1,4 +1,4 @@
-#include "headers/municion.h"
+#include "../headers/municion.h"
 
 Municion::Municion(float x, float y, std::map<std::string, float>& config, Queue<Container>& q):
         Pickup(x, y, 2, 2, EntityType::BULLET, AnimationType::PICKUP, q),

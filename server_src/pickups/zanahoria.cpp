@@ -1,4 +1,4 @@
-#include "headers/zanahoria.h"
+#include "../headers/zanahoria.h"
 
 Zanahoria::Zanahoria(float x, float y, std::map<std::string, float>& config, Queue<Container>& q):
         Pickup(x, y, 3, 5, EntityType::CARROT, AnimationType::PICKUP, q),

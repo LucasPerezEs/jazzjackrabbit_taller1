@@ -1,9 +1,9 @@
-#include "headers/mapa.h"
+#include "../headers/mapa.h"
 
 Piso::Piso(float posx, float posy, float width,
            float height) {  // Lo llame piso pero tambien puede ser una pared
     x = posx;
-    y = posy;  //hitbox
+    y = posy;  // hitbox
     w = width;
     h = height;
 }
@@ -18,7 +18,7 @@ bool Piso::colision(float posx, float posy, float width, float height) {
 
 DiagonalIzquierda::DiagonalIzquierda(float posx, float posy, float width, float height) {
     x = posx;
-    y = posy;  //hitbox
+    y = posy;  // hitbox
     w = width;
     h = height;
 }
@@ -33,7 +33,7 @@ bool DiagonalIzquierda::colision(float posx, float posy, float width, float heig
 
 DiagonalDerecha::DiagonalDerecha(float posx, float posy, float width, float height) {
     x = posx;
-    y = posy;  //hitbox
+    y = posy;  // hitbox
     w = width;
     h = height;
 }
@@ -68,58 +68,58 @@ std::vector<std::vector<int>> Mapa::cargarCSV(const std::string& ruta) {
 
 Mapa::Mapa() {
 
-    std::vector<std::vector<int>> tilemap = cargarCSV("../client_src/assets/background/castle_erlong_map/castle_earlong_mapa.csv");
+    std::vector<std::vector<int>> tilemap =
+            cargarCSV("../client_src/assets/background/castle_erlong_map/castle_earlong_mapa.csv");
 
-for (std::vector<int>::size_type i = tilemap.size()-1; i >= 1; --i) {
-    for (std::vector<int>::size_type j = 0; j < tilemap[i].size(); j++) {
-        if (tilemap[i][j] != -1) {
+    for (std::vector<int>::size_type i = tilemap.size() - 1; i >= 1; --i) {
+        for (std::vector<int>::size_type j = 0; j < tilemap[i].size(); j++) {
+            if (tilemap[i][j] != -1) {
 
-            /*if (tilemap[i][j] == 20000) {
-                DiagonalIzquierda* diagonal = new DiagonalIzquierda(j, (tilemap.size()-1-i), 1, 1);
-                diagonalesIzq.push_back(diagonal);
+                /*if (tilemap[i][j] == 20000) {
+                    DiagonalIzquierda* diagonal = new DiagonalIzquierda(j, (tilemap.size()-1-i), 1,
+                1); diagonalesIzq.push_back(diagonal);
+                }
+                else if (tilemap[i][j] == 22000) {
+                    DiagonalDerecha* diagonal = new DiagonalDerecha(j, (tilemap.size()-1-i), 1, 1);
+                    diagonalesDer.push_back(diagonal);
+                }
+                */
+                if (tilemap[i][j] == 147) {
+                    DiagonalIzquierda* diagonal =
+                            new DiagonalIzquierda(j, (tilemap.size() - 1 - i), 1, 1);
+                    diagonalesIzq.push_back(diagonal);
+                } else if (tilemap[i][j] == 142) {
+                    DiagonalDerecha* diagonal =
+                            new DiagonalDerecha(j, (tilemap.size() - 1 - i), 1, 1);
+                    diagonalesDer.push_back(diagonal);
+                } else if ((tilemap[i][j] < 40 && tilemap[i][j] > 0) ||
+                           (tilemap[i][j] >= 140 && tilemap[i][j] < 200)) {
+                    Piso* piso =
+                            new Piso(j, (tilemap.size() - 1 - i), 1,
+                                     1);  // cada numero en la matriz representa un espacio de 1x1
+                    objetos.push_back(piso);
+                    // std::cout << "Entro al creador de piso con fila" << i << " y columna: " << j
+                    // << std::endl;
+                }
             }
-            else if (tilemap[i][j] == 22000) {
-                DiagonalDerecha* diagonal = new DiagonalDerecha(j, (tilemap.size()-1-i), 1, 1);
-                diagonalesDer.push_back(diagonal);
-            }
-            */
-            if (tilemap[i][j] == 147) {
-                DiagonalIzquierda* diagonal = new DiagonalIzquierda(j, (tilemap.size()-1-i), 1, 1);
-                diagonalesIzq.push_back(diagonal);
-            }
-            else if (tilemap[i][j] == 142) {
-                DiagonalDerecha* diagonal = new DiagonalDerecha(j, (tilemap.size()-1-i), 1, 1);
-                diagonalesDer.push_back(diagonal);                
-            }
-            else if( (tilemap[i][j] < 40 && tilemap[i][j] > 0) || (tilemap[i][j] >= 140 && tilemap[i][j] < 200) ) {
-                Piso* piso = new Piso(j, (tilemap.size()-1-i), 1, 1); // cada numero en la matriz representa un espacio de 1x1
-                objetos.push_back(piso);
-                //std::cout << "Entro al creador de piso con fila" << i << " y columna: " << j << std::endl;
-            }
-
         }
     }
-}
-
 }
 
 bool Mapa::CheckColision(
         float x, float y, float w,
         float h) {  // devuelve true si la hitbox que le paso por parametro colisiona con el mapa
     for (auto p: objetos) {
-        // cppcheck-suppress useStlAlgorithm
         if (p->colision(x, y, w, h)) {
             return true;
         }
     }
     for (auto d: diagonalesIzq) {
-        // cppcheck-suppress useStlAlgorithm
         if (d->colision(x, y, w, h)) {
             return true;
         }
     }
     for (auto d: diagonalesDer) {
-        // cppcheck-suppress useStlAlgorithm
         if (d->colision(x, y, w, h)) {
             return true;
         }

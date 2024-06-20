@@ -1,4 +1,4 @@
-#include "headers/bat.h"
+#include "../headers/bat.h"
 
 Bat::Bat(float x, float y, std::map<std::string, float>& config):
         Enemigo(x, y, 2, 2, config["bat_life"], config["bat_speed"], config["bat_damage"],

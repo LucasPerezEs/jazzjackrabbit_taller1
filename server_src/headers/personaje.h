@@ -12,7 +12,10 @@
 #include "../../common_src/headers/sound_commands.h"
 
 #include "banana.h"
+#include "enemigo.h"
+#include "lista_objetos.h"
 #include "mapa.h"
+#include "municion.h"
 #include "objeto.h"
 
 
