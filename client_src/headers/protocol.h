@@ -5,6 +5,7 @@
 #include <sstream>
 #include <string>
 #include <utility>
+#include <vector>
 
 #include "../../common_src/headers/Container.h"
 #include "../../common_src/headers/Message.h"
@@ -48,7 +49,8 @@ private:
     void send_setup(const Setup& setup);
     void send_command(const Command& cmd);
     void send_join_game(const std::string& gameId, const int character);
-    void send_create_game(const std::string& gameId, const uint32_t& maxPlayers);
+    void send_create_game(const std::string& gameId, const uint32_t& maxPlayers,
+                          const std::vector<uint32_t>& cheats);
     void send_get_game_list();
 
     Container receive_setup_container();

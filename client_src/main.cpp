@@ -57,14 +57,16 @@ int main(int argc, char* argv[]) {
                     }
                 });
 
-                QObject::connect(&multiplayerMenu, &MultiplayerMenu::createGameRequested,
-                                 [&](const QString& gameID, const uint32_t& maxPlayers) {
-                                     if (client.createGame(gameID.toStdString(), maxPlayers)) {
-                                         multiplayerMenu.showGameCreatedMessage();
-                                     } else {
-                                         multiplayerMenu.showGameCreationFailedMessage();
-                                     }
-                                 });
+                QObject::connect(
+                        &multiplayerMenu, &MultiplayerMenu::createGameRequested,
+                        [&](const QString& gameID, const uint32_t& maxPlayers,
+                            const std::vector<uint32_t>& cheats) {
+                            if (client.createGame(gameID.toStdString(), maxPlayers, cheats)) {
+                                multiplayerMenu.showGameCreatedMessage();
+                            } else {
+                                multiplayerMenu.showGameCreationFailedMessage();
+                            }
+                        });
 
                 QObject::connect(
                         &multiplayerMenu, &MultiplayerMenu::joinGameRequested,

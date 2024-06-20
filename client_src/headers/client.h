@@ -24,7 +24,8 @@ public:
            SdlWindow& window, std::map<int, Entity*>& entidades, std::map<int, Player*>& personajes,
            UIManager& ui_manager);
 
-    bool createGame(const std::string& gameId, const uint32_t maxPlayers);
+    bool createGame(const std::string& gameId, const uint32_t maxPlayers,
+                    const std::vector<uint32_t>& cheats);
     bool joinGame(const std::string& gameId, const int elegido);
     bool refreshGameList(std::vector<std::string>& gameList);
 

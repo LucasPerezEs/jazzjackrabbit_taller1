@@ -3,7 +3,8 @@
 #include "headers/partida.h"
 
 Game::Game(Queue<Message>& actionQueue, Queue<Container>& stateQueue, uint32_t maxPlayers,
-           std::map<std::string, float>& config):
+           // cppcheck-suppress passedByValue
+           std::map<std::string, float> config):
         maxPlayers(maxPlayers),
         actionQueue(actionQueue),
         stateQueue(stateQueue),
@@ -16,7 +17,7 @@ void Game::run() {
     Mapa m = Mapa();
     Ghost ghost = Ghost(50, 2, config);
     Bat bat = Bat(75, 4, config);
-    Monkey monkey = Monkey(20, 1, config);
+    Monkey monkey = Monkey(15, 1, config);
     objetos.agregar_objeto(&ghost);
     objetos.agregar_objeto(&bat);
     objetos.agregar_objeto(&monkey);

@@ -13,7 +13,7 @@
 class SetupContainer {
 public:
     SetupContainer(Setup::ActionType setupType, const std::string& gameId, uint32_t maxPlayers,
-                   bool ok);
+                   std::vector<uint32_t> cheats, bool ok);
 
     SetupContainer(Setup::ActionType setupType, std::vector<std::string>& gameList, bool ok);
     SetupContainer(Setup::ActionType setupType, uint32_t id, bool ok);
@@ -21,6 +21,7 @@ public:
     Setup::ActionType setupType;
     std::string gameId;
     uint32_t maxPlayers;
+    std::vector<uint32_t> cheats;
     std::vector<std::string> gameList;
     uint32_t clientId;
     bool ok;
@@ -59,7 +60,8 @@ public:
               AnimationType an_type, EntityType en_type, int health, int ammo, int score);
 
     // Setup container constructor
-    Container(Setup::ActionType setupType, const std::string& gameId, uint32_t maxPlayers, bool ok);
+    Container(Setup::ActionType setupType, const std::string& gameId, uint32_t maxPlayers,
+              std::vector<uint32_t> cheats, bool ok);
     Container(Setup::ActionType setupType, std::vector<std::string>& gameList, bool ok);
     Container(Setup::ActionType setupType, uint32_t id, bool ok);
 

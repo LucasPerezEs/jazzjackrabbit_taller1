@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <map>
 #include <string>
+#include <vector>
 // En este archivo se pueden crear nuevos comandos.
 
 struct Command {
@@ -46,6 +47,7 @@ struct Setup {
     uint32_t maxPlayers;
     // cppcheck-suppress unusedStructMember
     uint32_t character;
+    std::vector<uint32_t> cheats;
 };
 
 #endif  // COMMANDS_H

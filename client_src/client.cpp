@@ -50,9 +50,10 @@ void Client::close() {
     this->updater.join();
 }
 
-bool Client::createGame(const std::string& gameId, const uint32_t maxPlayers) {
+bool Client::createGame(const std::string& gameId, const uint32_t maxPlayers,
+                        const std::vector<uint32_t>& cheats) {
 
-    Message msg(Setup::ActionType::CREATE_GAME, gameId, maxPlayers);
+    Message msg(Setup::ActionType::CREATE_GAME, gameId, maxPlayers, cheats);
     client_protocol.send_message(msg);
 
     Container container = client_protocol.receive_container();

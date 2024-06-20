@@ -1,4 +1,5 @@
 #include "headers/GamesManager.h"
+
 #include "iostream"
 
 std::map<std::string, float> load_config_YAML(const std::string& path) {
@@ -68,10 +69,15 @@ std::map<std::string, float> load_config_YAML(const std::string& path) {
 GamesManager::GamesManager(): setupQueue(), stateQueue() {}
 
 bool GamesManager::createGame(std::string gameId, uint32_t maxPlayers,
-                              std::map<std::string, float>& config) {
+                              // cppcheck-suppress passedByValue
+                              std::vector<uint32_t> cheats) {
     std::lock_guard<std::mutex> lock(gamesMutex);
 
-    GameBroadcasterContainer* newGame = new GameBroadcasterContainer(config, maxPlayers);
+    std::map<std::string, float> config = load_config_YAML("../config.yml");
+
+    activate_cheats(cheats, config);
+
+    GameBroadcasterContainer* newGame = new GameBroadcasterContainer(std::move(config), maxPlayers);
 
     if (newGame != nullptr) {
         games[gameId] = newGame;
@@ -98,7 +104,8 @@ bool GamesManager::listGames(std::vector<std::string>& gameList) {
 
     for (const auto& game: games) {
         std::stringstream stm;
-        stm << game.first << " " << game.second->number_of_players() << "/" << game.second->max_players() << "\n";
+        stm << game.first << " " << game.second->number_of_players() << "/"
+            << game.second->max_players() << "\n";
         gameList.push_back(stm.str());
     }
 
@@ -109,35 +116,78 @@ bool GamesManager::listGames(std::vector<std::string>& gameList) {
     return false;
 }
 
+void GamesManager::activate_cheats(const std::vector<uint32_t>& cheats,
+                                   std::map<std::string, float>& config) {
+    if (cheats.size() == 0) {
+        return;
+    }
+
+    for (uint32_t i = 0; i < cheats.size(); i++) {
+        switch (cheats[i]) {
+            case INMORTAL:
+                std::cout << "Cheat inmortal activado" << std::endl;
+                config["player_life"] = 10000;
+                break;
+
+            case ONE_SHOT_ONE_KILL:
+                std::cout << "Cheat one shot one kill activado" << std::endl;
+                config["ghost_life"] = 1;
+                config["monkey_life"] = 1;
+                config["bat_life"] = 1;
+                break;
+
+            case MOON_GRAVITY:
+                std::cout << "Cheat moon gravity activado" << std::endl;
+                config["gravity"] = 0.05;
+                break;
+
+            case HARD_ENEMIES:
+                std::cout << "Cheat hard enemies activado" << std::endl;
+                config["ghost_damage"] = 50;
+                config["bat_damage"] = 50;
+                config["monkey_damage"] = 50;
+                break;
+
+            case EXTRA_TIME:
+                std::cout << "Cheat extra time activado" << std::endl;
+                config["game_time"] = 500;
+                break;
+
+            default:
+                break;
+        }
+    }
+}
 
 void GamesManager::run() {
 
+    // cppcheck-suppress unreadVariable
     Message msg(Setup::ActionType::NONE);
-    Container container({}, {}, {}, {});
+    Container container({}, {}, {}, {}, {});
     bool ok;
 
 
-    std::map<std::string, float> config = load_config_YAML("../config.yml");
+    // std::map<std::string, float> config = load_config_YAML("../config.yml");
     while (_keep_running) {
         msg = setupQueue.pop();
         uint32_t clientId = msg.id();
         switch (msg.setup.action) {
             case Setup::JOIN_GAME:
                 ok = joinGame(msg.setup.gameId, clients[clientId], msg.setup.character);
-                container = Container(Setup::JOIN_GAME, msg.setup.gameId, msg.setup.maxPlayers, ok);
+                container = Container(Setup::JOIN_GAME, msg.setup.gameId, msg.setup.maxPlayers,
+                                      msg.setup.cheats, ok);
                 clients[clientId]->pushState(container);
                 break;
             case Setup::CREATE_GAME:
-                ok = createGame(msg.setup.gameId, msg.setup.maxPlayers, config);
-                container =
-                        Container(Setup::CREATE_GAME, msg.setup.gameId, msg.setup.maxPlayers, ok);
+                ok = createGame(msg.setup.gameId, msg.setup.maxPlayers, msg.setup.cheats);
+                container = Container(Setup::CREATE_GAME, msg.setup.gameId, msg.setup.maxPlayers,
+                                      msg.setup.cheats, ok);
                 clients[clientId]->pushState(container);
                 break;
             case Setup::GET_GAME_LIST: {
                 std::vector<std::string> gameList;
                 ok = listGames(gameList);
-                container =
-                        Container(Setup::GET_GAME_LIST, gameList, ok);
+                container = Container(Setup::GET_GAME_LIST, gameList, ok);
                 clients[clientId]->pushState(container);
                 break;
             }

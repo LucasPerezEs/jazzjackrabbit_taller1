@@ -3,6 +3,7 @@
 
 #include <list>
 #include <map>
+#include <string>
 
 #include "broadcaster.h"
 #include "client.h"
@@ -10,7 +11,7 @@
 
 class GameBroadcasterContainer {
 public:
-    GameBroadcasterContainer(std::map<std::string, float>& config, uint32_t maxPlayers);
+    GameBroadcasterContainer(std::map<std::string, float> config, uint32_t maxPlayers);
 
     void addPlayer(ClientHandler* client, uint32_t character);
     bool canAddPlayer() const;

@@ -1,10 +1,11 @@
 #include "headers/GameBroadcasterContainer.h"
 
-GameBroadcasterContainer::GameBroadcasterContainer(std::map<std::string, float>& config, uint32_t maxPlayers):
+GameBroadcasterContainer::GameBroadcasterContainer(std::map<std::string, float> config,
+                                                   uint32_t maxPlayers):
         maxPlayers(maxPlayers),
         actionQueue(),
         stateQueue(),
-        game(actionQueue, stateQueue,maxPlayers, config),
+        game(actionQueue, stateQueue, maxPlayers, std::move(config)),
         broadcaster(clients, stateQueue) {}
 
 void GameBroadcasterContainer::addPlayer(ClientHandler* client, uint32_t character) {
@@ -34,10 +35,6 @@ void GameBroadcasterContainer::join() {
 
 bool GameBroadcasterContainer::is_running() { return game.is_running(); }
 
-int GameBroadcasterContainer::max_players() {
-    return maxPlayers;
-}
+int GameBroadcasterContainer::max_players() { return maxPlayers; }
 
-int GameBroadcasterContainer::number_of_players() {
-    return clients.size();
-}
+int GameBroadcasterContainer::number_of_players() { return clients.size(); }

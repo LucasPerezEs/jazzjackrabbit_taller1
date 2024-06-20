@@ -3,8 +3,9 @@
 // SetupContainer implementation
 // cppcheck-suppress uninitMemberVar
 SetupContainer::SetupContainer(Setup::ActionType setupType, const std::string& gameId,
-                               uint32_t maxPlayers, bool ok):
-        setupType(setupType), gameId(gameId), maxPlayers(maxPlayers), ok(ok) {}
+                               // cppcheck-suppress passedByValue
+                               uint32_t maxPlayers, std::vector<uint32_t> cheats, bool ok):
+        setupType(setupType), gameId(gameId), maxPlayers(maxPlayers), cheats(cheats), ok(ok) {}
 
 // cppcheck-suppress uninitMemberVar
 SetupContainer::SetupContainer(Setup::ActionType setupType, std::vector<std::string>& gameList,
@@ -47,8 +48,9 @@ Container::Container(uint32_t msg_code, int id, float x, float y, float w, float
         _type(Type::GAME) {}
 
 Container::Container(Setup::ActionType setupType, const std::string& gameId, uint32_t maxPlayers,
-                     bool ok):
-        setup_container(new SetupContainer(setupType, gameId, maxPlayers, ok)),
+                     // cppcheck-suppress passedByValue
+                     std::vector<uint32_t> cheats, bool ok):
+        setup_container(new SetupContainer(setupType, gameId, maxPlayers, cheats, ok)),
         game_container(nullptr),
         sound_container(nullptr),
         _type(Type::SETUP) {}

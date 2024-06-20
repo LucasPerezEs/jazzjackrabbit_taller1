@@ -32,11 +32,12 @@
 #include <unordered_map>
 #include <vector>
 
+#include "../../common_src/headers/Container.h"
+#include "../../common_src/headers/Message.h"
 #include "../../common_src/headers/commands.h"
 #include "../../common_src/headers/queue.h"
 #include "../../common_src/headers/thread.h"
-#include "../../common_src/headers/Message.h"
-#include "../../common_src/headers/Container.h"
+
 #include "bat.h"
 #include "clock.h"
 #include "ghost.h"
@@ -50,7 +51,7 @@
 class Game: public Thread {
 public:
     explicit Game(Queue<Message>& actionQueue, Queue<Container>& eventQueue, uint32_t maxPlayers,
-                  std::map<std::string, float>& config);
+                  std::map<std::string, float> config);
 
     void run() override;
     void stop() override;
@@ -68,7 +69,7 @@ private:
     Queue<Message>& actionQueue;
     Queue<Container>& stateQueue;
 
-    std::map<std::string, float>& config;
+    std::map<std::string, float> config;
 
     std::mutex clientCharactersMutex;
     Clock clock;
