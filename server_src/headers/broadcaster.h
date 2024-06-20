@@ -4,19 +4,22 @@
 
 #include "../../common_src/headers/thread.h"
 
+#include "monitor_clients.h"
 #include "client.h"
 #include "game.h"
 
 class Broadcaster: public Thread {
 private:
-    std::list<ClientHandler*>& clients;
+    Monitor_clients& clients;
     Queue<Container>& stateQueue;
+    Queue<Message>& setupQueue;
 
 
 public:
-    explicit Broadcaster(std::list<ClientHandler*>& clients, Queue<Container>& stateQueue);
+    explicit Broadcaster(Monitor_clients& clients, Queue<Container>& stateQueue, Queue<Message>& setupQueue);
     void run() override;
     void stop() override;
+    void erase_client(int id);
 };
 
 #endif  // SERVER_BROADCASTER_H

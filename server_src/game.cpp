@@ -1,14 +1,16 @@
 #include "headers/game.h"
 
+#include "headers/broadcaster.h"
 #include "headers/partida.h"
 
 Game::Game(Queue<Message>& actionQueue, Queue<Container>& stateQueue, uint32_t maxPlayers,
            // cppcheck-suppress passedByValue
-           std::map<std::string, float> config):
+           std::map<std::string, float> config, Broadcaster& broadcaster):
         maxPlayers(maxPlayers),
         actionQueue(actionQueue),
         stateQueue(stateQueue),
         config(config),
+        broadcaster(broadcaster),
         clientCharactersMutex(),
         clock(config),
         gameStarted(false) {}
@@ -65,6 +67,7 @@ void Game::run() {
                     break;
                 case Command::ActionType::QUIT:
                     personaje->borrar = true;
+                    broadcaster.erase_client(clientId);
                     break;
                 default:
                     break;
@@ -87,9 +90,6 @@ void Game::run() {
 void Game::addPlayer(uint32_t clientId, uint32_t character) {
     std::lock_guard<std::mutex> lock(clientCharactersMutex);
 
-    Container init(2, clientId, 0, 0, 0, 0, 0, AnimationType::NONE_ANIMATION,
-                   EntityType::NONE_ENTITY, 0, 0, 0);
-    stateQueue.push(init);
     Personaje* personaje;
     if (character == 0) {
         personaje = new Jazz(20 + clientId, 10, config, stateQueue);

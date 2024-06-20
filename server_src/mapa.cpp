@@ -83,10 +83,18 @@ for (std::vector<int>::size_type i = tilemap.size()-1; i >= 1; --i) {
                 diagonalesDer.push_back(diagonal);
             }
             */
-            if( (tilemap[i][j] < 40 && tilemap[i][j] > 0) || (tilemap[i][j] >= 140 && tilemap[i][j] < 200) ) {
+            if (tilemap[i][j] == 147) {
+                DiagonalIzquierda* diagonal = new DiagonalIzquierda(j, (tilemap.size()-1-i), 1, 1);
+                diagonalesIzq.push_back(diagonal);
+            }
+            else if (tilemap[i][j] == 142) {
+                DiagonalDerecha* diagonal = new DiagonalDerecha(j, (tilemap.size()-1-i), 1, 1);
+                diagonalesDer.push_back(diagonal);                
+            }
+            else if( (tilemap[i][j] < 40 && tilemap[i][j] > 0) || (tilemap[i][j] >= 140 && tilemap[i][j] < 200) ) {
                 Piso* piso = new Piso(j, (tilemap.size()-1-i), 1, 1); // cada numero en la matriz representa un espacio de 1x1
                 objetos.push_back(piso);
-                std::cout << "Entro al creador de piso con fila" << i << " y columna: " << j << std::endl;
+                //std::cout << "Entro al creador de piso con fila" << i << " y columna: " << j << std::endl;
             }
 
         }

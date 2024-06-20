@@ -77,7 +77,8 @@ bool GamesManager::createGame(std::string gameId, uint32_t maxPlayers,
 
     activate_cheats(cheats, config);
 
-    GameBroadcasterContainer* newGame = new GameBroadcasterContainer(std::move(config), maxPlayers);
+    GameBroadcasterContainer* newGame =
+            new GameBroadcasterContainer(std::move(config), maxPlayers, setupQueue);
 
     if (newGame != nullptr) {
         games[gameId] = newGame;

@@ -48,10 +48,12 @@
 #include "personaje.h"
 #include "spaz.h"
 
+class Broadcaster;
+
 class Game: public Thread {
 public:
     explicit Game(Queue<Message>& actionQueue, Queue<Container>& eventQueue, uint32_t maxPlayers,
-                  std::map<std::string, float> config);
+                  std::map<std::string, float> config, Broadcaster& broadcaster);
 
     void run() override;
     void stop() override;
@@ -70,6 +72,8 @@ private:
     Queue<Container>& stateQueue;
 
     std::map<std::string, float> config;
+
+    Broadcaster& broadcaster;
 
     std::mutex clientCharactersMutex;
     Clock clock;

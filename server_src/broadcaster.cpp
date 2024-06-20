@@ -1,7 +1,8 @@
 #include "headers/broadcaster.h"
 
-Broadcaster::Broadcaster(std::list<ClientHandler*>& clients, Queue<Container>& stateQueue):
-        clients(clients), stateQueue(stateQueue) {}
+
+Broadcaster::Broadcaster(Monitor_clients& clients, Queue<Container>& stateQueue, Queue<Message>& setupQueue):
+        clients(clients), stateQueue(stateQueue), setupQueue(setupQueue) {}
 
 void Broadcaster::run() {
     Container c(0, 0, 0, 0, 0, 0, 0, AnimationType::NONE_ANIMATION, EntityType::NONE_ENTITY, 0, 0,
@@ -11,15 +12,17 @@ void Broadcaster::run() {
 
         try {
             c = stateQueue.pop();
-            for (auto& client: clients) {
-                client->pushState(c);
-            }
+            clients.send(c);
         } catch (const ClosedQueue&) {
             break;
         }
     }
     stop();
     _is_alive = false;
+}
+
+void Broadcaster::erase_client(int id) {
+    clients.erase_client(id, &setupQueue);
 }
 
 void Broadcaster::stop() { _keep_running = false; }

@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QLabel>
+#include <QMainWindow>
 #include <QMessageBox>
 #include <QPushButton>
 #include <QString>
@@ -19,6 +20,7 @@ class MultiplayerMenu: public QDialog {
     Q_OBJECT
 
 public:
+    int exit;
     explicit MultiplayerMenu(QWidget* parent = nullptr);
     void updateGameList(const std::vector<std::string>& gameList);
     void showGameCreatedMessage();

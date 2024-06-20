@@ -3,13 +3,15 @@
 int escala2x = 26;
 int escala2y = 26;
 
-Game::Game(Client& client, SdlWindow& window, std::map<int, Entity*>& entidades,
-           std::map<int, Player*>& personajes, UIManager& ui_manager):
+Game::Game(Client& client):
         client(client),
-        window(window),
-        entidades(entidades),
-        personajes(personajes),
-        ui_manager(ui_manager) {
+        window(800, 600),
+        ui_manager(personajes, window), 
+        client_receiver(client.get_protocol(), receiverQueue),
+        in_menu(false),
+        sound_manager(client.get_id()),
+        event_handler(client.get_protocol(), in_menu, sound_manager),
+        updater(client.get_protocol(), window, entidades, receiverQueue, personajes, ui_manager, client.get_id(), sound_manager) {
 
     SDL_Surface* tilesetSurface =
             IMG_Load("../client_src/assets/background/ASSETS_GENERALES.png");
@@ -31,21 +33,27 @@ Game::Game(Client& client, SdlWindow& window, std::map<int, Entity*>& entidades,
     camara = new Camara(0, 0, 800, 600, tilemap_terreno_solido[0].size(),
                         tilemap_terreno_solido.size());
 
-    client.get_EventHandler()->set_camara(camara);
+    event_handler.set_camara(camara);
 }
 
 void Game::run() {
 
+    this->event_handler.start();
+    this->updater.start();
+    this->client_receiver.start();
     uint32_t time1 = 0;
     time1 = SDL_GetTicks();
 
     client.go_online();
 
-    Music musica("../client_src/assets/music/Its_Pizza_Time.wav");
+    std::cout << "Iniciando musica\n";
+    sound_manager.play_music();
+    /*Music musica("../client_src/assets/music/Its_Pizza_Time.wav");
     musica.PlayMusic(-1);
-    musica.SetVolume(20);
+    musica.SetVolume(20);*/
 
-    while (client.is_online()) {
+    while (updater.is_running()) {
+
 
         SDL_RenderClear(window.getRenderer());
 
@@ -62,8 +70,12 @@ void Game::run() {
         usleep(rest);
     }
 
-    this->close();
 }
+
+
+
+
+
 
 // Modifica SaveMapToCSV para guardar los IDs de los tiles
 void Game::SaveMapToCSV(const std::string& filename) {
@@ -137,18 +149,23 @@ void Game::update() {
 void Game::render() {
     this->window.fill();
 
-    Entity* entidad;
+    Entity* entidad = NULL;
     if (personajes.find(client.get_id()) != personajes.end()) {
         entidad = static_cast<Entity*>(personajes[client.get_id()]);
     } else {
         if (personajes.size() > 0) {
             entidad = static_cast<Entity*>(personajes.begin()->second);
-        } else {
+        } else if (entidades.size() > 0) {
             entidad = entidades.begin()->second;
         }
     }
 
-    camara->actualizar_pos(entidad->getPosition().first, entidad->getPosition().second);
+    if (entidad != NULL) {
+        camara->actualizar_pos(entidad->getPosition().first, entidad->getPosition().second);
+    } else {
+        camara->actualizar_pos(0, 0);
+    }
+    
 
     draw(tilemap_terreno_solido, tilesetTexture);
 
@@ -162,10 +179,39 @@ void Game::render() {
 
     ui_manager.render_UI(this->client.get_id());
 
+    if (in_menu) {
+        SDL_Rect background;
+        background.x = 800/4;
+        background.w = 800*2/4;
+        background.y = 600/4;
+        background.h = 600*2/4;
+        SDL_SetRenderDrawColor(window.getRenderer(), 70, 130, 180, 255);
+        SDL_RenderFillRect(window.getRenderer(), &background);
+
+        SDL_Rect button;
+        button.x = 800/4 + 800/4 - 70;
+        button.w = 140;
+        button.y = 600/4 + 600/4 - 15;
+        button.h = 30;
+        SDL_SetRenderDrawColor(window.getRenderer(), 255, 255, 255, 255);
+        SDL_RenderFillRect(window.getRenderer(), &button);
+    }
+
     this->window.render();
 }
 
-void Game::close() { client.close(); }
+Game::~Game() {
+
+    //client.close();
+    this->event_handler.close();
+    this->event_handler.join();
+    std::cout << "Haciendo join del event handler\n";
+    //this->client_receiver.close();
+    this->client_receiver.join();
+    std::cout << "Haciendo join del receiver\n";
+    this->updater.join();
+    std::cout << "Haciendo join del updater\n";
+}
 
 
 std::vector<std::vector<int>> Game::cargarCSV(const std::string& ruta) {
@@ -334,5 +380,5 @@ void Game::create_map(){
         }
     }
     SaveMapToCSV("Nuevo_mapa");
-    this->close();
+    
 }

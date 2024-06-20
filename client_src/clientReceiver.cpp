@@ -8,6 +8,11 @@ void ClientReceiver::run() {
         try {
             // recibir comando de un cliente
             Container c = clientProtocol.receive_container();
+            if ((int)c.type() == 1) {
+                if (c.game_container->msg_code == 2) {
+                    _keep_running = false;
+                }
+            }
             queueReceiver.push(c);
         } catch (ProtocolDesconection& d) {
             break;
@@ -17,7 +22,4 @@ void ClientReceiver::run() {
             break;
         }
     }
-
-    stop();
-    _is_alive = false;
 }

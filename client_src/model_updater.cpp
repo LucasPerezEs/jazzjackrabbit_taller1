@@ -4,14 +4,17 @@
 // cppcheck-suppress uninitMemberVar
 ModelUpdater::ModelUpdater(ClientProtocol& protocol, SdlWindow& window,
                            std::map<int, Entity*>& entidades, Queue<Container>& reciever_queue,
-                           std::map<int, Player*>& personajes, UIManager& ui_manager):
+                           std::map<int, Player*>& personajes, UIManager& ui_manager, int id, SoundManager& sound_manager):
         protocol(protocol),
         was_closed(false),
         entidades(entidades),
         reciever_queue(reciever_queue),
         personajes(personajes),
-        ui_manager(ui_manager) {
+        ui_manager(ui_manager),
+        sound_manager(sound_manager),
+        id(id) {
     this->init_animations(window);
+    //this->sound_manager.set_clientId(id);
 }
 
 void ModelUpdater::init_animations(SdlWindow& window) {
@@ -245,10 +248,11 @@ void ModelUpdater::despawn_entity(Container& c) {
 void ModelUpdater::update(float dt) {
 
     try {
-
+        //std::cout << "Popeando container de la queue en updater\n";
         Container c = this->reciever_queue.pop();
 
         if (c.sound_container != nullptr) {
+                std::cout << "llego container de sonido\n";
             sound_manager.play_sound(c.sound_container->entity, c.sound_container->sound,
                                      c.sound_container->id);
             return;
@@ -263,9 +267,9 @@ void ModelUpdater::update(float dt) {
                 despawn_entity(c);
                 break;
 
-            case 2:  // Setea el ID al cliente, si todavia no fue seteado
-                if (cliente->get_id() == -1) {
-                    cliente->set_id(c.game_container->id);
+            case 2:  // Si el id es -1 o es igual al id del cliente se cierra el game del lado cliente
+                if (c.game_container->id == -1 || c.game_container->id == id) {
+                        close();
                 }
                 break;
 
@@ -286,11 +290,9 @@ void ModelUpdater::update(float dt) {
     }
 }
 
-void ModelUpdater::set_clientId(int clientId) { this->sound_manager.set_clientId(clientId); }
+//void ModelUpdater::set_clientId(int clientId) { this->sound_manager.set_clientId(clientId); }
 
 bool ModelUpdater::is_running() { return not was_closed; }
-
-void ModelUpdater::agregar_cliente(Client* c) { this->cliente = c; }
 
 void ModelUpdater::close() {
     this->reciever_queue.close();

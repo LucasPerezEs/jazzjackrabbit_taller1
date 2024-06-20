@@ -12,7 +12,7 @@ add_library(server_lib
     clientSender.cpp
     acceptor.cpp
     server.cpp
-        lista_objetos.cpp
+    lista_objetos.cpp
     municion.cpp
     pickup.cpp
     zanahoria.cpp
@@ -33,6 +33,7 @@ add_library(server_lib
     ../common_src/socket.cpp
     GamesManager.cpp
     GameBroadcasterContainer.cpp
+    monitor_clients.cpp
 )
 
 target_include_directories(server_lib PRIVATE headers/*)
