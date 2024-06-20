@@ -44,7 +44,8 @@ void JoinGame::init() {
 }
 
 void JoinGame::setGameId(const QString &gameId) {
-    QString gameName = gameId.split(' ').first();
+    int lastSpaceIndex = gameId.lastIndexOf(' ');
+    QString gameName = gameId.left(lastSpaceIndex);
     gameIdInput->setText(gameName);
     joinButton->setEnabled(true);
 }
