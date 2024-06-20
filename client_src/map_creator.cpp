@@ -5,7 +5,32 @@ MapCreator::MapCreator(Client& client):
         client(client),
         window(800, 600) {}
 
-// Modifica SaveMapToCSV para guardar los IDs de los tiles
+
+//Pre: -
+//Post: -
+std::vector<std::vector<int>> MapCreator::cargarCSV(const std::string& ruta) {
+    std::vector<std::vector<int>> matriz;
+    std::ifstream archivo(ruta);
+
+    if (archivo.is_open()) {
+        std::string linea;
+        while (std::getline(archivo, linea)) {
+            std::vector<int> fila;
+            std::stringstream ss(linea);
+            std::string valor;
+            while (std::getline(ss, valor, ',')) {
+                fila.push_back(std::stoi(valor));
+            }
+            matriz.push_back(fila);
+        }
+        archivo.close();
+    }
+
+    return matriz;
+}
+
+//Pre: -
+//Post: Modifica SaveMapToCSV para guardar los IDs de los tiles
 void MapCreator::SaveMapToCSV(std::ofstream& file, bool& is_already_create) {
 
     if(is_already_create){

@@ -10,8 +10,8 @@
 
 #include <SDL2/SDL.h>
 #include "client.h"
+#include "drawer.h"
 #include "SdlWindow.h"
-#include "UIManager.h"
 
 #define TILE_MAP_ASSETS 16  // Tamaño en el que se ve el asset al crear.
 #define TILE_MAP_CREATED 8  // Tamaño en el que se ve el mapa al crearlo.
@@ -44,6 +44,7 @@ public:
     void select_map();
     void create_map(std::ofstream& file, bool& is_already_create);
     void modify_map(std::ofstream& file, bool& is_already_create);
+    std::vector<std::vector<int>> cargarCSV(const std::string& ruta);
 
     MapCreator(const MapCreator&) = delete;
     MapCreator& operator=(const MapCreator&) = delete;

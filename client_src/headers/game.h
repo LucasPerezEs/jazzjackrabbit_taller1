@@ -23,6 +23,8 @@
 #include "entity.h"
 #include "event_handler.h"
 #include "model_updater.h"
+#include "map_creator.h"
+#include "drawer.h"
 #include "protocol.h"
 
 class Game {
@@ -34,7 +36,7 @@ private:
     std::map<int, Player*> personajes;
 
     SDL_Texture* tilesetTexture;
-    std::vector<std::vector<int>> tilemap_terreno_solido;
+    std::vector<std::vector<int>> tilemap;
     UIManager ui_manager;
 
     ClientReceiver client_receiver;
@@ -43,7 +45,6 @@ private:
     EventHandler event_handler;  // eventos teclado (sender)
     ModelUpdater updater;        // actualizar modelos (receiver)
 
-    std::vector<std::vector<int>> cargarCSV(const std::string& ruta);
     void draw(const std::vector<std::vector<int>>& tilemap, SDL_Texture* tilesetTexture);
 
     Camara* camara;

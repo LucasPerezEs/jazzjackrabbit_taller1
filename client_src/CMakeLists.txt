@@ -4,6 +4,7 @@ add_library(client_lib
     game.cpp
     protocol.cpp
     client.cpp
+    drawer.cpp
     map_creator.cpp
     clientReceiver.cpp
     entity.cpp

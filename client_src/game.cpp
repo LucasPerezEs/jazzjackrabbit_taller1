@@ -13,6 +13,7 @@ Game::Game(Client& client):
         event_handler(client.get_protocol(), in_menu, sound_manager),
         updater(client.get_protocol(), window, entidades, receiverQueue, personajes, ui_manager, client.get_id(), sound_manager) {
 
+    //Este asset tambien deberia de pedirselo al map creator y que este le devuelva ya la textura.
     SDL_Surface* tilesetSurface =
             IMG_Load("../client_src/assets/background/ASSETS_GENERALES.png");
     if (tilesetSurface == nullptr) {
@@ -26,12 +27,13 @@ Game::Game(Client& client):
 
     SDL_FreeSurface(tilesetSurface);
 
-    tilemap_terreno_solido = cargarCSV(
+    //Aca deberia ir un seleccionador de mapas pero todavia no se implementó (en proceso).
+    MapCreator load_map(client);
+    tilemap = load_map.cargarCSV(
             "../client_src/assets/background/castle_erlong_map/castle_earlong_mapa.csv");
 
     // cppcheck-suppress noOperatorEq
-    camara = new Camara(0, 0, 800, 600, tilemap_terreno_solido[0].size(),
-                        tilemap_terreno_solido.size());
+    camara = new Camara(0, 0, 800, 600, tilemap[0].size(),tilemap.size());
 
     event_handler.set_camara(camara);
 }
@@ -54,12 +56,10 @@ void Game::run() {
 
     while (updater.is_running()) {
 
-
         SDL_RenderClear(window.getRenderer());
 
         this->update();
         this->render();
-
         SDL_RenderPresent(window.getRenderer());
 
         uint32_t time2;
@@ -104,8 +104,8 @@ void Game::render() {
         camara->actualizar_pos(0, 0);
     }
     
-
-    draw(tilemap_terreno_solido, tilesetTexture);
+    Drawer drawer(this->window);
+    drawer.draw_with_camara(tilemap, tilesetTexture, camara);
 
     for (std::map<int, Entity*>::iterator it = entidades.begin(); it != entidades.end(); ++it) {
         it->second->render(window, entidad, camara);
@@ -140,7 +140,6 @@ void Game::render() {
 
 Game::~Game() {
 
-    //client.close();
     this->event_handler.close();
     this->event_handler.join();
     std::cout << "Haciendo join del event handler\n";
@@ -149,67 +148,4 @@ Game::~Game() {
     std::cout << "Haciendo join del receiver\n";
     this->updater.join();
     std::cout << "Haciendo join del updater\n";
-}
-
-
-std::vector<std::vector<int>> Game::cargarCSV(const std::string& ruta) {
-    std::vector<std::vector<int>> matriz;
-    std::ifstream archivo(ruta);
-
-    if (archivo.is_open()) {
-        std::string linea;
-        while (std::getline(archivo, linea)) {
-            std::vector<int> fila;
-            std::stringstream ss(linea);
-            std::string valor;
-            while (std::getline(ss, valor, ',')) {
-                fila.push_back(std::stoi(valor));
-            }
-            matriz.push_back(fila);
-        }
-        archivo.close();
-    }
-
-    return matriz;
-}
-
-void Game::draw(const std::vector<std::vector<int>>& tilemap, SDL_Texture* tilesetTexture) {
-
-    int TILESET_WIDTH = 10;
-
-    // Ahora recorre solo los tiles que están dentro de la vista de la cámara
-    for (long unsigned int y = 0; y < tilemap.size(); y++) {
-        for (long unsigned int x = 0; x < tilemap[0].size(); x++) {
-
-            // Obtiene el id del tile
-            int tileValue = tilemap[y][x];
-
-            // Calcula la posición del tile en píxeles
-            int posX = x;
-            int posY = tilemap.size() - y;
-
-            if (!camara->en_rango(posX, posY, 1, 1)) {
-                continue;
-            }
-
-            SDL_Rect sourceRect;
-            sourceRect.x = (tileValue % TILESET_WIDTH) * 16;
-            sourceRect.y = (tileValue / TILESET_WIDTH) * 16;
-            sourceRect.w = 16;
-            sourceRect.h = 16;
-
-            // Define el rectángulo de destino en la pantalla
-            SDL_Rect destinationRect;
-
-            destinationRect.x = (posX - camara->x) * camara->escalax;
-            destinationRect.y = (camara->y - posY) * camara->escalay;
-            destinationRect.w = camara->escalax;
-            destinationRect.h = camara->escalay;
-
-
-            // Renderiza el tile
-            SDL_RenderCopy(this->window.getRenderer(), tilesetTexture, &sourceRect,
-                           &destinationRect);
-        }
-    }
 }
