@@ -5,6 +5,7 @@
 #include "SDL2/SDL_mixer.h"
 #include "SDL2/SDL_ttf.h"
 #include "headers/SdlTexture.h"
+#include "headers/map_creator.h"
 #include "headers/UIManager.h"
 #include "headers/entity.h"
 #include "headers/game.h"
@@ -87,8 +88,8 @@ int main(int argc, char* argv[]) {
                     multiplayerMenu.close();
 
                     try {
-                        Game game(client);
-                        game.create_map();
+                        MapCreator create_map(client);
+                        create_map.select_map();
                     } catch (const std::exception& e) {
                         std::cerr << "Exception during map creation: " << e.what() << std::endl;
                     } catch (...) {
