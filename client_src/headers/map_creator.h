@@ -31,6 +31,9 @@ private:
     std::map<std::tuple<int, int>, Tile> mapTiles;
 
     void saveMapToCSV(std::string& filename, bool& is_already_create);
+
+    std::map<std::tuple<int, int>, Tile> loadMap(std::vector<std::vector<std::string>>& mapReceived);
+
     void save_values(Tile& selectedTile, const double& minX, const double& maxX, const double& minY, const double& maxY,
                      SDL_Event& event);
 
@@ -38,7 +41,7 @@ public:
     explicit MapCreator(Client& client);
 
     void select_map();
-    void create_map(std::string& filename, bool& is_already_create);
+    void create_map(std::string& filename, std::vector<std::vector<std::string>>& mapReceived, bool& is_already_create);
 
     std::map<std::tuple<int, int>, Tile> loadCSV(const std::string&filename);
     std::vector<std::vector<int>> cargarCSV(const std::string& ruta);

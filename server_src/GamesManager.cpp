@@ -91,16 +91,14 @@ bool GamesManager::createGame(std::string gameId, uint32_t maxPlayers,
 bool GamesManager::createMap(std::string& mapName, std::vector<std::vector<std::string>>& mapReceived){
 
     std::string path;
-    path = "../mapas/" + mapName;
+    path = "../server_src/maps/" + mapName;
 
-     // Verifica la existencia del archivo
     std::ifstream archivo(path);
     if (!archivo.is_open()) {
         std::cout << "El archivo no existe." << std::endl;
         return false;
     }
 
-    // Lee los datos del archivo CSV y almacénalos en mapReceived
     std::string linea;
     while (std::getline(archivo, linea)) {
         std::vector<std::string> fila;
@@ -109,7 +107,7 @@ bool GamesManager::createMap(std::string& mapName, std::vector<std::vector<std::
             fila.push_back(linea.substr(0, pos));
             linea.erase(0, pos + 1);
         }
-        fila.push_back(linea); // Último campo
+        fila.push_back(linea);
         mapReceived.push_back(fila);
     }
 

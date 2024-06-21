@@ -35,7 +35,8 @@ public:
     void sendVectorString(const std::vector<std::string>& vec);
     std::vector<std::string> receiveVectorString();
 
-    void sendMap(const std::vector<std::vector<std::string>>& externVec);
+    void sendMap(const std::vector<std::vector<std::string>>& map);
+    std::vector<std::vector<std::string>> receiveMap();
 
 
     Protocol(const Protocol&) = delete;

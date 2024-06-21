@@ -104,22 +104,26 @@ void MapCreator::select_map() {
     std::string mapName;
     bool is_map_received = false;
     bool is_already_create = false;
-    //std::cout << "Por favor, ingresa el nombre del nuevo mapa: ";
+    std::cout << "Por favor, ingresa el nombre del nuevo mapa: ";
     //std::cin >> mapName;
+
     //if (mapName == "1") {
         mapName = "castle_earlong";
+    //}else if(mapName == "2"){
+        //mapName = "medivo";
     //}
-        std::vector<std::vector<std::string>> mapReceived;
-        is_map_received = client.createMap(mapName, mapReceived);
 
-    if (!mapReceived.empty() && is_map_received == true) {
+    std::vector<std::vector<std::string>> mapReceived;
+    is_map_received = client.createMap(mapName, mapReceived);
+
+    if (is_map_received) {
         std::cout << "El mapa con el nombre '" << mapName << "' ya existe." << std::endl;
         is_already_create = true;
 
     }else{
         std::cout << "El contenedor esta vacio o se produjo un error!" << std::endl;
     }
-    create_map(mapName, is_already_create);
+    create_map(mapName, mapReceived, is_already_create);
 }
 
 
@@ -160,10 +164,36 @@ std::map<std::tuple<int, int>, Tile> MapCreator::loadCSV(const std::string& file
     return mapTiles;
 }
 
+//Pre: -
+//Post: Carga en un mapa todos los datos obtenidos del CSV que representa un mapa del juego.
+std::map<std::tuple<int, int>, Tile> MapCreator::loadMap(std::vector<std::vector<std::string>>& mapReceived) {
+
+    std::map<std::tuple<int, int>, Tile> mapCreated;
+    int row = 20;
+
+    for (const auto& tileRow : mapReceived) {
+        int column = 20;
+
+        for (const auto& value : tileRow) {
+            int tile_id = std::stoi(value);
+            Tile tile;
+            tile.id = tile_id;
+            tile.srcRect = {(tile_id % TILESET_WIDTH) * TILE_MAP_ASSETS, (tile_id / TILESET_WIDTH) * TILE_MAP_ASSETS, TILE_MAP_ASSETS, TILE_MAP_ASSETS};
+            tile.destRect = {column * TILE_MAP_CREATED, row * TILE_MAP_CREATED, TILE_MAP_CREATED, TILE_MAP_CREATED};
+            std::tuple<int, int> posicion = std::make_tuple(row, column);
+            mapCreated[posicion] = tile;
+            column++;
+        }
+        row++;
+    }
+    return mapCreated;
+}
+
 
 //Pre: -
 //Post: -
-void MapCreator::create_map(std::string& filename, bool& is_already_create){
+//void MapCreator::create_map(std::string& filename, bool& is_already_create){
+void MapCreator::create_map(std::string& filename, std::vector<std::vector<std::string>>& mapReceived, bool& is_already_create){
 
     mapTiles.clear();
     std::vector<Tile> tiles_asset;
@@ -210,7 +240,8 @@ void MapCreator::create_map(std::string& filename, bool& is_already_create){
     this->window.render();
 
     if(is_already_create){
-        mapTiles = loadCSV(filename);
+        //mapTiles = loadCSV(filename);
+        mapTiles = loadMap(mapReceived);
         for (const auto& pair : mapTiles) {
             const Tile& value = pair.second;
             SDL_RenderCopy(renderer, assetTexture, &(value.srcRect), &(value.destRect));
@@ -272,6 +303,7 @@ void MapCreator::create_map(std::string& filename, bool& is_already_create){
             this->window.render();
         }
     }
+    //saveMapToCSV(filename, is_already_create);
     saveMapToCSV(filename, is_already_create);
     
 }

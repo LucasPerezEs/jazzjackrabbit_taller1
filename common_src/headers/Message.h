@@ -28,11 +28,8 @@ public:
     Message(Setup::ActionType setupType, uint32_t character, const std::string& gameId):
             setup({setupType, {}, gameId, {}, character, {}, {}}), type_(Type::SETUP) {}
 
-
-
     Message(Setup::ActionType setupType, const std::string& mapName): 
         setup({setupType, {}, {}, {}, {}, mapName, {}}), type_(Type::SETUP) {}
-
 
 
     Type type() const { return type_; }

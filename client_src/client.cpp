@@ -74,7 +74,11 @@ bool Client::createMap(const std::string& mapName, std::vector<std::vector<std::
     Message msg(Setup::ActionType::CREATE_MAP, mapName);
     client_protocol.send_message(msg);
 
+    std::cout << "Esperando el container" << std::endl;
+
     Container container = client_protocol.receive_container();
+
+    std::cout << "Cargando el container a mapReceived" << std::endl;
     mapReceived = container.setup_container->map;
     return container.setup_container->ok;
 }
