@@ -28,6 +28,10 @@ void Game::run() {
     // cppcheck-suppress danglingLifetime
     entes.push_back(&monkey);
 
+
+    Container c = Container(5, 0, 0, 0, 0, 0, 0, NONE_ANIMATION, NONE_ENTITY, 0, 0, 0);
+    stateQueue.push(c);
+
     while (_keep_running && !clock.times_up()) {
         Message msg(Command::ActionType::NONE);
         while (actionQueue.try_pop(msg)) {

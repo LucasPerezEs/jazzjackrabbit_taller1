@@ -6,7 +6,7 @@ ServerProtocol::ServerProtocol(Socket peer): Protocol(std::move(peer)) {}
 //////////////SEND
 
 void ServerProtocol::send_container(const Container& container) {
-
+    std::cout << "Enviando container\n";
     if (container.type() == Container::Type::SETUP) {
         sendUChar(static_cast<unsigned char>(container.type()));
         send_setup_container(*container.setup_container);
@@ -117,6 +117,7 @@ void ServerProtocol::send_sound_container(const SoundContainer& soundContainer) 
 
 Message ServerProtocol::receive_message() {
     unsigned char type = receiveUChar();
+    std::cout << "Recibiendo mensaje\n";
     Message::Type messageType = static_cast<Message::Type>(type);
 
     switch (messageType) {

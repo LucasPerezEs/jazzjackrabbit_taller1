@@ -8,6 +8,7 @@ void Acceptor::reap_offline_clients() {
         if (!c->is_online()) {
             c->kill();
             delete c;
+            std::cout << "Eliminando client\n";
             return true;
         }
         return false;

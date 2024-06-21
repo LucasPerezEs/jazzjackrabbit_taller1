@@ -7,6 +7,7 @@ ClientProtocol::ClientProtocol(const std::string& hostname, const std::string& s
 //////////////SEND
 
 void ClientProtocol::send_message(const Message& message) {
+    std::cout << "Enviando mensaje\n";
 
     if (message.type() == Message::Type::SETUP) {
         sendUChar(static_cast<unsigned char>(message.type()));
@@ -64,6 +65,7 @@ void ClientProtocol::send_get_game_list() {
 
 Container ClientProtocol::receive_container() {
     unsigned char containerType = receiveUChar();
+    std::cout << "Recibiendo container\n";
     Container::Type type = static_cast<Container::Type>(containerType);
 
     switch (type) {
