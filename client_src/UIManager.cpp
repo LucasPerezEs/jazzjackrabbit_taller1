@@ -52,3 +52,7 @@ void UIManager::render_UI(int id_cliente) {
         this->fuente.render(700, 15, std::to_string(this->clock), window, amarillo);
     }
 }
+
+void UIManager::renderLoadingText() {
+    this->fuente.render(800/2 - 140, 600/2 + 120, "Waiting       players", window, {0, 0, 0});
+}
