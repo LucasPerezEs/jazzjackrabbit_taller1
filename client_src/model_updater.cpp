@@ -29,6 +29,11 @@ void ModelUpdater::init_animations(SdlWindow& window) {
                            Color{0x2C, 0x66, 0x96}),
             12, AnimationSpeed::FAST);
 
+    this->animations[EntityType::JAZZ][AnimationType::INTOXICATED_IDLE] =
+            new Animation(new SdlTexture("../client_src/assets/textures/jazz_intoxicated_idle.png",
+                                         window, Color{0x2C, 0x66, 0x96}),
+                          8, AnimationSpeed::DEFAULT);
+
     this->animations[EntityType::JAZZ][AnimationType::IDLE] =
             new Animation(new SdlTexture("../client_src/assets/textures/jazz_idle.png", window,
                                          Color{0x2C, 0x66, 0x96}),
@@ -124,10 +129,20 @@ void ModelUpdater::init_animations(SdlWindow& window) {
                                          Color{0x2C, 0x66, 0x96}),
                           8, AnimationSpeed::FAST);
 
+    this->animations[EntityType::LORI][AnimationType::INTOXICATED_WALK] = new Animation(
+            new SdlTexture("../client_src/assets/textures/lori_intoxicated_walking.png", window,
+                           Color{0x2C, 0x66, 0x96}),
+            12, AnimationSpeed::FAST);
+
     this->animations[EntityType::LORI][AnimationType::IDLE] =
             new Animation(new SdlTexture("../client_src/assets/textures/lori_idle.png", window,
                                          Color{0x2C, 0x66, 0x96}),
                           16, AnimationSpeed::FAST);
+
+    this->animations[EntityType::LORI][AnimationType::INTOXICATED_IDLE] =
+            new Animation(new SdlTexture("../client_src/assets/textures/lori_intoxicated_idle.png",
+                                         window, Color{0x2C, 0x66, 0x96}),
+                          12, AnimationSpeed::DEFAULT);
 
     this->animations[EntityType::LORI][AnimationType::SHOOT_IDLE] =
             new Animation(new SdlTexture("../client_src/assets/textures/lori_shoot_idle.png",
@@ -164,10 +179,20 @@ void ModelUpdater::init_animations(SdlWindow& window) {
                                          Color{0x2C, 0x66, 0x96}),
                           8, AnimationSpeed::FAST);
 
+    this->animations[EntityType::SPAZ][AnimationType::INTOXICATED_WALK] = new Animation(
+            new SdlTexture("../client_src/assets/textures/spaz_intoxicated_walking.png", window,
+                           Color{0x2C, 0x66, 0x96}),
+            12, AnimationSpeed::FAST);
+
     this->animations[EntityType::SPAZ][AnimationType::IDLE] =
             new Animation(new SdlTexture("../client_src/assets/textures/spaz_idle.png", window,
                                          Color{0x2C, 0x66, 0x96}),
                           20, AnimationSpeed::FAST);
+
+    this->animations[EntityType::SPAZ][AnimationType::INTOXICATED_IDLE] =
+            new Animation(new SdlTexture("../client_src/assets/textures/spaz_intoxicated_idle.png",
+                                         window, Color{0x2C, 0x66, 0x96}),
+                          8, AnimationSpeed::DEFAULT);
 
     this->animations[EntityType::SPAZ][AnimationType::SHOOT_IDLE] =
             new Animation(new SdlTexture("../client_src/assets/textures/spaz_shoot_idle.png",
