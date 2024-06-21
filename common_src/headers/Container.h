@@ -16,11 +16,13 @@ public:
                    std::vector<uint32_t> cheats, bool ok);
 
     SetupContainer(Setup::ActionType setupType, std::vector<std::string>& gameList, bool ok);
+    SetupContainer(Setup::ActionType setupType, std::vector<std::vector<std::string>>& mapReceived, bool ok);
     SetupContainer(Setup::ActionType setupType, uint32_t id, bool ok);
 
     Setup::ActionType setupType;
     std::string gameId;
     uint32_t maxPlayers;
+    std::vector<std::vector<std::string>> map;
     std::vector<uint32_t> cheats;
     std::vector<std::string> gameList;
     uint32_t clientId;
@@ -67,6 +69,9 @@ public:
 
     // Sound container constructor
     Container(EntityType entity, SoundType sound, int id);
+
+    //Setup map container
+    Container(Setup::ActionType setupType, std::vector<std::vector<std::string>>& mapReceived, bool ok);
 
     Type type() const { return _type; }
 

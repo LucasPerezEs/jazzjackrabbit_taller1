@@ -89,6 +89,33 @@ bool GamesManager::createGame(std::string gameId, uint32_t maxPlayers,
     return false;
 }
 
+bool GamesManager::createMap(std::string& mapName, std::vector<std::vector<std::string>>& mapReceived){
+
+    std::string path;
+    path = "../server_src/maps/" + mapName;
+
+    std::ifstream archivo(path);
+    if (!archivo.is_open()) {
+        std::cout << "El archivo no existe." << std::endl;
+        return false;
+    }
+
+    std::string linea;
+    while (std::getline(archivo, linea)) {
+        std::vector<std::string> fila;
+        size_t pos = 0;
+        while ((pos = linea.find(',')) != std::string::npos) {
+            fila.push_back(linea.substr(0, pos));
+            linea.erase(0, pos + 1);
+        }
+        fila.push_back(linea);
+        mapReceived.push_back(fila);
+    }
+
+    archivo.close();
+    return true;
+}
+
 bool GamesManager::joinGame(const std::string& gameId, ClientHandler* client, uint32_t character) {
     std::lock_guard<std::mutex> lock(gamesMutex);
 
@@ -192,6 +219,13 @@ void GamesManager::run() {
                 std::vector<std::string> gameList;
                 ok = listGames(gameList);
                 container = Container(Setup::GET_GAME_LIST, gameList, ok);
+                clients[clientId]->pushState(container);
+                break;
+            }
+            case Setup::CREATE_MAP:{
+                std::vector<std::vector<std::string>> mapReceived;
+                ok = createMap(msg.setup.mapName, mapReceived);
+                container = Container(Setup::CREATE_MAP, mapReceived, ok);
                 clients[clientId]->pushState(container);
                 break;
             }

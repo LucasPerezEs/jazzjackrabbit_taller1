@@ -67,6 +67,22 @@ bool Client::joinGame(const std::string& gameId, const int character) {
     return container.setup_container->ok;
 }
 
+bool Client::createMap(const std::string& mapName, std::vector<std::vector<std::string>>& mapReceived){
+
+    std::cout << "Estoy en client createMap" << std::endl;
+
+    Message msg(Setup::ActionType::CREATE_MAP, mapName);
+    client_protocol.send_message(msg);
+
+    std::cout << "Esperando el container" << std::endl;
+
+    Container container = client_protocol.receive_container();
+
+    std::cout << "Cargando el container a mapReceived" << std::endl;
+    mapReceived = container.setup_container->map;
+    return container.setup_container->ok;
+}
+
 bool Client::refreshGameList(std::vector<std::string>& gameList) {
     Message msg(Setup::ActionType::GET_GAME_LIST);
     client_protocol.send_message(msg);

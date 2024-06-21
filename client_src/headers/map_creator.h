@@ -11,10 +11,13 @@
 #include <iostream>
 
 #include <SDL2/SDL.h>
+
+#include "tile.h"
 #include "client.h"
 #include "drawer.h"
-#include "tile.h"
+#include "protocol.h"
 #include "SdlWindow.h"
+#include "../../common_src/headers/commands.h"
 
 #define TILE_MAP_ASSETS 16  // Tamaño en el que se ve el asset al crear.
 #define TILE_MAP_CREATED 8  // Tamaño en el que se ve el mapa al crearlo.
@@ -23,9 +26,14 @@ class MapCreator {
 private:
     Client& client;
     SdlWindow window;
+    ClientReceiver client_receiver;
+    Queue<Container> receiverQueue;
     std::map<std::tuple<int, int>, Tile> mapTiles;
 
     void saveMapToCSV(std::string& filename, bool& is_already_create);
+
+    std::map<std::tuple<int, int>, Tile> loadMap(std::vector<std::vector<std::string>>& mapReceived);
+
     void save_values(Tile& selectedTile, const double& minX, const double& maxX, const double& minY, const double& maxY,
                      SDL_Event& event);
 
@@ -33,7 +41,7 @@ public:
     explicit MapCreator(Client& client);
 
     void select_map();
-    void create_map(std::string& filename, bool& is_already_create);
+    void create_map(std::string& filename, std::vector<std::vector<std::string>>& mapReceived, bool& is_already_create);
 
     std::map<std::tuple<int, int>, Tile> loadCSV(const std::string&filename);
     std::vector<std::vector<int>> cargarCSV(const std::string& ruta);

@@ -37,6 +37,10 @@ void ClientProtocol::send_setup(const Setup& setup) {
     if (setup.action == Setup::ActionType::GET_GAME_LIST) {
         send_get_game_list();
     }
+
+    if(setup.action == Setup::ActionType::CREATE_MAP){
+        send_create_map(setup.mapName);
+    }
 }
 
 
@@ -55,6 +59,13 @@ void ClientProtocol::send_create_game(const std::string& gameId, const uint32_t&
     for (uint32_t i = 0; i < cheats.size(); i++) {
         send32(cheats[i]);
     }
+}
+
+void ClientProtocol::send_create_map(const std::string& mapName) {
+    sendUChar(static_cast<unsigned char>(Setup::CREATE_MAP));
+    sendString(mapName);
+
+    std::cout << "Mande la info de mapa" << std::endl;
 }
 
 void ClientProtocol::send_get_game_list() {
@@ -93,6 +104,8 @@ Container ClientProtocol::receive_setup_container() {
             return receive_get_game_list();
         case Setup::ActionType::CLIENT_ID:
             return receive_client_id();
+        case Setup::ActionType::CREATE_MAP:
+            return receive_create_map();
         default:
             throw std::runtime_error("Unknown setup action type");
     }
@@ -166,6 +179,13 @@ Container ClientProtocol::receive_sound_container() {
     socket.recvall(&data, sizeof(data), &was_closed);
     Container c(data.entity, data.sound, data.id);
     return c;
+}
+
+Container ClientProtocol::receive_create_map() {
+    bool ok = receiveBool();
+    std::vector<std::vector<std::string>> mapReceived = receiveMap();
+
+    return Container(Setup::ActionType::CREATE_MAP, mapReceived, ok);
 }
 
 void ClientProtocol::stop() { Protocol::stop(); }

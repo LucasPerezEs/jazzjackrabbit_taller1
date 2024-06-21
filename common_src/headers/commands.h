@@ -37,6 +37,7 @@ struct Setup {
         CREATE_GAME = 0x32,
         GET_GAME_LIST = 0x33,
         CLIENT_ID = 0x34,
+        CREATE_MAP = 0x35,
     };
     ActionType action;
 
@@ -47,6 +48,7 @@ struct Setup {
     uint32_t maxPlayers;
     // cppcheck-suppress unusedStructMember
     uint32_t character;
+    std::string mapName;
     std::vector<uint32_t> cheats;
 };
 
