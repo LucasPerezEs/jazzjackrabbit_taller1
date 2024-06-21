@@ -19,11 +19,16 @@ void GameList::init() {
         emit refreshRequested();
     });
 
+    connect(gameList, &QListWidget::itemClicked, this, [this](QListWidgetItem *item) {
+        emit gameSelected(item->text());
+    });
+
 }
 
 void GameList::updateGameList(const QStringList &games) {
     gameList->clear();
     gameList->addItems(games);
 }
+
 
 GameList::~GameList() {}

@@ -49,6 +49,9 @@ void MultiplayerMenu::init() {
     connect(joinGameWidget, &JoinGame::joinGameRequested, this,
             &MultiplayerMenu::joinGameRequested);
     connect(gameListWidget, &GameList::refreshRequested, this, &MultiplayerMenu::refreshRequested);
+
+    connect(gameListWidget, &GameList::gameSelected, joinGameWidget, &JoinGame::setGameId);
+
 }
 
 void MultiplayerMenu::onReturnClicked() {
