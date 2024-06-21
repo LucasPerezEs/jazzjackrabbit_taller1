@@ -109,6 +109,17 @@ void Personaje::add_score(int score) {
 
 void Personaje::check_idle() {
 
+    if (state == PlayerState::INTOXICATED) {
+        std::cout << "Intoxicado esto" << std::endl;
+        auto now = std::chrono::system_clock::now();
+        auto duration =
+                std::chrono::duration_cast<std::chrono::seconds>(now - intoxicated_start).count();
+
+        if (duration >= 10) {
+            state = PlayerState::NORMAL;
+        }
+    }
+
     if (state == PlayerState::HURTED && std::chrono::duration_cast<std::chrono::milliseconds>(
                                                 std::chrono::system_clock::now() - last_hurt)
                                                         .count() > espera_hurt / 2) {
@@ -318,6 +329,14 @@ void Personaje::update_vivo(ListaObjetos& objetos, Queue<Container>& q,
     }
 }
 
+void Personaje::colision(ZanahoriaEnvenenada& ze) {
+
+    this->state = PlayerState::INTOXICATED;
+    this->tiempo = std::chrono::system_clock::now();
+    this->intoxicated_start = std::chrono::system_clock::now();
+
+}
+
 
 void Personaje::colision(Objeto& o) {
     if (check_colision(o)) {
@@ -399,6 +418,10 @@ void Personaje::check_dead(int killer_id) {
 }
 
 void Personaje::disparar(ListaObjetos& objetos) {
+
+    if (state == PlayerState::INTOXICATED) {
+        return;
+    }
     tiempo = std::chrono::system_clock::now();
     arma.disparar(objetos, id, x, width, y, height, direccion, q);
     if (!movingleft && !movingright) {
