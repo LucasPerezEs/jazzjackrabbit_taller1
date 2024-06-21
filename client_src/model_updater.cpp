@@ -4,7 +4,7 @@
 // cppcheck-suppress uninitMemberVar
 ModelUpdater::ModelUpdater(ClientProtocol& protocol, SdlWindow& window,
                            std::map<int, Entity*>& entidades, Queue<Container>& reciever_queue,
-                           std::map<int, Player*>& personajes, UIManager& ui_manager, int id, SoundManager& sound_manager):
+                           std::map<int, Player*>& personajes, UIManager& ui_manager, int id, SoundManager& sound_manager, bool& gameStarted):
         protocol(protocol),
         was_closed(false),
         entidades(entidades),
@@ -12,7 +12,8 @@ ModelUpdater::ModelUpdater(ClientProtocol& protocol, SdlWindow& window,
         personajes(personajes),
         ui_manager(ui_manager),
         sound_manager(sound_manager),
-        id(id) {
+        id(id),
+        gameStarted(gameStarted) {
     this->init_animations(window);
     //this->sound_manager.set_clientId(id);
 }
@@ -280,7 +281,10 @@ void ModelUpdater::update(float dt) {
             case 4:  // Actualiza el reloj de partida
                 ui_manager.update_clock(c.game_container->id);
                 break;
-
+            case 5:  // Comienza la partida
+                sound_manager.play_music();
+                gameStarted = true;
+                break;
             default:
                 break;
         }

@@ -13,6 +13,10 @@ void GameBroadcasterContainer::addPlayer(ClientHandler* client, uint32_t charact
         client->setReceiverQueue(&actionQueue);
         clients.add_client(client);
         game.addPlayer(client->getId(), character);
+        if (number_of_players() == max_players()) {
+            gameStarted = true;
+            start();
+        }
     }
 }
 
@@ -33,7 +37,13 @@ void GameBroadcasterContainer::join() {
     broadcaster.join();
 }
 
-bool GameBroadcasterContainer::is_running() { return game.is_running(); }
+bool GameBroadcasterContainer::is_running() {
+    if (gameStarted) {
+        return game.is_running();
+    }
+    return true;
+}
+
 
 int GameBroadcasterContainer::max_players() { return maxPlayers; }
 

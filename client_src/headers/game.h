@@ -40,6 +40,7 @@ private:
     UIManager ui_manager;
 
     ClientReceiver client_receiver;
+    bool gameStarted;
     bool in_menu;
     SoundManager sound_manager;
     EventHandler event_handler;  // eventos teclado (sender)

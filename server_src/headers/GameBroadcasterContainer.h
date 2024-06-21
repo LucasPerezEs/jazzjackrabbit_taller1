@@ -35,6 +35,8 @@ private:
 
     Broadcaster broadcaster;
     Game game;
+    bool gameStarted;
+    bool gameEnded;
 };
 
 #endif  // GAMEBROADCASTERCONTAINER_H

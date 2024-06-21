@@ -18,6 +18,7 @@ int main(int argc, char* argv[]) {
         ret = 0;
         return ret;
     } catch (const std::exception& err) {
+        std::cout << "entro en catch B\n";
         std::cerr << "Something went wrong and an exception was caught: " << err.what() << "\n";
         return -1;
     } catch (...) {

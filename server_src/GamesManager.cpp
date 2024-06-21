@@ -9,6 +9,7 @@ std::map<std::string, float> load_config_YAML(const std::string& path) {
     try {
         yaml = YAML::LoadFile(path);
     } catch (std::exception& e) {
+        std::cout << "entro en catch C\n";
         std::cerr << e.what() << std::endl;
     }
 
@@ -82,7 +83,7 @@ bool GamesManager::createGame(std::string gameId, uint32_t maxPlayers,
 
     if (newGame != nullptr) {
         games[gameId] = newGame;
-        newGame->start();
+        //newGame->start();
         return true;
     }
     return false;
@@ -208,9 +209,11 @@ void GamesManager::run() {
                 break;
             case Setup::CREATE_GAME:
                 ok = createGame(msg.setup.gameId, msg.setup.maxPlayers, msg.setup.cheats);
+                std::cout << "Creando game\n";
                 container = Container(Setup::CREATE_GAME, msg.setup.gameId, msg.setup.maxPlayers,
                                       msg.setup.cheats, ok);
                 clients[clientId]->pushState(container);
+                std::cout << "Pusheando cola de create a client\n";
                 break;
             case Setup::GET_GAME_LIST: {
                 std::vector<std::string> gameList;
@@ -244,6 +247,7 @@ void GamesManager::reap_offline_games() {
             it->second->join();
             delete it->second;
             it = games.erase(it);
+            std::cout << "Borrando game\n";
         } else {
             ++it;
         }

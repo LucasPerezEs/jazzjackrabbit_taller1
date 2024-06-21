@@ -8,10 +8,11 @@ Game::Game(Client& client):
         window(800, 600),
         ui_manager(personajes, window), 
         client_receiver(client.get_protocol(), receiverQueue),
+        gameStarted(false),
         in_menu(false),
         sound_manager(client.get_id()),
         event_handler(client.get_protocol(), in_menu, sound_manager),
-        updater(client.get_protocol(), window, entidades, receiverQueue, personajes, ui_manager, client.get_id(), sound_manager) {
+        updater(client.get_protocol(), window, entidades, receiverQueue, personajes, ui_manager, client.get_id(), sound_manager, gameStarted) {
 
     //Este asset tambien deberia de pedirselo al map creator y que este le devuelva ya la textura.
     SDL_Surface* tilesetSurface =
@@ -48,8 +49,7 @@ void Game::run() {
 
     client.go_online();
 
-    std::cout << "Iniciando musica\n";
-    sound_manager.play_music();
+    //std::cout << "Iniciando musica\n";
     /*Music musica("../client_src/assets/music/Its_Pizza_Time.wav");
     musica.PlayMusic(-1);
     musica.SetVolume(20);*/
@@ -69,7 +69,7 @@ void Game::run() {
 
         usleep(rest);
     }
-
+    sound_manager.stop_music();
 }
 
 
@@ -86,6 +86,11 @@ void Game::update() {
 
 void Game::render() {
     this->window.fill();
+
+    if (!gameStarted) {
+        window.fill(255, 51, 51, 255);
+    }
+    else {
 
     Entity* entidad = NULL;
     if (personajes.find(client.get_id()) != personajes.end()) {
@@ -136,6 +141,7 @@ void Game::render() {
     }
 
     this->window.render();
+    }
 }
 
 Game::~Game() {

@@ -53,6 +53,10 @@ void SoundManager::play_music() {
     music->PlayMusic(-1);
 }
 
+void SoundManager::stop_music() {
+    music->PauseMusic();
+}
+
 void SoundManager::change_music_volume() {
     if (music_volume == 0) {
         music_volume = 20;

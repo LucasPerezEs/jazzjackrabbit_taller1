@@ -56,6 +56,7 @@ int main(int argc, char* argv[]) {
                         [&](const QString& gameID, const uint32_t& maxPlayers,
                             const std::vector<uint32_t>& cheats) {
                             if (client.createGame(gameID.toStdString(), maxPlayers, cheats)) {
+                                std::cout << "Game creado\n",
                                 multiplayerMenu.showGameCreatedMessage();
                             } else {
                                 multiplayerMenu.showGameCreationFailedMessage();

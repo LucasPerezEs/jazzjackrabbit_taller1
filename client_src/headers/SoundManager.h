@@ -24,6 +24,8 @@ public:
 
     void play_music();
 
+    void stop_music();
+
     void change_music_volume();
 
     void init_sounds();
