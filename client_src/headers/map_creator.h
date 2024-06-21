@@ -34,7 +34,6 @@ public:
 
     void select_map();
     void create_map(std::string& filename, bool& is_already_create);
-    void modify_map(std::string& filename, bool& is_already_create);
 
     std::map<std::tuple<int, int>, Tile> loadCSV(const std::string&filename);
     std::vector<std::vector<int>> cargarCSV(const std::string& ruta);

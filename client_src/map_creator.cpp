@@ -111,23 +111,17 @@ void MapCreator::select_map() {
 
     std::string mapName;
     bool is_already_create = false;
-    std::cout << "Por favor, ingresa el nombre del nuevo mapa: ";
-    std::cin >> mapName;
-    if (mapName == "1") {
+    //std::cout << "Por favor, ingresa el nombre del nuevo mapa: ";
+    //std::cin >> mapName;
+    //if (mapName == "1") {
         mapName = "castle_earlong_mapa.csv";
-    }
-
+    //}
 
     if (std::ifstream(mapName)) {
         std::cout << "El mapa con el nombre '" << mapName << "' ya existe." << std::endl;
         is_already_create = true;
-        modify_map(mapName, is_already_create);
-    
-
-    } else {
-        std::cout << "El mapa: '" << mapName << "' no existe, se crea desde cero." << std::endl;
-        create_map(mapName, is_already_create);
     }
+    create_map(mapName, is_already_create);
 }
 
 
@@ -138,34 +132,31 @@ std::map<std::tuple<int, int>, Tile> MapCreator::loadCSV(const std::string& file
     std::cout << "Estoy DENTRO de loadCSV " << std::endl;
     std::cout << "FIlename: " << filename << std::endl;
 
-    std::map<std::tuple<int, int>, Tile> mapTiles;  // Crear el mapa
+    std::map<std::tuple<int, int>, Tile> mapTiles;
     std::ifstream file(filename);
     if (file.is_open()) {
         std::cout << "Paso 1 " << std::endl;
         std::string line;
         int row = 0;
-        while (std::getline(file, line)) { //NO esta entrando aca
+        while (std::getline(file, line)) {
 
             std::cout << "En el while de row " << std::endl;
             std::istringstream iss(line);
             std::string value;
-            int column = 0;  // Contador de columnas
+            int column = 20;
 
             while (std::getline(iss, value, ',')) {
+
                 int tile_id = std::stoi(value);
                 Tile tile;
                 tile.id = tile_id;
-
-                tile.srcRect = {column*TILE_MAP_ASSETS, row*TILE_MAP_ASSETS, TILE_MAP_ASSETS, TILE_MAP_ASSETS};
+                tile.srcRect = {(tile_id % TILESET_WIDTH)*TILE_MAP_ASSETS, (tile_id / TILESET_WIDTH)*TILE_MAP_ASSETS, TILE_MAP_ASSETS, TILE_MAP_ASSETS};
                 tile.destRect = {column*TILE_MAP_CREATED, row*TILE_MAP_CREATED, TILE_MAP_CREATED, TILE_MAP_CREATED};
-
-                std::cout << "Fila: " << row << " columna: " << column << std::endl;
-
                 std::tuple<int,int> posicion = std::make_tuple(row, column);
                 mapTiles[posicion] = tile;
                 column++;
             }
-            column = 0;
+            column = 20;
             row++;
         }
         file.close();
@@ -200,7 +191,7 @@ void MapCreator::create_map(std::string& filename, bool& is_already_create){
         std::cout << "Error al crear la textura: " << SDL_GetError() << std::endl;
 
     SDL_FreeSurface(tilesetSurface);
-    SDL_SetTextureBlendMode(assetTexture, SDL_BLENDMODE_BLEND);
+    //SDL_SetTextureBlendMode(assetTexture, SDL_BLENDMODE_BLEND);
 
     int window_width, window_height;
     SDL_GetRendererOutputSize(renderer, &window_width, &window_height);
@@ -224,6 +215,15 @@ void MapCreator::create_map(std::string& filename, bool& is_already_create){
     SDL_Rect destRectAsset = {0, 0, width_texture, height_texture};
     SDL_RenderCopy(renderer, assetTexture, NULL, &destRectAsset);
     this->window.render();
+
+    if(is_already_create){
+        mapTiles = loadCSV(filename);
+        for (const auto& pair : mapTiles) {
+            const Tile& value = pair.second;
+            SDL_RenderCopy(renderer, assetTexture, &(value.srcRect), &(value.destRect));
+        }
+        this->window.render();
+    }
 
     SDL_Point mousePos;
     Tile selectedTile;
@@ -281,128 +281,4 @@ void MapCreator::create_map(std::string& filename, bool& is_already_create){
     }
     saveMapToCSV(filename, is_already_create);
     
-}
-
-
-
-////////////////////TESTING
-
-
-//Pre: -
-//Post: -
-void MapCreator::modify_map(std::string& filename, bool& is_already_create){
-
-    mapTiles.clear();
-    std::vector<Tile> tiles_asset;
-    std::tuple<int, int> posicion;
-    SDL_Renderer* renderer = this->window.getRenderer();
-
-    SDL_Surface* tilesetSurface =
-            IMG_Load("../client_src/assets/background/ASSETS_GENERALES.png");
-    if (tilesetSurface == nullptr) {
-        std::cout << "Error al cargar la imagen: " << IMG_GetError() << std::endl;
-        return;
-    }
-    SDL_SetColorKey(tilesetSurface, SDL_TRUE, SDL_MapRGB(tilesetSurface->format, 87, 0, 203));
-
-    SDL_Texture* assetTexture = SDL_CreateTextureFromSurface(renderer, tilesetSurface);
-    if (assetTexture == nullptr)
-        std::cout << "Error al crear la textura: " << SDL_GetError() << std::endl;
-    SDL_FreeSurface(tilesetSurface);
-    SDL_SetTextureBlendMode(assetTexture, SDL_BLENDMODE_BLEND);
-
-    int window_width, window_height;
-    SDL_GetRendererOutputSize(renderer, &window_width, &window_height);
-
-    int width_texture, height_texture;
-    SDL_QueryTexture(assetTexture, NULL, NULL, &width_texture, &height_texture);
-    
-
-    //Renderizo la paleta de assets
-    int numTiles = (width_texture / TILE_MAP_ASSETS) * (height_texture / TILE_MAP_ASSETS);
-    int tilesPerRow = (width_texture / TILE_MAP_ASSETS);
-    
-    for (int i = 0; i < numTiles; i++) {
-        Tile tile;
-        tile.id = i;
-        tile.srcRect = {(i % tilesPerRow)*TILE_MAP_ASSETS, (i / tilesPerRow)*TILE_MAP_ASSETS, TILE_MAP_ASSETS, TILE_MAP_ASSETS};
-        tile.selected = false;
-        // cppcheck-suppress uninitStructMember
-        tiles_asset.push_back(tile);
-    }
-    SDL_Rect destRectAsset = {0, 0, width_texture, height_texture};
-    SDL_RenderCopy(renderer, assetTexture, NULL, &destRectAsset);
-    this->window.render();
-
-    std::cout << "Estoy por entrar a loadCSV " << std::endl;
-    //Renderiza el mapa actual
-    mapTiles = loadCSV(filename);
-    for (const auto& pair : mapTiles) {
-        const Tile& value = pair.second;
-        SDL_RenderCopy(renderer, assetTexture, &(value.srcRect), &(value.destRect));
-    }
-    this->window.render();
-
-    std::this_thread::sleep_for(std::chrono::seconds(10));
-    
-    SDL_Point mousePos;
-    Tile selectedTile;
-
-    bool running = true;
-    bool mouseHeldDown = false;
-    selectedTile.selected = false;
-
-    while (running) {
-        SDL_Event event;
-        while (SDL_PollEvent(&event)) {
-            switch (event.type) {
-
-                case SDL_QUIT:
-                    running = false;
-                    break;
-
-                case SDL_MOUSEBUTTONDOWN: {
-                    mousePos.x = event.button.x;
-                    mousePos.y = event.button.y;
-
-                    for (auto& tile : tiles_asset) {
-                        if (SDL_PointInRect(&mousePos, &tile.srcRect)) {
-                            selectedTile = tile;
-                            selectedTile.selected = true;
-                            break;
-                        }
-                    }
-
-                    if (!selectedTile.selected)
-                        break;
-
-                    save_values(selectedTile, width_texture, window_width, window_height, 0, event);
-                    mouseHeldDown = true;
-                    break;
-                }
-
-                case SDL_MOUSEBUTTONUP: {
-                    mouseHeldDown = false;
-                    break;
-                }
-
-                case SDL_MOUSEMOTION: {
-
-                    if(mouseHeldDown)
-                        save_values(selectedTile, width_texture, window_width, window_height, 0, event);
-                }
-            }
-            this->window.fill();
-
-            for (const auto& pair : mapTiles) {
-                const Tile& value = pair.second;
-                SDL_RenderCopy(renderer, assetTexture, &(value.srcRect), &(value.destRect));
-            }
-
-            SDL_RenderCopy(renderer, assetTexture, NULL, &destRectAsset);
-            this->window.render();
-        }
-    }
-
-    saveMapToCSV(filename, is_already_create);
 }
