@@ -1,7 +1,7 @@
 #include "../headers/municion.h"
 
 Municion::Municion(float x, float y, std::map<std::string, float>& config, Queue<Container>& q):
-        Pickup(x, y, 2, 2, EntityType::BULLET, AnimationType::PICKUP, q),
+        Pickup(x, y, 1, 1, EntityType::BULLET, AnimationType::PICKUP, q),
         add_ammo(config["ammo_addammo"]) {}
 
 void Municion::colision(Personaje& p) {
