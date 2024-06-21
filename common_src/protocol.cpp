@@ -151,23 +151,22 @@ void Protocol::sendMap(const std::vector<std::vector<std::string>>& map){
 }
 
 std::vector<std::vector<std::string>> Protocol::receiveMap(){
-    std::vector<std::vector<std::string>> map;
-    uint16_t outerSize = receive16();
-    map.reserve(outerSize);
+    
+    std::vector<std::vector<std::string>> mapReceived;
+    uint16_t numRows = receive16();
 
-    for (uint16_t i = 0; i < outerSize; ++i) {
-        uint16_t innerSize = receive16();
-        std::vector<std::string> innerVec;
-        innerVec.reserve(innerSize);
+    for (uint16_t row = 0; row < numRows; ++row) {
+        uint16_t numCols = receive16();
+        std::vector<std::string> rowValues;
 
-        for (uint16_t j = 0; j < innerSize; ++j) {
-            innerVec.push_back(receiveString());
+        for (uint16_t col = 0; col < numCols; ++col) {
+            rowValues.push_back(receiveString());
         }
 
-        map.push_back(innerVec);
+        mapReceived.push_back(rowValues);
     }
 
-    return map;
+    return mapReceived;
 }
 
 
