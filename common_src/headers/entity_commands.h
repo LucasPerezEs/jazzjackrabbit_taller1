@@ -13,7 +13,8 @@ enum EntityType {
     GOLD_COIN = 0x08,
     NONE_ENTITY = 0x09,
     BANANA = 0x10,
-    MONKEY = 0x11
+    MONKEY = 0x11,
+    INTOXICATED_CARROT = 0x12
 };
 
 enum AnimationType {

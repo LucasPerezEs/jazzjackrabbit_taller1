@@ -108,9 +108,9 @@ void MapCreator::select_map() {
     //std::cin >> mapName;
 
     //if (mapName == "1") {
-        mapName = "castle_earlong";
+        //mapName = "castle_earlong";
     //}else if(mapName == "2"){
-        //mapName = "medivo";
+        mapName = "medivo";
     //}
 
     std::vector<std::vector<std::string>> mapReceived;
