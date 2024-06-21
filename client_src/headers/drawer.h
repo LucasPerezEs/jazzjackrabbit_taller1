@@ -8,8 +8,10 @@
 #include <vector>
 
 #include <SDL2/SDL.h>
+#include "map_creator.h"
 #include "SdlWindow.h"
 #include "camara.h"
+#include "tile.h"
 
 const int TILESET_WIDTH = 10;
 
@@ -21,7 +23,7 @@ public:
     explicit Drawer(SdlWindow& window);
 
     void draw_with_camara(const std::vector<std::vector<int>>& tilemap, SDL_Texture* tilesetTexture, Camara* camara);
-    void draw_map(const std::vector<std::vector<int>>& tilemap, SDL_Texture* tilesetTexture, const int& size_src, const int& size_dest);
+    void draw_map(std::map<std::tuple<int, int>, Tile>& tilemap, SDL_Texture* tilesetTexture, const int& size_src, const int& size_dest);
 
     Drawer(const Drawer&) = delete;
     Drawer& operator=(const Drawer&) = delete;

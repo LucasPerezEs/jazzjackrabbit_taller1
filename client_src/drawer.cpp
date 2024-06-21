@@ -42,37 +42,33 @@ void Drawer::draw_with_camara(const std::vector<std::vector<int>>& tilemap, SDL_
 }
 
 
-void Drawer::draw_map(const std::vector<std::vector<int>>& tilemap, SDL_Texture* tilesetTexture, const int& size_src, const int& size_dest) {
+void Drawer::draw_map(std::map<std::tuple<int, int>, Tile>& tilemap, SDL_Texture* tilesetTexture, const int& size_src, const int& size_dest) {
 
     // Ahora recorre solo los tiles que están dentro de la vista de la cámara
-    for (long unsigned int y = 0; y < tilemap.size(); y++) {
-        for (long unsigned int x = 0; x < tilemap[0].size(); x++) {
+    for (const auto& tileEntry : tilemap) {
+        const auto& tilePosition = tileEntry.first;
+        const Tile& tile = tileEntry.second;
 
-            // Obtiene el id del tile
-            int tileValue = tilemap[y][x];
+        // Calcula la posición del tile en píxeles
+        int posX = std::get<0>(tilePosition);
+        int posY = std::get<1>(tilePosition);
 
-            // Calcula la posición del tile en píxeles
-            int posX = x;
-            int posY = tilemap.size() - y;
+        SDL_Rect sourceRect;
+        sourceRect.x = (tile.id % TILESET_WIDTH) * size_src;
+        sourceRect.y = (tile.id / TILESET_WIDTH) * size_src;
+        sourceRect.w = size_src;
+        sourceRect.h = size_src;
 
-            SDL_Rect sourceRect;
-            sourceRect.x = (tileValue % TILESET_WIDTH) * size_src;
-            sourceRect.y = (tileValue / TILESET_WIDTH) * size_src;
-            sourceRect.w = size_src;
-            sourceRect.h = size_src;
+        // Define el rectángulo de destino en la pantalla
+        SDL_Rect destinationRect;
 
-            // Define el rectángulo de destino en la pantalla
-            SDL_Rect destinationRect;
+        destinationRect.x = posX;
+        destinationRect.y = posY;
+        destinationRect.w = size_dest;
+        destinationRect.h = size_dest;
 
-            destinationRect.x = posX;
-            destinationRect.y = posY;
-            destinationRect.w = size_dest;
-            destinationRect.h = size_dest;
-
-
-            // Renderiza el tile
-            SDL_RenderCopy(window.getRenderer(), tilesetTexture, &sourceRect,
-                           &destinationRect);
-        }
+        // Renderiza el tile
+        SDL_RenderCopy(window.getRenderer(), tilesetTexture, &sourceRect, 
+            &destinationRect);
     }
 }
