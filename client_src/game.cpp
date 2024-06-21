@@ -101,6 +101,7 @@ void Game::render() {
 
     if (!gameStarted) {
         SDL_RenderCopy(window.getRenderer(), loadingImage, NULL, NULL);
+        ui_manager.renderLoadingText();
     }
     else {
 
