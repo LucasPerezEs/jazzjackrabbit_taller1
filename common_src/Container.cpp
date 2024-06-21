@@ -16,6 +16,10 @@ SetupContainer::SetupContainer(Setup::ActionType setupType, std::vector<std::str
 SetupContainer::SetupContainer(Setup::ActionType setupType, uint32_t id, bool ok):
         setupType(setupType), clientId(id), ok(ok) {}
 
+// cppcheck-suppress uninitMemberVar
+SetupContainer::SetupContainer(Setup::ActionType setupType, std::vector<std::vector<std::string>>& mapReceived, bool ok):
+        setupType(setupType), map(mapReceived), ok(ok) {}
+
 
 // GameContainer implementation
 GameContainer::GameContainer(uint32_t msg_code, int id, float x, float y, float w, float h,
@@ -65,6 +69,14 @@ Container::Container(Setup::ActionType setupType, uint32_t id, bool ok):
         // cppcheck-suppress noCopyConstructor
         // cppcheck-suppress noOperatorEq
         setup_container(new SetupContainer(setupType, id, ok)),
+        game_container(nullptr),
+        sound_container(nullptr),
+        _type(Type::SETUP) {}
+
+Container::Container(Setup::ActionType setupType, std::vector<std::vector<std::string>>& mapReceived, bool ok):
+        // cppcheck-suppress noCopyConstructor
+        // cppcheck-suppress noOperatorEq
+        setup_container(new SetupContainer(setupType, mapReceived, ok)),
         game_container(nullptr),
         sound_container(nullptr),
         _type(Type::SETUP) {}

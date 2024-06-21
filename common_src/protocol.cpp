@@ -140,6 +140,15 @@ void Protocol::sendVectorString(const std::vector<std::string>& vec){
     }
 }
 
+void Protocol::sendMap(const std::vector<std::vector<std::string>>& externVec){
+    send16(externVec.size());
+    for (const auto& innerVec : externVec) {
+        send16(innerVec.size()); 
+        for (const auto& str : innerVec) {
+            sendString(str);
+        }
+    }
+}
 
 
 void Protocol::close() { socket.close(); }

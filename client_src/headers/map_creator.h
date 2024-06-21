@@ -11,10 +11,13 @@
 #include <iostream>
 
 #include <SDL2/SDL.h>
+
+#include "tile.h"
 #include "client.h"
 #include "drawer.h"
-#include "tile.h"
+#include "protocol.h"
 #include "SdlWindow.h"
+#include "../../common_src/headers/commands.h"
 
 #define TILE_MAP_ASSETS 16  // Tamaño en el que se ve el asset al crear.
 #define TILE_MAP_CREATED 8  // Tamaño en el que se ve el mapa al crearlo.
@@ -23,6 +26,8 @@ class MapCreator {
 private:
     Client& client;
     SdlWindow window;
+    ClientReceiver client_receiver;
+    Queue<Container> receiverQueue;
     std::map<std::tuple<int, int>, Tile> mapTiles;
 
     void saveMapToCSV(std::string& filename, bool& is_already_create);
