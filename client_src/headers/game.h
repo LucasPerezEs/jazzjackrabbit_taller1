@@ -35,6 +35,7 @@ private:
     std::map<int, Entity*> entidades;
     std::map<int, Player*> personajes;
 
+    SDL_Texture* loadingImage;
     SDL_Texture* tilesetTexture;
     std::vector<std::vector<int>> tilemap;
     UIManager ui_manager;
