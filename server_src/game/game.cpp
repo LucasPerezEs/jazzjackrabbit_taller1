@@ -101,12 +101,12 @@ void Game::run() {
                 case Command::ActionType::QUIT: {
                     Container c(1, clientId, 0, 0, 0, 0, 0, AnimationType::NONE_ANIMATION, EntityType::NONE_ENTITY, 0, 0, 0);
                     stateQueue.push(c);
-                    objetos.borrar(clientId);
                     entes.erase(std::remove_if(entes.begin(), entes.end(), [&](Ente* o){
                         if (o->id == (int)clientId) {
                             return true;
                         }
                         return false;}));
+                    objetos.borrar(clientId);
                     broadcaster.erase_client(clientId);
                     break;
                 }
