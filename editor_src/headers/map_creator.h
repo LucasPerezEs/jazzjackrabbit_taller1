@@ -20,7 +20,11 @@
 #define TILE_MAP_CREATED 8  // Tamaño en el que se ve el mapa al crearlo.
 
 class MapCreator {
+    std::string mapName;
+    int mapWidth;
+    int mapHeight;
     SdlWindow window;
+    bool is_already_create;
     std::map<std::tuple<int, int>, Tile> mapTiles;
 
     void saveMapToCSV(std::string& filename, bool& is_already_create);
@@ -28,7 +32,7 @@ class MapCreator {
                      SDL_Event& event);
 
 public:
-    explicit MapCreator();
+    explicit MapCreator(const std::string& mapName, const int& width, const int& height, const bool& is_already_create);
 
     void select_map();
     void create_map(std::string& filename, bool& is_already_create);

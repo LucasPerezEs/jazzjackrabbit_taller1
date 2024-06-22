@@ -1,8 +1,7 @@
 #include "headers/map_creator.h"
 
-MapCreator::MapCreator():
-        window(800, 600) {}
-
+MapCreator::MapCreator(const std::string& mapName, const int& width, const int& height, const bool& is_already_create):
+        mapName(mapName), mapWidth(width), mapHeight(height), window(800, 600), is_already_create(is_already_create) {}
 
 //Pre: -
 //Post: -
