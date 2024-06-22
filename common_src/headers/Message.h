@@ -22,7 +22,9 @@ public:
     // cppcheck-suppress uninitMemberVar
     Message(Setup::ActionType setupType, const std::string& gameId, uint32_t maxPlayers,
             const std::vector<uint32_t>& cheats):
+
             setup({setupType, {}, gameId, maxPlayers, {}, {}, {}, cheats}), type_(Type::SETUP) {}
+
 
     // cppcheck-suppress uninitMemberVar
     Message(Setup::ActionType setupType, uint32_t character, const std::string& gameId):
@@ -33,6 +35,7 @@ public:
 
     Message(Setup::ActionType setupType, const std::string& mapName, std::vector<std::vector<std::string>>& map): 
         setup({setupType, {}, {}, {}, {}, mapName, map, {}}), type_(Type::SETUP) {}
+
 
 
     Type type() const { return type_; }

@@ -17,9 +17,7 @@ void Acceptor::reap_offline_clients() {
 
 void Acceptor::kill_all() {
     for (auto& c: clients) {
-        if (c->is_online()) {
-            c->kill();
-        }
+        c->kill();
         delete c;
     }
     clients.clear();
@@ -33,6 +31,7 @@ void Acceptor::run() {
             Socket peer = sk.accept();
             ClientHandler* client = new ClientHandler(id, std::move(peer));
             client->go_online();
+            
             client->pushState(Container(Setup::CLIENT_ID, id, true));
             clients.push_back(client);
             gameManager.addClient(id,client);

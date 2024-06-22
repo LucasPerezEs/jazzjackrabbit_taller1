@@ -54,6 +54,8 @@ build CMakeFiles/server.dir/server_src/main.cpp.o: CXX_COMPILER__server_unscanne
   FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles/server.dir
   OBJECT_FILE_DIR = CMakeFiles/server.dir/server_src
+  TARGET_COMPILE_PDB = CMakeFiles/server.dir/
+  TARGET_PDB = server.pdb
 
 
 # =============================================================================
@@ -70,8 +72,9 @@ build server: CXX_EXECUTABLE_LINKER__server_Debug CMakeFiles/server.dir/server_s
   OBJECT_DIR = CMakeFiles/server.dir
   POST_BUILD = :
   PRE_LINK = :
+  TARGET_COMPILE_PDB = CMakeFiles/server.dir/
   TARGET_FILE = server
-  TARGET_PDB = server.dbg
+  TARGET_PDB = server.pdb
 
 # =============================================================================
 # Object build statements for EXECUTABLE target client
@@ -89,6 +92,8 @@ build CMakeFiles/client.dir/client_src/main.cpp.o: CXX_COMPILER__client_unscanne
   INCLUDES = -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
   OBJECT_DIR = CMakeFiles/client.dir
   OBJECT_FILE_DIR = CMakeFiles/client.dir/client_src
+  TARGET_COMPILE_PDB = CMakeFiles/client.dir/
+  TARGET_PDB = client.pdb
 
 
 # =============================================================================
@@ -105,15 +110,16 @@ build client: CXX_EXECUTABLE_LINKER__client_Debug CMakeFiles/client.dir/client_s
   OBJECT_DIR = CMakeFiles/client.dir
   POST_BUILD = :
   PRE_LINK = :
+  TARGET_COMPILE_PDB = CMakeFiles/client.dir/
   TARGET_FILE = client
-  TARGET_PDB = client.dbg
+  TARGET_PDB = client.pdb
 
 
 #############################################
 # Utility command for edit_cache
 
 build CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug && /snap/clion/282/bin/cmake/linux/x64/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  COMMAND = cd /home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug && /snap/clion/284/bin/cmake/linux/x64/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
   DESC = No interactive CMake dialog available...
   restat = 1
 
@@ -124,7 +130,7 @@ build edit_cache: phony CMakeFiles/edit_cache.util
 # Utility command for rebuild_cache
 
 build CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug && /snap/clion/282/bin/cmake/linux/x64/bin/cmake --regenerate-during-build -S/home/moko/Escritorio/jazzjackrabbit_taller1 -B/home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug
+  COMMAND = cd /home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug && /snap/clion/284/bin/cmake/linux/x64/bin/cmake --regenerate-during-build -S/home/moko/Escritorio/jazzjackrabbit_taller1 -B/home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -152,6 +158,8 @@ build client_src/CMakeFiles/client_lib.dir/event_handler.cpp.o: CXX_COMPILER__cl
   INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/../common_src/headers/*" -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
   OBJECT_DIR = client_src/CMakeFiles/client_lib.dir
   OBJECT_FILE_DIR = client_src/CMakeFiles/client_lib.dir
+  TARGET_COMPILE_PDB = client_src/CMakeFiles/client_lib.dir/client_lib.pdb
+  TARGET_PDB = client_src/libclient_lib.pdb
 
 build client_src/CMakeFiles/client_lib.dir/model_updater.cpp.o: CXX_COMPILER__client_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/model_updater.cpp || cmake_object_order_depends_target_client_lib
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
@@ -160,6 +168,8 @@ build client_src/CMakeFiles/client_lib.dir/model_updater.cpp.o: CXX_COMPILER__cl
   INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/../common_src/headers/*" -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
   OBJECT_DIR = client_src/CMakeFiles/client_lib.dir
   OBJECT_FILE_DIR = client_src/CMakeFiles/client_lib.dir
+  TARGET_COMPILE_PDB = client_src/CMakeFiles/client_lib.dir/client_lib.pdb
+  TARGET_PDB = client_src/libclient_lib.pdb
 
 build client_src/CMakeFiles/client_lib.dir/game.cpp.o: CXX_COMPILER__client_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/game.cpp || cmake_object_order_depends_target_client_lib
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
@@ -168,6 +178,8 @@ build client_src/CMakeFiles/client_lib.dir/game.cpp.o: CXX_COMPILER__client_lib_
   INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/../common_src/headers/*" -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
   OBJECT_DIR = client_src/CMakeFiles/client_lib.dir
   OBJECT_FILE_DIR = client_src/CMakeFiles/client_lib.dir
+  TARGET_COMPILE_PDB = client_src/CMakeFiles/client_lib.dir/client_lib.pdb
+  TARGET_PDB = client_src/libclient_lib.pdb
 
 build client_src/CMakeFiles/client_lib.dir/protocol.cpp.o: CXX_COMPILER__client_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/protocol.cpp || cmake_object_order_depends_target_client_lib
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
@@ -176,6 +188,8 @@ build client_src/CMakeFiles/client_lib.dir/protocol.cpp.o: CXX_COMPILER__client_
   INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/../common_src/headers/*" -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
   OBJECT_DIR = client_src/CMakeFiles/client_lib.dir
   OBJECT_FILE_DIR = client_src/CMakeFiles/client_lib.dir
+  TARGET_COMPILE_PDB = client_src/CMakeFiles/client_lib.dir/client_lib.pdb
+  TARGET_PDB = client_src/libclient_lib.pdb
 
 build client_src/CMakeFiles/client_lib.dir/client.cpp.o: CXX_COMPILER__client_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/client.cpp || cmake_object_order_depends_target_client_lib
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
@@ -184,6 +198,28 @@ build client_src/CMakeFiles/client_lib.dir/client.cpp.o: CXX_COMPILER__client_li
   INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/../common_src/headers/*" -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
   OBJECT_DIR = client_src/CMakeFiles/client_lib.dir
   OBJECT_FILE_DIR = client_src/CMakeFiles/client_lib.dir
+  TARGET_COMPILE_PDB = client_src/CMakeFiles/client_lib.dir/client_lib.pdb
+  TARGET_PDB = client_src/libclient_lib.pdb
+
+build client_src/CMakeFiles/client_lib.dir/drawer.cpp.o: CXX_COMPILER__client_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/drawer.cpp || cmake_object_order_depends_target_client_lib
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
+  DEP_FILE = client_src/CMakeFiles/client_lib.dir/drawer.cpp.o.d
+  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always -fPIC
+  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/../common_src/headers/*" -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
+  OBJECT_DIR = client_src/CMakeFiles/client_lib.dir
+  OBJECT_FILE_DIR = client_src/CMakeFiles/client_lib.dir
+  TARGET_COMPILE_PDB = client_src/CMakeFiles/client_lib.dir/client_lib.pdb
+  TARGET_PDB = client_src/libclient_lib.pdb
+
+build client_src/CMakeFiles/client_lib.dir/map_creator.cpp.o: CXX_COMPILER__client_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/map_creator.cpp || cmake_object_order_depends_target_client_lib
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
+  DEP_FILE = client_src/CMakeFiles/client_lib.dir/map_creator.cpp.o.d
+  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always -fPIC
+  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/../common_src/headers/*" -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
+  OBJECT_DIR = client_src/CMakeFiles/client_lib.dir
+  OBJECT_FILE_DIR = client_src/CMakeFiles/client_lib.dir
+  TARGET_COMPILE_PDB = client_src/CMakeFiles/client_lib.dir/client_lib.pdb
+  TARGET_PDB = client_src/libclient_lib.pdb
 
 build client_src/CMakeFiles/client_lib.dir/clientReceiver.cpp.o: CXX_COMPILER__client_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/clientReceiver.cpp || cmake_object_order_depends_target_client_lib
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
@@ -192,6 +228,8 @@ build client_src/CMakeFiles/client_lib.dir/clientReceiver.cpp.o: CXX_COMPILER__c
   INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/../common_src/headers/*" -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
   OBJECT_DIR = client_src/CMakeFiles/client_lib.dir
   OBJECT_FILE_DIR = client_src/CMakeFiles/client_lib.dir
+  TARGET_COMPILE_PDB = client_src/CMakeFiles/client_lib.dir/client_lib.pdb
+  TARGET_PDB = client_src/libclient_lib.pdb
 
 build client_src/CMakeFiles/client_lib.dir/entity.cpp.o: CXX_COMPILER__client_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/entity.cpp || cmake_object_order_depends_target_client_lib
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
@@ -200,6 +238,8 @@ build client_src/CMakeFiles/client_lib.dir/entity.cpp.o: CXX_COMPILER__client_li
   INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/../common_src/headers/*" -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
   OBJECT_DIR = client_src/CMakeFiles/client_lib.dir
   OBJECT_FILE_DIR = client_src/CMakeFiles/client_lib.dir
+  TARGET_COMPILE_PDB = client_src/CMakeFiles/client_lib.dir/client_lib.pdb
+  TARGET_PDB = client_src/libclient_lib.pdb
 
 build client_src/CMakeFiles/client_lib.dir/player.cpp.o: CXX_COMPILER__client_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/player.cpp || cmake_object_order_depends_target_client_lib
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
@@ -208,6 +248,8 @@ build client_src/CMakeFiles/client_lib.dir/player.cpp.o: CXX_COMPILER__client_li
   INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/../common_src/headers/*" -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
   OBJECT_DIR = client_src/CMakeFiles/client_lib.dir
   OBJECT_FILE_DIR = client_src/CMakeFiles/client_lib.dir
+  TARGET_COMPILE_PDB = client_src/CMakeFiles/client_lib.dir/client_lib.pdb
+  TARGET_PDB = client_src/libclient_lib.pdb
 
 build client_src/CMakeFiles/client_lib.dir/camara.cpp.o: CXX_COMPILER__client_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/camara.cpp || cmake_object_order_depends_target_client_lib
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
@@ -216,6 +258,8 @@ build client_src/CMakeFiles/client_lib.dir/camara.cpp.o: CXX_COMPILER__client_li
   INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/../common_src/headers/*" -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
   OBJECT_DIR = client_src/CMakeFiles/client_lib.dir
   OBJECT_FILE_DIR = client_src/CMakeFiles/client_lib.dir
+  TARGET_COMPILE_PDB = client_src/CMakeFiles/client_lib.dir/client_lib.pdb
+  TARGET_PDB = client_src/libclient_lib.pdb
 
 build client_src/CMakeFiles/client_lib.dir/UIManager.cpp.o: CXX_COMPILER__client_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/UIManager.cpp || cmake_object_order_depends_target_client_lib
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
@@ -224,6 +268,18 @@ build client_src/CMakeFiles/client_lib.dir/UIManager.cpp.o: CXX_COMPILER__client
   INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/../common_src/headers/*" -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
   OBJECT_DIR = client_src/CMakeFiles/client_lib.dir
   OBJECT_FILE_DIR = client_src/CMakeFiles/client_lib.dir
+  TARGET_COMPILE_PDB = client_src/CMakeFiles/client_lib.dir/client_lib.pdb
+  TARGET_PDB = client_src/libclient_lib.pdb
+
+build client_src/CMakeFiles/client_lib.dir/SoundManager.cpp.o: CXX_COMPILER__client_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/SoundManager.cpp || cmake_object_order_depends_target_client_lib
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
+  DEP_FILE = client_src/CMakeFiles/client_lib.dir/SoundManager.cpp.o.d
+  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always -fPIC
+  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/../common_src/headers/*" -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
+  OBJECT_DIR = client_src/CMakeFiles/client_lib.dir
+  OBJECT_FILE_DIR = client_src/CMakeFiles/client_lib.dir
+  TARGET_COMPILE_PDB = client_src/CMakeFiles/client_lib.dir/client_lib.pdb
+  TARGET_PDB = client_src/libclient_lib.pdb
 
 build client_src/CMakeFiles/client_lib.dir/__/common_src/liberror.cpp.o: CXX_COMPILER__client_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/common_src/liberror.cpp || cmake_object_order_depends_target_client_lib
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
@@ -232,6 +288,8 @@ build client_src/CMakeFiles/client_lib.dir/__/common_src/liberror.cpp.o: CXX_COM
   INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/../common_src/headers/*" -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
   OBJECT_DIR = client_src/CMakeFiles/client_lib.dir
   OBJECT_FILE_DIR = client_src/CMakeFiles/client_lib.dir/__/common_src
+  TARGET_COMPILE_PDB = client_src/CMakeFiles/client_lib.dir/client_lib.pdb
+  TARGET_PDB = client_src/libclient_lib.pdb
 
 build client_src/CMakeFiles/client_lib.dir/__/common_src/protocol.cpp.o: CXX_COMPILER__client_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/common_src/protocol.cpp || cmake_object_order_depends_target_client_lib
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
@@ -240,6 +298,8 @@ build client_src/CMakeFiles/client_lib.dir/__/common_src/protocol.cpp.o: CXX_COM
   INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/../common_src/headers/*" -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
   OBJECT_DIR = client_src/CMakeFiles/client_lib.dir
   OBJECT_FILE_DIR = client_src/CMakeFiles/client_lib.dir/__/common_src
+  TARGET_COMPILE_PDB = client_src/CMakeFiles/client_lib.dir/client_lib.pdb
+  TARGET_PDB = client_src/libclient_lib.pdb
 
 build client_src/CMakeFiles/client_lib.dir/__/common_src/resolver.cpp.o: CXX_COMPILER__client_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/common_src/resolver.cpp || cmake_object_order_depends_target_client_lib
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
@@ -248,6 +308,8 @@ build client_src/CMakeFiles/client_lib.dir/__/common_src/resolver.cpp.o: CXX_COM
   INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/../common_src/headers/*" -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
   OBJECT_DIR = client_src/CMakeFiles/client_lib.dir
   OBJECT_FILE_DIR = client_src/CMakeFiles/client_lib.dir/__/common_src
+  TARGET_COMPILE_PDB = client_src/CMakeFiles/client_lib.dir/client_lib.pdb
+  TARGET_PDB = client_src/libclient_lib.pdb
 
 build client_src/CMakeFiles/client_lib.dir/__/common_src/resolvererror.cpp.o: CXX_COMPILER__client_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/common_src/resolvererror.cpp || cmake_object_order_depends_target_client_lib
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
@@ -256,6 +318,8 @@ build client_src/CMakeFiles/client_lib.dir/__/common_src/resolvererror.cpp.o: CX
   INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/../common_src/headers/*" -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
   OBJECT_DIR = client_src/CMakeFiles/client_lib.dir
   OBJECT_FILE_DIR = client_src/CMakeFiles/client_lib.dir/__/common_src
+  TARGET_COMPILE_PDB = client_src/CMakeFiles/client_lib.dir/client_lib.pdb
+  TARGET_PDB = client_src/libclient_lib.pdb
 
 build client_src/CMakeFiles/client_lib.dir/__/common_src/socket.cpp.o: CXX_COMPILER__client_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/common_src/socket.cpp || cmake_object_order_depends_target_client_lib
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
@@ -264,86 +328,8 @@ build client_src/CMakeFiles/client_lib.dir/__/common_src/socket.cpp.o: CXX_COMPI
   INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/../common_src/headers/*" -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
   OBJECT_DIR = client_src/CMakeFiles/client_lib.dir
   OBJECT_FILE_DIR = client_src/CMakeFiles/client_lib.dir/__/common_src
-
-build client_src/CMakeFiles/client_lib.dir/sdl_libs/Animation.cpp.o: CXX_COMPILER__client_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/sdl_libs/Animation.cpp || cmake_object_order_depends_target_client_lib
-  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
-  DEP_FILE = client_src/CMakeFiles/client_lib.dir/sdl_libs/Animation.cpp.o.d
-  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always -fPIC
-  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/../common_src/headers/*" -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
-  OBJECT_DIR = client_src/CMakeFiles/client_lib.dir
-  OBJECT_FILE_DIR = client_src/CMakeFiles/client_lib.dir/sdl_libs
-
-build client_src/CMakeFiles/client_lib.dir/sdl_libs/Area.cpp.o: CXX_COMPILER__client_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/sdl_libs/Area.cpp || cmake_object_order_depends_target_client_lib
-  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
-  DEP_FILE = client_src/CMakeFiles/client_lib.dir/sdl_libs/Area.cpp.o.d
-  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always -fPIC
-  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/../common_src/headers/*" -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
-  OBJECT_DIR = client_src/CMakeFiles/client_lib.dir
-  OBJECT_FILE_DIR = client_src/CMakeFiles/client_lib.dir/sdl_libs
-
-build client_src/CMakeFiles/client_lib.dir/sdl_libs/Exception.cpp.o: CXX_COMPILER__client_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/sdl_libs/Exception.cpp || cmake_object_order_depends_target_client_lib
-  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
-  DEP_FILE = client_src/CMakeFiles/client_lib.dir/sdl_libs/Exception.cpp.o.d
-  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always -fPIC
-  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/../common_src/headers/*" -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
-  OBJECT_DIR = client_src/CMakeFiles/client_lib.dir
-  OBJECT_FILE_DIR = client_src/CMakeFiles/client_lib.dir/sdl_libs
-
-build client_src/CMakeFiles/client_lib.dir/sdl_libs/SdlException.cpp.o: CXX_COMPILER__client_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/sdl_libs/SdlException.cpp || cmake_object_order_depends_target_client_lib
-  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
-  DEP_FILE = client_src/CMakeFiles/client_lib.dir/sdl_libs/SdlException.cpp.o.d
-  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always -fPIC
-  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/../common_src/headers/*" -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
-  OBJECT_DIR = client_src/CMakeFiles/client_lib.dir
-  OBJECT_FILE_DIR = client_src/CMakeFiles/client_lib.dir/sdl_libs
-
-build client_src/CMakeFiles/client_lib.dir/sdl_libs/SdlTexture.cpp.o: CXX_COMPILER__client_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/sdl_libs/SdlTexture.cpp || cmake_object_order_depends_target_client_lib
-  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
-  DEP_FILE = client_src/CMakeFiles/client_lib.dir/sdl_libs/SdlTexture.cpp.o.d
-  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always -fPIC
-  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/../common_src/headers/*" -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
-  OBJECT_DIR = client_src/CMakeFiles/client_lib.dir
-  OBJECT_FILE_DIR = client_src/CMakeFiles/client_lib.dir/sdl_libs
-
-build client_src/CMakeFiles/client_lib.dir/sdl_libs/SdlWindow.cpp.o: CXX_COMPILER__client_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/sdl_libs/SdlWindow.cpp || cmake_object_order_depends_target_client_lib
-  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
-  DEP_FILE = client_src/CMakeFiles/client_lib.dir/sdl_libs/SdlWindow.cpp.o.d
-  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always -fPIC
-  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/../common_src/headers/*" -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
-  OBJECT_DIR = client_src/CMakeFiles/client_lib.dir
-  OBJECT_FILE_DIR = client_src/CMakeFiles/client_lib.dir/sdl_libs
-
-build client_src/CMakeFiles/client_lib.dir/sdl_libs/Fuente.cpp.o: CXX_COMPILER__client_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/sdl_libs/Fuente.cpp || cmake_object_order_depends_target_client_lib
-  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
-  DEP_FILE = client_src/CMakeFiles/client_lib.dir/sdl_libs/Fuente.cpp.o.d
-  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always -fPIC
-  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/../common_src/headers/*" -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
-  OBJECT_DIR = client_src/CMakeFiles/client_lib.dir
-  OBJECT_FILE_DIR = client_src/CMakeFiles/client_lib.dir/sdl_libs
-
-build client_src/CMakeFiles/client_lib.dir/sdl_libs/Music.cpp.o: CXX_COMPILER__client_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/sdl_libs/Music.cpp || cmake_object_order_depends_target_client_lib
-  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
-  DEP_FILE = client_src/CMakeFiles/client_lib.dir/sdl_libs/Music.cpp.o.d
-  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always -fPIC
-  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/../common_src/headers/*" -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
-  OBJECT_DIR = client_src/CMakeFiles/client_lib.dir
-  OBJECT_FILE_DIR = client_src/CMakeFiles/client_lib.dir/sdl_libs
-
-build client_src/CMakeFiles/client_lib.dir/sdl_libs/Sound.cpp.o: CXX_COMPILER__client_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/sdl_libs/Sound.cpp || cmake_object_order_depends_target_client_lib
-  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
-  DEP_FILE = client_src/CMakeFiles/client_lib.dir/sdl_libs/Sound.cpp.o.d
-  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always -fPIC
-  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/../common_src/headers/*" -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
-  OBJECT_DIR = client_src/CMakeFiles/client_lib.dir
-  OBJECT_FILE_DIR = client_src/CMakeFiles/client_lib.dir/sdl_libs
-
-build client_src/CMakeFiles/client_lib.dir/setupscreen/ConnectMenu.cpp.o: CXX_COMPILER__client_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/ConnectMenu.cpp || cmake_object_order_depends_target_client_lib
-  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
-  DEP_FILE = client_src/CMakeFiles/client_lib.dir/setupscreen/ConnectMenu.cpp.o.d
-  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always -fPIC
-  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/../common_src/headers/*" -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
-  OBJECT_DIR = client_src/CMakeFiles/client_lib.dir
-  OBJECT_FILE_DIR = client_src/CMakeFiles/client_lib.dir/setupscreen
+  TARGET_COMPILE_PDB = client_src/CMakeFiles/client_lib.dir/client_lib.pdb
+  TARGET_PDB = client_src/libclient_lib.pdb
 
 build client_src/CMakeFiles/client_lib.dir/__/common_src/Container.cpp.o: CXX_COMPILER__client_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/common_src/Container.cpp || cmake_object_order_depends_target_client_lib
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
@@ -352,6 +338,108 @@ build client_src/CMakeFiles/client_lib.dir/__/common_src/Container.cpp.o: CXX_CO
   INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/../common_src/headers/*" -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
   OBJECT_DIR = client_src/CMakeFiles/client_lib.dir
   OBJECT_FILE_DIR = client_src/CMakeFiles/client_lib.dir/__/common_src
+  TARGET_COMPILE_PDB = client_src/CMakeFiles/client_lib.dir/client_lib.pdb
+  TARGET_PDB = client_src/libclient_lib.pdb
+
+build client_src/CMakeFiles/client_lib.dir/sdl_libs/Animation.cpp.o: CXX_COMPILER__client_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/sdl_libs/Animation.cpp || cmake_object_order_depends_target_client_lib
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
+  DEP_FILE = client_src/CMakeFiles/client_lib.dir/sdl_libs/Animation.cpp.o.d
+  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always -fPIC
+  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/../common_src/headers/*" -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
+  OBJECT_DIR = client_src/CMakeFiles/client_lib.dir
+  OBJECT_FILE_DIR = client_src/CMakeFiles/client_lib.dir/sdl_libs
+  TARGET_COMPILE_PDB = client_src/CMakeFiles/client_lib.dir/client_lib.pdb
+  TARGET_PDB = client_src/libclient_lib.pdb
+
+build client_src/CMakeFiles/client_lib.dir/sdl_libs/Area.cpp.o: CXX_COMPILER__client_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/sdl_libs/Area.cpp || cmake_object_order_depends_target_client_lib
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
+  DEP_FILE = client_src/CMakeFiles/client_lib.dir/sdl_libs/Area.cpp.o.d
+  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always -fPIC
+  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/../common_src/headers/*" -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
+  OBJECT_DIR = client_src/CMakeFiles/client_lib.dir
+  OBJECT_FILE_DIR = client_src/CMakeFiles/client_lib.dir/sdl_libs
+  TARGET_COMPILE_PDB = client_src/CMakeFiles/client_lib.dir/client_lib.pdb
+  TARGET_PDB = client_src/libclient_lib.pdb
+
+build client_src/CMakeFiles/client_lib.dir/sdl_libs/Exception.cpp.o: CXX_COMPILER__client_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/sdl_libs/Exception.cpp || cmake_object_order_depends_target_client_lib
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
+  DEP_FILE = client_src/CMakeFiles/client_lib.dir/sdl_libs/Exception.cpp.o.d
+  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always -fPIC
+  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/../common_src/headers/*" -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
+  OBJECT_DIR = client_src/CMakeFiles/client_lib.dir
+  OBJECT_FILE_DIR = client_src/CMakeFiles/client_lib.dir/sdl_libs
+  TARGET_COMPILE_PDB = client_src/CMakeFiles/client_lib.dir/client_lib.pdb
+  TARGET_PDB = client_src/libclient_lib.pdb
+
+build client_src/CMakeFiles/client_lib.dir/sdl_libs/SdlException.cpp.o: CXX_COMPILER__client_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/sdl_libs/SdlException.cpp || cmake_object_order_depends_target_client_lib
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
+  DEP_FILE = client_src/CMakeFiles/client_lib.dir/sdl_libs/SdlException.cpp.o.d
+  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always -fPIC
+  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/../common_src/headers/*" -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
+  OBJECT_DIR = client_src/CMakeFiles/client_lib.dir
+  OBJECT_FILE_DIR = client_src/CMakeFiles/client_lib.dir/sdl_libs
+  TARGET_COMPILE_PDB = client_src/CMakeFiles/client_lib.dir/client_lib.pdb
+  TARGET_PDB = client_src/libclient_lib.pdb
+
+build client_src/CMakeFiles/client_lib.dir/sdl_libs/SdlTexture.cpp.o: CXX_COMPILER__client_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/sdl_libs/SdlTexture.cpp || cmake_object_order_depends_target_client_lib
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
+  DEP_FILE = client_src/CMakeFiles/client_lib.dir/sdl_libs/SdlTexture.cpp.o.d
+  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always -fPIC
+  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/../common_src/headers/*" -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
+  OBJECT_DIR = client_src/CMakeFiles/client_lib.dir
+  OBJECT_FILE_DIR = client_src/CMakeFiles/client_lib.dir/sdl_libs
+  TARGET_COMPILE_PDB = client_src/CMakeFiles/client_lib.dir/client_lib.pdb
+  TARGET_PDB = client_src/libclient_lib.pdb
+
+build client_src/CMakeFiles/client_lib.dir/sdl_libs/SdlWindow.cpp.o: CXX_COMPILER__client_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/sdl_libs/SdlWindow.cpp || cmake_object_order_depends_target_client_lib
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
+  DEP_FILE = client_src/CMakeFiles/client_lib.dir/sdl_libs/SdlWindow.cpp.o.d
+  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always -fPIC
+  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/../common_src/headers/*" -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
+  OBJECT_DIR = client_src/CMakeFiles/client_lib.dir
+  OBJECT_FILE_DIR = client_src/CMakeFiles/client_lib.dir/sdl_libs
+  TARGET_COMPILE_PDB = client_src/CMakeFiles/client_lib.dir/client_lib.pdb
+  TARGET_PDB = client_src/libclient_lib.pdb
+
+build client_src/CMakeFiles/client_lib.dir/sdl_libs/Fuente.cpp.o: CXX_COMPILER__client_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/sdl_libs/Fuente.cpp || cmake_object_order_depends_target_client_lib
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
+  DEP_FILE = client_src/CMakeFiles/client_lib.dir/sdl_libs/Fuente.cpp.o.d
+  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always -fPIC
+  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/../common_src/headers/*" -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
+  OBJECT_DIR = client_src/CMakeFiles/client_lib.dir
+  OBJECT_FILE_DIR = client_src/CMakeFiles/client_lib.dir/sdl_libs
+  TARGET_COMPILE_PDB = client_src/CMakeFiles/client_lib.dir/client_lib.pdb
+  TARGET_PDB = client_src/libclient_lib.pdb
+
+build client_src/CMakeFiles/client_lib.dir/sdl_libs/Music.cpp.o: CXX_COMPILER__client_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/sdl_libs/Music.cpp || cmake_object_order_depends_target_client_lib
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
+  DEP_FILE = client_src/CMakeFiles/client_lib.dir/sdl_libs/Music.cpp.o.d
+  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always -fPIC
+  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/../common_src/headers/*" -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
+  OBJECT_DIR = client_src/CMakeFiles/client_lib.dir
+  OBJECT_FILE_DIR = client_src/CMakeFiles/client_lib.dir/sdl_libs
+  TARGET_COMPILE_PDB = client_src/CMakeFiles/client_lib.dir/client_lib.pdb
+  TARGET_PDB = client_src/libclient_lib.pdb
+
+build client_src/CMakeFiles/client_lib.dir/sdl_libs/Sound.cpp.o: CXX_COMPILER__client_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/sdl_libs/Sound.cpp || cmake_object_order_depends_target_client_lib
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
+  DEP_FILE = client_src/CMakeFiles/client_lib.dir/sdl_libs/Sound.cpp.o.d
+  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always -fPIC
+  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/../common_src/headers/*" -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
+  OBJECT_DIR = client_src/CMakeFiles/client_lib.dir
+  OBJECT_FILE_DIR = client_src/CMakeFiles/client_lib.dir/sdl_libs
+  TARGET_COMPILE_PDB = client_src/CMakeFiles/client_lib.dir/client_lib.pdb
+  TARGET_PDB = client_src/libclient_lib.pdb
+
+build client_src/CMakeFiles/client_lib.dir/setupscreen/ConnectMenu.cpp.o: CXX_COMPILER__client_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/ConnectMenu.cpp || cmake_object_order_depends_target_client_lib
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
+  DEP_FILE = client_src/CMakeFiles/client_lib.dir/setupscreen/ConnectMenu.cpp.o.d
+  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always -fPIC
+  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/../common_src/headers/*" -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
+  OBJECT_DIR = client_src/CMakeFiles/client_lib.dir
+  OBJECT_FILE_DIR = client_src/CMakeFiles/client_lib.dir/setupscreen
+  TARGET_COMPILE_PDB = client_src/CMakeFiles/client_lib.dir/client_lib.pdb
+  TARGET_PDB = client_src/libclient_lib.pdb
 
 
 # =============================================================================
@@ -361,20 +449,21 @@ build client_src/CMakeFiles/client_lib.dir/__/common_src/Container.cpp.o: CXX_CO
 #############################################
 # Link the static library client_src/libclient_lib.a
 
-build client_src/libclient_lib.a: CXX_STATIC_LIBRARY_LINKER__client_lib_Debug client_src/CMakeFiles/client_lib.dir/event_handler.cpp.o client_src/CMakeFiles/client_lib.dir/model_updater.cpp.o client_src/CMakeFiles/client_lib.dir/game.cpp.o client_src/CMakeFiles/client_lib.dir/protocol.cpp.o client_src/CMakeFiles/client_lib.dir/client.cpp.o client_src/CMakeFiles/client_lib.dir/clientReceiver.cpp.o client_src/CMakeFiles/client_lib.dir/entity.cpp.o client_src/CMakeFiles/client_lib.dir/player.cpp.o client_src/CMakeFiles/client_lib.dir/camara.cpp.o client_src/CMakeFiles/client_lib.dir/UIManager.cpp.o client_src/CMakeFiles/client_lib.dir/__/common_src/liberror.cpp.o client_src/CMakeFiles/client_lib.dir/__/common_src/protocol.cpp.o client_src/CMakeFiles/client_lib.dir/__/common_src/resolver.cpp.o client_src/CMakeFiles/client_lib.dir/__/common_src/resolvererror.cpp.o client_src/CMakeFiles/client_lib.dir/__/common_src/socket.cpp.o client_src/CMakeFiles/client_lib.dir/sdl_libs/Animation.cpp.o client_src/CMakeFiles/client_lib.dir/sdl_libs/Area.cpp.o client_src/CMakeFiles/client_lib.dir/sdl_libs/Exception.cpp.o client_src/CMakeFiles/client_lib.dir/sdl_libs/SdlException.cpp.o client_src/CMakeFiles/client_lib.dir/sdl_libs/SdlTexture.cpp.o client_src/CMakeFiles/client_lib.dir/sdl_libs/SdlWindow.cpp.o client_src/CMakeFiles/client_lib.dir/sdl_libs/Fuente.cpp.o client_src/CMakeFiles/client_lib.dir/sdl_libs/Music.cpp.o client_src/CMakeFiles/client_lib.dir/sdl_libs/Sound.cpp.o client_src/CMakeFiles/client_lib.dir/setupscreen/ConnectMenu.cpp.o client_src/CMakeFiles/client_lib.dir/__/common_src/Container.cpp.o || client_src/setupscreen/libsetupscreen.a
+build client_src/libclient_lib.a: CXX_STATIC_LIBRARY_LINKER__client_lib_Debug client_src/CMakeFiles/client_lib.dir/event_handler.cpp.o client_src/CMakeFiles/client_lib.dir/model_updater.cpp.o client_src/CMakeFiles/client_lib.dir/game.cpp.o client_src/CMakeFiles/client_lib.dir/protocol.cpp.o client_src/CMakeFiles/client_lib.dir/client.cpp.o client_src/CMakeFiles/client_lib.dir/drawer.cpp.o client_src/CMakeFiles/client_lib.dir/map_creator.cpp.o client_src/CMakeFiles/client_lib.dir/clientReceiver.cpp.o client_src/CMakeFiles/client_lib.dir/entity.cpp.o client_src/CMakeFiles/client_lib.dir/player.cpp.o client_src/CMakeFiles/client_lib.dir/camara.cpp.o client_src/CMakeFiles/client_lib.dir/UIManager.cpp.o client_src/CMakeFiles/client_lib.dir/SoundManager.cpp.o client_src/CMakeFiles/client_lib.dir/__/common_src/liberror.cpp.o client_src/CMakeFiles/client_lib.dir/__/common_src/protocol.cpp.o client_src/CMakeFiles/client_lib.dir/__/common_src/resolver.cpp.o client_src/CMakeFiles/client_lib.dir/__/common_src/resolvererror.cpp.o client_src/CMakeFiles/client_lib.dir/__/common_src/socket.cpp.o client_src/CMakeFiles/client_lib.dir/__/common_src/Container.cpp.o client_src/CMakeFiles/client_lib.dir/sdl_libs/Animation.cpp.o client_src/CMakeFiles/client_lib.dir/sdl_libs/Area.cpp.o client_src/CMakeFiles/client_lib.dir/sdl_libs/Exception.cpp.o client_src/CMakeFiles/client_lib.dir/sdl_libs/SdlException.cpp.o client_src/CMakeFiles/client_lib.dir/sdl_libs/SdlTexture.cpp.o client_src/CMakeFiles/client_lib.dir/sdl_libs/SdlWindow.cpp.o client_src/CMakeFiles/client_lib.dir/sdl_libs/Fuente.cpp.o client_src/CMakeFiles/client_lib.dir/sdl_libs/Music.cpp.o client_src/CMakeFiles/client_lib.dir/sdl_libs/Sound.cpp.o client_src/CMakeFiles/client_lib.dir/setupscreen/ConnectMenu.cpp.o || client_src/setupscreen/libsetupscreen.a
   LANGUAGE_COMPILE_FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g
   OBJECT_DIR = client_src/CMakeFiles/client_lib.dir
   POST_BUILD = :
   PRE_LINK = :
+  TARGET_COMPILE_PDB = client_src/CMakeFiles/client_lib.dir/client_lib.pdb
   TARGET_FILE = client_src/libclient_lib.a
-  TARGET_PDB = client_lib.a.dbg
+  TARGET_PDB = client_src/libclient_lib.pdb
 
 
 #############################################
 # Utility command for edit_cache
 
 build client_src/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/client_src && /snap/clion/282/bin/cmake/linux/x64/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  COMMAND = cd /home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/client_src && /snap/clion/284/bin/cmake/linux/x64/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
   DESC = No interactive CMake dialog available...
   restat = 1
 
@@ -385,7 +474,7 @@ build client_src/edit_cache: phony client_src/CMakeFiles/edit_cache.util
 # Utility command for rebuild_cache
 
 build client_src/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/client_src && /snap/clion/282/bin/cmake/linux/x64/bin/cmake --regenerate-during-build -S/home/moko/Escritorio/jazzjackrabbit_taller1 -B/home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug
+  COMMAND = cd /home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/client_src && /snap/clion/284/bin/cmake/linux/x64/bin/cmake --regenerate-during-build -S/home/moko/Escritorio/jazzjackrabbit_taller1 -B/home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -406,229 +495,158 @@ build client_src/rebuild_cache: phony client_src/CMakeFiles/rebuild_cache.util
 
 build cmake_object_order_depends_target_server_lib: phony || server_src/CMakeFiles/server_lib.dir
 
-build server_src/CMakeFiles/server_lib.dir/enemigo.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/enemigo.cpp || cmake_object_order_depends_target_server_lib
-  DEP_FILE = server_src/CMakeFiles/server_lib.dir/enemigo.cpp.o.d
+build server_src/CMakeFiles/server_lib.dir/enemies/enemigo.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/enemies/enemigo.cpp || cmake_object_order_depends_target_server_lib
+  DEP_FILE = server_src/CMakeFiles/server_lib.dir/enemies/enemigo.cpp.o.d
   FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
   INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
   OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
-  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir
+  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir/enemies
+  TARGET_COMPILE_PDB = server_src/CMakeFiles/server_lib.dir/server_lib.pdb
+  TARGET_PDB = server_src/libserver_lib.pdb
 
-build server_src/CMakeFiles/server_lib.dir/game.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/game.cpp || cmake_object_order_depends_target_server_lib
-  DEP_FILE = server_src/CMakeFiles/server_lib.dir/game.cpp.o.d
+build server_src/CMakeFiles/server_lib.dir/enemies/bat.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/enemies/bat.cpp || cmake_object_order_depends_target_server_lib
+  DEP_FILE = server_src/CMakeFiles/server_lib.dir/enemies/bat.cpp.o.d
   FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
   INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
   OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
-  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir
+  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir/enemies
+  TARGET_COMPILE_PDB = server_src/CMakeFiles/server_lib.dir/server_lib.pdb
+  TARGET_PDB = server_src/libserver_lib.pdb
 
-build server_src/CMakeFiles/server_lib.dir/mapa.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/mapa.cpp || cmake_object_order_depends_target_server_lib
-  DEP_FILE = server_src/CMakeFiles/server_lib.dir/mapa.cpp.o.d
+build server_src/CMakeFiles/server_lib.dir/enemies/ghost.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/enemies/ghost.cpp || cmake_object_order_depends_target_server_lib
+  DEP_FILE = server_src/CMakeFiles/server_lib.dir/enemies/ghost.cpp.o.d
   FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
   INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
   OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
-  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir
+  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir/enemies
+  TARGET_COMPILE_PDB = server_src/CMakeFiles/server_lib.dir/server_lib.pdb
+  TARGET_PDB = server_src/libserver_lib.pdb
 
-build server_src/CMakeFiles/server_lib.dir/objeto.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/objeto.cpp || cmake_object_order_depends_target_server_lib
-  DEP_FILE = server_src/CMakeFiles/server_lib.dir/objeto.cpp.o.d
+build server_src/CMakeFiles/server_lib.dir/enemies/monkey.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/enemies/monkey.cpp || cmake_object_order_depends_target_server_lib
+  DEP_FILE = server_src/CMakeFiles/server_lib.dir/enemies/monkey.cpp.o.d
   FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
   INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
   OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
-  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir
+  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir/enemies
+  TARGET_COMPILE_PDB = server_src/CMakeFiles/server_lib.dir/server_lib.pdb
+  TARGET_PDB = server_src/libserver_lib.pdb
 
-build server_src/CMakeFiles/server_lib.dir/partida.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/partida.cpp || cmake_object_order_depends_target_server_lib
-  DEP_FILE = server_src/CMakeFiles/server_lib.dir/partida.cpp.o.d
+build server_src/CMakeFiles/server_lib.dir/pickups/municion.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/pickups/municion.cpp || cmake_object_order_depends_target_server_lib
+  DEP_FILE = server_src/CMakeFiles/server_lib.dir/pickups/municion.cpp.o.d
   FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
   INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
   OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
-  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir
+  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir/pickups
+  TARGET_COMPILE_PDB = server_src/CMakeFiles/server_lib.dir/server_lib.pdb
+  TARGET_PDB = server_src/libserver_lib.pdb
 
-build server_src/CMakeFiles/server_lib.dir/personaje.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/personaje.cpp || cmake_object_order_depends_target_server_lib
-  DEP_FILE = server_src/CMakeFiles/server_lib.dir/personaje.cpp.o.d
+build server_src/CMakeFiles/server_lib.dir/pickups/pickup.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/pickups/pickup.cpp || cmake_object_order_depends_target_server_lib
+  DEP_FILE = server_src/CMakeFiles/server_lib.dir/pickups/pickup.cpp.o.d
   FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
   INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
   OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
-  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir
+  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir/pickups
+  TARGET_COMPILE_PDB = server_src/CMakeFiles/server_lib.dir/server_lib.pdb
+  TARGET_PDB = server_src/libserver_lib.pdb
 
-build server_src/CMakeFiles/server_lib.dir/protocol.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/protocol.cpp || cmake_object_order_depends_target_server_lib
-  DEP_FILE = server_src/CMakeFiles/server_lib.dir/protocol.cpp.o.d
+build server_src/CMakeFiles/server_lib.dir/pickups/zanahoria.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/pickups/zanahoria.cpp || cmake_object_order_depends_target_server_lib
+  DEP_FILE = server_src/CMakeFiles/server_lib.dir/pickups/zanahoria.cpp.o.d
   FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
   INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
   OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
-  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir
+  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir/pickups
+  TARGET_COMPILE_PDB = server_src/CMakeFiles/server_lib.dir/server_lib.pdb
+  TARGET_PDB = server_src/libserver_lib.pdb
 
-build server_src/CMakeFiles/server_lib.dir/broadcaster.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/broadcaster.cpp || cmake_object_order_depends_target_server_lib
-  DEP_FILE = server_src/CMakeFiles/server_lib.dir/broadcaster.cpp.o.d
+build server_src/CMakeFiles/server_lib.dir/pickups/gold_coin.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/pickups/gold_coin.cpp || cmake_object_order_depends_target_server_lib
+  DEP_FILE = server_src/CMakeFiles/server_lib.dir/pickups/gold_coin.cpp.o.d
   FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
   INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
   OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
-  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir
+  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir/pickups
+  TARGET_COMPILE_PDB = server_src/CMakeFiles/server_lib.dir/server_lib.pdb
+  TARGET_PDB = server_src/libserver_lib.pdb
 
-build server_src/CMakeFiles/server_lib.dir/client.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/client.cpp || cmake_object_order_depends_target_server_lib
-  DEP_FILE = server_src/CMakeFiles/server_lib.dir/client.cpp.o.d
+build server_src/CMakeFiles/server_lib.dir/characters/personaje.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/characters/personaje.cpp || cmake_object_order_depends_target_server_lib
+  DEP_FILE = server_src/CMakeFiles/server_lib.dir/characters/personaje.cpp.o.d
   FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
   INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
   OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
-  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir
+  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir/characters
+  TARGET_COMPILE_PDB = server_src/CMakeFiles/server_lib.dir/server_lib.pdb
+  TARGET_PDB = server_src/libserver_lib.pdb
 
-build server_src/CMakeFiles/server_lib.dir/clientReceiver.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/clientReceiver.cpp || cmake_object_order_depends_target_server_lib
-  DEP_FILE = server_src/CMakeFiles/server_lib.dir/clientReceiver.cpp.o.d
+build server_src/CMakeFiles/server_lib.dir/characters/jazz.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/characters/jazz.cpp || cmake_object_order_depends_target_server_lib
+  DEP_FILE = server_src/CMakeFiles/server_lib.dir/characters/jazz.cpp.o.d
   FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
   INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
   OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
-  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir
+  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir/characters
+  TARGET_COMPILE_PDB = server_src/CMakeFiles/server_lib.dir/server_lib.pdb
+  TARGET_PDB = server_src/libserver_lib.pdb
 
-build server_src/CMakeFiles/server_lib.dir/clientSender.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/clientSender.cpp || cmake_object_order_depends_target_server_lib
-  DEP_FILE = server_src/CMakeFiles/server_lib.dir/clientSender.cpp.o.d
+build server_src/CMakeFiles/server_lib.dir/characters/lori.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/characters/lori.cpp || cmake_object_order_depends_target_server_lib
+  DEP_FILE = server_src/CMakeFiles/server_lib.dir/characters/lori.cpp.o.d
   FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
   INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
   OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
-  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir
+  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir/characters
+  TARGET_COMPILE_PDB = server_src/CMakeFiles/server_lib.dir/server_lib.pdb
+  TARGET_PDB = server_src/libserver_lib.pdb
 
-build server_src/CMakeFiles/server_lib.dir/acceptor.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/acceptor.cpp || cmake_object_order_depends_target_server_lib
-  DEP_FILE = server_src/CMakeFiles/server_lib.dir/acceptor.cpp.o.d
+build server_src/CMakeFiles/server_lib.dir/characters/spaz.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/characters/spaz.cpp || cmake_object_order_depends_target_server_lib
+  DEP_FILE = server_src/CMakeFiles/server_lib.dir/characters/spaz.cpp.o.d
   FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
   INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
   OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
-  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir
+  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir/characters
+  TARGET_COMPILE_PDB = server_src/CMakeFiles/server_lib.dir/server_lib.pdb
+  TARGET_PDB = server_src/libserver_lib.pdb
 
-build server_src/CMakeFiles/server_lib.dir/server.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/server.cpp || cmake_object_order_depends_target_server_lib
-  DEP_FILE = server_src/CMakeFiles/server_lib.dir/server.cpp.o.d
+build server_src/CMakeFiles/server_lib.dir/game/game.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/game/game.cpp || cmake_object_order_depends_target_server_lib
+  DEP_FILE = server_src/CMakeFiles/server_lib.dir/game/game.cpp.o.d
   FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
   INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
   OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
-  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir
+  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir/game
+  TARGET_COMPILE_PDB = server_src/CMakeFiles/server_lib.dir/server_lib.pdb
+  TARGET_PDB = server_src/libserver_lib.pdb
 
-build server_src/CMakeFiles/server_lib.dir/lista_objetos.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/lista_objetos.cpp || cmake_object_order_depends_target_server_lib
-  DEP_FILE = server_src/CMakeFiles/server_lib.dir/lista_objetos.cpp.o.d
+build server_src/CMakeFiles/server_lib.dir/game/mapa.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/game/mapa.cpp || cmake_object_order_depends_target_server_lib
+  DEP_FILE = server_src/CMakeFiles/server_lib.dir/game/mapa.cpp.o.d
   FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
   INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
   OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
-  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir
+  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir/game
+  TARGET_COMPILE_PDB = server_src/CMakeFiles/server_lib.dir/server_lib.pdb
+  TARGET_PDB = server_src/libserver_lib.pdb
 
-build server_src/CMakeFiles/server_lib.dir/municion.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/municion.cpp || cmake_object_order_depends_target_server_lib
-  DEP_FILE = server_src/CMakeFiles/server_lib.dir/municion.cpp.o.d
+build server_src/CMakeFiles/server_lib.dir/game/objeto.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/game/objeto.cpp || cmake_object_order_depends_target_server_lib
+  DEP_FILE = server_src/CMakeFiles/server_lib.dir/game/objeto.cpp.o.d
   FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
   INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
   OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
-  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir
+  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir/game
+  TARGET_COMPILE_PDB = server_src/CMakeFiles/server_lib.dir/server_lib.pdb
+  TARGET_PDB = server_src/libserver_lib.pdb
 
-build server_src/CMakeFiles/server_lib.dir/pickup.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/pickup.cpp || cmake_object_order_depends_target_server_lib
-  DEP_FILE = server_src/CMakeFiles/server_lib.dir/pickup.cpp.o.d
+build server_src/CMakeFiles/server_lib.dir/game/lista_objetos.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/game/lista_objetos.cpp || cmake_object_order_depends_target_server_lib
+  DEP_FILE = server_src/CMakeFiles/server_lib.dir/game/lista_objetos.cpp.o.d
   FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
   INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
   OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
-  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir
+  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir/game
+  TARGET_COMPILE_PDB = server_src/CMakeFiles/server_lib.dir/server_lib.pdb
+  TARGET_PDB = server_src/libserver_lib.pdb
 
-build server_src/CMakeFiles/server_lib.dir/zanahoria.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/zanahoria.cpp || cmake_object_order_depends_target_server_lib
-  DEP_FILE = server_src/CMakeFiles/server_lib.dir/zanahoria.cpp.o.d
+build server_src/CMakeFiles/server_lib.dir/game/clock.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/game/clock.cpp || cmake_object_order_depends_target_server_lib
+  DEP_FILE = server_src/CMakeFiles/server_lib.dir/game/clock.cpp.o.d
   FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
   INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
   OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
-  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir
-
-build server_src/CMakeFiles/server_lib.dir/gold_coin.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/gold_coin.cpp || cmake_object_order_depends_target_server_lib
-  DEP_FILE = server_src/CMakeFiles/server_lib.dir/gold_coin.cpp.o.d
-  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
-  OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
-  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir
-
-build server_src/CMakeFiles/server_lib.dir/clock.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/clock.cpp || cmake_object_order_depends_target_server_lib
-  DEP_FILE = server_src/CMakeFiles/server_lib.dir/clock.cpp.o.d
-  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
-  OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
-  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir
-
-build server_src/CMakeFiles/server_lib.dir/ghost.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/ghost.cpp || cmake_object_order_depends_target_server_lib
-  DEP_FILE = server_src/CMakeFiles/server_lib.dir/ghost.cpp.o.d
-  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
-  OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
-  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir
-
-build server_src/CMakeFiles/server_lib.dir/bat.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/bat.cpp || cmake_object_order_depends_target_server_lib
-  DEP_FILE = server_src/CMakeFiles/server_lib.dir/bat.cpp.o.d
-  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
-  OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
-  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir
-
-build server_src/CMakeFiles/server_lib.dir/monkey.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/monkey.cpp || cmake_object_order_depends_target_server_lib
-  DEP_FILE = server_src/CMakeFiles/server_lib.dir/monkey.cpp.o.d
-  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
-  OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
-  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir
-
-build server_src/CMakeFiles/server_lib.dir/banana.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/banana.cpp || cmake_object_order_depends_target_server_lib
-  DEP_FILE = server_src/CMakeFiles/server_lib.dir/banana.cpp.o.d
-  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
-  OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
-  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir
-
-build server_src/CMakeFiles/server_lib.dir/jazz.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/jazz.cpp || cmake_object_order_depends_target_server_lib
-  DEP_FILE = server_src/CMakeFiles/server_lib.dir/jazz.cpp.o.d
-  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
-  OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
-  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir
-
-build server_src/CMakeFiles/server_lib.dir/lori.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/lori.cpp || cmake_object_order_depends_target_server_lib
-  DEP_FILE = server_src/CMakeFiles/server_lib.dir/lori.cpp.o.d
-  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
-  OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
-  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir
-
-build server_src/CMakeFiles/server_lib.dir/spaz.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/spaz.cpp || cmake_object_order_depends_target_server_lib
-  DEP_FILE = server_src/CMakeFiles/server_lib.dir/spaz.cpp.o.d
-  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
-  OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
-  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir
-
-build server_src/CMakeFiles/server_lib.dir/__/common_src/Container.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/common_src/Container.cpp || cmake_object_order_depends_target_server_lib
-  DEP_FILE = server_src/CMakeFiles/server_lib.dir/__/common_src/Container.cpp.o.d
-  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
-  OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
-  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir/__/common_src
-
-build server_src/CMakeFiles/server_lib.dir/__/common_src/liberror.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/common_src/liberror.cpp || cmake_object_order_depends_target_server_lib
-  DEP_FILE = server_src/CMakeFiles/server_lib.dir/__/common_src/liberror.cpp.o.d
-  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
-  OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
-  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir/__/common_src
-
-build server_src/CMakeFiles/server_lib.dir/__/common_src/protocol.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/common_src/protocol.cpp || cmake_object_order_depends_target_server_lib
-  DEP_FILE = server_src/CMakeFiles/server_lib.dir/__/common_src/protocol.cpp.o.d
-  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
-  OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
-  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir/__/common_src
-
-build server_src/CMakeFiles/server_lib.dir/__/common_src/resolver.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/common_src/resolver.cpp || cmake_object_order_depends_target_server_lib
-  DEP_FILE = server_src/CMakeFiles/server_lib.dir/__/common_src/resolver.cpp.o.d
-  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
-  OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
-  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir/__/common_src
-
-build server_src/CMakeFiles/server_lib.dir/__/common_src/resolvererror.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/common_src/resolvererror.cpp || cmake_object_order_depends_target_server_lib
-  DEP_FILE = server_src/CMakeFiles/server_lib.dir/__/common_src/resolvererror.cpp.o.d
-  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
-  OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
-  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir/__/common_src
-
-build server_src/CMakeFiles/server_lib.dir/__/common_src/socket.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/common_src/socket.cpp || cmake_object_order_depends_target_server_lib
-  DEP_FILE = server_src/CMakeFiles/server_lib.dir/__/common_src/socket.cpp.o.d
-  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
-  OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
-  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir/__/common_src
+  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir/game
+  TARGET_COMPILE_PDB = server_src/CMakeFiles/server_lib.dir/server_lib.pdb
+  TARGET_PDB = server_src/libserver_lib.pdb
 
 build server_src/CMakeFiles/server_lib.dir/GamesManager.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/GamesManager.cpp || cmake_object_order_depends_target_server_lib
   DEP_FILE = server_src/CMakeFiles/server_lib.dir/GamesManager.cpp.o.d
@@ -636,6 +654,8 @@ build server_src/CMakeFiles/server_lib.dir/GamesManager.cpp.o: CXX_COMPILER__ser
   INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
   OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
   OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir
+  TARGET_COMPILE_PDB = server_src/CMakeFiles/server_lib.dir/server_lib.pdb
+  TARGET_PDB = server_src/libserver_lib.pdb
 
 build server_src/CMakeFiles/server_lib.dir/GameBroadcasterContainer.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/GameBroadcasterContainer.cpp || cmake_object_order_depends_target_server_lib
   DEP_FILE = server_src/CMakeFiles/server_lib.dir/GameBroadcasterContainer.cpp.o.d
@@ -643,6 +663,152 @@ build server_src/CMakeFiles/server_lib.dir/GameBroadcasterContainer.cpp.o: CXX_C
   INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
   OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
   OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir
+  TARGET_COMPILE_PDB = server_src/CMakeFiles/server_lib.dir/server_lib.pdb
+  TARGET_PDB = server_src/libserver_lib.pdb
+
+build server_src/CMakeFiles/server_lib.dir/protocol.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/protocol.cpp || cmake_object_order_depends_target_server_lib
+  DEP_FILE = server_src/CMakeFiles/server_lib.dir/protocol.cpp.o.d
+  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
+  OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
+  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir
+  TARGET_COMPILE_PDB = server_src/CMakeFiles/server_lib.dir/server_lib.pdb
+  TARGET_PDB = server_src/libserver_lib.pdb
+
+build server_src/CMakeFiles/server_lib.dir/broadcaster.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/broadcaster.cpp || cmake_object_order_depends_target_server_lib
+  DEP_FILE = server_src/CMakeFiles/server_lib.dir/broadcaster.cpp.o.d
+  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
+  OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
+  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir
+  TARGET_COMPILE_PDB = server_src/CMakeFiles/server_lib.dir/server_lib.pdb
+  TARGET_PDB = server_src/libserver_lib.pdb
+
+build server_src/CMakeFiles/server_lib.dir/client.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/client.cpp || cmake_object_order_depends_target_server_lib
+  DEP_FILE = server_src/CMakeFiles/server_lib.dir/client.cpp.o.d
+  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
+  OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
+  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir
+  TARGET_COMPILE_PDB = server_src/CMakeFiles/server_lib.dir/server_lib.pdb
+  TARGET_PDB = server_src/libserver_lib.pdb
+
+build server_src/CMakeFiles/server_lib.dir/clientReceiver.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/clientReceiver.cpp || cmake_object_order_depends_target_server_lib
+  DEP_FILE = server_src/CMakeFiles/server_lib.dir/clientReceiver.cpp.o.d
+  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
+  OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
+  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir
+  TARGET_COMPILE_PDB = server_src/CMakeFiles/server_lib.dir/server_lib.pdb
+  TARGET_PDB = server_src/libserver_lib.pdb
+
+build server_src/CMakeFiles/server_lib.dir/clientSender.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/clientSender.cpp || cmake_object_order_depends_target_server_lib
+  DEP_FILE = server_src/CMakeFiles/server_lib.dir/clientSender.cpp.o.d
+  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
+  OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
+  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir
+  TARGET_COMPILE_PDB = server_src/CMakeFiles/server_lib.dir/server_lib.pdb
+  TARGET_PDB = server_src/libserver_lib.pdb
+
+build server_src/CMakeFiles/server_lib.dir/acceptor.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/acceptor.cpp || cmake_object_order_depends_target_server_lib
+  DEP_FILE = server_src/CMakeFiles/server_lib.dir/acceptor.cpp.o.d
+  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
+  OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
+  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir
+  TARGET_COMPILE_PDB = server_src/CMakeFiles/server_lib.dir/server_lib.pdb
+  TARGET_PDB = server_src/libserver_lib.pdb
+
+build server_src/CMakeFiles/server_lib.dir/server.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/server.cpp || cmake_object_order_depends_target_server_lib
+  DEP_FILE = server_src/CMakeFiles/server_lib.dir/server.cpp.o.d
+  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
+  OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
+  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir
+  TARGET_COMPILE_PDB = server_src/CMakeFiles/server_lib.dir/server_lib.pdb
+  TARGET_PDB = server_src/libserver_lib.pdb
+
+build server_src/CMakeFiles/server_lib.dir/banana.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/banana.cpp || cmake_object_order_depends_target_server_lib
+  DEP_FILE = server_src/CMakeFiles/server_lib.dir/banana.cpp.o.d
+  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
+  OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
+  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir
+  TARGET_COMPILE_PDB = server_src/CMakeFiles/server_lib.dir/server_lib.pdb
+  TARGET_PDB = server_src/libserver_lib.pdb
+
+build server_src/CMakeFiles/server_lib.dir/__/common_src/Container.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/common_src/Container.cpp || cmake_object_order_depends_target_server_lib
+  DEP_FILE = server_src/CMakeFiles/server_lib.dir/__/common_src/Container.cpp.o.d
+  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
+  OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
+  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir/__/common_src
+  TARGET_COMPILE_PDB = server_src/CMakeFiles/server_lib.dir/server_lib.pdb
+  TARGET_PDB = server_src/libserver_lib.pdb
+
+build server_src/CMakeFiles/server_lib.dir/__/common_src/liberror.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/common_src/liberror.cpp || cmake_object_order_depends_target_server_lib
+  DEP_FILE = server_src/CMakeFiles/server_lib.dir/__/common_src/liberror.cpp.o.d
+  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
+  OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
+  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir/__/common_src
+  TARGET_COMPILE_PDB = server_src/CMakeFiles/server_lib.dir/server_lib.pdb
+  TARGET_PDB = server_src/libserver_lib.pdb
+
+build server_src/CMakeFiles/server_lib.dir/__/common_src/protocol.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/common_src/protocol.cpp || cmake_object_order_depends_target_server_lib
+  DEP_FILE = server_src/CMakeFiles/server_lib.dir/__/common_src/protocol.cpp.o.d
+  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
+  OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
+  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir/__/common_src
+  TARGET_COMPILE_PDB = server_src/CMakeFiles/server_lib.dir/server_lib.pdb
+  TARGET_PDB = server_src/libserver_lib.pdb
+
+build server_src/CMakeFiles/server_lib.dir/__/common_src/resolver.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/common_src/resolver.cpp || cmake_object_order_depends_target_server_lib
+  DEP_FILE = server_src/CMakeFiles/server_lib.dir/__/common_src/resolver.cpp.o.d
+  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
+  OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
+  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir/__/common_src
+  TARGET_COMPILE_PDB = server_src/CMakeFiles/server_lib.dir/server_lib.pdb
+  TARGET_PDB = server_src/libserver_lib.pdb
+
+build server_src/CMakeFiles/server_lib.dir/__/common_src/resolvererror.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/common_src/resolvererror.cpp || cmake_object_order_depends_target_server_lib
+  DEP_FILE = server_src/CMakeFiles/server_lib.dir/__/common_src/resolvererror.cpp.o.d
+  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
+  OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
+  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir/__/common_src
+  TARGET_COMPILE_PDB = server_src/CMakeFiles/server_lib.dir/server_lib.pdb
+  TARGET_PDB = server_src/libserver_lib.pdb
+
+build server_src/CMakeFiles/server_lib.dir/__/common_src/socket.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/common_src/socket.cpp || cmake_object_order_depends_target_server_lib
+  DEP_FILE = server_src/CMakeFiles/server_lib.dir/__/common_src/socket.cpp.o.d
+  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
+  OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
+  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir/__/common_src
+  TARGET_COMPILE_PDB = server_src/CMakeFiles/server_lib.dir/server_lib.pdb
+  TARGET_PDB = server_src/libserver_lib.pdb
+
+build server_src/CMakeFiles/server_lib.dir/monitor_clients.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/monitor_clients.cpp || cmake_object_order_depends_target_server_lib
+  DEP_FILE = server_src/CMakeFiles/server_lib.dir/monitor_clients.cpp.o.d
+  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
+  OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
+  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir
+  TARGET_COMPILE_PDB = server_src/CMakeFiles/server_lib.dir/server_lib.pdb
+  TARGET_PDB = server_src/libserver_lib.pdb
+
+build server_src/CMakeFiles/server_lib.dir/pickups/zanahoria_envenenada.cpp.o: CXX_COMPILER__server_lib_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/pickups/zanahoria_envenenada.cpp || cmake_object_order_depends_target_server_lib
+  DEP_FILE = server_src/CMakeFiles/server_lib.dir/pickups/zanahoria_envenenada.cpp.o.d
+  FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/headers/*" -I"/home/moko/Escritorio/jazzjackrabbit_taller1/server_src/../common_src/headers/*"
+  OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
+  OBJECT_FILE_DIR = server_src/CMakeFiles/server_lib.dir/pickups
+  TARGET_COMPILE_PDB = server_src/CMakeFiles/server_lib.dir/server_lib.pdb
+  TARGET_PDB = server_src/libserver_lib.pdb
 
 
 # =============================================================================
@@ -652,20 +818,21 @@ build server_src/CMakeFiles/server_lib.dir/GameBroadcasterContainer.cpp.o: CXX_C
 #############################################
 # Link the static library server_src/libserver_lib.a
 
-build server_src/libserver_lib.a: CXX_STATIC_LIBRARY_LINKER__server_lib_Debug server_src/CMakeFiles/server_lib.dir/enemigo.cpp.o server_src/CMakeFiles/server_lib.dir/game.cpp.o server_src/CMakeFiles/server_lib.dir/mapa.cpp.o server_src/CMakeFiles/server_lib.dir/objeto.cpp.o server_src/CMakeFiles/server_lib.dir/partida.cpp.o server_src/CMakeFiles/server_lib.dir/personaje.cpp.o server_src/CMakeFiles/server_lib.dir/protocol.cpp.o server_src/CMakeFiles/server_lib.dir/broadcaster.cpp.o server_src/CMakeFiles/server_lib.dir/client.cpp.o server_src/CMakeFiles/server_lib.dir/clientReceiver.cpp.o server_src/CMakeFiles/server_lib.dir/clientSender.cpp.o server_src/CMakeFiles/server_lib.dir/acceptor.cpp.o server_src/CMakeFiles/server_lib.dir/server.cpp.o server_src/CMakeFiles/server_lib.dir/lista_objetos.cpp.o server_src/CMakeFiles/server_lib.dir/municion.cpp.o server_src/CMakeFiles/server_lib.dir/pickup.cpp.o server_src/CMakeFiles/server_lib.dir/zanahoria.cpp.o server_src/CMakeFiles/server_lib.dir/gold_coin.cpp.o server_src/CMakeFiles/server_lib.dir/clock.cpp.o server_src/CMakeFiles/server_lib.dir/ghost.cpp.o server_src/CMakeFiles/server_lib.dir/bat.cpp.o server_src/CMakeFiles/server_lib.dir/monkey.cpp.o server_src/CMakeFiles/server_lib.dir/banana.cpp.o server_src/CMakeFiles/server_lib.dir/jazz.cpp.o server_src/CMakeFiles/server_lib.dir/lori.cpp.o server_src/CMakeFiles/server_lib.dir/spaz.cpp.o server_src/CMakeFiles/server_lib.dir/__/common_src/Container.cpp.o server_src/CMakeFiles/server_lib.dir/__/common_src/liberror.cpp.o server_src/CMakeFiles/server_lib.dir/__/common_src/protocol.cpp.o server_src/CMakeFiles/server_lib.dir/__/common_src/resolver.cpp.o server_src/CMakeFiles/server_lib.dir/__/common_src/resolvererror.cpp.o server_src/CMakeFiles/server_lib.dir/__/common_src/socket.cpp.o server_src/CMakeFiles/server_lib.dir/GamesManager.cpp.o server_src/CMakeFiles/server_lib.dir/GameBroadcasterContainer.cpp.o
+build server_src/libserver_lib.a: CXX_STATIC_LIBRARY_LINKER__server_lib_Debug server_src/CMakeFiles/server_lib.dir/enemies/enemigo.cpp.o server_src/CMakeFiles/server_lib.dir/enemies/bat.cpp.o server_src/CMakeFiles/server_lib.dir/enemies/ghost.cpp.o server_src/CMakeFiles/server_lib.dir/enemies/monkey.cpp.o server_src/CMakeFiles/server_lib.dir/pickups/municion.cpp.o server_src/CMakeFiles/server_lib.dir/pickups/pickup.cpp.o server_src/CMakeFiles/server_lib.dir/pickups/zanahoria.cpp.o server_src/CMakeFiles/server_lib.dir/pickups/gold_coin.cpp.o server_src/CMakeFiles/server_lib.dir/characters/personaje.cpp.o server_src/CMakeFiles/server_lib.dir/characters/jazz.cpp.o server_src/CMakeFiles/server_lib.dir/characters/lori.cpp.o server_src/CMakeFiles/server_lib.dir/characters/spaz.cpp.o server_src/CMakeFiles/server_lib.dir/game/game.cpp.o server_src/CMakeFiles/server_lib.dir/game/mapa.cpp.o server_src/CMakeFiles/server_lib.dir/game/objeto.cpp.o server_src/CMakeFiles/server_lib.dir/game/lista_objetos.cpp.o server_src/CMakeFiles/server_lib.dir/game/clock.cpp.o server_src/CMakeFiles/server_lib.dir/GamesManager.cpp.o server_src/CMakeFiles/server_lib.dir/GameBroadcasterContainer.cpp.o server_src/CMakeFiles/server_lib.dir/protocol.cpp.o server_src/CMakeFiles/server_lib.dir/broadcaster.cpp.o server_src/CMakeFiles/server_lib.dir/client.cpp.o server_src/CMakeFiles/server_lib.dir/clientReceiver.cpp.o server_src/CMakeFiles/server_lib.dir/clientSender.cpp.o server_src/CMakeFiles/server_lib.dir/acceptor.cpp.o server_src/CMakeFiles/server_lib.dir/server.cpp.o server_src/CMakeFiles/server_lib.dir/banana.cpp.o server_src/CMakeFiles/server_lib.dir/__/common_src/Container.cpp.o server_src/CMakeFiles/server_lib.dir/__/common_src/liberror.cpp.o server_src/CMakeFiles/server_lib.dir/__/common_src/protocol.cpp.o server_src/CMakeFiles/server_lib.dir/__/common_src/resolver.cpp.o server_src/CMakeFiles/server_lib.dir/__/common_src/resolvererror.cpp.o server_src/CMakeFiles/server_lib.dir/__/common_src/socket.cpp.o server_src/CMakeFiles/server_lib.dir/monitor_clients.cpp.o server_src/CMakeFiles/server_lib.dir/pickups/zanahoria_envenenada.cpp.o
   LANGUAGE_COMPILE_FLAGS = -std=c++17 -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -I/usr/include/SDL2 -g
   OBJECT_DIR = server_src/CMakeFiles/server_lib.dir
   POST_BUILD = :
   PRE_LINK = :
+  TARGET_COMPILE_PDB = server_src/CMakeFiles/server_lib.dir/server_lib.pdb
   TARGET_FILE = server_src/libserver_lib.a
-  TARGET_PDB = server_lib.a.dbg
+  TARGET_PDB = server_src/libserver_lib.pdb
 
 
 #############################################
 # Utility command for edit_cache
 
 build server_src/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/server_src && /snap/clion/282/bin/cmake/linux/x64/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  COMMAND = cd /home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/server_src && /snap/clion/284/bin/cmake/linux/x64/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
   DESC = No interactive CMake dialog available...
   restat = 1
 
@@ -676,7 +843,7 @@ build server_src/edit_cache: phony server_src/CMakeFiles/edit_cache.util
 # Utility command for rebuild_cache
 
 build server_src/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/server_src && /snap/clion/282/bin/cmake/linux/x64/bin/cmake --regenerate-during-build -S/home/moko/Escritorio/jazzjackrabbit_taller1 -B/home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug
+  COMMAND = cd /home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/server_src && /snap/clion/284/bin/cmake/linux/x64/bin/cmake --regenerate-during-build -S/home/moko/Escritorio/jazzjackrabbit_taller1 -B/home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -704,6 +871,8 @@ build client_src/setupscreen/CMakeFiles/setupscreen.dir/ConnectMenu.cpp.o: CXX_C
   INCLUDES = -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
   OBJECT_DIR = client_src/setupscreen/CMakeFiles/setupscreen.dir
   OBJECT_FILE_DIR = client_src/setupscreen/CMakeFiles/setupscreen.dir
+  TARGET_COMPILE_PDB = client_src/setupscreen/CMakeFiles/setupscreen.dir/setupscreen.pdb
+  TARGET_PDB = client_src/setupscreen/libsetupscreen.pdb
 
 build client_src/setupscreen/CMakeFiles/setupscreen.dir/SetupScreen.cpp.o: CXX_COMPILER__setupscreen_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/SetupScreen.cpp || cmake_object_order_depends_target_setupscreen
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
@@ -712,6 +881,8 @@ build client_src/setupscreen/CMakeFiles/setupscreen.dir/SetupScreen.cpp.o: CXX_C
   INCLUDES = -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
   OBJECT_DIR = client_src/setupscreen/CMakeFiles/setupscreen.dir
   OBJECT_FILE_DIR = client_src/setupscreen/CMakeFiles/setupscreen.dir
+  TARGET_COMPILE_PDB = client_src/setupscreen/CMakeFiles/setupscreen.dir/setupscreen.pdb
+  TARGET_PDB = client_src/setupscreen/libsetupscreen.pdb
 
 build client_src/setupscreen/CMakeFiles/setupscreen.dir/MultiplayerMenu.cpp.o: CXX_COMPILER__setupscreen_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/MultiplayerMenu.cpp || cmake_object_order_depends_target_setupscreen
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
@@ -720,6 +891,8 @@ build client_src/setupscreen/CMakeFiles/setupscreen.dir/MultiplayerMenu.cpp.o: C
   INCLUDES = -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
   OBJECT_DIR = client_src/setupscreen/CMakeFiles/setupscreen.dir
   OBJECT_FILE_DIR = client_src/setupscreen/CMakeFiles/setupscreen.dir
+  TARGET_COMPILE_PDB = client_src/setupscreen/CMakeFiles/setupscreen.dir/setupscreen.pdb
+  TARGET_PDB = client_src/setupscreen/libsetupscreen.pdb
 
 build client_src/setupscreen/CMakeFiles/setupscreen.dir/CreateGame.cpp.o: CXX_COMPILER__setupscreen_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/CreateGame.cpp || cmake_object_order_depends_target_setupscreen
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
@@ -728,6 +901,8 @@ build client_src/setupscreen/CMakeFiles/setupscreen.dir/CreateGame.cpp.o: CXX_CO
   INCLUDES = -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
   OBJECT_DIR = client_src/setupscreen/CMakeFiles/setupscreen.dir
   OBJECT_FILE_DIR = client_src/setupscreen/CMakeFiles/setupscreen.dir
+  TARGET_COMPILE_PDB = client_src/setupscreen/CMakeFiles/setupscreen.dir/setupscreen.pdb
+  TARGET_PDB = client_src/setupscreen/libsetupscreen.pdb
 
 build client_src/setupscreen/CMakeFiles/setupscreen.dir/JoinGame.cpp.o: CXX_COMPILER__setupscreen_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/JoinGame.cpp || cmake_object_order_depends_target_setupscreen
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
@@ -736,6 +911,8 @@ build client_src/setupscreen/CMakeFiles/setupscreen.dir/JoinGame.cpp.o: CXX_COMP
   INCLUDES = -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
   OBJECT_DIR = client_src/setupscreen/CMakeFiles/setupscreen.dir
   OBJECT_FILE_DIR = client_src/setupscreen/CMakeFiles/setupscreen.dir
+  TARGET_COMPILE_PDB = client_src/setupscreen/CMakeFiles/setupscreen.dir/setupscreen.pdb
+  TARGET_PDB = client_src/setupscreen/libsetupscreen.pdb
 
 build client_src/setupscreen/CMakeFiles/setupscreen.dir/GameList.cpp.o: CXX_COMPILER__setupscreen_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/GameList.cpp || cmake_object_order_depends_target_setupscreen
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
@@ -744,6 +921,8 @@ build client_src/setupscreen/CMakeFiles/setupscreen.dir/GameList.cpp.o: CXX_COMP
   INCLUDES = -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
   OBJECT_DIR = client_src/setupscreen/CMakeFiles/setupscreen.dir
   OBJECT_FILE_DIR = client_src/setupscreen/CMakeFiles/setupscreen.dir
+  TARGET_COMPILE_PDB = client_src/setupscreen/CMakeFiles/setupscreen.dir/setupscreen.pdb
+  TARGET_PDB = client_src/setupscreen/libsetupscreen.pdb
 
 build client_src/setupscreen/CMakeFiles/setupscreen.dir/moc_ConnectMenu.cpp.o: CXX_COMPILER__setupscreen_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/client_src/setupscreen/moc_ConnectMenu.cpp || cmake_object_order_depends_target_setupscreen
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
@@ -752,6 +931,8 @@ build client_src/setupscreen/CMakeFiles/setupscreen.dir/moc_ConnectMenu.cpp.o: C
   INCLUDES = -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
   OBJECT_DIR = client_src/setupscreen/CMakeFiles/setupscreen.dir
   OBJECT_FILE_DIR = client_src/setupscreen/CMakeFiles/setupscreen.dir
+  TARGET_COMPILE_PDB = client_src/setupscreen/CMakeFiles/setupscreen.dir/setupscreen.pdb
+  TARGET_PDB = client_src/setupscreen/libsetupscreen.pdb
 
 build client_src/setupscreen/CMakeFiles/setupscreen.dir/moc_SetupScreen.cpp.o: CXX_COMPILER__setupscreen_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/client_src/setupscreen/moc_SetupScreen.cpp || cmake_object_order_depends_target_setupscreen
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
@@ -760,6 +941,8 @@ build client_src/setupscreen/CMakeFiles/setupscreen.dir/moc_SetupScreen.cpp.o: C
   INCLUDES = -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
   OBJECT_DIR = client_src/setupscreen/CMakeFiles/setupscreen.dir
   OBJECT_FILE_DIR = client_src/setupscreen/CMakeFiles/setupscreen.dir
+  TARGET_COMPILE_PDB = client_src/setupscreen/CMakeFiles/setupscreen.dir/setupscreen.pdb
+  TARGET_PDB = client_src/setupscreen/libsetupscreen.pdb
 
 build client_src/setupscreen/CMakeFiles/setupscreen.dir/moc_MultiplayerMenu.cpp.o: CXX_COMPILER__setupscreen_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/client_src/setupscreen/moc_MultiplayerMenu.cpp || cmake_object_order_depends_target_setupscreen
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
@@ -768,6 +951,8 @@ build client_src/setupscreen/CMakeFiles/setupscreen.dir/moc_MultiplayerMenu.cpp.
   INCLUDES = -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
   OBJECT_DIR = client_src/setupscreen/CMakeFiles/setupscreen.dir
   OBJECT_FILE_DIR = client_src/setupscreen/CMakeFiles/setupscreen.dir
+  TARGET_COMPILE_PDB = client_src/setupscreen/CMakeFiles/setupscreen.dir/setupscreen.pdb
+  TARGET_PDB = client_src/setupscreen/libsetupscreen.pdb
 
 build client_src/setupscreen/CMakeFiles/setupscreen.dir/moc_CreateGame.cpp.o: CXX_COMPILER__setupscreen_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/client_src/setupscreen/moc_CreateGame.cpp || cmake_object_order_depends_target_setupscreen
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
@@ -776,6 +961,8 @@ build client_src/setupscreen/CMakeFiles/setupscreen.dir/moc_CreateGame.cpp.o: CX
   INCLUDES = -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
   OBJECT_DIR = client_src/setupscreen/CMakeFiles/setupscreen.dir
   OBJECT_FILE_DIR = client_src/setupscreen/CMakeFiles/setupscreen.dir
+  TARGET_COMPILE_PDB = client_src/setupscreen/CMakeFiles/setupscreen.dir/setupscreen.pdb
+  TARGET_PDB = client_src/setupscreen/libsetupscreen.pdb
 
 build client_src/setupscreen/CMakeFiles/setupscreen.dir/moc_JoinGame.cpp.o: CXX_COMPILER__setupscreen_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/client_src/setupscreen/moc_JoinGame.cpp || cmake_object_order_depends_target_setupscreen
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
@@ -784,6 +971,8 @@ build client_src/setupscreen/CMakeFiles/setupscreen.dir/moc_JoinGame.cpp.o: CXX_
   INCLUDES = -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
   OBJECT_DIR = client_src/setupscreen/CMakeFiles/setupscreen.dir
   OBJECT_FILE_DIR = client_src/setupscreen/CMakeFiles/setupscreen.dir
+  TARGET_COMPILE_PDB = client_src/setupscreen/CMakeFiles/setupscreen.dir/setupscreen.pdb
+  TARGET_PDB = client_src/setupscreen/libsetupscreen.pdb
 
 build client_src/setupscreen/CMakeFiles/setupscreen.dir/moc_GameList.cpp.o: CXX_COMPILER__setupscreen_unscanned_Debug /home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/client_src/setupscreen/moc_GameList.cpp || cmake_object_order_depends_target_setupscreen
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
@@ -792,6 +981,8 @@ build client_src/setupscreen/CMakeFiles/setupscreen.dir/moc_GameList.cpp.o: CXX_
   INCLUDES = -I/home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/.. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
   OBJECT_DIR = client_src/setupscreen/CMakeFiles/setupscreen.dir
   OBJECT_FILE_DIR = client_src/setupscreen/CMakeFiles/setupscreen.dir
+  TARGET_COMPILE_PDB = client_src/setupscreen/CMakeFiles/setupscreen.dir/setupscreen.pdb
+  TARGET_PDB = client_src/setupscreen/libsetupscreen.pdb
 
 
 # =============================================================================
@@ -806,15 +997,16 @@ build client_src/setupscreen/libsetupscreen.a: CXX_STATIC_LIBRARY_LINKER__setups
   OBJECT_DIR = client_src/setupscreen/CMakeFiles/setupscreen.dir
   POST_BUILD = :
   PRE_LINK = :
+  TARGET_COMPILE_PDB = client_src/setupscreen/CMakeFiles/setupscreen.dir/setupscreen.pdb
   TARGET_FILE = client_src/setupscreen/libsetupscreen.a
-  TARGET_PDB = setupscreen.a.dbg
+  TARGET_PDB = client_src/setupscreen/libsetupscreen.pdb
 
 
 #############################################
 # Utility command for edit_cache
 
 build client_src/setupscreen/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/client_src/setupscreen && /snap/clion/282/bin/cmake/linux/x64/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  COMMAND = cd /home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/client_src/setupscreen && /snap/clion/284/bin/cmake/linux/x64/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
   DESC = No interactive CMake dialog available...
   restat = 1
 
@@ -825,7 +1017,7 @@ build client_src/setupscreen/edit_cache: phony client_src/setupscreen/CMakeFiles
 # Utility command for rebuild_cache
 
 build client_src/setupscreen/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/client_src/setupscreen && /snap/clion/282/bin/cmake/linux/x64/bin/cmake --regenerate-during-build -S/home/moko/Escritorio/jazzjackrabbit_taller1 -B/home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug
+  COMMAND = cd /home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/client_src/setupscreen && /snap/clion/284/bin/cmake/linux/x64/bin/cmake --regenerate-during-build -S/home/moko/Escritorio/jazzjackrabbit_taller1 -B/home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -944,14 +1136,14 @@ build server_src/all: phony server_src/libserver_lib.a
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja: RERUN_CMAKE | /home/moko/Escritorio/jazzjackrabbit_taller1/CMakeLists.txt /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/CMakeLists.txt /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/CMakeLists.txt /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/CMakeLists.txt /snap/clion/282/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeCInformation.cmake /snap/clion/282/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeCXXInformation.cmake /snap/clion/282/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeCommonLanguageInclude.cmake /snap/clion/282/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeGenericSystem.cmake /snap/clion/282/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeInitializeConfigs.cmake /snap/clion/282/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeLanguageInformation.cmake /snap/clion/282/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeParseArguments.cmake /snap/clion/282/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeSystemSpecificInformation.cmake /snap/clion/282/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeSystemSpecificInitialize.cmake /snap/clion/282/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/CMakeCommonCompilerMacros.cmake /snap/clion/282/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/GNU-C.cmake /snap/clion/282/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/GNU-CXX.cmake /snap/clion/282/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/GNU.cmake /snap/clion/282/bin/cmake/linux/x64/share/cmake-3.28/Modules/Platform/Linux-GNU-C.cmake /snap/clion/282/bin/cmake/linux/x64/share/cmake-3.28/Modules/Platform/Linux-GNU-CXX.cmake /snap/clion/282/bin/cmake/linux/x64/share/cmake-3.28/Modules/Platform/Linux-GNU.cmake /snap/clion/282/bin/cmake/linux/x64/share/cmake-3.28/Modules/Platform/Linux-Initialize.cmake /snap/clion/282/bin/cmake/linux/x64/share/cmake-3.28/Modules/Platform/Linux.cmake /snap/clion/282/bin/cmake/linux/x64/share/cmake-3.28/Modules/Platform/UnixPaths.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreConfig.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreConfigExtras.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreConfigExtrasMkspecDir.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreConfigVersion.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreMacros.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5GuiConfig.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5GuiConfigExtras.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5GuiConfigVersion.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QComposePlatformInputContextPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEglFSEmulatorIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEglFSIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEglFSKmsEglDeviceIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEglFSKmsGbmIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEglFSX11IntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEvdevKeyboardPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEvdevMousePlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEvdevTabletPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEvdevTouchScreenPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QGifPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QICOPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QIbusPlatformInputContextPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QJpegPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QLibInputPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QLinuxFbIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QMinimalEglIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QMinimalIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QOffscreenIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QTuioTouchPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QVncIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QXcbEglIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QXcbGlxIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QXcbIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsConfig.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsConfigExtras.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsConfigVersion.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsMacros.cmake CMakeCache.txt CMakeFiles/3.28.1/CMakeCCompiler.cmake CMakeFiles/3.28.1/CMakeCXXCompiler.cmake CMakeFiles/3.28.1/CMakeSystem.cmake
+build build.ninja: RERUN_CMAKE | /home/moko/Escritorio/jazzjackrabbit_taller1/CMakeLists.txt /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/CMakeLists.txt /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/CMakeLists.txt /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/CMakeLists.txt /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeCCompiler.cmake.in /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeCCompilerABI.c /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeCInformation.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeCXXCompiler.cmake.in /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeCXXInformation.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeCommonLanguageInclude.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeCompilerIdDetection.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeDetermineCCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeDetermineCXXCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeDetermineCompileFeatures.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeDetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeDetermineCompilerABI.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeDetermineSystem.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeFindBinUtils.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeGenericSystem.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeInitializeConfigs.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeLanguageInformation.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeParseArguments.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeParseImplicitIncludeInfo.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeParseImplicitLinkInfo.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeParseLibraryArchitecture.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeSystem.cmake.in /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeSystemSpecificInformation.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeSystemSpecificInitialize.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeTestCCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeTestCXXCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeTestCompilerCommon.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/ADSP-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/ARMCC-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/ARMClang-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/AppleClang-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/Borland-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/Bruce-C-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/CMakeCommonCompilerMacros.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/Clang-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/Clang-DetermineCompilerInternal.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/Comeau-CXX-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/Compaq-C-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/Compaq-CXX-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/Cray-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/CrayClang-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/Embarcadero-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/Fujitsu-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/FujitsuClang-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/GHS-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/GNU-C-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/GNU-C.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/GNU-CXX-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/GNU-CXX.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/GNU-FindBinUtils.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/GNU.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/HP-C-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/HP-CXX-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/IAR-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/IBMCPP-C-DetermineVersionInternal.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/IBMCPP-CXX-DetermineVersionInternal.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/IBMClang-C-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/IBMClang-CXX-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/Intel-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/IntelLLVM-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/LCC-C-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/LCC-CXX-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/MSVC-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/NVHPC-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/NVIDIA-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/OpenWatcom-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/OrangeC-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/PGI-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/PathScale-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/SCO-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/SDCC-C-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/SunPro-C-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/SunPro-CXX-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/TI-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/Tasking-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/TinyCC-C-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/VisualAge-C-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/VisualAge-CXX-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/Watcom-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/XL-C-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/XL-CXX-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/XLClang-C-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/XLClang-CXX-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/zOS-C-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/zOS-CXX-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Internal/FeatureTesting.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Platform/Linux-Determine-CXX.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Platform/Linux-GNU-C.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Platform/Linux-GNU-CXX.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Platform/Linux-GNU.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Platform/Linux-Initialize.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Platform/Linux.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Platform/UnixPaths.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreConfig.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreConfigExtras.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreConfigExtrasMkspecDir.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreConfigVersion.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreMacros.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5GuiConfig.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5GuiConfigExtras.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5GuiConfigVersion.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QComposePlatformInputContextPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEglFSEmulatorIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEglFSIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEglFSKmsEglDeviceIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEglFSKmsGbmIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEglFSX11IntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEvdevKeyboardPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEvdevMousePlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEvdevTabletPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEvdevTouchScreenPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QGifPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QICOPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QIbusPlatformInputContextPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QJpegPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QLibInputPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QLinuxFbIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QMinimalEglIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QMinimalIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QOffscreenIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QTuioTouchPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QVncIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QXcbEglIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QXcbGlxIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QXcbIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsConfig.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsConfigExtras.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsConfigVersion.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsMacros.cmake CMakeCache.txt CMakeFiles/3.28.1/CMakeCCompiler.cmake CMakeFiles/3.28.1/CMakeCXXCompiler.cmake CMakeFiles/3.28.1/CMakeSystem.cmake
   pool = console
 
 
 #############################################
 # A missing CMake input file is not an error.
 
-build /home/moko/Escritorio/jazzjackrabbit_taller1/CMakeLists.txt /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/CMakeLists.txt /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/CMakeLists.txt /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/CMakeLists.txt /snap/clion/282/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeCInformation.cmake /snap/clion/282/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeCXXInformation.cmake /snap/clion/282/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeCommonLanguageInclude.cmake /snap/clion/282/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeGenericSystem.cmake /snap/clion/282/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeInitializeConfigs.cmake /snap/clion/282/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeLanguageInformation.cmake /snap/clion/282/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeParseArguments.cmake /snap/clion/282/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeSystemSpecificInformation.cmake /snap/clion/282/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeSystemSpecificInitialize.cmake /snap/clion/282/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/CMakeCommonCompilerMacros.cmake /snap/clion/282/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/GNU-C.cmake /snap/clion/282/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/GNU-CXX.cmake /snap/clion/282/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/GNU.cmake /snap/clion/282/bin/cmake/linux/x64/share/cmake-3.28/Modules/Platform/Linux-GNU-C.cmake /snap/clion/282/bin/cmake/linux/x64/share/cmake-3.28/Modules/Platform/Linux-GNU-CXX.cmake /snap/clion/282/bin/cmake/linux/x64/share/cmake-3.28/Modules/Platform/Linux-GNU.cmake /snap/clion/282/bin/cmake/linux/x64/share/cmake-3.28/Modules/Platform/Linux-Initialize.cmake /snap/clion/282/bin/cmake/linux/x64/share/cmake-3.28/Modules/Platform/Linux.cmake /snap/clion/282/bin/cmake/linux/x64/share/cmake-3.28/Modules/Platform/UnixPaths.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreConfig.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreConfigExtras.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreConfigExtrasMkspecDir.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreConfigVersion.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreMacros.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5GuiConfig.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5GuiConfigExtras.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5GuiConfigVersion.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QComposePlatformInputContextPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEglFSEmulatorIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEglFSIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEglFSKmsEglDeviceIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEglFSKmsGbmIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEglFSX11IntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEvdevKeyboardPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEvdevMousePlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEvdevTabletPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEvdevTouchScreenPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QGifPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QICOPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QIbusPlatformInputContextPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QJpegPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QLibInputPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QLinuxFbIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QMinimalEglIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QMinimalIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QOffscreenIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QTuioTouchPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QVncIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QXcbEglIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QXcbGlxIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QXcbIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsConfig.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsConfigExtras.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsConfigVersion.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsMacros.cmake CMakeCache.txt CMakeFiles/3.28.1/CMakeCCompiler.cmake CMakeFiles/3.28.1/CMakeCXXCompiler.cmake CMakeFiles/3.28.1/CMakeSystem.cmake: phony
+build /home/moko/Escritorio/jazzjackrabbit_taller1/CMakeLists.txt /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/CMakeLists.txt /home/moko/Escritorio/jazzjackrabbit_taller1/client_src/setupscreen/CMakeLists.txt /home/moko/Escritorio/jazzjackrabbit_taller1/server_src/CMakeLists.txt /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeCCompiler.cmake.in /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeCCompilerABI.c /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeCInformation.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeCXXCompiler.cmake.in /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeCXXInformation.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeCommonLanguageInclude.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeCompilerIdDetection.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeDetermineCCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeDetermineCXXCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeDetermineCompileFeatures.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeDetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeDetermineCompilerABI.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeDetermineSystem.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeFindBinUtils.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeGenericSystem.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeInitializeConfigs.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeLanguageInformation.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeParseArguments.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeParseImplicitIncludeInfo.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeParseImplicitLinkInfo.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeParseLibraryArchitecture.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeSystem.cmake.in /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeSystemSpecificInformation.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeSystemSpecificInitialize.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeTestCCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeTestCXXCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeTestCompilerCommon.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/ADSP-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/ARMCC-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/ARMClang-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/AppleClang-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/Borland-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/Bruce-C-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/CMakeCommonCompilerMacros.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/Clang-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/Clang-DetermineCompilerInternal.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/Comeau-CXX-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/Compaq-C-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/Compaq-CXX-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/Cray-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/CrayClang-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/Embarcadero-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/Fujitsu-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/FujitsuClang-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/GHS-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/GNU-C-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/GNU-C.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/GNU-CXX-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/GNU-CXX.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/GNU-FindBinUtils.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/GNU.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/HP-C-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/HP-CXX-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/IAR-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/IBMCPP-C-DetermineVersionInternal.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/IBMCPP-CXX-DetermineVersionInternal.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/IBMClang-C-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/IBMClang-CXX-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/Intel-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/IntelLLVM-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/LCC-C-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/LCC-CXX-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/MSVC-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/NVHPC-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/NVIDIA-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/OpenWatcom-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/OrangeC-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/PGI-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/PathScale-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/SCO-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/SDCC-C-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/SunPro-C-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/SunPro-CXX-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/TI-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/Tasking-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/TinyCC-C-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/VisualAge-C-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/VisualAge-CXX-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/Watcom-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/XL-C-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/XL-CXX-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/XLClang-C-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/XLClang-CXX-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/zOS-C-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Compiler/zOS-CXX-DetermineCompiler.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Internal/FeatureTesting.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Platform/Linux-Determine-CXX.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Platform/Linux-GNU-C.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Platform/Linux-GNU-CXX.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Platform/Linux-GNU.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Platform/Linux-Initialize.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Platform/Linux.cmake /snap/clion/284/bin/cmake/linux/x64/share/cmake-3.28/Modules/Platform/UnixPaths.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreConfig.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreConfigExtras.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreConfigExtrasMkspecDir.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreConfigVersion.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreMacros.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5GuiConfig.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5GuiConfigExtras.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5GuiConfigVersion.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QComposePlatformInputContextPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEglFSEmulatorIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEglFSIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEglFSKmsEglDeviceIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEglFSKmsGbmIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEglFSX11IntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEvdevKeyboardPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEvdevMousePlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEvdevTabletPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEvdevTouchScreenPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QGifPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QICOPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QIbusPlatformInputContextPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QJpegPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QLibInputPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QLinuxFbIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QMinimalEglIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QMinimalIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QOffscreenIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QTuioTouchPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QVncIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QXcbEglIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QXcbGlxIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QXcbIntegrationPlugin.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsConfig.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsConfigExtras.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsConfigVersion.cmake /usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsMacros.cmake CMakeCache.txt CMakeFiles/3.28.1/CMakeCCompiler.cmake CMakeFiles/3.28.1/CMakeCXXCompiler.cmake CMakeFiles/3.28.1/CMakeSystem.cmake: phony
 
 
 #############################################

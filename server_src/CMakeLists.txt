@@ -33,6 +33,8 @@ add_library(server_lib
     ../common_src/resolvererror.cpp
     ../common_src/socket.cpp
     monitor_clients.cpp
+        pickups/zanahoria_envenenada.cpp
+        headers/zanahoria_envenenada.h
 )
 
 target_include_directories(server_lib PRIVATE headers/*)

@@ -62,11 +62,15 @@ public:
 
     bool is_running() { return _is_alive; }
 
+    ~Game();
+
 private:
+    Mapa* m;
     uint32_t maxPlayers;
     std::unordered_map<uint32_t, Personaje*> clientCharacters;
     ListaObjetos objetos;
     std::vector<Ente*> entes;
+    std::map<uint32_t, uint32_t> elecciones;
 
     Queue<Message>& actionQueue;
     Queue<Container>& stateQueue;

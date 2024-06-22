@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <string>
 #include <vector>
+#include <memory>
 
 #include "commands.h"
 #include "entity_commands.h"
@@ -77,11 +78,14 @@ public:
     //Setup confirmmation map saved
     Container(Setup::ActionType setupType, bool ok);
 
+
     Type type() const { return _type; }
 
-    SetupContainer* setup_container;
-    GameContainer* game_container;
-    SoundContainer* sound_container;
+    std::shared_ptr<SetupContainer> setup_container;
+    std::shared_ptr<GameContainer> game_container;
+    std::shared_ptr<SoundContainer> sound_container;
+    //GameContainer* game_container;
+    //SoundContainer* sound_container;
 
 private:
     Type _type;

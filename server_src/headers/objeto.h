@@ -18,6 +18,7 @@ class Mapa;
 class Municion;
 class ListaObjetos;
 class Pickup;
+class ZanahoriaEnvenenada;
 
 class Objeto {
 public:
@@ -43,6 +44,7 @@ public:
     virtual void colision(Bala& o);
     virtual void colision(Banana& o);
     virtual void colision(Municion& m);
+    virtual void colision(ZanahoriaEnvenenada& ze);
     virtual ~Objeto();
 };
 

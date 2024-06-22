@@ -131,4 +131,10 @@ Mapa::~Mapa() {
     for (auto o: objetos) {
         delete (o);
     }
+    for (auto o: diagonalesDer) {
+        delete (o);
+    }
+    for (auto o: diagonalesIzq) {
+        delete (o);
+    }
 }

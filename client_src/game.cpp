@@ -25,8 +25,20 @@ Game::Game(Client& client):
     tilesetTexture = SDL_CreateTextureFromSurface(this->window.getRenderer(), tilesetSurface);
     if (tilesetTexture == nullptr)
         std::cout << "Error al crear la textura: " << SDL_GetError() << std::endl;
-
     SDL_FreeSurface(tilesetSurface);
+
+    SDL_Surface* loadingSurface = 
+            IMG_Load("../client_src/assets/loading/loading.png");
+    if (loadingSurface == nullptr) {
+        std::cout << "Error al cargar la imagen: " << IMG_GetError() << std::endl;
+        return;
+    }
+
+    loadingImage = SDL_CreateTextureFromSurface(this->window.getRenderer(), loadingSurface);
+    if (loadingImage == nullptr)
+        std::cout << "Error al crear la textura: " << SDL_GetError() << std::endl;
+    SDL_FreeSurface(loadingSurface);
+    
 
     //Aca deberia ir un seleccionador de mapas pero todavia no se implementó (en proceso).
     MapCreator load_map(client);
@@ -88,7 +100,8 @@ void Game::render() {
     this->window.fill();
 
     if (!gameStarted) {
-        window.fill(255, 51, 51, 255);
+        SDL_RenderCopy(window.getRenderer(), loadingImage, NULL, NULL);
+        ui_manager.renderLoadingText();
     }
     else {
 

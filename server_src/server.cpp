@@ -84,7 +84,6 @@ void Server::run() {
         c = getchar();
     } while (c != 'q');
 
-
     thread_acceptador.stop();
     game_manager.stop();
 

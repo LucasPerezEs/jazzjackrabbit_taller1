@@ -42,7 +42,13 @@ void Personaje::moveRigth() {
 
     movingright = true;
     direccion = 1;
-    an_type = AnimationType::WALK;
+
+    if (state == PlayerState::INTOXICATED) {
+        an_type = AnimationType::INTOXICATED_WALK;
+    } else {
+        an_type = AnimationType::WALK;
+    }
+
     tiempo = std::chrono::system_clock::now();
 }
 void Personaje::moveLeft() {
@@ -51,7 +57,13 @@ void Personaje::moveLeft() {
     }
     movingleft = true;
     direccion = -1;
-    an_type = AnimationType::WALK;
+
+    if (state == PlayerState::INTOXICATED) {
+        an_type = AnimationType::INTOXICATED_WALK;
+    } else {
+        an_type = AnimationType::WALK;
+    }
+
     tiempo = std::chrono::system_clock::now();
 }
 void Personaje::stopMovingRight() {
@@ -109,6 +121,17 @@ void Personaje::add_score(int score) {
 
 void Personaje::check_idle() {
 
+    if (state == PlayerState::INTOXICATED) {
+        std::cout << "Intoxicado esto" << std::endl;
+        auto now = std::chrono::system_clock::now();
+        auto duration =
+                std::chrono::duration_cast<std::chrono::seconds>(now - intoxicated_start).count();
+
+        if (duration >= 10) {
+            state = PlayerState::NORMAL;
+        }
+    }
+
     if (state == PlayerState::HURTED && std::chrono::duration_cast<std::chrono::milliseconds>(
                                                 std::chrono::system_clock::now() - last_hurt)
                                                         .count() > espera_hurt / 2) {
@@ -119,7 +142,12 @@ void Personaje::check_idle() {
         std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() -
                                                               tiempo)
                         .count() > espera_idle) {
-        an_type = AnimationType::IDLE;
+
+        if (state == PlayerState::INTOXICATED) {
+            an_type = AnimationType::INTOXICATED_IDLE;
+        } else {
+            an_type = AnimationType::IDLE;
+        }
 
     } else if (!movingleft && !movingright && state != PlayerState::HURTED && !jumping &&
                std::chrono::duration_cast<std::chrono::milliseconds>(
@@ -318,6 +346,13 @@ void Personaje::update_vivo(ListaObjetos& objetos, Queue<Container>& q,
     }
 }
 
+void Personaje::colision(ZanahoriaEnvenenada& ze) {
+
+    this->state = PlayerState::INTOXICATED;
+    this->tiempo = std::chrono::system_clock::now();
+    this->intoxicated_start = std::chrono::system_clock::now();
+}
+
 
 void Personaje::colision(Objeto& o) {
     if (check_colision(o)) {
@@ -332,7 +367,9 @@ void Personaje::colision(Enemigo& e) {
                        std::chrono::system_clock::now() - last_hurt)
                        .count() > espera_hurt) {
         RecibirDanio(e.get_damage());
-        state = PlayerState::HURTED;
+        if (state != PlayerState::INTOXICATED) {
+            state = PlayerState::HURTED;
+        }
         an_type = AnimationType::HURT;
         last_hurt = std::chrono::system_clock::now();
         tiempo = std::chrono::system_clock::now();
@@ -345,7 +382,10 @@ void Personaje::colision(Banana& b) {  // Banana y Bala deberian pertenecer a cl
     if (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() -
                                                               last_hurt)
                 .count() > espera_hurt) {
-        state = PlayerState::HURTED;
+
+        if (state != PlayerState::INTOXICATED) {
+            state = PlayerState::HURTED;
+        }
         an_type = AnimationType::HURT;
         last_hurt = std::chrono::system_clock::now();
         tiempo = std::chrono::system_clock::now();
@@ -364,7 +404,11 @@ void Personaje::colision(Bala& b) {
     if (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() -
                                                               last_hurt)
                 .count() > espera_hurt) {
-        state = PlayerState::HURTED;
+
+        if (state != PlayerState::INTOXICATED) {
+            state = PlayerState::HURTED;
+        }
+
         an_type = AnimationType::HURT;
         last_hurt = std::chrono::system_clock::now();
         tiempo = std::chrono::system_clock::now();
@@ -399,6 +443,10 @@ void Personaje::check_dead(int killer_id) {
 }
 
 void Personaje::disparar(ListaObjetos& objetos) {
+
+    if (state == PlayerState::INTOXICATED) {
+        return;
+    }
     tiempo = std::chrono::system_clock::now();
     arma.disparar(objetos, id, x, width, y, height, direccion, q);
     if (!movingleft && !movingright) {

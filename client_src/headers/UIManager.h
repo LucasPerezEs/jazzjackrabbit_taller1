@@ -27,6 +27,8 @@ public:
     void update_clock(int seconds);
 
     void render_UI(int id_cliente);
+
+    void renderLoadingText();
 };
 
 #endif  // UIMANAGER_H

@@ -1,10 +1,10 @@
 #include "headers/model_updater.h"
 
 #include "headers/client.h"
-// cppcheck-suppress uninitMemberVar
 ModelUpdater::ModelUpdater(ClientProtocol& protocol, SdlWindow& window,
                            std::map<int, Entity*>& entidades, Queue<Container>& reciever_queue,
-                           std::map<int, Player*>& personajes, UIManager& ui_manager, int id, SoundManager& sound_manager, bool& gameStarted):
+                           std::map<int, Player*>& personajes, UIManager& ui_manager, int id,
+                           SoundManager& sound_manager, bool& gameStarted):
         protocol(protocol),
         was_closed(false),
         entidades(entidades),
@@ -15,7 +15,7 @@ ModelUpdater::ModelUpdater(ClientProtocol& protocol, SdlWindow& window,
         id(id),
         gameStarted(gameStarted) {
     this->init_animations(window);
-    //this->sound_manager.set_clientId(id);
+    // this->sound_manager.set_clientId(id);
 }
 
 void ModelUpdater::init_animations(SdlWindow& window) {
@@ -28,6 +28,11 @@ void ModelUpdater::init_animations(SdlWindow& window) {
             new SdlTexture("../client_src/assets/textures/jazz_intoxicated_walking.png", window,
                            Color{0x2C, 0x66, 0x96}),
             12, AnimationSpeed::FAST);
+
+    this->animations[EntityType::JAZZ][AnimationType::INTOXICATED_IDLE] =
+            new Animation(new SdlTexture("../client_src/assets/textures/jazz_intoxicated_idle.png",
+                                         window, Color{0x2C, 0x66, 0x96}),
+                          8, AnimationSpeed::DEFAULT);
 
     this->animations[EntityType::JAZZ][AnimationType::IDLE] =
             new Animation(new SdlTexture("../client_src/assets/textures/jazz_idle.png", window,
@@ -89,6 +94,11 @@ void ModelUpdater::init_animations(SdlWindow& window) {
                                          Color{0x2C, 0x66, 0x96}),
                           10, AnimationSpeed::DEFAULT);
 
+    this->animations[EntityType::INTOXICATED_CARROT][AnimationType::PICKUP] = new Animation(
+            new SdlTexture("../client_src/assets/textures/intoxicated_carrot_pickup.png", window,
+                           Color{0x2C, 0x66, 0x96}),
+            10, AnimationSpeed::DEFAULT);
+
     this->animations[EntityType::GOLD_COIN][AnimationType::PICKUP] =
             new Animation(new SdlTexture("../client_src/assets/textures/goldcoin_pickup.png",
                                          window, Color{0x2C, 0x66, 0x96}),
@@ -119,10 +129,20 @@ void ModelUpdater::init_animations(SdlWindow& window) {
                                          Color{0x2C, 0x66, 0x96}),
                           8, AnimationSpeed::FAST);
 
+    this->animations[EntityType::LORI][AnimationType::INTOXICATED_WALK] = new Animation(
+            new SdlTexture("../client_src/assets/textures/lori_intoxicated_walking.png", window,
+                           Color{0x2C, 0x66, 0x96}),
+            12, AnimationSpeed::FAST);
+
     this->animations[EntityType::LORI][AnimationType::IDLE] =
             new Animation(new SdlTexture("../client_src/assets/textures/lori_idle.png", window,
                                          Color{0x2C, 0x66, 0x96}),
                           16, AnimationSpeed::FAST);
+
+    this->animations[EntityType::LORI][AnimationType::INTOXICATED_IDLE] =
+            new Animation(new SdlTexture("../client_src/assets/textures/lori_intoxicated_idle.png",
+                                         window, Color{0x2C, 0x66, 0x96}),
+                          12, AnimationSpeed::DEFAULT);
 
     this->animations[EntityType::LORI][AnimationType::SHOOT_IDLE] =
             new Animation(new SdlTexture("../client_src/assets/textures/lori_shoot_idle.png",
@@ -159,10 +179,20 @@ void ModelUpdater::init_animations(SdlWindow& window) {
                                          Color{0x2C, 0x66, 0x96}),
                           8, AnimationSpeed::FAST);
 
+    this->animations[EntityType::SPAZ][AnimationType::INTOXICATED_WALK] = new Animation(
+            new SdlTexture("../client_src/assets/textures/spaz_intoxicated_walking.png", window,
+                           Color{0x2C, 0x66, 0x96}),
+            12, AnimationSpeed::FAST);
+
     this->animations[EntityType::SPAZ][AnimationType::IDLE] =
             new Animation(new SdlTexture("../client_src/assets/textures/spaz_idle.png", window,
                                          Color{0x2C, 0x66, 0x96}),
                           20, AnimationSpeed::FAST);
+
+    this->animations[EntityType::SPAZ][AnimationType::INTOXICATED_IDLE] =
+            new Animation(new SdlTexture("../client_src/assets/textures/spaz_intoxicated_idle.png",
+                                         window, Color{0x2C, 0x66, 0x96}),
+                          8, AnimationSpeed::DEFAULT);
 
     this->animations[EntityType::SPAZ][AnimationType::SHOOT_IDLE] =
             new Animation(new SdlTexture("../client_src/assets/textures/spaz_shoot_idle.png",
@@ -249,11 +279,11 @@ void ModelUpdater::despawn_entity(Container& c) {
 void ModelUpdater::update(float dt) {
 
     try {
-        //std::cout << "Popeando container de la queue en updater\n";
+        // std::cout << "Popeando container de la queue en updater\n";
         Container c = this->reciever_queue.pop();
 
         if (c.sound_container != nullptr) {
-                std::cout << "llego container de sonido\n";
+            std::cout << "llego container de sonido\n";
             sound_manager.play_sound(c.sound_container->entity, c.sound_container->sound,
                                      c.sound_container->id);
             return;
@@ -268,9 +298,10 @@ void ModelUpdater::update(float dt) {
                 despawn_entity(c);
                 break;
 
-            case 2:  // Si el id es -1 o es igual al id del cliente se cierra el game del lado cliente
+            case 2:  // Si el id es -1 o es igual al id del cliente se cierra el game del lado
+                     // cliente
                 if (c.game_container->id == -1 || c.game_container->id == id) {
-                        close();
+                    close();
                 }
                 break;
 
@@ -294,7 +325,7 @@ void ModelUpdater::update(float dt) {
     }
 }
 
-//void ModelUpdater::set_clientId(int clientId) { this->sound_manager.set_clientId(clientId); }
+// void ModelUpdater::set_clientId(int clientId) { this->sound_manager.set_clientId(clientId); }
 
 bool ModelUpdater::is_running() { return not was_closed; }
 
