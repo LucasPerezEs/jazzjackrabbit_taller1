@@ -111,6 +111,15 @@ bool Client::refreshGameList(std::vector<std::string>& gameList) {
     return container.setup_container->ok;
 }
 
+bool Client::setName(const std::string& clientName) {
+    Message msg(Setup::ActionType::SET_NAME, clientName);
+    client_protocol.send_message(msg);
+
+    Container container = client_protocol.receive_container();
+
+    return container.setup_container->ok;
+}
+
 // EventHandler* Client::get_EventHandler() { return &event_handler; }
 
 ClientProtocol& Client::get_protocol() { return client_protocol; }

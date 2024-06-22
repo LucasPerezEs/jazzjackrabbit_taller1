@@ -32,6 +32,8 @@ public:
     bool joinGame(const std::string& gameId, const int elegido);
     bool refreshGameList(std::vector<std::string>& gameList);
 
+    bool setName(const std::string& clientName);
+
     void go_online();
     bool is_online();
 

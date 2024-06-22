@@ -45,6 +45,11 @@ void ClientProtocol::send_setup(const Setup& setup) {
     if(setup.action == Setup::ActionType::SAVE_MAP){
         send_save_map(setup.mapName, setup.map);
     }
+
+    if(setup.action == Setup::ActionType::SET_NAME){
+        std::cout << "Enviando set name\n";
+        send_set_name(setup.mapName);
+    }    
 }
 
 
@@ -80,6 +85,11 @@ void ClientProtocol::send_create_map(const std::string& mapName) {
 
 void ClientProtocol::send_get_game_list() {
     sendUChar(static_cast<unsigned char>(Setup::GET_GAME_LIST));
+}
+
+void ClientProtocol::send_set_name(const std::string& clientName) {
+    sendUChar(static_cast<unsigned char>(Setup::SET_NAME));
+    sendString(clientName);
 }
 
 //////////////RECEIVE
@@ -119,6 +129,8 @@ Container ClientProtocol::receive_setup_container() {
             return receive_create_map();
         case Setup::ActionType::SAVE_MAP:
             return receive_saved_map();
+        case Setup::ActionType::SET_NAME:
+            return receive_saved_name();
         default:
             throw std::runtime_error("Unknown setup action type");
     }
@@ -140,6 +152,11 @@ Container ClientProtocol::receive_create_game() {
 Container ClientProtocol::receive_saved_map() {
     bool ok = receiveBool();
     return Container(Setup::ActionType::SAVE_MAP, ok);
+}
+
+Container ClientProtocol::receive_saved_name() {
+    bool ok = receiveBool();
+    return Container(Setup::ActionType::SET_NAME, ok);
 }
 
 Container ClientProtocol::receive_join_game() {

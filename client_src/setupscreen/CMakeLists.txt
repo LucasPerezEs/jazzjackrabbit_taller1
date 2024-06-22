@@ -9,6 +9,7 @@ set(HEADER_FILES
         CreateGame.h
         JoinGame.h
         GameList.h
+        ClientName.h
 )
 
 set(SOURCE_FILES
@@ -18,6 +19,7 @@ set(SOURCE_FILES
         CreateGame.cpp
         JoinGame.cpp
         GameList.cpp
+        ClientName.cpp
 )
 
 

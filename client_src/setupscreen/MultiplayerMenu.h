@@ -15,6 +15,7 @@
 #include "CreateMap.h"
 #include "GameList.h"
 #include "JoinGame.h"
+#include "ClientName.h"
 
 class MultiplayerMenu: public QDialog {
     Q_OBJECT
@@ -23,9 +24,11 @@ public:
     int exit;
     explicit MultiplayerMenu(QWidget* parent = nullptr);
     void updateGameList(const std::vector<std::string>& gameList);
+    void nameSet();
     void showGameCreatedMessage();
     void showGameCreationFailedMessage();
     void showJoinGameFailedMessage();
+    void showSetNameFailedMessage();
     virtual ~MultiplayerMenu();
 
 signals:
@@ -34,6 +37,7 @@ signals:
                              const std::vector<uint32_t>& cheats);
     void joinGameRequested(const QString& gameID, const int elegido);
     void createMapRequested();
+    void ClientNameRequested(const QString& clientName);
 
 
 private:
@@ -43,6 +47,7 @@ private:
     QPushButton* createMapButton;
     QPushButton* back;
 
+    ClientName* clientNameWidget;
     CreateGame* createGameWidget;
     JoinGame* joinGameWidget;
     GameList* gameListWidget;

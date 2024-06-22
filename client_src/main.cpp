@@ -43,7 +43,6 @@ int main(int argc, char* argv[]) {
             client.go_online();
             if (client.is_online()) {
                 MultiplayerMenu multiplayerMenu;
-
                 QObject::connect(&multiplayerMenu, &MultiplayerMenu::refreshRequested, [&]() {
                     std::vector<std::string> gameList;
                     if (client.refreshGameList(gameList)) {
@@ -85,16 +84,18 @@ int main(int argc, char* argv[]) {
                                      }
                                  });
 
-                QObject::connect(&multiplayerMenu, &MultiplayerMenu::createMapRequested, [&]() {
-                    multiplayerMenu.close();
+                QObject::connect(&multiplayerMenu, &MultiplayerMenu::ClientNameRequested, [&](const QString& clientName) {
+                    if (!client.setName(clientName.toStdString())) {
+                        multiplayerMenu.showSetNameFailedMessage();
+                    } else {
+                        multiplayerMenu.nameSet();
+                    }
+                });
 
-                    try {
-                        MapCreator create_map(client);
-                        create_map.select_map();
-                    } catch (const std::exception& e) {
-                        std::cerr << "Exception during map creation: " << e.what() << std::endl;
-                    } catch (...) {
-                        std::cerr << "Unknown exception during map creation." << std::endl;
+                QObject::connect(&multiplayerMenu, &MultiplayerMenu::refreshRequested, [&]() {
+                    std::vector<std::string> gameList;
+                    if (client.refreshGameList(gameList)) {
+                        multiplayerMenu.updateGameList(gameList);
                     }
                 });
 
