@@ -74,18 +74,21 @@ bool GamesManager::createGame(std::string gameId, uint32_t maxPlayers,
                               std::vector<uint32_t> cheats) {
     std::lock_guard<std::mutex> lock(gamesMutex);
 
-    std::map<std::string, float> config = load_config_YAML("../config.yml");
+    if (games.count(gameId) == 0) {
+        std::map<std::string, float> config = load_config_YAML("../config.yml");
 
-    activate_cheats(cheats, config);
+        activate_cheats(cheats, config);
 
-    GameBroadcasterContainer* newGame =
-            new GameBroadcasterContainer(std::move(config), maxPlayers, setupQueue);
+        GameBroadcasterContainer* newGame =
+                new GameBroadcasterContainer(std::move(config), maxPlayers, setupQueue);
 
-    if (newGame != nullptr) {
-        games[gameId] = newGame;
-        //newGame->start();
-        return true;
+        if (newGame != nullptr) {
+            games[gameId] = newGame;
+            //newGame->start();
+            return true;
+        }
     }
+
     return false;
 }
 
@@ -176,6 +179,17 @@ bool GamesManager::listGames(std::vector<std::string>& gameList) {
 
     return false;
 }
+
+bool GamesManager::setName(std::string& clientName, uint32_t id) {
+    for (auto client: clients) {
+        if (client.second->getName().compare(clientName) == 0) {
+            return false;
+        }
+    }
+    clients[id]->setName(clientName);
+    return true;
+}
+
 
 void GamesManager::activate_cheats(const std::vector<uint32_t>& cheats,
                                    std::map<std::string, float>& config) {
@@ -277,7 +291,12 @@ void GamesManager::run() {
                 clients[clientId]->pushState(container);
                 break;
             }
-
+            case Setup::SET_NAME:{
+                ok = setName(msg.setup.mapName, clientId);
+                Container container = Container(Setup::SET_NAME, ok);
+                clients[clientId]->pushState(container);
+                break;
+            }
             default:
                 std::cout << "Comando desconocido" << std::endl;
                 break;

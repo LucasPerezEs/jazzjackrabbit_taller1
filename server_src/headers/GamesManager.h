@@ -25,6 +25,7 @@ public:
     bool listGames(std::vector<std::string>& gameList);
     bool savedMap(std::string& mapName, std::vector<std::vector<std::string>>& mapReceived);
     bool createMap(std::string& mapName, std::vector<std::vector<std::string>>& mapReceived);
+    bool setName(std::string& clientName, uint32_t id);
     virtual void run() override;
     virtual void stop() override;
 

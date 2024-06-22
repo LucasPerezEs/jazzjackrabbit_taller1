@@ -17,6 +17,7 @@
 class ClientHandler {
 private:
     uint32_t id;
+    std::string name;
     ServerProtocol serverProtocol;
     ClientReceiver receiverThread;
     ClientSender senderThread;
@@ -27,6 +28,8 @@ public:
     ClientHandler(uint32_t id,Socket peer);
     void setReceiverQueue(Queue<Message>* actionQueue);
     uint32_t getId();
+    std::string getName();
+    void setName(std::string newName);
     bool is_online();
     void kill();
     void pushState(const Container& c);

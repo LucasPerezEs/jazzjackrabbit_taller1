@@ -2,6 +2,7 @@
 
 MultiplayerMenu::MultiplayerMenu(QWidget* parent):
         QDialog(parent),
+        clientNameWidget(new ClientName()),
         createGameWidget(new CreateGame()),
         joinGameWidget(new JoinGame()),
         gameListWidget(new GameList()) {
@@ -27,10 +28,14 @@ void MultiplayerMenu::init() {
     layout->addWidget(back);
     // layout->addWidget(refreshButton);
 
+    layout->addWidget(clientNameWidget);
     layout->addWidget(createGameWidget);
     layout->addWidget(gameListWidget);
     layout->addWidget(joinGameWidget);
 
+    createGameButton->hide();
+    joinGameButton->hide();
+    createMapButton->hide();
     refreshButton->hide();
     back->hide();
     createGameWidget->hide();
@@ -44,6 +49,8 @@ void MultiplayerMenu::init() {
     connect(createMapButton, &QPushButton::clicked, this, &MultiplayerMenu::onCreateMapClicked);
     connect(back, &QPushButton::clicked, this, &MultiplayerMenu::onReturnClicked);
 
+    connect(clientNameWidget, &ClientName::ClientNameRequested, this,
+            &MultiplayerMenu::ClientNameRequested);
     connect(createGameWidget, &CreateGame::createGameRequested, this,
             &MultiplayerMenu::createGameRequested);
     connect(joinGameWidget, &JoinGame::joinGameRequested, this,
@@ -52,6 +59,14 @@ void MultiplayerMenu::init() {
 
     connect(gameListWidget, &GameList::gameSelected, joinGameWidget, &JoinGame::setGameId);
 
+}
+
+void MultiplayerMenu::nameSet() {
+    createGameButton->show();
+    joinGameButton->show();
+    createMapButton->show();
+
+    clientNameWidget->hide();
 }
 
 void MultiplayerMenu::onReturnClicked() {
@@ -123,5 +138,8 @@ void MultiplayerMenu::showJoinGameFailedMessage() {
     QMessageBox::critical(this, "Join Game Failed", "Failed to join the game.");
 }
 
+void MultiplayerMenu::showSetNameFailedMessage() {
+    QMessageBox::critical(this, "Save Name Failed", "Name already in use.");
+}
 
 MultiplayerMenu::~MultiplayerMenu() {}

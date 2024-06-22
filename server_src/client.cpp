@@ -2,10 +2,12 @@
 
 ClientHandler::ClientHandler(uint32_t id, Socket peer):
         id(id),
+        name(std::string()),
         serverProtocol(std::move(peer)),
         receiverThread(id, serverProtocol),
         senderThread(id, serverProtocol),
-        online(true) {}
+        online(true)
+         {}
 
 bool ClientHandler::is_online() { return online; }
 
@@ -49,3 +51,9 @@ void ClientHandler::setReceiverQueue(Queue<Message>* actionQueue) {
 
 
 uint32_t ClientHandler::getId() { return id; }
+
+std::string ClientHandler::getName() { return name; }
+
+void ClientHandler::setName(std::string newName) {
+    name = newName;
+}

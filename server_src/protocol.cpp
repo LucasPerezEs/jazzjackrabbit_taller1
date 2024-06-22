@@ -63,6 +63,10 @@ void ServerProtocol::send_setup_container(const SetupContainer& setupContainer) 
         case Setup::ActionType::SAVE_MAP:
             sendBool(setupContainer.ok);
             break;
+
+        case Setup::ActionType::SET_NAME:
+            sendBool(setupContainer.ok);
+            break;
             
         default:
             throw std::runtime_error("Unknown setup action type to send");
@@ -155,6 +159,8 @@ Message ServerProtocol::receive_setup_message() {
             return receive_create_map();
         case Setup::ActionType::SAVE_MAP:
             return receive_save_map();
+        case Setup::ActionType::SET_NAME:
+            return receive_set_name();
         default:
             throw std::runtime_error("Unknown setup action type");
     }
@@ -195,6 +201,11 @@ Message ServerProtocol::receive_save_map() {
     return Message(Setup::ActionType::SAVE_MAP, mapName, map);
 }
 
+Message ServerProtocol::receive_set_name() {
+    std::string ClientName = receiveString();
+
+    return Message(Setup::ActionType::SET_NAME, ClientName);
+}
 
 Message ServerProtocol::receive_join_game() {
     std::string gameId = receiveString();
