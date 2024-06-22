@@ -7,7 +7,6 @@ ClientProtocol::ClientProtocol(const std::string& hostname, const std::string& s
 //////////////SEND
 
 void ClientProtocol::send_message(const Message& message) {
-    std::cout << "Enviando mensaje\n";
 
     if (message.type() == Message::Type::SETUP) {
         sendUChar(static_cast<unsigned char>(message.type()));
@@ -38,18 +37,18 @@ void ClientProtocol::send_setup(const Setup& setup) {
         send_get_game_list();
     }
 
-    if(setup.action == Setup::ActionType::CREATE_MAP){
+    if (setup.action == Setup::ActionType::CREATE_MAP) {
         send_create_map(setup.mapName);
     }
 
-    if(setup.action == Setup::ActionType::SAVE_MAP){
+    if (setup.action == Setup::ActionType::SAVE_MAP) {
         send_save_map(setup.mapName, setup.map);
     }
 
-    if(setup.action == Setup::ActionType::SET_NAME){
+    if (setup.action == Setup::ActionType::SET_NAME) {
         std::cout << "Enviando set name\n";
         send_set_name(setup.mapName);
-    }    
+    }
 }
 
 
@@ -70,7 +69,8 @@ void ClientProtocol::send_create_game(const std::string& gameId, const uint32_t&
     }
 }
 
-void ClientProtocol::send_save_map(const std::string& mapName, const std::vector<std::vector<std::string>>& map) {
+void ClientProtocol::send_save_map(const std::string& mapName,
+                                   const std::vector<std::vector<std::string>>& map) {
     sendUChar(static_cast<unsigned char>(Setup::SAVE_MAP));
     sendString(mapName);
     sendMap(map);
@@ -95,9 +95,7 @@ void ClientProtocol::send_set_name(const std::string& clientName) {
 //////////////RECEIVE
 
 Container ClientProtocol::receive_container() {
-    std::cout << "Estoy esperando el receiveUChar" << std::endl;
     unsigned char containerType = receiveUChar();
-    std::cout << "Recibiendo container\n";
     Container::Type type = static_cast<Container::Type>(containerType);
 
     switch (type) {
