@@ -2,6 +2,7 @@
 
 #include "../headers/broadcaster.h"
 
+#include <algorithm>
 
 Game::Game(Queue<Message>& actionQueue, Queue<Container>& stateQueue, uint32_t maxPlayers,
            // cppcheck-suppress passedByValue
@@ -18,20 +19,31 @@ Game::Game(Queue<Message>& actionQueue, Queue<Container>& stateQueue, uint32_t m
 void Game::run() {
     
     for (auto eleccion: elecciones)  {
-        Personaje* personaje;
+        //Personaje* personaje;
         if (eleccion.second == 0) {
-        personaje = new Jazz(20 + eleccion.first, 10, config, stateQueue);
+            Jazz* personaje = new Jazz(20 + eleccion.first, 10, config, stateQueue);
+            personaje->set_id(eleccion.first);
+            clientCharacters[eleccion.first] = personaje;
+            objetos.agregar_objeto(personaje);
+            entes.push_back(personaje);
         } else if (eleccion.second == 1) {
-        personaje = new Lori(20 + eleccion.first, 10, config, stateQueue);
+            Lori* personaje = new Lori(20 + eleccion.first, 10, config, stateQueue);
+            personaje->set_id(eleccion.first);
+            clientCharacters[eleccion.first] = personaje;
+            objetos.agregar_objeto(personaje);
+            entes.push_back(personaje);
         } else {
-        personaje = new Spaz(20 + eleccion.first, 10, config, stateQueue);
+            Spaz* personaje = new Spaz(20 + eleccion.first, 10, config, stateQueue);
+            personaje->set_id(eleccion.first);
+            clientCharacters[eleccion.first] = personaje;
+            objetos.agregar_objeto(personaje);
+            entes.push_back(personaje);
         }
-        personaje->set_id(eleccion.first);
-        clientCharacters[eleccion.first] = personaje;
-        objetos.agregar_objeto(personaje);
-        entes.push_back(personaje);
     }
-
+    /*Jazz* personaje = new Jazz(20, 10, config, stateQueue);
+    objetos.agregar_objeto(personaje);
+    entes.push_back(personaje);
+    clientCharacters[personaje->id] = personaje;*/
     Mapa m;
     Ghost* ghost = new Ghost(50, 2, config);
     Bat* bat = new Bat(75, 4, config);
@@ -86,10 +98,18 @@ void Game::run() {
                 case Command::ActionType::STOPFIRE:
                     personaje->disparando = false;
                     break;
-                case Command::ActionType::QUIT:
-                    personaje->borrar = true;
+                case Command::ActionType::QUIT: {
+                    Container c(1, clientId, 0, 0, 0, 0, 0, AnimationType::NONE_ANIMATION, EntityType::NONE_ENTITY, 0, 0, 0);
+                    stateQueue.push(c);
+                    objetos.borrar(clientId);
+                    entes.erase(std::remove_if(entes.begin(), entes.end(), [&](Ente* o){
+                        if (o->id == (int)clientId) {
+                            return true;
+                        }
+                        return false;}));
                     broadcaster.erase_client(clientId);
                     break;
+                }
                 default:
                     break;
             }

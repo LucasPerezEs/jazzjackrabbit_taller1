@@ -98,7 +98,7 @@ Container::Container(EntityType entity, SoundType sound, int id):
         sound_container(new SoundContainer(entity, sound, id)),
         _type(Type::SOUND) {}
 
-Container::~Container() {
+//Container::~Container() {
        /* if (setup_container != nullptr) {
                 delete setup_container;
         } 
@@ -108,4 +108,4 @@ Container::~Container() {
         if (sound_container != nullptr) {
                 delete sound_container;
         } */
-}
+//}

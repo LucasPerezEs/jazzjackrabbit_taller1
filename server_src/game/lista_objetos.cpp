@@ -47,3 +47,12 @@ void ListaObjetos::borrar() {
     }
     objetos.clear();
 }
+
+void ListaObjetos::borrar(int id) {
+    objetos.erase(std::remove_if(objetos.begin(), objetos.end(), [&](Objeto* o){
+        if (o->id == id) {
+            delete o;
+            return true;
+        }
+        return false;}));
+}

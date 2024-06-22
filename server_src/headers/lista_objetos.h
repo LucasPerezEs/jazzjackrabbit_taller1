@@ -18,6 +18,7 @@ public:
     void update(Mapa& mapa, Queue<Container>& q);
     void correr_colisiones();
     void borrar();
+    void borrar(int id);
 };
 
 #endif

@@ -273,7 +273,7 @@ void GamesManager::run() {
             }
             case Setup::SAVE_MAP:{
                 ok = savedMap(msg.setup.mapName, msg.setup.map);
-                container = Container(Setup::SAVE_MAP, ok);
+                Container container = Container(Setup::SAVE_MAP, ok);
                 clients[clientId]->pushState(container);
                 break;
             }
