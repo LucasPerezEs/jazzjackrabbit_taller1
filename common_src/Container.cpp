@@ -12,6 +12,9 @@ SetupContainer::SetupContainer(Setup::ActionType setupType, std::vector<std::str
                                bool ok):
         setupType(setupType), gameList(gameList), ok(ok) {}
 
+SetupContainer::SetupContainer(Setup::ActionType setupType, bool ok):
+        setupType(setupType), ok(ok) {}
+
 // cppcheck-suppress uninitMemberVar
 SetupContainer::SetupContainer(Setup::ActionType setupType, uint32_t id, bool ok):
         setupType(setupType), clientId(id), ok(ok) {}
@@ -77,6 +80,12 @@ Container::Container(Setup::ActionType setupType, std::vector<std::vector<std::s
         // cppcheck-suppress noCopyConstructor
         // cppcheck-suppress noOperatorEq
         setup_container(new SetupContainer(setupType, mapReceived, ok)),
+        game_container(nullptr),
+        sound_container(nullptr),
+        _type(Type::SETUP) {}
+
+Container::Container(Setup::ActionType setupType, bool ok):
+        setup_container(new SetupContainer(setupType, ok)),
         game_container(nullptr),
         sound_container(nullptr),
         _type(Type::SETUP) {}

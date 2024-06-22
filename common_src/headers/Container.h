@@ -18,6 +18,7 @@ public:
     SetupContainer(Setup::ActionType setupType, std::vector<std::string>& gameList, bool ok);
     SetupContainer(Setup::ActionType setupType, std::vector<std::vector<std::string>>& mapReceived, bool ok);
     SetupContainer(Setup::ActionType setupType, uint32_t id, bool ok);
+    SetupContainer(Setup::ActionType setupType, bool ok);
 
     Setup::ActionType setupType;
     std::string gameId;
@@ -72,6 +73,9 @@ public:
 
     //Setup map container
     Container(Setup::ActionType setupType, std::vector<std::vector<std::string>>& mapReceived, bool ok);
+
+    //Setup confirmmation map saved
+    Container(Setup::ActionType setupType, bool ok);
 
     Type type() const { return _type; }
 

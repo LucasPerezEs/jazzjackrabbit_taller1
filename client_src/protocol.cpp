@@ -41,6 +41,10 @@ void ClientProtocol::send_setup(const Setup& setup) {
     if(setup.action == Setup::ActionType::CREATE_MAP){
         send_create_map(setup.mapName);
     }
+
+    if(setup.action == Setup::ActionType::SAVE_MAP){
+        send_save_map(setup.mapName, setup.map);
+    }
 }
 
 
@@ -61,11 +65,17 @@ void ClientProtocol::send_create_game(const std::string& gameId, const uint32_t&
     }
 }
 
+void ClientProtocol::send_save_map(const std::string& mapName, const std::vector<std::vector<std::string>>& map) {
+    sendUChar(static_cast<unsigned char>(Setup::SAVE_MAP));
+    sendString(mapName);
+    sendMap(map);
+
+    std::cout << "Mande el mapa creado" << std::endl;
+}
+
 void ClientProtocol::send_create_map(const std::string& mapName) {
     sendUChar(static_cast<unsigned char>(Setup::CREATE_MAP));
     sendString(mapName);
-
-    std::cout << "Mande la info de mapa" << std::endl;
 }
 
 void ClientProtocol::send_get_game_list() {
@@ -75,6 +85,7 @@ void ClientProtocol::send_get_game_list() {
 //////////////RECEIVE
 
 Container ClientProtocol::receive_container() {
+    std::cout << "Estoy esperando el receiveUChar" << std::endl;
     unsigned char containerType = receiveUChar();
     std::cout << "Recibiendo container\n";
     Container::Type type = static_cast<Container::Type>(containerType);
@@ -106,6 +117,8 @@ Container ClientProtocol::receive_setup_container() {
             return receive_client_id();
         case Setup::ActionType::CREATE_MAP:
             return receive_create_map();
+        case Setup::ActionType::SAVE_MAP:
+            return receive_saved_map();
         default:
             throw std::runtime_error("Unknown setup action type");
     }
@@ -122,6 +135,11 @@ Container ClientProtocol::receive_create_game() {
     }
 
     return Container(Setup::ActionType::CREATE_GAME, gameId, maxPlayers, cheats, ok);
+}
+
+Container ClientProtocol::receive_saved_map() {
+    bool ok = receiveBool();
+    return Container(Setup::ActionType::SAVE_MAP, ok);
 }
 
 Container ClientProtocol::receive_join_game() {

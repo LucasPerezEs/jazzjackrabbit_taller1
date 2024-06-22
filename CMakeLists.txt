@@ -18,7 +18,9 @@ endif()
 
 add_subdirectory(client_src)
 add_subdirectory(server_src)
+add_subdirectory(editor_src)
 add_subdirectory(client_src/setupscreen)
+add_subdirectory(editor_src/setupscreen_editor)
 
 add_executable (server
   server_src/main.cpp
@@ -31,6 +33,11 @@ add_executable (client
   client_src/main.cpp
 )
 
+add_executable (editor
+  editor_src/main.cpp
+)
+
 
 target_link_libraries(client client_lib Qt5::Widgets setupscreen SDL2 SDL2_image pthread SDL2_ttf -lSDL2_mixer)
+target_link_libraries(editor editor_lib Qt5::Widgets setupscreen_editor SDL2 SDL2_image pthread SDL2_ttf -lSDL2_mixer)
 target_link_libraries(server server_lib pthread yaml-cpp)

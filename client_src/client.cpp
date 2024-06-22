@@ -83,6 +83,23 @@ bool Client::createMap(const std::string& mapName, std::vector<std::vector<std::
     return container.setup_container->ok;
 }
 
+
+
+bool Client::saveMap(const std::string& mapName, std::vector<std::vector<std::string>>& mapSended){
+
+    std::cout << "Estoy en client createMap para guardar el mapa" << std::endl;
+
+    Message msg(Setup::ActionType::SAVE_MAP, mapName, mapSended);
+    client_protocol.send_message(msg);
+
+    std::cout << "Se envio el mensaje de guardado" << std::endl;
+    Container container = client_protocol.receive_container();
+
+    std::cout << "Se recibe el container de envios?" << std::endl;
+
+    return container.setup_container->ok;
+}
+
 bool Client::refreshGameList(std::vector<std::string>& gameList) {
     Message msg(Setup::ActionType::GET_GAME_LIST);
     client_protocol.send_message(msg);

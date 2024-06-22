@@ -51,6 +51,7 @@ private:
     void send_join_game(const std::string& gameId, const int character);
     void send_create_game(const std::string& gameId, const uint32_t& maxPlayers,
                           const std::vector<uint32_t>& cheats);
+    void send_save_map(const std::string& mapName, const std::vector<std::vector<std::string>>& map);
     void send_create_map(const std::string& mapName);
     void send_get_game_list();
 
@@ -62,6 +63,7 @@ private:
     Container receive_get_game_list();
     Container receive_client_id();
     Container receive_create_map();
+    Container receive_saved_map();
 
 public:
     ClientProtocol(const std::string& hostname, const std::string& servicename);

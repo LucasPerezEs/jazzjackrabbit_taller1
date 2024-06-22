@@ -27,6 +27,8 @@ public:
 
     bool createMap(const std::string& mapName, std::vector<std::vector<std::string>>& mapReceived);
 
+    bool saveMap(const std::string& mapName, std::vector<std::vector<std::string>>& mapSended);
+
     bool joinGame(const std::string& gameId, const int elegido);
     bool refreshGameList(std::vector<std::string>& gameList);
 

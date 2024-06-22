@@ -151,7 +151,7 @@ void Protocol::sendMap(const std::vector<std::vector<std::string>>& map){
 }
 
 std::vector<std::vector<std::string>> Protocol::receiveMap(){
-    
+
     std::vector<std::vector<std::string>> mapReceived;
     uint16_t numRows = receive16();
 

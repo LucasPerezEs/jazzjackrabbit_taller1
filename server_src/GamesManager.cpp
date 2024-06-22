@@ -116,6 +116,38 @@ bool GamesManager::createMap(std::string& mapName, std::vector<std::vector<std::
     return true;
 }
 
+bool GamesManager::savedMap(std::string& mapName, std::vector<std::vector<std::string>>& mapReceived){
+
+/*
+    std::ofstream outputFile(mapName);
+
+    if (!outputFile.is_open()) {
+        std::cerr << "Error al abrir el archivo: " << mapName << std::endl;
+        return false;
+    }
+
+    for (const auto& row : mapReceived) {
+        for (const auto& element : row) {
+            outputFile << element << ",";
+        }
+        outputFile << std::endl;
+    }
+
+    outputFile.close();
+*/
+    int fila = 0;
+
+    for(const auto& row : mapReceived){
+        std::cout << fila << std::endl;
+        for (const auto& column : row){
+            std::cout << column << ",";
+        }
+        fila++;
+        std::cout << "\n";
+    }
+    return true;
+}
+
 bool GamesManager::joinGame(const std::string& gameId, ClientHandler* client, uint32_t character) {
     std::lock_guard<std::mutex> lock(gamesMutex);
 
@@ -229,6 +261,13 @@ void GamesManager::run() {
                 clients[clientId]->pushState(container);
                 break;
             }
+            case Setup::SAVE_MAP:{
+                ok = savedMap(msg.setup.mapName, msg.setup.map);
+                container = Container(Setup::SAVE_MAP, ok);
+                clients[clientId]->pushState(container);
+                break;
+            }
+
             default:
                 std::cout << "Comando desconocido" << std::endl;
                 break;

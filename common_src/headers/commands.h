@@ -38,6 +38,7 @@ struct Setup {
         GET_GAME_LIST = 0x33,
         CLIENT_ID = 0x34,
         CREATE_MAP = 0x35,
+        SAVE_MAP = 0x36,
     };
     ActionType action;
 
@@ -49,6 +50,7 @@ struct Setup {
     // cppcheck-suppress unusedStructMember
     uint32_t character;
     std::string mapName;
+    std::vector<std::vector<std::string>> map;
     std::vector<uint32_t> cheats;
 };
 

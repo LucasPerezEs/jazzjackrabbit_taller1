@@ -1,46 +1,22 @@
-
 #include "headers/map_creator.h"
 
-MapCreator::MapCreator(Client& client):
-        client(client),
-        window(800, 600),
-        client_receiver(client.get_protocol(), receiverQueue) {}
-
-
-//ESTE ESTA MAL. No deberia manrse el path, si no el nombre del mapa nada mas. Se debe de borra este metodo y suplantarlo por loadCSV.
-std::vector<std::vector<int>> MapCreator::cargarCSV(const std::string& ruta) {
-    std::vector<std::vector<int>> matriz;
-    std::ifstream archivo(ruta);
-
-    if (archivo.is_open()) {
-        std::string linea;
-        while (std::getline(archivo, linea)) {
-            std::vector<int> fila;
-            std::stringstream ss(linea);
-            std::string valor;
-            while (std::getline(ss, valor, ',')) {
-                fila.push_back(std::stoi(valor));
-            }
-            matriz.push_back(fila);
-        }
-        archivo.close();
-    }
-    return matriz;
-}
+MapCreator::MapCreator():
+        window(800, 600) {}
 
 
 //Pre: -
 //Post: -
 void MapCreator::saveMapToCSV(std::string& filename, bool& is_already_create) {
 
-    /*
     std::string newFilename;
 
     if (is_already_create) {
-        newFilename = filename + "_modified";
+
+        newFilename = "../editor_src/assets/" + filename;
+        newFilename = newFilename + "_modified";
 
     } else if(!is_already_create){
-        newFilename = filename;
+        newFilename = "../editor_src/assets/" + filename;
     }
         std::ofstream file(newFilename);
         int fila_anterior = -1;
@@ -66,49 +42,6 @@ void MapCreator::saveMapToCSV(std::string& filename, bool& is_already_create) {
         } else {
             std::cerr << "No se pudo abrir el archivo y por lo tanto no se creó el mapa." << std::endl;
         }
-
-        // Crear el vector de vectores mapSended
-    std::vector<std::vector<std::string>> mapSended;
-    */
-    std::string newFilename;
-
-    if (is_already_create) {
-        newFilename = filename + "_modified";
-
-    } else if(!is_already_create){
-        newFilename = filename;
-    }
-
-    int row_actual = -1;
-    std::vector<std::string> currentRow;
-    std::vector<std::vector<std::string>> mapSended;
-
-    for (const auto& entry : mapTiles) {
-        const Tile& tile = entry.second;
-        int row = std::get<0>(entry.first);
-
-        if (row != row_actual) {
-            // Si es una nueva fila, agregamos la fila actual al vector de vectores
-            if (!currentRow.empty()) {
-                mapSended.push_back(currentRow);
-            }
-        currentRow.clear(); // Limpiamos el vector para la nueva fila
-        row_actual = row; // Actualizamos la fila actual
-    }
-
-    // Agregamos el tile.id al vector de la fila actual
-    currentRow.push_back(std::to_string(tile.id));
-    }
-
-    // Agregamos la última fila al vector de vectores (si no está vacía)
-    if (!currentRow.empty())
-        mapSended.push_back(currentRow);
-
-    std::cout << "Envio el mapa" << std::endl;
-
-    client.saveMap(filename, mapSended);
-
-    std::cout << "El mapa se guardó" << std::endl;
 }
 
 
@@ -142,32 +75,18 @@ void MapCreator::save_values(Tile& selectedTile, const double& minX, const doubl
 // Post: Si el mapa seleccionado existe, se habre la opcion de modificarlo, y si no existe se puede crear uno nuevo desde cero.
 void MapCreator::select_map() {
 
-    this->client_receiver.start();
-
-
     std::string mapName;
-    bool is_map_received = false;
     bool is_already_create = false;
     std::cout << "Por favor, ingresa el nombre del nuevo mapa: ";
-    //std::cin >> mapName;
+    std::cin >> mapName;
+    if (mapName == "1")
+        mapName = "castle_earlong_mapa";
 
-    //if (mapName == "1") {
-        //mapName = "castle_earlong";
-    //}else if(mapName == "2"){
-        mapName = "medivo";
-    //}
-
-    std::vector<std::vector<std::string>> mapReceived;
-    is_map_received = client.createMap(mapName, mapReceived);
-
-    if (is_map_received) {
+    if (std::ifstream(mapName)) {
         std::cout << "El mapa con el nombre '" << mapName << "' ya existe." << std::endl;
         is_already_create = true;
-
-    }else{
-        std::cout << "El contenedor esta vacio o se produjo un error!" << std::endl;
     }
-    create_map(mapName, mapReceived, is_already_create);
+    create_map(mapName, is_already_create);
 }
 
 
@@ -208,44 +127,17 @@ std::map<std::tuple<int, int>, Tile> MapCreator::loadCSV(const std::string& file
     return mapTiles;
 }
 
-//Pre: -
-//Post: Carga en un mapa todos los datos obtenidos del CSV que representa un mapa del juego.
-std::map<std::tuple<int, int>, Tile> MapCreator::loadMap(std::vector<std::vector<std::string>>& mapReceived) {
-
-    std::map<std::tuple<int, int>, Tile> mapCreated;
-    int row = 20;
-
-    for (const auto& tileRow : mapReceived) {
-        int column = 20;
-
-        for (const auto& value : tileRow) {
-            int tile_id = std::stoi(value);
-            Tile tile;
-            tile.id = tile_id;
-            tile.srcRect = {(tile_id % TILESET_WIDTH) * TILE_MAP_ASSETS, (tile_id / TILESET_WIDTH) * TILE_MAP_ASSETS, TILE_MAP_ASSETS, TILE_MAP_ASSETS};
-            tile.destRect = {column * TILE_MAP_CREATED, row * TILE_MAP_CREATED, TILE_MAP_CREATED, TILE_MAP_CREATED};
-            std::tuple<int, int> posicion = std::make_tuple(row, column);
-            mapCreated[posicion] = tile;
-            column++;
-        }
-        row++;
-    }
-    return mapCreated;
-}
-
 
 //Pre: -
 //Post: -
-//void MapCreator::create_map(std::string& filename, bool& is_already_create){
-void MapCreator::create_map(std::string& filename, std::vector<std::vector<std::string>>& mapReceived, bool& is_already_create){
+void MapCreator::create_map(std::string& filename, bool& is_already_create){
 
     mapTiles.clear();
     std::vector<Tile> tiles_asset;
     std::tuple<int, int> posicion;
     SDL_Renderer* renderer = this->window.getRenderer();
 
-    SDL_Surface* tilesetSurface =
-            IMG_Load("../client_src/assets/background/ASSETS_GENERALES.png");
+    SDL_Surface* tilesetSurface = IMG_Load("../editor_src/assets/ASSETS_GENERALES.png");
     if (tilesetSurface == nullptr) {
         std::cout << "Error al cargar la imagen: " << IMG_GetError() << std::endl;
         return;
@@ -258,7 +150,7 @@ void MapCreator::create_map(std::string& filename, std::vector<std::vector<std::
         std::cout << "Error al crear la textura: " << SDL_GetError() << std::endl;
 
     SDL_FreeSurface(tilesetSurface);
-    //SDL_SetTextureBlendMode(assetTexture, SDL_BLENDMODE_BLEND);
+    SDL_SetTextureBlendMode(assetTexture, SDL_BLENDMODE_BLEND);
 
     int window_width, window_height;
     SDL_GetRendererOutputSize(renderer, &window_width, &window_height);
@@ -284,8 +176,7 @@ void MapCreator::create_map(std::string& filename, std::vector<std::vector<std::
     this->window.render();
 
     if(is_already_create){
-        //mapTiles = loadCSV(filename);
-        mapTiles = loadMap(mapReceived);
+        mapTiles = loadCSV(filename);
         for (const auto& pair : mapTiles) {
             const Tile& value = pair.second;
             SDL_RenderCopy(renderer, assetTexture, &(value.srcRect), &(value.destRect));
@@ -347,7 +238,6 @@ void MapCreator::create_map(std::string& filename, std::vector<std::vector<std::
             this->window.render();
         }
     }
-    //saveMapToCSV(filename, is_already_create);
     saveMapToCSV(filename, is_already_create);
     
 }

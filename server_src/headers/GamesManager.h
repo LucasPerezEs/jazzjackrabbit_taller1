@@ -23,6 +23,7 @@ public:
     bool createGame(std::string gameId, uint32_t maxPlayers, std::vector<uint32_t> cheats);
     bool joinGame(const std::string& gameId, ClientHandler* client, uint32_t character);
     bool listGames(std::vector<std::string>& gameList);
+    bool savedMap(std::string& mapName, std::vector<std::vector<std::string>>& mapReceived);
     bool createMap(std::string& mapName, std::vector<std::vector<std::string>>& mapReceived);
     virtual void run() override;
     virtual void stop() override;
