@@ -6,7 +6,8 @@ GameBroadcasterContainer::GameBroadcasterContainer(std::map<std::string, float> 
         actionQueue(),
         stateQueue(),
         broadcaster(clients, stateQueue, setupQueue),
-        game(actionQueue, stateQueue, maxPlayers, std::move(config), broadcaster) {}
+        game(actionQueue, stateQueue, maxPlayers, std::move(config), broadcaster),
+        gameStarted(false) {}
 
 void GameBroadcasterContainer::addPlayer(ClientHandler* client, uint32_t character) {
     if (canAddPlayer()) {
@@ -28,13 +29,17 @@ void GameBroadcasterContainer::start() {
 }
 
 void GameBroadcasterContainer::stop() {
-    game.stop();
-    broadcaster.stop();
+    if (gameStarted) {
+        game.stop();
+        broadcaster.stop();
+    }
 }
 
 void GameBroadcasterContainer::join() {
-    game.join();
-    broadcaster.join();
+    if (gameStarted) {
+        game.join();
+        broadcaster.join();
+    }
 }
 
 bool GameBroadcasterContainer::is_running() {

@@ -17,6 +17,7 @@ public:
     void eliminar_borrados(Queue<Container>& q);
     void update(Mapa& mapa, Queue<Container>& q);
     void correr_colisiones();
+    void borrar();
 };
 
 #endif

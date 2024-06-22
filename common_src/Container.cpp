@@ -1,4 +1,6 @@
 #include "headers/Container.h"
+#include <iostream>
+
 
 // SetupContainer implementation
 // cppcheck-suppress uninitMemberVar
@@ -86,3 +88,15 @@ Container::Container(EntityType entity, SoundType sound, int id):
         game_container(nullptr),
         sound_container(new SoundContainer(entity, sound, id)),
         _type(Type::SOUND) {}
+
+Container::~Container() {
+       /* if (setup_container != nullptr) {
+                delete setup_container;
+        } 
+        if (game_container != nullptr) {
+                delete game_container;
+        } 
+        if (sound_container != nullptr) {
+                delete sound_container;
+        } */
+}

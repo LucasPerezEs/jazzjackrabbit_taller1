@@ -16,18 +16,35 @@ Game::Game(Queue<Message>& actionQueue, Queue<Container>& stateQueue, uint32_t m
         gameStarted(false) {}
 
 void Game::run() {
-    Mapa m = Mapa();
-    Ghost ghost = Ghost(50, 2, config);
-    Bat bat = Bat(75, 4, config);
-    Monkey monkey = Monkey(15, 1, config);
-    objetos.agregar_objeto(&ghost);
-    objetos.agregar_objeto(&bat);
-    objetos.agregar_objeto(&monkey);
-    entes.push_back(&ghost);
-    entes.push_back(&bat);
-    // cppcheck-suppress danglingLifetime
-    entes.push_back(&monkey);
+    
+    for (auto eleccion: elecciones)  {
+        Personaje* personaje;
+        if (eleccion.second == 0) {
+        personaje = new Jazz(20 + eleccion.first, 10, config, stateQueue);
+        } else if (eleccion.second == 1) {
+        personaje = new Lori(20 + eleccion.first, 10, config, stateQueue);
+        } else {
+        personaje = new Spaz(20 + eleccion.first, 10, config, stateQueue);
+        }
+        personaje->set_id(eleccion.first);
+        clientCharacters[eleccion.first] = personaje;
+        objetos.agregar_objeto(personaje);
+        entes.push_back(personaje);
+    }
 
+    Mapa m;
+    Ghost* ghost = new Ghost(50, 2, config);
+    Bat* bat = new Bat(75, 4, config);
+    Monkey* monkey = new Monkey(15, 1, config);
+    objetos.agregar_objeto(ghost);
+    objetos.agregar_objeto(bat);
+    objetos.agregar_objeto(monkey);
+    entes.push_back(ghost);
+    entes.push_back(bat);
+    // cppcheck-suppress danglingLifetime
+    entes.push_back(monkey);
+
+    clock.start();
 
     Container c = Container(5, 0, 0, 0, 0, 0, 0, NONE_ANIMATION, NONE_ENTITY, 0, 0, 0);
     stateQueue.push(c);
@@ -94,28 +111,36 @@ void Game::run() {
 void Game::addPlayer(uint32_t clientId, uint32_t character) {
     std::lock_guard<std::mutex> lock(clientCharactersMutex);
 
-    Personaje* personaje;
-    if (character == 0) {
-        personaje = new Jazz(20 + clientId, 10, config, stateQueue);
+
+    elecciones[clientId] = character;
+
+    //Personaje* personaje;
+    /*if (character == 0) {
+        Jazz* personaje = new Jazz(20 + clientId, 10, config, stateQueue);
+        personaje->set_id(clientId);
+        clientCharacters[clientId] = personaje;
+        objetos.agregar_objeto(personaje);
+        entes.push_back(personaje);
     } else if (character == 1) {
         personaje = new Lori(20 + clientId, 10, config, stateQueue);
     } else {
         personaje = new Spaz(20 + clientId, 10, config, stateQueue);
-    }
+    }*/
 
-    personaje->set_id(clientId);
-    clientCharacters[clientId] = personaje;
-    objetos.agregar_objeto(personaje);
-    entes.push_back(personaje);
 
     // Para mas adelante, el reloj deberia empezar cuando hay dos jugadores
-    if (clientCharacters.size() == 1) {
+    /*if (clientCharacters.size() == 1) {
         clock.start();
-    }
+    }*/
 }
 
 void Game::stop() {
     stateQueue.close();
     _is_alive = false;
     _keep_running = false;
+}
+
+Game::~Game() {
+    objetos.borrar();
+    entes.clear();
 }

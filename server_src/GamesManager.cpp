@@ -192,40 +192,50 @@ void GamesManager::run() {
 
     // cppcheck-suppress unreadVariable
     Message msg(Setup::ActionType::NONE);
-    Container container({}, {}, {}, {}, {});
+    //Container container({}, {}, {}, {}, {});
     bool ok;
 
 
     // std::map<std::string, float> config = load_config_YAML("../config.yml");
+
     while (_keep_running) {
-        msg = setupQueue.pop();
+        try {
+            msg = setupQueue.pop();
+        } catch (ClosedQueue& q) {
+            break;
+        } catch (...) {
+            break;
+        }
+        
         uint32_t clientId = msg.id();
         switch (msg.setup.action) {
-            case Setup::JOIN_GAME:
+            case Setup::JOIN_GAME: {
                 ok = joinGame(msg.setup.gameId, clients[clientId], msg.setup.character);
-                container = Container(Setup::JOIN_GAME, msg.setup.gameId, msg.setup.maxPlayers,
-                                      msg.setup.cheats, ok);
+                Container container = Container(Setup::JOIN_GAME, msg.setup.gameId, msg.setup.maxPlayers,
+                                    msg.setup.cheats, ok);
                 clients[clientId]->pushState(container);
                 break;
-            case Setup::CREATE_GAME:
+            }
+            case Setup::CREATE_GAME: {
                 ok = createGame(msg.setup.gameId, msg.setup.maxPlayers, msg.setup.cheats);
                 std::cout << "Creando game\n";
-                container = Container(Setup::CREATE_GAME, msg.setup.gameId, msg.setup.maxPlayers,
-                                      msg.setup.cheats, ok);
+                Container container = Container(Setup::CREATE_GAME, msg.setup.gameId, msg.setup.maxPlayers,
+                                    msg.setup.cheats, ok);
                 clients[clientId]->pushState(container);
                 std::cout << "Pusheando cola de create a client\n";
                 break;
+            }
             case Setup::GET_GAME_LIST: {
                 std::vector<std::string> gameList;
                 ok = listGames(gameList);
-                container = Container(Setup::GET_GAME_LIST, gameList, ok);
+                Container container = Container(Setup::GET_GAME_LIST, gameList, ok);
                 clients[clientId]->pushState(container);
                 break;
             }
             case Setup::CREATE_MAP:{
                 std::vector<std::vector<std::string>> mapReceived;
                 ok = createMap(msg.setup.mapName, mapReceived);
-                container = Container(Setup::CREATE_MAP, mapReceived, ok);
+                Container container = Container(Setup::CREATE_MAP, mapReceived, ok);
                 clients[clientId]->pushState(container);
                 break;
             }
@@ -235,7 +245,8 @@ void GamesManager::run() {
         }
         reap_offline_games();
     }
-    stop();
+
+    //stop();
     _is_alive = false;
 }
 
@@ -259,11 +270,13 @@ void GamesManager::kill_all_games() {
         gamePair.second->stop();
         gamePair.second->join();
         delete gamePair.second;
+        std::cout << "borrando game\n";
     }
     games.clear();
 }
 
 void GamesManager::stop() {
+    setupQueue.close();
     _keep_running = false;
     kill_all_games();
 }

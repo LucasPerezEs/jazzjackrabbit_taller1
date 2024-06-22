@@ -32,9 +32,18 @@ void ListaObjetos::eliminar_borrados(Queue<Container>& q) {
                                                      EntityType::NONE_ENTITY, 0, 0, 0);
                                          // Al borrar solo hace falta el id
                                          q.try_push(c);
+                                         o->eliminar();
                                          return true;
                                      }
                                      return false;
                                  }),
                   objetos.end());
+}
+
+
+void ListaObjetos::borrar() {
+    for (auto objeto: objetos) {
+        delete objeto;
+    }
+    objetos.clear();
 }
