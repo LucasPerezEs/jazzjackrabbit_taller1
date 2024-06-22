@@ -14,18 +14,15 @@ int main(int argc, char* argv[]) {
 
     try {
 
-        //SDL_Init(SDL_INIT_EVERYTHING);
-
-        // Inicialización de la aplicación Qt
         QApplication app(argc, argv);
 
         AppMenu appMenu;
 
-        QObject::connect(&appMenu, &AppMenu::createMapRequested, [&] {
-            //appMenu.close();
-
+        QObject::connect(&appMenu, &AppMenu::createMapRequested, [&](const QString& mapName, const int& widthMap,
+                            const int& heightMap) {
             try {
-                MapCreator map;
+                //appMenu.hide();
+                MapCreator map(mapName.toStdString(), widthMap, heightMap, false);
                 map.select_map();
             } catch (const std::exception& e) {
                 std::cerr << "Exception during map creation: " << e.what() << std::endl;
@@ -33,6 +30,18 @@ int main(int argc, char* argv[]) {
                 std::cerr << "Unknown exception during map creation." << std::endl;
             }
         });
+
+        QObject::connect(&appMenu, &AppMenu::modifyMapRequested, [&](const QString& mapName) {
+            try {
+                MapCreator map(mapName.toStdString(), -1, -1, true);
+                map.select_map();
+            } catch (const std::exception& e) {
+                std::cerr << "Exception during map creation: " << e.what() << std::endl;
+            } catch (...) {
+                std::cerr << "Unknown exception during map creation." << std::endl;
+            }
+        });
+
         appMenu.exec();
 
     } catch (const std::exception& err) {

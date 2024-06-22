@@ -5,12 +5,16 @@ find_package(Qt5Widgets REQUIRED)
 set(HEADER_FILES
         SetupScreen.h
         AppMenu.h
+        CreateMap.h
+        ModifyMap.h
 
 )
 
 set(SOURCE_FILES
         SetupScreen.cpp
         AppMenu.cpp
+        CreateMap.cpp
+        ModifyMap.cpp
 )
 
 
