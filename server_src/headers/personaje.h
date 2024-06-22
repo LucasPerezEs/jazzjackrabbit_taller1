@@ -17,6 +17,7 @@
 #include "mapa.h"
 #include "municion.h"
 #include "objeto.h"
+#include "zanahoria_envenenada.h"
 
 
 class ListaObjetos;
@@ -62,6 +63,7 @@ protected:
     int espera_hurt;
     std::chrono::system_clock::time_point tiempo;
     std::chrono::system_clock::time_point last_hurt;
+    std::chrono::system_clock::time_point intoxicated_start;
     bool movingright;
     bool movingleft;
     bool jumping;
@@ -89,6 +91,7 @@ public:
     Personaje(float x, float y, float w, float h, EntityType en_type, AnimationType an_type,
               std::map<std::string, float>& config, Queue<Container>& q);
 
+    virtual void colision(ZanahoriaEnvenenada& ze) override;
     virtual void colision(Objeto& o) override;
     virtual void colision(Enemigo& e) override;
     virtual void colision(Municion& m) override;
@@ -113,6 +116,7 @@ public:
     virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) override;
     virtual void update_vivo(ListaObjetos& objetos, Queue<Container>& q,
                              std::unordered_map<uint32_t, Personaje*>& clientCharacters) override;
+
 };
 
 #endif

@@ -32,7 +32,8 @@ enum AnimationType {
     SHOOT = 0x21,
     SHOOT_IDLE = 0x22,
     FLY = 0x23,
-    HURT = 0x24
+    HURT = 0x24,
+    INTOXICATED_IDLE = 0x25
 };
 
 enum AnimationSpeed { FAST = 1, DEFAULT = 2, SLOW = 3 };

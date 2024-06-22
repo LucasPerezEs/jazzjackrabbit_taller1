@@ -40,6 +40,8 @@ void Objeto::colision(Bala& o) {}
 void Objeto::colision(Pickup& o) {}
 void Objeto::colision(Municion& m) {}
 void Objeto::colision(Banana& b) {}
+void Objeto::colision(ZanahoriaEnvenenada& ze) {}
+
 Objeto::~Objeto() {}
 
 void Ente::RecibirDanio(int d) {
@@ -67,3 +69,4 @@ void Ente::update_vivo(ListaObjetos& objetos, Queue<Container>& q,
         contador++;
     }
 }
+

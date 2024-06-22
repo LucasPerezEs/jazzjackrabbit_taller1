@@ -44,11 +44,15 @@ void Enemigo::drop_item(ListaObjetos& objetos, Queue<Container>& q) {
 
     Pickup* drop;
 
+
     if (random_int < prob_goldcoin) {
         drop = new Gold_Coin(x + width / 2, y + height / 3, config, q);
 
     } else if (random_int < prob_goldcoin + prob_carrot) {
         drop = new Zanahoria(x + width / 2, y + height / 3, config, q);
+
+    } else if (random_int < 80) {
+        drop = new ZanahoriaEnvenenada(x + width / 2, y + height / 3, config, q);
 
     } else if (random_int < prob_goldcoin + prob_carrot + prob_ammo) {
         drop = new Municion(x + width / 2, y + height / 3, config, q);
