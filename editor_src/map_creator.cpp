@@ -1,11 +1,11 @@
 #include "headers/map_creator.h"
 
-MapCreator::MapCreator(const std::string& mapName, const int& width, const int& height, const bool& is_already_create):
+MapCreator::MapCreator(const std::string& mapName, const double& width, const double& height, const bool& is_already_create):
         mapName(mapName), mapWidth(width), mapHeight(height), window(800, 600), is_already_create(is_already_create) {}
 
 //Pre: -
 //Post: Guarda el nuevo mapa en
-void MapCreator::saveMapToCSV(std::string& filename, bool& is_already_create) {
+void MapCreator::save_map(std::string& filename, bool& is_already_create) {
 
     std::string newFilename = filename;
     if (is_already_create)
@@ -13,23 +13,22 @@ void MapCreator::saveMapToCSV(std::string& filename, bool& is_already_create) {
 
     std::string path = path_maps + newFilename;
     std::ofstream file(path);
-    int fila_anterior = -1;
+    //int fila_anterior = -1;
 
     if (file.is_open()) {
-        for (const auto& pair : mapTiles) {
-            const std::tuple<int, int>& key = pair.first;
-            const Tile& value = pair.second;
-            int fila_actual = std::get<0>(key);
+        
+        for (int fila = 0; fila < mapHeight; ++fila) {
+    for (int columna = 0; columna < mapWidth; ++columna) {
+        const Tile& value = mapTiles[{fila, columna}];
 
-            if (fila_actual != fila_anterior) {
-                if (fila_anterior != -1)
-                    file << "\n";
-                fila_anterior = fila_actual;
-            } else {
-                file << ",";
-            }
-            file << value.id;
+        if (columna > 0) {
+            file << ",";
         }
+        file << value.id;
+    }
+    file << "\n";
+}
+
         file.close();
     
     } else {
@@ -92,7 +91,7 @@ std::map<std::tuple<int, int>, Tile> MapCreator::loadEmptyCSV() {
                 Tile tile;
                 tile.id = tile_id;
                 tile.srcRect = {0,0,TILE_MAP_ASSETS, TILE_MAP_ASSETS};
-                tile.destRect = {(j+TILESET_WIDTH)*TILE_MAP_CREATED, i*TILE_MAP_CREATED, TILE_MAP_CREATED, TILE_MAP_CREATED};
+                tile.destRect = {(j*TILE_MAP_CREATED+TILESET_WIDTH*TILE_MAP_ASSETS), i*TILE_MAP_CREATED, TILE_MAP_CREATED, TILE_MAP_CREATED};
                 std::tuple<int,int> posicion = std::make_tuple(i, j);
                 mapTiles[posicion] = tile;
             }
@@ -231,7 +230,7 @@ void MapCreator::create_map(std::string& filename, bool& is_already_create){
                     }
                     if (!selectedTile.selected)
                         break;
-                    set_values(selectedTile, width_texture, window_width, window_height, 0, event);
+                    set_values(selectedTile, width_texture, width_texture+mapWidth*TILE_MAP_CREATED, mapHeight*TILE_MAP_CREATED, 0, event);
                     mouseHeldDown = true;
                     break;
                 }
@@ -243,7 +242,9 @@ void MapCreator::create_map(std::string& filename, bool& is_already_create){
 
                 case SDL_MOUSEMOTION: {
                     if(mouseHeldDown)
-                        set_values(selectedTile, width_texture, window_width, window_height, 0, event);
+                        //set_values(selectedTile, width_texture, (window_width*mapWidth/100), (window_height*mapHeight/100), 0, event);
+                        set_values(selectedTile, width_texture, width_texture+mapWidth*TILE_MAP_CREATED, mapHeight*TILE_MAP_CREATED, 0, event);
+
                 }
             }
                         this->window.fill();
@@ -257,6 +258,6 @@ void MapCreator::create_map(std::string& filename, bool& is_already_create){
             this->window.render();
         }
     }
-    saveMapToCSV(filename, is_already_create);
+    save_map(filename, is_already_create);
     
 }

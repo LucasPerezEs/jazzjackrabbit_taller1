@@ -15,7 +15,7 @@ public:
     virtual ~CreateMap();
 
     signals:
-    	void createMapRequested(const QString& mapName, const int& widthMap, const int& heightMap);
+    	void createMapRequested(const QString& mapName, const double& widthMap, const double& heightMap);
 
 private:
     QLineEdit* widthLineEdit;

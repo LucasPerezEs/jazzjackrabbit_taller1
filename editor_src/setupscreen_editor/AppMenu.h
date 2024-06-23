@@ -20,7 +20,7 @@ private:
     void init();
 
 signals:
-    void createMapRequested(const QString& mapName, const int& widthMap, const int& heightMap);
+    void createMapRequested(const QString& mapName, const double& widthMap, const double& heightMap);
     void modifyMapRequested(const QString& mapName);
 
 private slots:
