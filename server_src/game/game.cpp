@@ -7,7 +7,7 @@
 // cppcheck-suppress uninitMemberVar
 Game::Game(Queue<Message>& actionQueue, Queue<Container>& stateQueue, uint32_t maxPlayers,
            // cppcheck-suppress passedByValue
-           std::map<std::string, float> config, Broadcaster& broadcaster):
+           std::map<std::string, float> config, Broadcaster& broadcaster, bool& gameStarted, bool& gameEnded):
         maxPlayers(maxPlayers),
         actionQueue(actionQueue),
         stateQueue(stateQueue),
@@ -15,14 +15,13 @@ Game::Game(Queue<Message>& actionQueue, Queue<Container>& stateQueue, uint32_t m
         broadcaster(broadcaster),
         clientCharactersMutex(),
         clock(config),
-        gameStarted(false) {}
+        gameStarted(gameStarted),
+        gameEnded(gameEnded) {}
 
 void Game::run() {
 
-    /*Jazz* personaje = new Jazz(20, 10, config, stateQueue);
-    objetos.agregar_objeto(personaje);
-    entes.push_back(personaje);
-    clientCharacters[personaje->id] = personaje;*/
+    gameStarted= true;
+
     Mapa m;
     std::shared_ptr<Ghost> ghost(new Ghost(50, 2, config));
     std::shared_ptr<Bat> bat(new Bat(75, 4, config));
@@ -123,6 +122,7 @@ void Game::run() {
             broadcaster.erase_client(client.first);
         }
     }
+    gameEnded = true;
     _is_alive = false;
 }
 

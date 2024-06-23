@@ -23,6 +23,7 @@ public:
     void stop();
     void join();
     bool is_running();
+    bool game_started();
     int max_players();
     int number_of_players();
 
@@ -34,9 +35,9 @@ private:
     Queue<Container> stateQueue;
 
     Broadcaster broadcaster;
-    Game game;
     bool gameStarted;
     bool gameEnded;
+    Game game;
 };
 
 #endif  // GAMEBROADCASTERCONTAINER_H

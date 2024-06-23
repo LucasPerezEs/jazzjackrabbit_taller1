@@ -16,6 +16,7 @@ void GameList::init() {
     layout->addWidget(refreshButton);
 
     connect(refreshButton, &QPushButton::clicked, this, [this]() {
+        gameList->clear();
         emit refreshRequested();
     });
 

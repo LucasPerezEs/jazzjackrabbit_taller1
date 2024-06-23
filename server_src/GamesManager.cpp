@@ -181,6 +181,9 @@ bool GamesManager::listGames(std::vector<std::string>& gameList) {
     std::lock_guard<std::mutex> lock(gamesMutex);
 
     for (const auto& game: games) {
+        if (game.second->game_started()){
+            continue;
+        }
         std::stringstream stm;
         stm << game.first << " " << game.second->number_of_players() << "/"
             << game.second->max_players() << "\n";

@@ -6,8 +6,9 @@ GameBroadcasterContainer::GameBroadcasterContainer(std::map<std::string, float> 
         actionQueue(),
         stateQueue(),
         broadcaster(clients, stateQueue, setupQueue),
-        game(actionQueue, stateQueue, maxPlayers, std::move(config), broadcaster),
-        gameStarted(false) {}
+        gameStarted(false),
+        gameEnded(false),
+        game(actionQueue, stateQueue, maxPlayers, std::move(config), broadcaster, gameStarted, gameEnded) {}
 
 void GameBroadcasterContainer::addPlayer(ClientHandler* client, uint32_t character) {
     if (canAddPlayer()) {
@@ -43,12 +44,19 @@ void GameBroadcasterContainer::join() {
 }
 
 bool GameBroadcasterContainer::is_running() {
+    if (gameEnded) {
+        return false;
+    }
     if (gameStarted) {
         return game.is_running();
     }
     return true;
 }
 
+
+bool GameBroadcasterContainer::game_started() {
+    return gameStarted;
+}
 
 int GameBroadcasterContainer::max_players() { return maxPlayers; }
 
