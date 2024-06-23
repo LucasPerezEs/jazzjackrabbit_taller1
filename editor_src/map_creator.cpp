@@ -158,6 +158,7 @@ std::map<std::tuple<int, int>, Tile> MapCreator::loadEmptyCSV() {
 std::map<std::tuple<int, int>, Tile> MapCreator::loadCSV(const std::string& filename) {
 
     std::string path = path_maps + filename;
+    std::cout << path << std::endl;
     std::map<std::tuple<int, int>, Tile> mapTiles;
     std::ifstream file(path);
     if (file.is_open()) {
