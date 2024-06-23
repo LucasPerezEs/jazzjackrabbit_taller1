@@ -11,6 +11,10 @@ UIManager::UIManager(std::map<int, Player*>& personajes, SdlWindow& window):
                                           Color{0x2C, 0x66, 0x96});
     this->texturas_ui[2] = new SdlTexture("../client_src/assets/textures/ui_score.png", window,
                                           Color{0x2C, 0x66, 0x96});
+    this->texturas_ui[3] = new SdlTexture("../client_src/assets/textures/ui_bullet.png", window,
+                                          Color{0x2C, 0x66, 0x96});
+    this->texturas_ui[4] = new SdlTexture("../client_src/assets/textures/ui_rocket.png", window,
+                                          Color{0x2C, 0x66, 0x96});
 }
 
 bool UIManager::player_alive(int id_cliente) { return personajes.count(id_cliente) > 0; }
@@ -54,5 +58,5 @@ void UIManager::render_UI(int id_cliente) {
 }
 
 void UIManager::renderLoadingText() {
-    this->fuente.render(800/2 - 140, 600/2 + 120, "Waiting       players", window, {0, 0, 0});
+    this->fuente.render(800 / 2 - 140, 600 / 2 + 120, "Waiting       players", window, {0, 0, 0});
 }

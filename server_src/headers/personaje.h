@@ -19,38 +19,31 @@
 #include "objeto.h"
 #include "zanahoria_envenenada.h"
 
-
 class ListaObjetos;
-
-class Bala: public Objeto {
-protected:
-    float vel;
-    int shooter_id;
-
-public:
-    int danio;
-    Bala(float x, float y, int d, int shooter_id, std::map<std::string, float>& config);
-    virtual void colision(Objeto& o) override;
-    virtual void colision(Enemigo& e) override;
-    virtual void colision(Personaje& p) override;
-    virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) override;
-    virtual void eliminar() override;
-    int get_shooter_id();
-};
+class Projectile;
+class Bullet;
+class Rocket;
 
 class Arma {  // No se si es necesaria esta clase
 protected:
-    int espera;
-    std::chrono::system_clock::time_point tiempo;
-    int municion;
     std::map<std::string, float>& config;
+    std::chrono::system_clock::time_point tiempo;
+    std::vector<EntityType> ammo_types;
+    std::map<EntityType, int> ammo_inventory;
+    std::map<EntityType, int> fire_rates;
+    int current_ammo;
 
-    virtual void disminuir_municion();
+    void init_ammo();
+    void spawn_projectile(ListaObjetos& objetos, EntityType ammo, int x, int y, int d,
+                          int shooter_id, std::map<std::string, float>& config);
 
 public:
     explicit Arma(std::map<std::string, float>& config);
-    void disparar(ListaObjetos& objetos, int shooter_id, float x, float w, float y, float h, int d,
+    bool disparar(ListaObjetos& objetos, int shooter_id, float x, float w, float y, float h, int d,
                   Queue<Container>& q);
+    bool change_selected_ammo();
+    int remaining_ammo();
+    void add_ammo(EntityType ammo, int n);
 };
 
 enum PlayerState { INTOXICATED = 0x30, HURTED = 0x31, NORMAL = 0x32 };
@@ -97,7 +90,7 @@ public:
     virtual void colision(Municion& m) override;
     virtual void colision(
             Banana& b) override;  // Banana y Bala deberian pertenecer a una clase 'Proyectil'
-    virtual void colision(Bala& b) override;
+    virtual void colision(Projectile& b) override;
     virtual void colision(Personaje& p) override;
 
     void disparar(ListaObjetos& objetos);
@@ -111,12 +104,13 @@ public:
     virtual void special_action() = 0;
     void set_id(uint32_t i);
     void add_score(int score);
+    void add_ammo(EntityType ammo, int n);
     void check_dead(int killer_id);
     bool has_special_action_active();
+    void change_selected_ammo();
     virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) override;
     virtual void update_vivo(ListaObjetos& objetos, Queue<Container>& q,
                              std::unordered_map<uint32_t, Personaje*>& clientCharacters) override;
-
 };
 
 #endif

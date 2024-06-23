@@ -1,9 +1,10 @@
 #include "../headers/game.h"
 
-#include "../headers/broadcaster.h"
-
 #include <algorithm>
 
+#include "../headers/broadcaster.h"
+
+// cppcheck-suppress uninitMemberVar
 Game::Game(Queue<Message>& actionQueue, Queue<Container>& stateQueue, uint32_t maxPlayers,
            // cppcheck-suppress passedByValue
            std::map<std::string, float> config, Broadcaster& broadcaster):
@@ -17,9 +18,9 @@ Game::Game(Queue<Message>& actionQueue, Queue<Container>& stateQueue, uint32_t m
         gameStarted(false) {}
 
 void Game::run() {
-    
-    for (auto eleccion: elecciones)  {
-        //Personaje* personaje;
+
+    for (auto eleccion: elecciones) {
+        // Personaje* personaje;
         if (eleccion.second == 0) {
             Jazz* personaje = new Jazz(20 + eleccion.first, 10, config, stateQueue);
             personaje->set_id(eleccion.first);
@@ -53,7 +54,6 @@ void Game::run() {
     objetos.agregar_objeto(monkey);
     entes.push_back(ghost);
     entes.push_back(bat);
-    // cppcheck-suppress danglingLifetime
     entes.push_back(monkey);
 
     clock.start();
@@ -98,14 +98,20 @@ void Game::run() {
                 case Command::ActionType::STOPFIRE:
                     personaje->disparando = false;
                     break;
+                case Command::ActionType::CHANGE_AMMO:
+                    personaje->change_selected_ammo();
+                    break;
                 case Command::ActionType::QUIT: {
-                    Container c(1, clientId, 0, 0, 0, 0, 0, AnimationType::NONE_ANIMATION, EntityType::NONE_ENTITY, 0, 0, 0);
+                    // cppcheck-suppress shadowVariable
+                    Container c(1, clientId, 0, 0, 0, 0, 0, AnimationType::NONE_ANIMATION,
+                                EntityType::NONE_ENTITY, 0, 0, 0);
                     stateQueue.push(c);
-                    entes.erase(std::remove_if(entes.begin(), entes.end(), [&](Ente* o){
+                    entes.erase(std::remove_if(entes.begin(), entes.end(), [&](Ente* o) {
                         if (o->id == (int)clientId) {
                             return true;
                         }
-                        return false;}));
+                        return false;
+                    }));
                     objetos.borrar(clientId);
                     broadcaster.erase_client(clientId);
                     break;
@@ -134,7 +140,7 @@ void Game::addPlayer(uint32_t clientId, uint32_t character) {
 
     elecciones[clientId] = character;
 
-    //Personaje* personaje;
+    // Personaje* personaje;
     /*if (character == 0) {
         Jazz* personaje = new Jazz(20 + clientId, 10, config, stateQueue);
         personaje->set_id(clientId);

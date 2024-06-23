@@ -20,18 +20,20 @@ ghost:
   life: 50
   damage: 10
   speed: 0.25
-  prob_carrot: 25 # sobre 100
-  prob_ammo: 25 
-  prob_goldcoin: 25 
+  prob_carrot: 20 # sobre 100
+  prob_ammo: 20 
+  prob_goldcoin: 30 
+  prob_rocket: 30
 
 # Murcielago
 bat:
  life: 20
  damage: 20
  speed: 0.25
- prob_carrot: 25
- prob_ammo: 0
+ prob_carrot: 10
+ prob_ammo: 20
  prob_goldcoin: 50
+ prob_rocket: 20
 
 # Mono
 monkey:
@@ -41,6 +43,7 @@ monkey:
  prob_carrot: 25
  prob_ammo: 25
  prob_goldcoin: 25
+ prob_rocket: 25
 
 # GoldCoin
 goldcoin:
@@ -52,17 +55,23 @@ carrot:
 
 # Municion
 ammo:
-  add_ammo: 1
+  add_ammo: 5
 
-# Armas
-weapon:
-  fire_rate: 4 # 4 tiros/seg (250ms de espera)
-  initial_ammo: 9999
+rocket_pickup:
+  add_ammo: 10
 
 # Balas
 bullet:
   speed: 1.5
   damage: 10
+  fire_rate: 3 # 2 tiros/seg (500ms de espera)
+  initial_ammo: 9999
+
+rocket:
+  speed: 1
+  damage: 50
+  fire_rate: 1 # 4 tiros/seg (250ms de espera)
+  initial_ammo: 0
 
 banana:
   speed: 1

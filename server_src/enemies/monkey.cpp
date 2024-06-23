@@ -3,7 +3,8 @@
 Monkey::Monkey(float x, float y, std::map<std::string, float>& config):
         Enemigo(x, y, 4, 6, config["monkey_life"], config["monkey_speed"], config["monkey_damage"],
                 config["monkey_prob_carrot"], config["monkey_prob_ammo"],
-                config["monkey_prob_goldcoin"], EntityType::MONKEY, AnimationType::IDLE, config),
+                config["monkey_prob_goldcoin"], config["ghost_prob_rocket"], EntityType::MONKEY,
+                AnimationType::IDLE, config),
         tiempo(std::chrono::system_clock::now()) {
     wait_idle = 3000;  // 3 segs
     wait_throw = 1000;

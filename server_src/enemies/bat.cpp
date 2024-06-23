@@ -3,7 +3,7 @@
 Bat::Bat(float x, float y, std::map<std::string, float>& config):
         Enemigo(x, y, 2, 2, config["bat_life"], config["bat_speed"], config["bat_damage"],
                 config["bat_prob_carrot"], config["bat_prob_ammo"], config["bat_prob_goldcoin"],
-                EntityType::BAT, AnimationType::FLY, config) {
+                config["ghost_prob_rocket"], EntityType::BAT, AnimationType::FLY, config) {
     lim_y_sup = y + 20;  // cuanto se va a mover de izquierda a derecha
     lim_y_inf = y - 20;
 }
