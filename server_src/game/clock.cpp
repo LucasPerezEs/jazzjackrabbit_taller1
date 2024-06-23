@@ -22,7 +22,7 @@ void Clock::update(Queue<Container>& q) {
 
         // No esta muy bien conceptualmente mandar los segundos en el campo id
         Container c(4, seconds, 0, 0, 0, 0, 0, AnimationType::NONE_ANIMATION,
-                    EntityType::NONE_ENTITY, 0, 0, 0);
+                    EntityType::NONE_ENTITY, 0, 0, 0, "");
         q.try_push(c);
     }
 

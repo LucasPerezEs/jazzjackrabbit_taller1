@@ -16,18 +16,20 @@ private:
     int vida;
     int municion;
     int score;
+    std::string name;
 
 public:
     Player(int id, float x, float y, float width, float height, int direccion,
            AnimationType an_type, Animation* an, EntityType entity_type, int vida, int municion,
-           int score);
+           int score, std::string name);
 
     void update_player_stats(float x, float y, float width, float height, int direccion, int vida,
-                             int municion, int score);
+                             int municion, int score, std::string name);
 
     int get_vida();
     int get_municion();
     int get_score();
+    std::string get_name();
 
     Player(const Player&) = delete;
     Player& operator=(const Player&) = delete;

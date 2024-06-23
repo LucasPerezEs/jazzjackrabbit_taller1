@@ -195,15 +195,17 @@ Container ClientProtocol::receive_game_container() {
         int id;
         socket.recvall(&id, sizeof(id), &was_closed);
         Container c(msg_code, id, 0, 0, 0, 0, 0, AnimationType::NONE_ANIMATION,
-                    EntityType::NONE_ENTITY, 0, 0, 0);
+                    EntityType::NONE_ENTITY, 0, 0, 0, "");
         return c;
     }
 
     GameData data;
     socket.recvall(&data, sizeof(data), &was_closed);
 
+    std::string name = receiveString();
+
     Container c(msg_code, data.id, data.x, data.y, data.width, data.height, data.direction, data.an,
-                data.en, data.health, data.ammo, data.score);
+                data.en, data.health, data.ammo, data.score, name);
     return c;
 }
 

@@ -1,7 +1,7 @@
 #include "../headers/jazz.h"
 
-Jazz::Jazz(float x, float y, std::map<std::string, float>& config, Queue<Container>& q):
-        Personaje(x, y, 2, 4, EntityType::JAZZ, AnimationType::SHOOT_IDLE, config, q) {}
+Jazz::Jazz(float x, float y, std::map<std::string, float>& config, Queue<Container>& q, std::string name):
+        Personaje(x, y, 2, 4, EntityType::JAZZ, AnimationType::SHOOT_IDLE, config, q, name) {}
 
 void Jazz::special_action() {
     if (!special_action_active) {

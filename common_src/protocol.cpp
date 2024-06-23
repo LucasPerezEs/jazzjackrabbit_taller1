@@ -170,4 +170,22 @@ std::vector<std::vector<std::string>> Protocol::receiveMap(){
 }
 
 
+std::vector<std::uint32_t> Protocol::receiveVectorUint32() {
+    std::vector<std::uint32_t> vec;
+    uint16_t size = receive16();
+    vec.reserve(size);
+    for (uint16_t i = 0; i < size; ++i) {
+        vec.push_back(receiveUInt32());
+    }
+    return vec;
+}
+
+void Protocol::sendVectorUint32(const std::vector<std::uint32_t>& vec){
+    send16(vec.size());
+    for (const auto& str : vec) {
+        send32(str);
+    }
+}
+
+
 void Protocol::close() { socket.close(); }
