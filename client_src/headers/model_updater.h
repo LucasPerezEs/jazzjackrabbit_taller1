@@ -37,6 +37,7 @@ private:
     SoundManager& sound_manager;
     int id;
     bool& gameStarted;
+    bool& gameEnded;
 
     void init_animations(SdlWindow& window);
 
@@ -49,7 +50,7 @@ private:
 public:
     ModelUpdater(ClientProtocol& protocol, SdlWindow& window, std::map<int, Entity*>& entidades,
                  Queue<Container>& reciever_queue, std::map<int, Player*>& personajes,
-                 UIManager& ui_manager, int id, SoundManager& sound_manager, bool& gameStarted);
+                 UIManager& ui_manager, int id, SoundManager& sound_manager, bool& gameStarted, bool& gameEnded);
 
     virtual void run() override;
 

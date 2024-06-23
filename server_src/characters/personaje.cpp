@@ -322,13 +322,13 @@ void Personaje::update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) {
 }
 
 void Personaje::update_vivo(ListaObjetos& objetos, Queue<Container>& q,
-                            std::unordered_map<uint32_t, Personaje*>& clientCharacters) {
+                            std::map<uint32_t, std::shared_ptr<Personaje>>& clientCharacters, std::shared_ptr<Ente> e) {
     if (vida <= 0) {
         // Me acaban de matar
         if (contador == 0) {
             if (killed_by_id != -1) {
-                Personaje* killer = clientCharacters[killed_by_id];
-                if (killer) {
+                std::shared_ptr<Personaje> killer = clientCharacters[killed_by_id];
+                if (killer.get()) {
                     std::cout << "Killer id: " << killer->id << std::endl;
                     killer->add_score(this->score);
                 }
@@ -341,7 +341,7 @@ void Personaje::update_vivo(ListaObjetos& objetos, Queue<Container>& q,
             borrar = false;
             killed_by_id = -1;
             score = 0;
-            objetos.agregar_objeto(this);
+            objetos.agregar_objeto(e);
             contador = -1;
             Container c(3, this->id, this->x, this->y, this->width, this->height, this->direccion,
                         this->an_type, this->en_type, this->vida, this->municion, this->score, this->name);
@@ -484,7 +484,7 @@ void Arma::disparar(ListaObjetos& objetos, int shooter_id, float x, float w, flo
 
         Container c(EntityType::BULLET, SoundType::SHOT_SOUND, shooter_id);
         q.try_push(c);
-        Bala* b = new Bala(aux, y + h / 2, d, shooter_id, config);
+        std::shared_ptr<Bala> b (new Bala(aux, y + h / 2, d, shooter_id, config));
         objetos.agregar_objeto(b);  // Se agrega al vector de colisiones
         // disminuir_municion();
     }

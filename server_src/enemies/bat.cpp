@@ -28,7 +28,7 @@ void Bat::update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) {
 }
 
 void Bat::update_vivo(ListaObjetos& objetos, Queue<Container>& q,
-                      std::unordered_map<uint32_t, Personaje*>& clientCharacters) {
+                      std::map<uint32_t, std::shared_ptr<Personaje>>& clientCharacters, std::shared_ptr<Ente> e) {
     if (vida <= 0) {
         if (contador == 1) {  // si acaba de morir dropea una municion o moneda o zanahoria
             drop_item(objetos, q);
@@ -36,7 +36,7 @@ void Bat::update_vivo(ListaObjetos& objetos, Queue<Container>& q,
         if (contador == 240) {  // despues de un rato revive
             vida = max_life;
             borrar = false;
-            objetos.agregar_objeto(this);
+            objetos.agregar_objeto(e);
             contador = 0;
             Container c(0, this->id, this->x, this->y, this->width, this->height, this->direccion,
                         AnimationType::FLY, EntityType::BAT, 0, 0, 0, "");

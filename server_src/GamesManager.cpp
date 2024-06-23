@@ -75,10 +75,11 @@ bool GamesManager::createGame(std::string gameId, uint32_t maxPlayers,
     std::lock_guard<std::mutex> lock(gamesMutex);
 
     if (games.count(gameId) == 0) {
+        std::cout << "cargando configuracion de juego\n";
         std::map<std::string, float> config = load_config_YAML("../config.yml");
-
+        std::cout << "Activando cheats\n";
         activate_cheats(cheats, config);
-
+        std::cout << "Creando game broadcaster\n";
         GameBroadcasterContainer* newGame =
                 new GameBroadcasterContainer(std::move(config), maxPlayers, setupQueue);
 
@@ -87,6 +88,7 @@ bool GamesManager::createGame(std::string gameId, uint32_t maxPlayers,
             //newGame->start();
             return true;
         }
+        std::cout << "error en new game broadcaster\n";
     }
 
     return false;
@@ -263,8 +265,8 @@ void GamesManager::run() {
                 break;
             }
             case Setup::CREATE_GAME: {
-                ok = createGame(msg.setup.gameId, msg.setup.maxPlayers, msg.setup.cheats);
                 std::cout << "Creando game\n";
+                ok = createGame(msg.setup.gameId, msg.setup.maxPlayers, msg.setup.cheats);
                 Container container = Container(Setup::CREATE_GAME, msg.setup.gameId, msg.setup.maxPlayers,
                                     msg.setup.cheats, ok);
                 clients[clientId]->pushState(container);

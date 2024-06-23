@@ -6,7 +6,7 @@
 
 ListaObjetos::ListaObjetos() {}
 
-void ListaObjetos::agregar_objeto(Objeto* o) { objetos.push_back(o); }
+void ListaObjetos::agregar_objeto(std::shared_ptr<Objeto> o) { objetos.push_back(o); }
 
 void ListaObjetos::update(Mapa& mapa, Queue<Container>& q) {
     int size = objetos.size();
@@ -25,14 +25,14 @@ void ListaObjetos::correr_colisiones() {
 
 void ListaObjetos::eliminar_borrados(Queue<Container>& q) {
     objetos.erase(std::remove_if(objetos.begin(), objetos.end(),
-                                 [&](Objeto* o) {
+                                 [&](std::shared_ptr<Objeto> o) {
                                      if (o->borrar) {
                                          Container c(1, o->id, 0, 0, 0, 0, 0,
                                                      AnimationType::NONE_ANIMATION,
                                                      EntityType::NONE_ENTITY, 0, 0, 0, "");
                                          // Al borrar solo hace falta el id
                                          q.try_push(c);
-                                         o->eliminar();
+                                         //o->eliminar();
                                          return true;
                                      }
                                      return false;
@@ -42,16 +42,16 @@ void ListaObjetos::eliminar_borrados(Queue<Container>& q) {
 
 
 void ListaObjetos::borrar() {
-    for (auto objeto: objetos) {
+    /*for (auto objeto: objetos) {
         delete objeto;
-    }
+    }*/
     objetos.clear();
 }
 
 void ListaObjetos::borrar(int id) {
-    objetos.erase(std::remove_if(objetos.begin(), objetos.end(), [&](Objeto* o){
+    objetos.erase(std::remove_if(objetos.begin(), objetos.end(), [&](std::shared_ptr<Objeto> o){
         if (o->id == id) {
-            delete o;
+            //delete o;
             return true;
         }
         return false;}));
