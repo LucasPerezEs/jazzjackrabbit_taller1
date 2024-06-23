@@ -36,7 +36,8 @@ void Game::run() {
 
     clock.start();
 
-    Container c = Container(5, 0, 0, 0, 0, 0, 0, NONE_ANIMATION, NONE_ENTITY, 0, 0, 0, "");
+    Container c = Container(5, 0, 0, 0, 0, 0, 0, NONE_ANIMATION, NONE_ENTITY, 0,
+                            {EntityType::NONE_ENTITY, 0}, 0, "");
     stateQueue.push(c);
 
     while (_keep_running && !clock.times_up()) {
@@ -82,7 +83,7 @@ void Game::run() {
                 case Command::ActionType::QUIT: {
                     // cppcheck-suppress shadowVariable
                     Container c(1, clientId, 0, 0, 0, 0, 0, AnimationType::NONE_ANIMATION,
-                                EntityType::NONE_ENTITY, 0, 0, 0, "");
+                                EntityType::NONE_ENTITY, 0, {EntityType::NONE_ENTITY, 0}, 0, "");
                     stateQueue.push(c);
                     entes.erase(std::remove_if(entes.begin(), entes.end(), [&](Ente* o) {
                         if (o->id == (int)clientId) {

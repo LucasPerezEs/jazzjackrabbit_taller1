@@ -2,8 +2,11 @@
 #define UIMANAGER_H
 
 #include <map>
+#include <utility>
+#include <vector>
 
 #include "../../common_src/headers/commands.h"
+#include "../../common_src/headers/entity_commands.h"
 
 #include "Fuente.h"
 #include "SdlWindow.h"
@@ -20,6 +23,10 @@ private:
     TTF_Font* chica;
 
     bool player_alive(int id_cliente);
+
+    void render_top3();
+
+    std::vector<std::pair<int, Player*>> top3Values(const std::map<int, Player*>& inputMap);
 
 public:
     UIManager(std::map<int, Player*>& personajes, SdlWindow& window);

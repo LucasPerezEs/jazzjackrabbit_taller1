@@ -29,7 +29,8 @@ void ListaObjetos::eliminar_borrados(Queue<Container>& q) {
                                      if (o->borrar) {
                                          Container c(1, o->id, 0, 0, 0, 0, 0,
                                                      AnimationType::NONE_ANIMATION,
-                                                     EntityType::NONE_ENTITY, 0, 0, 0, "");
+                                                     EntityType::NONE_ENTITY, 0,
+                                                     {EntityType::NONE_ENTITY, 0}, 0, "");
                                          // Al borrar solo hace falta el id
                                          q.try_push(c);
                                          o->eliminar();
@@ -49,10 +50,11 @@ void ListaObjetos::borrar() {
 }
 
 void ListaObjetos::borrar(int id) {
-    objetos.erase(std::remove_if(objetos.begin(), objetos.end(), [&](Objeto* o){
+    objetos.erase(std::remove_if(objetos.begin(), objetos.end(), [&](Objeto* o) {
         if (o->id == id) {
             delete o;
             return true;
         }
-        return false;}));
+        return false;
+    }));
 }

@@ -7,6 +7,7 @@
 #include <SDL2/SDL.h>
 
 #include "../../common_src/headers/entity_commands.h"
+#include "../../common_src/headers/protocol.h"
 
 #include "Animation.h"
 #include "entity.h"
@@ -14,20 +15,20 @@
 class Player: public Entity {
 private:
     int vida;
-    int municion;
+    AmmoData municion;
     int score;
     std::string name;
 
 public:
     Player(int id, float x, float y, float width, float height, int direccion,
-           AnimationType an_type, Animation* an, EntityType entity_type, int vida, int municion,
-           int score, std::string name);
+           AnimationType an_type, Animation* an, EntityType entity_type, int vida,
+           AmmoData municion, int score, std::string name);
 
     void update_player_stats(float x, float y, float width, float height, int direccion, int vida,
-                             int municion, int score, std::string name);
+                             AmmoData municion, int score, std::string name);
 
     int get_vida();
-    int get_municion();
+    AmmoData get_municion();
     int get_score();
     std::string get_name();
 

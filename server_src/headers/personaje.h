@@ -43,6 +43,7 @@ public:
                   Queue<Container>& q);
     bool change_selected_ammo();
     int remaining_ammo();
+    EntityType selected_ammo();
     void add_ammo(EntityType ammo, int n);
 };
 

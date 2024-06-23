@@ -192,8 +192,9 @@ Container ClientProtocol::receive_game_container() {
     if (msg_code == 2) {
         int id;
         socket.recvall(&id, sizeof(id), &was_closed);
+        AmmoData data = {EntityType::NONE_ENTITY, 0};
         Container c(msg_code, id, 0, 0, 0, 0, 0, AnimationType::NONE_ANIMATION,
-                    EntityType::NONE_ENTITY, 0, 0, 0, "");
+                    EntityType::NONE_ENTITY, 0, data, 0, "");
         return c;
     }
 

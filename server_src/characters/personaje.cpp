@@ -321,9 +321,10 @@ void Personaje::update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) {
 
     check_colisions(m, aux_x, aux_y);
 
+    AmmoData ammo = {this->arma.selected_ammo(), this->arma.remaining_ammo()};
+
     Container c(3, this->id, this->x, this->y, this->width, this->height, this->direccion,
-                this->an_type, this->en_type, this->vida, this->arma.remaining_ammo(), this->score,
-                this->name);
+                this->an_type, this->en_type, this->vida, ammo, this->score, this->name);
     q.try_push(c);
 }
 
@@ -349,9 +350,9 @@ void Personaje::update_vivo(ListaObjetos& objetos, Queue<Container>& q,
             score = 0;
             objetos.agregar_objeto(this);
             contador = -1;
+            AmmoData ammo = {this->arma.selected_ammo(), this->arma.remaining_ammo()};
             Container c(3, this->id, this->x, this->y, this->width, this->height, this->direccion,
-                        this->an_type, this->en_type, this->vida, this->municion, this->score,
-                        this->name);
+                        this->an_type, this->en_type, this->vida, ammo, this->score, this->name);
             q.try_push(c);
         }
         contador++;
@@ -518,6 +519,8 @@ bool Arma::change_selected_ammo() {
 
     return changed_ammo;
 }
+
+EntityType Arma::selected_ammo() { return ammo_types[current_ammo]; }
 
 int Arma::remaining_ammo() { return ammo_inventory[ammo_types[current_ammo]]; }
 

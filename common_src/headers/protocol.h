@@ -7,9 +7,15 @@
 
 #include <arpa/inet.h>
 
-#include "socket.h"
 #include "entity_commands.h"
+#include "socket.h"
 #include "sound_commands.h"
+
+struct AmmoData {
+    EntityType ammo_type;
+    // cppcheck-suppress unusedStructMember
+    int ammo;
+};
 
 struct GameData {
     // cppcheck-suppress unusedStructMember
@@ -28,12 +34,10 @@ struct GameData {
     EntityType en;
     // cppcheck-suppress unusedStructMember
     int health;
-    // cppcheck-suppress unusedStructMember
-    int ammo;
+    AmmoData ammo;
     // cppcheck-suppress unusedStructMember
     int score;
-    // cppcheck-suppress unusedStructMember
-    //std::string name;
+    // std::string name;
 };
 
 struct SoundData {
@@ -86,7 +90,6 @@ public:
     virtual void close();
 
     virtual ~Protocol() = default;
-
 };
 
 
