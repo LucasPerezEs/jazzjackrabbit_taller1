@@ -28,7 +28,7 @@ void Monkey::update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) {
     }
 
     Container c(0, this->id, this->x, this->y, this->width, this->height, this->direccion,
-                this->an_type, this->en_type, 0, 0, 0);
+                this->an_type, this->en_type, 0, 0, 0, "");
     q.try_push(c);
 }
 
@@ -44,7 +44,7 @@ void Monkey::update_vivo(ListaObjetos& objetos, Queue<Container>& q,
             objetos.agregar_objeto(this);
             contador = 0;
             Container c(0, this->id, this->x, this->y, this->width, this->height, this->direccion,
-                        AnimationType::IDLE, EntityType::MONKEY, 0, 0, 0);
+                        AnimationType::IDLE, EntityType::MONKEY, 0, 0, 0, "");
             q.try_push(c);
         }
         contador++;

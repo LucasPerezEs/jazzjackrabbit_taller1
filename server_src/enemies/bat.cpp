@@ -23,7 +23,7 @@ void Bat::update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) {
     }
 
     Container c(0, this->id, this->x, this->y, this->width, this->height, this->direccion,
-                this->an_type, this->en_type, 0, 0, 0);
+                this->an_type, this->en_type, 0, 0, 0, "");
     q.try_push(c);
 }
 
@@ -39,7 +39,7 @@ void Bat::update_vivo(ListaObjetos& objetos, Queue<Container>& q,
             objetos.agregar_objeto(this);
             contador = 0;
             Container c(0, this->id, this->x, this->y, this->width, this->height, this->direccion,
-                        AnimationType::FLY, EntityType::BAT, 0, 0, 0);
+                        AnimationType::FLY, EntityType::BAT, 0, 0, 0, "");
             q.try_push(c);
         }
         contador++;

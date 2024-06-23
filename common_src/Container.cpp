@@ -29,7 +29,7 @@ SetupContainer::SetupContainer(Setup::ActionType setupType, std::vector<std::vec
 // GameContainer implementation
 GameContainer::GameContainer(uint32_t msg_code, int id, float x, float y, float w, float h,
                              int direction, AnimationType an_type, EntityType en_type, int health,
-                             int ammo, int score):
+                             int ammo, int score, std::string name):
         msg_code(msg_code),
         id(id),
         x(x),
@@ -41,18 +41,20 @@ GameContainer::GameContainer(uint32_t msg_code, int id, float x, float y, float 
         en_type(en_type),
         health(health),
         ammo(ammo),
-        score(score) {}
+        score(score),
+        name(name) {}
 
+/*GameContainer::GameContainer(uint32_t msg_code, std::vector<std::uint32_t> score, std::vector<std::string> names): score(score), names(names) {}*/
 
 SoundContainer::SoundContainer(EntityType entity, SoundType sound, int id):
         entity(entity), sound(sound), id(id) {}
 
 // Container implementation
 Container::Container(uint32_t msg_code, int id, float x, float y, float w, float h, int direction,
-                     AnimationType an_type, EntityType en_type, int health, int ammo, int score):
+                     AnimationType an_type, EntityType en_type, int health, int ammo, int score, std::string name):
         setup_container(nullptr),
         game_container(new GameContainer(msg_code, id, x, y, w, h, direction, an_type, en_type,
-                                         health, ammo, score)),
+                                         health, ammo, score, name)),
         sound_container(nullptr),
         _type(Type::GAME) {}
 

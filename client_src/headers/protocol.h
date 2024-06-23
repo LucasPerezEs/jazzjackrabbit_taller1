@@ -14,35 +14,6 @@
 #include "../../common_src/headers/protocol.h"
 #include "../../common_src/headers/socket.h"
 
-struct GameData {
-    // cppcheck-suppress unusedStructMember
-    int id;
-    // cppcheck-suppress unusedStructMember
-    float x;
-    // cppcheck-suppress unusedStructMember
-    float y;
-    // cppcheck-suppress unusedStructMember
-    float width;
-    // cppcheck-suppress unusedStructMember
-    float height;
-    // cppcheck-suppress unusedStructMember
-    int direction;
-    AnimationType an;
-    EntityType en;
-    // cppcheck-suppress unusedStructMember
-    int health;
-    // cppcheck-suppress unusedStructMember
-    int ammo;
-    // cppcheck-suppress unusedStructMember
-    int score;
-};
-
-struct SoundData {
-    EntityType entity;
-    SoundType sound;
-    // cppcheck-suppress unusedStructMember
-    int id;
-};
 
 class ClientProtocol: public Protocol {
 private:

@@ -17,29 +17,7 @@ Game::Game(Queue<Message>& actionQueue, Queue<Container>& stateQueue, uint32_t m
         gameStarted(false) {}
 
 void Game::run() {
-    
-    for (auto eleccion: elecciones)  {
-        //Personaje* personaje;
-        if (eleccion.second == 0) {
-            Jazz* personaje = new Jazz(20 + eleccion.first, 10, config, stateQueue);
-            personaje->set_id(eleccion.first);
-            clientCharacters[eleccion.first] = personaje;
-            objetos.agregar_objeto(personaje);
-            entes.push_back(personaje);
-        } else if (eleccion.second == 1) {
-            Lori* personaje = new Lori(20 + eleccion.first, 10, config, stateQueue);
-            personaje->set_id(eleccion.first);
-            clientCharacters[eleccion.first] = personaje;
-            objetos.agregar_objeto(personaje);
-            entes.push_back(personaje);
-        } else {
-            Spaz* personaje = new Spaz(20 + eleccion.first, 10, config, stateQueue);
-            personaje->set_id(eleccion.first);
-            clientCharacters[eleccion.first] = personaje;
-            objetos.agregar_objeto(personaje);
-            entes.push_back(personaje);
-        }
-    }
+
     /*Jazz* personaje = new Jazz(20, 10, config, stateQueue);
     objetos.agregar_objeto(personaje);
     entes.push_back(personaje);
@@ -58,7 +36,7 @@ void Game::run() {
 
     clock.start();
 
-    Container c = Container(5, 0, 0, 0, 0, 0, 0, NONE_ANIMATION, NONE_ENTITY, 0, 0, 0);
+    Container c = Container(5, 0, 0, 0, 0, 0, 0, NONE_ANIMATION, NONE_ENTITY, 0, 0, 0, "");
     stateQueue.push(c);
 
     while (_keep_running && !clock.times_up()) {
@@ -99,7 +77,7 @@ void Game::run() {
                     personaje->disparando = false;
                     break;
                 case Command::ActionType::QUIT: {
-                    Container c(1, clientId, 0, 0, 0, 0, 0, AnimationType::NONE_ANIMATION, EntityType::NONE_ENTITY, 0, 0, 0);
+                    Container c(1, clientId, 0, 0, 0, 0, 0, AnimationType::NONE_ANIMATION, EntityType::NONE_ENTITY, 0, 0, 0, "");
                     stateQueue.push(c);
                     entes.erase(std::remove_if(entes.begin(), entes.end(), [&](Ente* o){
                         if (o->id == (int)clientId) {
@@ -127,26 +105,21 @@ void Game::run() {
     }
 }
 
-
-void Game::addPlayer(uint32_t clientId, uint32_t character) {
+void Game::addPlayer(uint32_t clientId, uint32_t character, std::string name) {
     std::lock_guard<std::mutex> lock(clientCharactersMutex);
 
-
-    elecciones[clientId] = character;
-
-    //Personaje* personaje;
-    /*if (character == 0) {
-        Jazz* personaje = new Jazz(20 + clientId, 10, config, stateQueue);
-        personaje->set_id(clientId);
-        clientCharacters[clientId] = personaje;
-        objetos.agregar_objeto(personaje);
-        entes.push_back(personaje);
+    Personaje* personaje;
+    if (character == 0) {
+        personaje = new Jazz(20 + clientId, 10, config, stateQueue, name);
     } else if (character == 1) {
-        personaje = new Lori(20 + clientId, 10, config, stateQueue);
+        personaje = new Lori(20 + clientId, 10, config, stateQueue, name);
     } else {
-        personaje = new Spaz(20 + clientId, 10, config, stateQueue);
-    }*/
-
+        personaje = new Spaz(20 + clientId, 10, config, stateQueue, name);
+    }
+    personaje->set_id(clientId);
+    clientCharacters[clientId] = personaje;
+    objetos.agregar_objeto(personaje);
+    entes.push_back(personaje);
 
     // Para mas adelante, el reloj deberia empezar cuando hay dos jugadores
     /*if (clientCharacters.size() == 1) {

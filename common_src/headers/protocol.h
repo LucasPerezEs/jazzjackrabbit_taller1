@@ -8,6 +8,40 @@
 #include <arpa/inet.h>
 
 #include "socket.h"
+#include "entity_commands.h"
+#include "sound_commands.h"
+
+struct GameData {
+    // cppcheck-suppress unusedStructMember
+    int id;
+    // cppcheck-suppress unusedStructMember
+    float x;
+    // cppcheck-suppress unusedStructMember
+    float y;
+    // cppcheck-suppress unusedStructMember
+    float width;
+    // cppcheck-suppress unusedStructMember
+    float height;
+    // cppcheck-suppress unusedStructMember
+    int direction;
+    AnimationType an;
+    EntityType en;
+    // cppcheck-suppress unusedStructMember
+    int health;
+    // cppcheck-suppress unusedStructMember
+    int ammo;
+    // cppcheck-suppress unusedStructMember
+    int score;
+    // cppcheck-suppress unusedStructMember
+    //std::string name;
+};
+
+struct SoundData {
+    EntityType entity;
+    SoundType sound;
+    // cppcheck-suppress unusedStructMember
+    int id;
+};
 
 
 class Protocol {
@@ -37,6 +71,10 @@ public:
 
     void sendMap(const std::vector<std::vector<std::string>>& map);
     std::vector<std::vector<std::string>> receiveMap();
+
+
+    std::vector<std::uint32_t> receiveVectorUint32();
+    void sendVectorUint32(const std::vector<std::uint32_t>& vec);
 
 
     Protocol(const Protocol&) = delete;

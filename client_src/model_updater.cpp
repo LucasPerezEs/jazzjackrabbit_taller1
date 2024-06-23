@@ -254,7 +254,7 @@ void ModelUpdater::update_player(Container& c) {
         personajes[c.game_container->id]->update_player_stats(
                 c.game_container->x, c.game_container->y, c.game_container->w, c.game_container->h,
                 c.game_container->direction, c.game_container->health, c.game_container->ammo,
-                c.game_container->score);
+                c.game_container->score, c.game_container->name);
         personajes[c.game_container->id]->modify_animation(
                 this->animations[c.game_container->en_type][c.game_container->an_type],
                 c.game_container->an_type);
@@ -264,7 +264,7 @@ void ModelUpdater::update_player(Container& c) {
                 c.game_container->h, c.game_container->direction, c.game_container->an_type,
                 this->animations[c.game_container->en_type][c.game_container->an_type],
                 c.game_container->en_type, c.game_container->health, c.game_container->ammo,
-                c.game_container->score);
+                c.game_container->score, c.game_container->name);
     }
 }
 
