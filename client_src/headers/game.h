@@ -42,6 +42,7 @@ private:
 
     ClientReceiver client_receiver;
     bool gameStarted;
+    bool gameEnded;
     bool in_menu;
     SoundManager sound_manager;
     EventHandler event_handler;  // eventos teclado (sender)

@@ -55,13 +55,14 @@ void Ente::RecibirDanio(int d) {
 bool Ente::vivo() { return vida > 0; }
 
 void Ente::update_vivo(ListaObjetos& objetos, Queue<Container>& q,
-                       std::unordered_map<uint32_t, Personaje*>& clientCharacters) {
+                       std::map<uint32_t, std::shared_ptr<Personaje>>& clientCharacters,
+                       std::shared_ptr<Ente> e) {
     if (vida <= 0) {
         if (contador ==
             240) {  // revive despues de tantos ciclos y lo agrego al vector de colisiones
             vida = 100;
             borrar = false;
-            objetos.agregar_objeto(this);
+            objetos.agregar_objeto(e);
             contador = 0;
             Container c(0, this->id, this->x, this->y, this->width, this->height, this->direccion,
                         this->an_type, this->en_type, 0, {EntityType::NONE_ENTITY, 0}, 0, "");

@@ -8,9 +8,6 @@ MapCreator::MapCreator(const std::string& mapName, const double& width, const do
 void MapCreator::save_map(std::string& filename, bool& is_already_create) {
 
     std::string newFilename = filename;
-    if (is_already_create)
-        newFilename = newFilename + "_modified";
-
     std::string path = path_maps + newFilename;
     std::ofstream file(path);
         int fila_anterior = -1;
@@ -43,10 +40,6 @@ void MapCreator::save_map(std::string& filename, bool& is_already_create) {
 void MapCreator::save_spawns(std::string& filename, bool& is_already_create){
 
     std::string newFilename = filename + "_spawns";
-
-    if (is_already_create)
-        newFilename = newFilename + "_modified";
-    
     std::string path = path_maps + newFilename;
 
     std::ofstream file(path);
@@ -158,6 +151,7 @@ std::map<std::tuple<int, int>, Tile> MapCreator::loadEmptyCSV() {
 std::map<std::tuple<int, int>, Tile> MapCreator::loadCSV(const std::string& filename) {
 
     std::string path = path_maps + filename;
+    std::cout << path << std::endl;
     std::map<std::tuple<int, int>, Tile> mapTiles;
     std::ifstream file(path);
     if (file.is_open()) {

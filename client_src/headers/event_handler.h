@@ -26,6 +26,8 @@ private:
 
     bool& in_menu;
 
+    bool& gameEnded;
+
     Camara* camara;
 
     SoundManager& sound_manager;
@@ -35,7 +37,7 @@ private:
     void handle_keyup(const SDL_Event& event, Command& cmd);
 
 public:
-    explicit EventHandler(ClientProtocol& protocol, bool& menu, SoundManager& sound_manager);
+    explicit EventHandler(ClientProtocol& protocol, bool& menu, bool& gameEnded, SoundManager& sound_manager);
 
     virtual void run() override;
 

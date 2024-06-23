@@ -9,10 +9,11 @@ Game::Game(Client& client):
         ui_manager(personajes, window), 
         client_receiver(client.get_protocol(), receiverQueue),
         gameStarted(false),
+        gameEnded(false),
         in_menu(false),
         sound_manager(client.get_id()),
-        event_handler(client.get_protocol(), in_menu, sound_manager),
-        updater(client.get_protocol(), window, entidades, receiverQueue, personajes, ui_manager, client.get_id(), sound_manager, gameStarted) {
+        event_handler(client.get_protocol(), in_menu, gameEnded, sound_manager),
+        updater(client.get_protocol(), window, entidades, receiverQueue, personajes, ui_manager, client.get_id(), sound_manager, gameStarted, gameEnded) {
 
     //Este asset tambien deberia de pedirselo al map creator y que este le devuelva ya la textura.
     SDL_Surface* tilesetSurface =
@@ -66,7 +67,7 @@ void Game::run() {
     musica.PlayMusic(-1);
     musica.SetVolume(20);*/
 
-    while (updater.is_running()) {
+    while (updater.is_running() && event_handler.is_running()) {
 
         SDL_RenderClear(window.getRenderer());
 
@@ -99,7 +100,17 @@ void Game::update() {
 void Game::render() {
     this->window.fill();
 
-    if (!gameStarted) {
+    if (gameEnded) {
+        window.fill(70, 130, 180, 255);
+        SDL_Rect button;
+        button.x = 800/2 - 100;
+        button.w = 200;
+        button.y = 600/2  - 25;
+        button.h = 50;
+        SDL_SetRenderDrawColor(window.getRenderer(), 255, 255, 255, 255);
+        SDL_RenderFillRect(window.getRenderer(), &button);
+    }
+    else if (!gameStarted) {
         SDL_RenderCopy(window.getRenderer(), loadingImage, NULL, NULL);
         ui_manager.renderLoadingText();
     }
@@ -165,6 +176,7 @@ Game::~Game() {
     //this->client_receiver.close();
     this->client_receiver.join();
     std::cout << "Haciendo join del receiver\n";
+    this->updater.close();
     this->updater.join();
     std::cout << "Haciendo join del updater\n";
 }

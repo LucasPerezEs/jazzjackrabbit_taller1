@@ -329,13 +329,14 @@ void Personaje::update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) {
 }
 
 void Personaje::update_vivo(ListaObjetos& objetos, Queue<Container>& q,
-                            std::unordered_map<uint32_t, Personaje*>& clientCharacters) {
+                            std::map<uint32_t, std::shared_ptr<Personaje>>& clientCharacters,
+                            std::shared_ptr<Ente> e) {
     if (vida <= 0) {
         // Me acaban de matar
         if (contador == 0) {
             if (killed_by_id != -1) {
-                Personaje* killer = clientCharacters[killed_by_id];
-                if (killer) {
+                std::shared_ptr<Personaje> killer = clientCharacters[killed_by_id];
+                if (killer.get()) {
                     std::cout << "Killer id: " << killer->id << std::endl;
                     killer->add_score(this->score);
                 }
@@ -348,7 +349,7 @@ void Personaje::update_vivo(ListaObjetos& objetos, Queue<Container>& q,
             borrar = false;
             killed_by_id = -1;
             score = 0;
-            objetos.agregar_objeto(this);
+            objetos.agregar_objeto(e);
             contador = -1;
             AmmoData ammo = {this->arma.selected_ammo(), this->arma.remaining_ammo()};
             Container c(3, this->id, this->x, this->y, this->width, this->height, this->direccion,
@@ -528,13 +529,13 @@ void Arma::spawn_projectile(ListaObjetos& objetos, EntityType ammo, int x, int y
                             int shooter_id, std::map<std::string, float>& config) {
     switch (ammo) {
         case BULLET: {
-            Bullet* b = new Bullet(x, y, d, shooter_id, config);
+            std::shared_ptr<Bullet> b(new Bullet(x, y, d, shooter_id, config));
             objetos.agregar_objeto(b);
             break;
         }
 
         case ROCKET: {
-            Rocket* b = new Rocket(x, y, d, shooter_id, config);
+            std::shared_ptr<Rocket> b(new Rocket(x, y, d, shooter_id, config));
             objetos.agregar_objeto(b);
             break;
         }

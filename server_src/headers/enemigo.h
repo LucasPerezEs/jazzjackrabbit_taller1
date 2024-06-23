@@ -40,7 +40,7 @@ public:
     virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) override = 0;
     virtual void update_vivo(
             ListaObjetos& objetos, Queue<Container>& q,
-            std::unordered_map<uint32_t, Personaje*>& clientCharacters) override = 0;
+            std::map<uint32_t, std::shared_ptr<Personaje>>& clientCharacters, std::shared_ptr<Ente> e) override = 0;
     virtual void drop_item(ListaObjetos& objetos, Queue<Container>& q);
     int get_damage();
 };

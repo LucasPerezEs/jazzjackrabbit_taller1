@@ -4,7 +4,7 @@
 ModelUpdater::ModelUpdater(ClientProtocol& protocol, SdlWindow& window,
                            std::map<int, Entity*>& entidades, Queue<Container>& reciever_queue,
                            std::map<int, Player*>& personajes, UIManager& ui_manager, int id,
-                           SoundManager& sound_manager, bool& gameStarted):
+                           SoundManager& sound_manager, bool& gameStarted, bool& gameEnded):
         protocol(protocol),
         was_closed(false),
         entidades(entidades),
@@ -13,7 +13,8 @@ ModelUpdater::ModelUpdater(ClientProtocol& protocol, SdlWindow& window,
         ui_manager(ui_manager),
         sound_manager(sound_manager),
         id(id),
-        gameStarted(gameStarted) {
+        gameStarted(gameStarted),
+        gameEnded(gameEnded) {
     this->init_animations(window);
     // this->sound_manager.set_clientId(id);
 }
@@ -311,7 +312,7 @@ void ModelUpdater::update(float dt) {
             case 2:  // Si el id es -1 o es igual al id del cliente se cierra el game del lado
                      // cliente
                 if (c.game_container->id == -1 || c.game_container->id == id) {
-                    close();
+                    gameEnded = true;
                 }
                 break;
 

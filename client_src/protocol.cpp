@@ -136,6 +136,7 @@ Container ClientProtocol::receive_setup_container() {
 
 Container ClientProtocol::receive_create_game() {
     bool ok = receiveBool();
+    std::cout << "recibo en el protocolo create game con resultado " << ok << "\n";
     std::string gameId = receiveString();
     uint32_t maxPlayers = receiveUInt32();
     uint32_t nCheats = receiveUInt32();

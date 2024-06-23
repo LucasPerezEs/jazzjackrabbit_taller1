@@ -59,7 +59,7 @@ public:
     void RecibirDanio(int d);
     bool vivo();
     virtual void update_vivo(ListaObjetos& objetos, Queue<Container>& q,
-                             std::unordered_map<uint32_t, Personaje*>& clientCharacters);
+            std::map<uint32_t, std::shared_ptr<Personaje>>& clientCharacters, std::shared_ptr<Ente> e);
 };
 
 

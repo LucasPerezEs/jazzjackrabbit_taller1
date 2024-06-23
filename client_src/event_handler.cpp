@@ -3,8 +3,7 @@
 // Pre: -
 // Post: -
 // cppcheck-suppress uninitMemberVar
-EventHandler::EventHandler(ClientProtocol& protocol, bool& menu, SoundManager& sound_manager):
-        protocol(protocol), was_closed(false), in_menu(menu), sound_manager(sound_manager) {}
+EventHandler::EventHandler(ClientProtocol& protocol, bool& menu, bool& gameEnded, SoundManager& sound_manager): protocol(protocol), was_closed(false), in_menu(menu), gameEnded(gameEnded), sound_manager(sound_manager) {}
 
 void EventHandler::handle_keydown(const SDL_Event& event, Command& cmd) {
     const SDL_KeyboardEvent& keyEvent = (SDL_KeyboardEvent&)event;
@@ -93,13 +92,16 @@ void EventHandler::run() {
 
         switch (event.type) {
             case SDL_MOUSEBUTTONDOWN:
-                if (in_menu && event.button.button == SDL_BUTTON_LEFT) {
-                    if (800 / 4 + 800 / 4 - 70 < event.button.x &&
-                        event.button.x < 800 / 4 + 800 / 4 + 70 &&
-                        600 / 4 + 600 / 4 - 15 < event.button.y &&
-                        event.button.y < 600 / 4 + 600 / 4 + 15) {
+                if (gameEnded && event.button.button == SDL_BUTTON_LEFT) {
+                    if (800/2 - 100 < event.button.x && event.button.x < 800/2 + 100
+                     && 600/2 - 25 < event.button.y && event.button.y < 600/2+ 25) {
+                        this->was_closed = true;
+                    }
+                }
+                else if (in_menu && event.button.button == SDL_BUTTON_LEFT) {
+                    if (800/4 + 800/4 - 70 < event.button.x && event.button.x < 800/4 + 800/4 + 70
+                     && 600/4 + 600/4 - 15 < event.button.y && event.button.y < 600/4 + 600/4 + 15) {
                         sound_manager.change_music_volume();
-                        continue;
                     }
                 }
             case SDL_KEYDOWN: {

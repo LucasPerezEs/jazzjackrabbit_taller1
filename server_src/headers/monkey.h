@@ -29,7 +29,7 @@ public:
     Monkey(float x, float y, std::map<std::string, float>& config);
     virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) override;
     virtual void update_vivo(ListaObjetos& objetos, Queue<Container>& q,
-                             std::unordered_map<uint32_t, Personaje*>& clientCharacters) override;
+                             std::map<uint32_t, std::shared_ptr<Personaje>>& clientCharacters, std::shared_ptr<Ente> e) override;
     void throw_banana(ListaObjetos& objetos);
 };
 
