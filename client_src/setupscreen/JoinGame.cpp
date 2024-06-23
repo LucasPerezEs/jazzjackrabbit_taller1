@@ -8,7 +8,7 @@ void JoinGame::init() {
     elegido = 0;
     QVBoxLayout *layout = new QVBoxLayout(this);
 
-    gameIdInput = new QLineEdit(this);
+
     joinButton = new QPushButton("Join Game", this);
     jazz = new QPushButton("Jazz", this);
     lori = new QPushButton("Lori", this);
@@ -17,14 +17,11 @@ void JoinGame::init() {
     layout->addWidget(jazz);
     layout->addWidget(lori);
     layout->addWidget(spaz);
-    layout->addWidget(gameIdInput);
     layout->addWidget(joinButton);
     joinButton->setEnabled(false);
 
     connect(joinButton, &QPushButton::clicked, this, [this]() {
-        QString gameId = gameIdInput->text();
-        emit joinGameRequested(gameId, elegido);
-
+        emit joinGameRequested(elegidoGameId, elegido); // Emitir la señal con el ID de juego elegido.
     });
     connect(jazz, &QPushButton::clicked, this, [this]() {
         elegido = 0;
@@ -46,7 +43,7 @@ void JoinGame::init() {
 void JoinGame::setGameId(const QString &gameId) {
     int lastSpaceIndex = gameId.lastIndexOf(' ');
     QString gameName = gameId.left(lastSpaceIndex);
-    gameIdInput->setText(gameName);
+    elegidoGameId = gameName;
     joinButton->setEnabled(true);
 }
 

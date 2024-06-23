@@ -1,0 +1,231 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						2,
+						3,
+						4,
+						5
+					],
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.12"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						2,
+						4
+					]
+				},
+				{
+					"build" : "client_src",
+					"jsonFile" : "directory-client_src-Debug-179201f71f9f693dff96.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.12"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "client_src",
+					"targetIndexes" : 
+					[
+						1
+					]
+				},
+				{
+					"build" : "server_src",
+					"jsonFile" : "directory-server_src-Debug-42873fb438c2fb44b4f4.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.12"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "server_src",
+					"targetIndexes" : 
+					[
+						5
+					]
+				},
+				{
+					"build" : "editor_src",
+					"jsonFile" : "directory-editor_src-Debug-241c395bf62efd692310.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.12"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "editor_src",
+					"targetIndexes" : 
+					[
+						3
+					]
+				},
+				{
+					"build" : "client_src/setupscreen",
+					"jsonFile" : "directory-client_src.setupscreen-Debug-cd6e2e7b37527981a326.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.12"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "client_src/setupscreen",
+					"targetIndexes" : 
+					[
+						6
+					]
+				},
+				{
+					"build" : "editor_src/setupscreen_editor",
+					"jsonFile" : "directory-editor_src.setupscreen_editor-Debug-893b12e43f4e04c15e19.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.12"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 2,
+					"source" : "editor_src/setupscreen_editor",
+					"targetIndexes" : 
+					[
+						7
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1,
+						2
+					],
+					"directoryIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					],
+					"name" : "jazzjackrabbit",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						4
+					],
+					"name" : "setupscreen",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						6
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						5
+					],
+					"name" : "setupscreen_editor",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						7
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "client::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-client-Debug-8fddd333bdbfcb7d848b.json",
+					"name" : "client",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "client_lib::@eafd6e3045e1d2452d18",
+					"jsonFile" : "target-client_lib-Debug-7ca6070e868df96b0bb1.json",
+					"name" : "client_lib",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "editor::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-editor-Debug-afb4af92ab27fe94a447.json",
+					"name" : "editor",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "editor_lib::@abafdd155b76fd456a60",
+					"jsonFile" : "target-editor_lib-Debug-27f15649c09a9b9cef31.json",
+					"name" : "editor_lib",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "server::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-server-Debug-c83605f5ad0588112875.json",
+					"name" : "server",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "server_lib::@afa1b295bad524b51d90",
+					"jsonFile" : "target-server_lib-Debug-2998b2befbbcf6521c97.json",
+					"name" : "server_lib",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "setupscreen::@5facb4b79328fbd2ad45",
+					"jsonFile" : "target-setupscreen-Debug-5bdd688a8a7e3edee778.json",
+					"name" : "setupscreen",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "setupscreen_editor::@05bd44e40baf4b22388e",
+					"jsonFile" : "target-setupscreen_editor-Debug-479b58e3e09605f0fee6.json",
+					"name" : "setupscreen_editor",
+					"projectIndex" : 2
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug",
+		"source" : "/home/moko/Escritorio/jazzjackrabbit_taller1"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}
