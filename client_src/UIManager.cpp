@@ -126,6 +126,20 @@ void UIManager::render_UI(int id_cliente) {
     }
 }
 
+void UIManager::render_pause_menu() {
+    SDL_Color amarillo = {237, 206, 69, 255};
+
+    SDL_Rect button;
+    button.x = 800 / 2 - 140;
+    button.w = 280;
+    button.y = 600 / 2 - 25;
+    button.h = 50;
+    SDL_SetRenderDrawColor(window.getRenderer(), 0, 0, 0, 255);
+    SDL_RenderFillRect(window.getRenderer(), &button);
+
+    this->fuente.render(800 / 2 - 100, 600 / 2 - 25, "Pause   Music", window, amarillo);
+}
+
 void UIManager::renderLoadingText() {
     this->fuente.render(800 / 2 - 100, 600 / 2 + 120, "Waiting       players", window, {0, 0, 0});
 }

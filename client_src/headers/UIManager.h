@@ -35,6 +35,8 @@ public:
 
     void render_UI(int id_cliente);
 
+    void render_pause_menu();
+
     void renderLoadingText();
 };
 
