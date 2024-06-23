@@ -44,9 +44,11 @@ bool Client::createGame(const std::string& gameId, const uint32_t maxPlayers,
 
     Message msg(Setup::ActionType::CREATE_GAME, gameId, maxPlayers, cheats);
     client_protocol.send_message(msg);
-
+    std::cout << "mando create game con nombre: " << gameId << "\n";
     Container container = client_protocol.receive_container();
-
+    while (container.setup_container.get() == NULL || container.setup_container->setupType != Setup::ActionType::CREATE_GAME) {
+        container = client_protocol.receive_container();
+    }
     return container.setup_container->ok;
 }
 

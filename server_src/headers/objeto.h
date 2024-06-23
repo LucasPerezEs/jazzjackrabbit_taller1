@@ -12,7 +12,7 @@
 
 class Enemigo;
 class Personaje;
-class Bala;
+class Projectile;
 class Banana;
 class Mapa;
 class Municion;
@@ -41,7 +41,7 @@ public:
     virtual void colision(Pickup& o);
     virtual void colision(Personaje& o);
     virtual void colision(Enemigo& o);
-    virtual void colision(Bala& o);
+    virtual void colision(Projectile& o);
     virtual void colision(Banana& o);
     virtual void colision(Municion& m);
     virtual void colision(ZanahoriaEnvenenada& ze);
@@ -59,7 +59,7 @@ public:
     void RecibirDanio(int d);
     bool vivo();
     virtual void update_vivo(ListaObjetos& objetos, Queue<Container>& q,
-                             std::unordered_map<uint32_t, Personaje*>& clientCharacters);
+            std::map<uint32_t, std::shared_ptr<Personaje>>& clientCharacters, std::shared_ptr<Ente> e);
 };
 
 

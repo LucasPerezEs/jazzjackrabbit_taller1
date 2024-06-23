@@ -69,9 +69,9 @@ public:
 private:
     Mapa* m;
     uint32_t maxPlayers;
-    std::unordered_map<uint32_t, Personaje*> clientCharacters;
+    std::map<uint32_t, std::shared_ptr<Personaje>> clientCharacters;
     ListaObjetos objetos;
-    std::vector<Ente*> entes;
+    std::vector<std::shared_ptr<Ente>> entes;
 
     Queue<Message>& actionQueue;
     Queue<Container>& stateQueue;

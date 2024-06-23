@@ -6,7 +6,7 @@ Municion::Municion(float x, float y, std::map<std::string, float>& config, Queue
 
 void Municion::colision(Personaje& p) {
     borrar = true;
-    p.municion += add_ammo;
+    p.add_ammo(EntityType::BULLET, add_ammo);
     Container c(en_type, SoundType::PICKUP_SOUND, p.id);
     q.try_push(c);
     std::cout << "Municion: " << p.municion << "\n";

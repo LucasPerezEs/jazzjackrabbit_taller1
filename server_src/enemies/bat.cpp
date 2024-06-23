@@ -3,7 +3,7 @@
 Bat::Bat(float x, float y, std::map<std::string, float>& config):
         Enemigo(x, y, 2, 2, config["bat_life"], config["bat_speed"], config["bat_damage"],
                 config["bat_prob_carrot"], config["bat_prob_ammo"], config["bat_prob_goldcoin"],
-                EntityType::BAT, AnimationType::FLY, config) {
+                config["ghost_prob_rocket"], EntityType::BAT, AnimationType::FLY, config) {
     lim_y_sup = y + 20;  // cuanto se va a mover de izquierda a derecha
     lim_y_inf = y - 20;
 }
@@ -28,7 +28,7 @@ void Bat::update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) {
 }
 
 void Bat::update_vivo(ListaObjetos& objetos, Queue<Container>& q,
-                      std::unordered_map<uint32_t, Personaje*>& clientCharacters) {
+                      std::map<uint32_t, std::shared_ptr<Personaje>>& clientCharacters, std::shared_ptr<Ente> e) {
     if (vida <= 0) {
         if (contador == 1) {  // si acaba de morir dropea una municion o moneda o zanahoria
             drop_item(objetos, q);
@@ -36,7 +36,7 @@ void Bat::update_vivo(ListaObjetos& objetos, Queue<Container>& q,
         if (contador == 240) {  // despues de un rato revive
             vida = max_life;
             borrar = false;
-            objetos.agregar_objeto(this);
+            objetos.agregar_objeto(e);
             contador = 0;
             Container c(0, this->id, this->x, this->y, this->width, this->height, this->direccion,
                         AnimationType::FLY, EntityType::BAT, 0, 0, 0, "");

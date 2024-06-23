@@ -54,6 +54,7 @@ int main(int argc, char* argv[]) {
                         &multiplayerMenu, &MultiplayerMenu::createGameRequested,
                         [&](const QString& gameID, const uint32_t& maxPlayers,
                             const std::vector<uint32_t>& cheats) {
+                            std::cout << "Enviando creacion con nombre: " << gameID.toStdString() << "\n";
                             if (client.createGame(gameID.toStdString(), maxPlayers, cheats)) {
                                 std::cout << "Game creado\n",
                                 multiplayerMenu.showGameCreatedMessage();

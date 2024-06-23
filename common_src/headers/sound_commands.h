@@ -8,7 +8,9 @@ enum SoundType {
     HURT1_SOUND = 0x45,
     HURT2_SOUND = 0x46,
     PICKUP_SOUND = 0x47,
-    NONE_SOUND = 0x48
+    NONE_SOUND = 0x48,
+    CHANGE_AMMO = 0x49,
+    NO_AMMO = 0x50
 };
 
 #endif
