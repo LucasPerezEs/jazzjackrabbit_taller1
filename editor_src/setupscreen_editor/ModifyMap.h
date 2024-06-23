@@ -2,6 +2,9 @@
 #ifndef MODIFY_MAP_H
 #define MODIFY_MAP_H
 
+#include <string>
+#include <iostream>
+#include <filesystem>
 #include <QLabel>
 #include <QLineEdit>
 #include <QVBoxLayout>
@@ -19,7 +22,7 @@ public:
     	void modifyMapRequested(const QString& mapName);
 
 private:
-
+    std::vector<std::string> obtenerElementosEnCarpeta(const std::string& ruta);
     QPushButton* modifyMapButton;
     QComboBox* mapComboBox;
 };
