@@ -39,7 +39,11 @@ void Client::close() {
     // this->updater.join();
 }
 
-bool Client::createGame(const std::string& gameId, const uint32_t maxPlayers,
+std::vector<std::vector<std::string>> Client::getMap(){
+    return map;   
+}
+
+bool Client::createGame(const std::string& gameId, const std::string& mapName, const uint32_t maxPlayers,
                         const std::vector<uint32_t>& cheats) {
 
     Message msg(Setup::ActionType::CREATE_GAME, gameId, maxPlayers, cheats);
@@ -49,6 +53,10 @@ bool Client::createGame(const std::string& gameId, const uint32_t maxPlayers,
     while (container.setup_container.get() == NULL || container.setup_container->setupType != Setup::ActionType::CREATE_GAME) {
         container = client_protocol.receive_container();
     }
+
+    this->mapName = mapName;
+    createMap(mapName, map);
+
     return container.setup_container->ok;
 }
 

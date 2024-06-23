@@ -52,10 +52,10 @@ int main(int argc, char* argv[]) {
 
                 QObject::connect(
                         &multiplayerMenu, &MultiplayerMenu::createGameRequested,
-                        [&](const QString& gameID, const uint32_t& maxPlayers,
+                        [&](const QString& gameID, const std::string& map_selected, const uint32_t& maxPlayers,
                             const std::vector<uint32_t>& cheats) {
                             std::cout << "Enviando creacion con nombre: " << gameID.toStdString() << "\n";
-                            if (client.createGame(gameID.toStdString(), maxPlayers, cheats)) {
+                            if (client.createGame(gameID.toStdString(), map_selected, maxPlayers, cheats)) {
                                 std::cout << "Game creado\n",
                                 multiplayerMenu.showGameCreatedMessage();
                             } else {

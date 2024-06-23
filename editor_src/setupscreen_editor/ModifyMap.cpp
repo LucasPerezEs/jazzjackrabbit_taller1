@@ -7,7 +7,7 @@ ModifyMap::ModifyMap(QWidget* parent): QWidget(parent) {
 
     QVBoxLayout *layout = new QVBoxLayout(this);
 
-    std::string rutaCarpeta = "../server_src/maps"; // Cambia esto a la ruta deseada
+    std::string rutaCarpeta = "../server_src/maps";
     std::vector<std::string> listaElementos = obtenerElementosEnCarpeta(rutaCarpeta);
 
     QStringList gameOptions;

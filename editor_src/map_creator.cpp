@@ -78,8 +78,6 @@ void MapCreator::set_values(Tile& selectedTile, const double& minX, const double
 
 
     std::tuple<int,int> posicion = std::make_tuple(fila/TILE_MAP_CREATED, (columna-TILESET_WIDTH*TILE_MAP_ASSETS)/TILE_MAP_CREATED);
-    std::cout << "Fila: " << fila/TILE_MAP_CREATED << " / Columna: " << (columna-TILESET_WIDTH*TILE_MAP_ASSETS)/TILE_MAP_CREATED << std::endl;
-
     selectedTile.destRect = { columna, fila, TILE_MAP_CREATED, TILE_MAP_CREATED };
 
     int PlayerSpawn = 0;
@@ -90,18 +88,17 @@ void MapCreator::set_values(Tile& selectedTile, const double& minX, const double
         selectedTile.type = PlayerSpawn;
         mapSpawn[posicion] = selectedTile;
         return;
-    }
 
     //SPAWN ENEMIGO
-    if(selectedTile.id == 68 || selectedTile.id == 69 || selectedTile.id == 78 || selectedTile.id == 79){
+    } else if(selectedTile.id == 68 || selectedTile.id == 69 || selectedTile.id == 78 || selectedTile.id == 79){
         selectedTile.type = EnemySpawn;
         mapSpawn[posicion] = selectedTile;
         return;
-    }
+    } 
 
     //Que pasas si quiero dibujar algo de mapa por sobre un spawn?
     //Debo chequear si ese elemento esta en el spawn y si esta, lo borro.
-    if (mapSpawn.find(posicion) != mapSpawn.end())
+    if (mapSpawn.count(posicion) > 0)
         mapSpawn.erase(posicion);
 
     mapTiles[posicion] = selectedTile;
@@ -112,18 +109,6 @@ void MapCreator::set_values(Tile& selectedTile, const double& minX, const double
 // Pre: -
 // Post: Si el mapa seleccionado existe, se habre la opcion de modificarlo, y si no existe se puede crear uno nuevo desde cero.
 void MapCreator::select_map() {
-
-    //std::string mapName;
-    //bool is_already_create = false;
-    //std::cout << "Por favor, ingresa el nombre del nuevo mapa: ";
-    //std::cin >> mapName;
-    //if (mapName == "1")
-      //  mapName = "castle_earlong_mapa";
-
-    //if (std::ifstream(mapName)) {
-      //  std::cout << "El mapa con el nombre '" << mapName << "' ya existe." << std::endl;
-      //  is_already_create = true;
-    //}
     create_map(mapName, is_already_create);
 }
 

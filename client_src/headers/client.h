@@ -22,7 +22,7 @@ class Client {
 public:
     Client(const std::string& hostname, const std::string& servername);
 
-    bool createGame(const std::string& gameId, const uint32_t maxPlayers,
+    bool createGame(const std::string& gameId, const std::string& mapName, const uint32_t maxPlayers,
                     const std::vector<uint32_t>& cheats);
 
     bool createMap(const std::string& mapName, std::vector<std::vector<std::string>>& mapReceived);
@@ -40,8 +40,12 @@ public:
     void set_id(int i);
     int get_id();
 
+    std::vector<std::vector<std::string>> getMap();
+
 
     ClientProtocol& get_protocol();
+    std::string mapName;
+    std::vector<std::vector<std::string>> map;
 
     void close();
 

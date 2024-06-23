@@ -8,6 +8,10 @@
 #include <QVBoxLayout>
 #include <QWidget>
 #include <vector>
+#include <iostream>
+#include <filesystem>
+#include <string>
+#include <QComboBox>
 
 #include "../../common_src/headers/cheat_commands.h"
 
@@ -19,10 +23,11 @@ public:
     virtual ~CreateGame();
 
 signals:
-    void createGameRequested(const QString& gameName, const uint32_t& maxPlayers,
+    void createGameRequested(const QString& gameName, const std::string& map_selected, const uint32_t& maxPlayers,
                              const std::vector<uint32_t>& cheats);
 
 private:
+    QLabel* mapNameLabel;
     QLabel* gameNameLabel;
     QLineEdit* gameNameInput;
 
@@ -36,8 +41,10 @@ private:
     QCheckBox* hardEnemiesCheckBox;
     QCheckBox* extraTimeCheckBox;
 
-
     QPushButton* createButton;
+
+    std::vector<std::string> obtenerElementosEnCarpeta(const std::string& ruta);
+    QComboBox* mapComboBox;
 
     void init();
     std::vector<uint32_t> saveCheats();

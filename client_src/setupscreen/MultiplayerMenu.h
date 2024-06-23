@@ -7,6 +7,7 @@
 #include <QMessageBox>
 #include <QPushButton>
 #include <QString>
+#include <QComboBox>
 #include <QVBoxLayout>
 #include <string>
 #include <vector>
@@ -33,7 +34,7 @@ public:
 
 signals:
     void refreshRequested();
-    void createGameRequested(const QString& gameName, const uint32_t maxPlayers,
+    void createGameRequested(const QString& gameName, const std::string& map_selected, const uint32_t maxPlayers,
                              const std::vector<uint32_t>& cheats);
     void joinGameRequested(const QString& gameID, const int elegido);
     void createMapRequested();

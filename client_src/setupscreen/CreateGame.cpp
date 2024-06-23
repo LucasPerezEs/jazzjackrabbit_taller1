@@ -36,6 +36,21 @@ void CreateGame::init() {
     gameNameInput = new QLineEdit(this);
     layout->addWidget(gameNameInput);
 
+    //SeleccionarMapa
+    mapNameLabel = new QLabel("Map Selected:", this);
+    std::string rutaCarpeta = "../server_src/maps"; //El nombre deberia pedirlo por socket.
+    std::vector<std::string> listaElementos = obtenerElementosEnCarpeta(rutaCarpeta);
+    QStringList gameOptions;
+    for (const auto& elemento : listaElementos) {
+        if (elemento.find("spawn") == std::string::npos) {
+            gameOptions << QString::fromStdString(elemento); 
+        }
+    }
+    layout->addWidget(mapNameLabel);
+    mapComboBox = new QComboBox(this);
+    mapComboBox->addItems(gameOptions);
+    layout->addWidget(mapComboBox);
+
 
     maxPlayersLabel = new QLabel("Max Players:", this);
     layout->addWidget(maxPlayersLabel);
@@ -66,9 +81,24 @@ void CreateGame::init() {
     connect(createButton, &QPushButton::clicked, this, [this]() {
         std::vector<uint32_t> cheatList = saveCheats();
         QString gameName = gameNameInput->text();
+        QString selectedMap = mapComboBox->currentText();
         uint32_t maxPlayers = maxPlayersInput->text().toInt();
-        emit createGameRequested(gameName, maxPlayers, cheatList);
+        emit createGameRequested(gameName, selectedMap.toStdString(), maxPlayers, cheatList);
     });
+}
+
+std::vector<std::string> CreateGame::obtenerElementosEnCarpeta(const std::string& ruta) {
+    std::vector<std::string> elementos;
+
+    try {
+        for (const auto& archivo : std::filesystem::directory_iterator(ruta)) {
+            elementos.push_back(archivo.path().filename().string());
+        }
+    } catch (const std::filesystem::filesystem_error& e) {
+        std::cerr << "Error al leer la carpeta: " << e.what() << std::endl;
+    }
+
+    return elementos;
 }
 
 CreateGame::~CreateGame() {}
