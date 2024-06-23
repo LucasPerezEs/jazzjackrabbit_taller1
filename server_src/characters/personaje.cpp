@@ -123,7 +123,6 @@ void Personaje::add_score(int score) {
 void Personaje::check_idle() {
 
     if (state == PlayerState::INTOXICATED) {
-        std::cout << "Intoxicado esto" << std::endl;
         auto now = std::chrono::system_clock::now();
         auto duration =
                 std::chrono::duration_cast<std::chrono::seconds>(now - intoxicated_start).count();
@@ -295,6 +294,11 @@ void Personaje::check_colisions(Mapa& m, float aux_x, float aux_y) {
         if (m.CheckColision(x, y, width, height)) {
             x = aux_x;  // se pone la pos x anterior
         }
+    }
+
+    // Caso que salta mientras se mueve y no suelta el boton
+    if ((colisiondiagonal || colisiony || colisionx) && an_type == AnimationType::JUMP) {
+        an_type = AnimationType::WALK;
     }
 }
 

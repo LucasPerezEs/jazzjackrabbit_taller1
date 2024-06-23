@@ -23,6 +23,7 @@ private:
     QPushButton *jazz;
     QPushButton *lori;
     QPushButton *spaz;
+    QString elegidoGameId;
     int elegido;
 
     void init();

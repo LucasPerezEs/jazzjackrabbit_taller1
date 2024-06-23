@@ -1,53 +1,44 @@
 #include "headers/map_creator.h"
 
-MapCreator::MapCreator():
-        window(800, 600) {}
-
+MapCreator::MapCreator(const std::string& mapName, const double& width, const double& height, const bool& is_already_create):
+        mapName(mapName), mapWidth(width), mapHeight(height), window(800, 600), is_already_create(is_already_create) {}
 
 //Pre: -
-//Post: -
-void MapCreator::saveMapToCSV(std::string& filename, bool& is_already_create) {
+//Post: Guarda el nuevo mapa en
+void MapCreator::save_map(std::string& filename, bool& is_already_create) {
 
-    std::string newFilename;
+    std::string newFilename = filename;
+    if (is_already_create)
+        newFilename = filename + "_modified";
 
-    if (is_already_create) {
+    std::string path = path_maps + newFilename;
+    std::ofstream file(path);
 
-        newFilename = "../editor_src/assets/" + filename;
-        newFilename = newFilename + "_modified";
+    if (file.is_open()) {
+        
+        for (int fila = 0; fila < mapHeight; ++fila) {
+    for (int columna = 0; columna < mapWidth; ++columna) {
+        const Tile& value = mapTiles[{fila, columna}];
 
-    } else if(!is_already_create){
-        newFilename = "../editor_src/assets/" + filename;
-    }
-        std::ofstream file(newFilename);
-        int fila_anterior = -1;
-
-        if (file.is_open()) {
-            for (const auto& pair : mapTiles) {
-                const std::tuple<int, int>& key = pair.first;
-                const Tile& value = pair.second;
-                int fila_actual = std::get<0>(key);
-
-                if (fila_actual != fila_anterior) {
-                    if (fila_anterior != -1) {
-                        file << "\n";
-                    }
-                    fila_anterior = fila_actual;
-                } else {
-                    file << ",";
-                }
-                file << value.id;
-            }
-            file.close();
-    
-        } else {
-            std::cerr << "No se pudo abrir el archivo y por lo tanto no se creó el mapa." << std::endl;
+        if (columna > 0) {
+            file << ",";
         }
+        file << value.id;
+    }
+    file << "\n";
+}
+
+        file.close();
+    
+    } else {
+        std::cerr << "No se pudo abrir el archivo y por lo tanto no se creó el mapa." << std::endl;
+    }
 }
 
 
 //Pre: -
 //Post: Guarda en mi matriz mapTile los valores que selecciono de mi paleta de assets para poder crear el mapa.
-void MapCreator::save_values(Tile& selectedTile, const double& minX, const double& maxX, const double& minY, const double& maxY, SDL_Event& event){
+void MapCreator::set_values(Tile& selectedTile, const double& minX, const double& maxX, const double& minY, const double& maxY, SDL_Event& event){
 
     double newX = event.button.x;
     double newY = event.button.y;
@@ -75,18 +66,36 @@ void MapCreator::save_values(Tile& selectedTile, const double& minX, const doubl
 // Post: Si el mapa seleccionado existe, se habre la opcion de modificarlo, y si no existe se puede crear uno nuevo desde cero.
 void MapCreator::select_map() {
 
-    std::string mapName;
-    bool is_already_create = false;
-    std::cout << "Por favor, ingresa el nombre del nuevo mapa: ";
-    std::cin >> mapName;
-    if (mapName == "1")
-        mapName = "castle_earlong_mapa";
+    //std::string mapName;
+    //bool is_already_create = false;
+    //std::cout << "Por favor, ingresa el nombre del nuevo mapa: ";
+    //std::cin >> mapName;
+    //if (mapName == "1")
+      //  mapName = "castle_earlong_mapa";
 
-    if (std::ifstream(mapName)) {
-        std::cout << "El mapa con el nombre '" << mapName << "' ya existe." << std::endl;
-        is_already_create = true;
-    }
+    //if (std::ifstream(mapName)) {
+      //  std::cout << "El mapa con el nombre '" << mapName << "' ya existe." << std::endl;
+      //  is_already_create = true;
+    //}
     create_map(mapName, is_already_create);
+}
+
+//Pre: -
+//Post: Carga las posiciones vacias del mapa en un mapa del juego.
+std::map<std::tuple<int, int>, Tile> MapCreator::loadEmptyCSV() {
+
+        for(int i = 0; i < mapHeight; i++){
+            for(int j = 0; j < mapWidth; j++){
+                int tile_id = -1;
+                Tile tile;
+                tile.id = tile_id;
+                tile.srcRect = {0,0,TILE_MAP_ASSETS, TILE_MAP_ASSETS};
+                tile.destRect = {(j*TILE_MAP_CREATED+TILESET_WIDTH*TILE_MAP_ASSETS), i*TILE_MAP_CREATED, TILE_MAP_CREATED, TILE_MAP_CREATED};
+                std::tuple<int,int> posicion = std::make_tuple(i, j);
+                mapTiles[posicion] = tile;
+            }
+        }
+    return mapTiles;
 }
 
 
@@ -94,16 +103,18 @@ void MapCreator::select_map() {
 //Post: Carga en un mapa todos los datos obtenidos del CSV que representa un mapa del juego.
 std::map<std::tuple<int, int>, Tile> MapCreator::loadCSV(const std::string& filename) {
 
+    std::string path = path_maps + filename;
     std::map<std::tuple<int, int>, Tile> mapTiles;
-    std::ifstream file(filename);
+    std::ifstream file(path);
     if (file.is_open()) {
         std::string line;
         int row = 0;
+        int column = 0;
         while (std::getline(file, line)) {
 
             std::istringstream iss(line);
             std::string value;
-            int column = 20;
+            column = 20;
 
             while (std::getline(iss, value, ',')) {
 
@@ -116,9 +127,10 @@ std::map<std::tuple<int, int>, Tile> MapCreator::loadCSV(const std::string& file
                 mapTiles[posicion] = tile;
                 column++;
             }
-            column = 20;
             row++;
         }
+        mapHeight = row;
+        mapWidth = column;
         file.close();
     } else {
         std::cerr << "No se pudo abrir el archivo." << std::endl;
@@ -182,6 +194,13 @@ void MapCreator::create_map(std::string& filename, bool& is_already_create){
             SDL_RenderCopy(renderer, assetTexture, &(value.srcRect), &(value.destRect));
         }
         this->window.render();
+    } else {
+        mapTiles = loadEmptyCSV();
+        for (const auto& pair : mapTiles) {
+            const Tile& value = pair.second;
+            SDL_RenderCopy(renderer, assetTexture, &(value.srcRect), &(value.destRect));
+        }
+        this->window.render();
     }
 
     SDL_Point mousePos;
@@ -212,7 +231,7 @@ void MapCreator::create_map(std::string& filename, bool& is_already_create){
                     }
                     if (!selectedTile.selected)
                         break;
-                    save_values(selectedTile, width_texture, window_width, window_height, 0, event);
+                    set_values(selectedTile, width_texture, width_texture+mapWidth*TILE_MAP_CREATED, mapHeight*TILE_MAP_CREATED, 0, event);
                     mouseHeldDown = true;
                     break;
                 }
@@ -224,7 +243,9 @@ void MapCreator::create_map(std::string& filename, bool& is_already_create){
 
                 case SDL_MOUSEMOTION: {
                     if(mouseHeldDown)
-                        save_values(selectedTile, width_texture, window_width, window_height, 0, event);
+                        //set_values(selectedTile, width_texture, (window_width*mapWidth/100), (window_height*mapHeight/100), 0, event);
+                        set_values(selectedTile, width_texture, width_texture+mapWidth*TILE_MAP_CREATED, mapHeight*TILE_MAP_CREATED, 0, event);
+
                 }
             }
                         this->window.fill();
@@ -238,6 +259,6 @@ void MapCreator::create_map(std::string& filename, bool& is_already_create){
             this->window.render();
         }
     }
-    saveMapToCSV(filename, is_already_create);
+    save_map(filename, is_already_create);
     
 }

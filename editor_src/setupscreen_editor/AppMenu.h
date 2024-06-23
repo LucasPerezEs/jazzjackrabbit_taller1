@@ -6,6 +6,8 @@
 #include <QPushButton>
 #include <QApplication>
 #include <QVBoxLayout>
+#include "CreateMap.h"
+#include "ModifyMap.h"
 
 class AppMenu : public QDialog {
     Q_OBJECT
@@ -18,15 +20,22 @@ private:
     void init();
 
 signals:
-    void createMapRequested();
+    void createMapRequested(const QString& mapName, const double& widthMap, const double& heightMap);
+    void modifyMapRequested(const QString& mapName);
 
 private slots:
-    void onReturnClicked();
     void onCreateMapClicked();
+    void OnModifyMapClicked();
+    void onReturnClicked();
 
 private:
     QPushButton* createMapButton;
+    QPushButton* modifyMapButton;
     QPushButton* back;
+
+    CreateMap* createMapWidget;
+    ModifyMap* modifyMapWidget;
+
 };
 
 #endif // APPMENU_H

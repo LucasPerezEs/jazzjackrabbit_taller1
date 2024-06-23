@@ -6,7 +6,6 @@ ServerProtocol::ServerProtocol(Socket peer): Protocol(std::move(peer)) {}
 //////////////SEND
 
 void ServerProtocol::send_container(const Container& container) {
-    std::cout << "Enviando container\n";
     if (container.type() == Container::Type::SETUP) {
         sendUChar(static_cast<unsigned char>(container.type()));
         send_setup_container(*container.setup_container);
@@ -24,7 +23,6 @@ void ServerProtocol::send_container(const Container& container) {
 }
 
 void ServerProtocol::send_setup_container(const SetupContainer& setupContainer) {
-    std::cout << "\n";
     Setup::ActionType actionType = static_cast<Setup::ActionType>(setupContainer.setupType);
     sendUChar(actionType);
 
@@ -67,7 +65,7 @@ void ServerProtocol::send_setup_container(const SetupContainer& setupContainer) 
         case Setup::ActionType::SET_NAME:
             sendBool(setupContainer.ok);
             break;
-            
+
         default:
             throw std::runtime_error("Unknown setup action type to send");
     }
@@ -124,7 +122,6 @@ void ServerProtocol::send_sound_container(const SoundContainer& soundContainer) 
 
 Message ServerProtocol::receive_message() {
     unsigned char type = receiveUChar();
-    std::cout << "Recibiendo mensaje\n";
     Message::Type messageType = static_cast<Message::Type>(type);
 
     switch (messageType) {
@@ -138,7 +135,6 @@ Message ServerProtocol::receive_message() {
 }
 
 Message ServerProtocol::receive_setup_message() {
-    std::cout << "Recibiendo mensaje de setup\n";
     unsigned char setupType = receiveUChar();
     Setup::ActionType actionType = static_cast<Setup::ActionType>(setupType);
     std::cout << actionType << std::endl;

@@ -42,7 +42,7 @@ void SdlWindow::fill(int r, int g, int b, int alpha) {
 
 //ANTES: void SdlWindow::fill() { this->fill(0x33, 0x33, 0x33, 0xFF); }
 //AHORA:
-void SdlWindow::fill() { this->fill(0, 0, 0, SDL_ALPHA_OPAQUE); }
+void SdlWindow::fill() { this->fill(255, 255, 255, 255); }
 
 void SdlWindow::render() { SDL_RenderPresent(this->renderer); }
 
