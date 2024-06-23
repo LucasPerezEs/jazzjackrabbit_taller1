@@ -57,7 +57,28 @@ void MapCreator::set_values(Tile& selectedTile, const double& minX, const double
     std::tuple<int,int> posicion = std::make_tuple(multiploY, multiploX);
     selectedTile.destRect = { multiploX, multiploY, TILE_MAP_CREATED, TILE_MAP_CREATED };
 
+    //
+    if (mapTiles.find(posicion) != mapTiles.end()) {
+
+        const Tile& tile_found = mapTiles[posicion];
+        if(selectedTile.id == 48 || selectedTile.id == 49 || selectedTile.id == 58 || selectedTile.id == 59)
+            selectedTile.id = tile_found.id;
+
+        if(selectedTile.id == 68 || selectedTile.id == 69 || selectedTile.id == 78 || selectedTile.id == 79)
+            selectedTile.id = tile_found.id;
+
+        //48,49,58,59 es para posicion del jugador.
+        //68,69,78,79 es para los spawn points.
+
+    } else {
+        
+        //No puedo colocar un spawn point en un sector no inicializado del mapa.
+        if(selectedTile.id == 48 || selectedTile.id == 49 || selectedTile.id == 58 || selectedTile.id == 59)
+            return;
+    }
+
     mapTiles[posicion] = selectedTile;
+    //mapTiles[posicion] = selectedTile;
 }
 
 
@@ -245,10 +266,9 @@ void MapCreator::create_map(std::string& filename, bool& is_already_create){
                     if(mouseHeldDown)
                         //set_values(selectedTile, width_texture, (window_width*mapWidth/100), (window_height*mapHeight/100), 0, event);
                         set_values(selectedTile, width_texture, width_texture+mapWidth*TILE_MAP_CREATED, mapHeight*TILE_MAP_CREATED, 0, event);
-
                 }
             }
-                        this->window.fill();
+                this->window.fill();
 
             for (const auto& pair : mapTiles) {
                 const Tile& value = pair.second;
