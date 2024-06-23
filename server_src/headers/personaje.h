@@ -50,7 +50,6 @@ enum PlayerState { INTOXICATED = 0x30, HURTED = 0x31, NORMAL = 0x32 };
 
 class Personaje: public Ente {
 protected:
-    int score;
     int espera_idle;
     int espera_shoot;
     int espera_hurt;
@@ -78,11 +77,13 @@ protected:
     virtual void check_special_action(bool col_x, bool col_y) = 0;
 
 public:
+    std::string name;
+    int score;
     int danio_ataque_especial;
     int municion;
     bool disparando;
     Personaje(float x, float y, float w, float h, EntityType en_type, AnimationType an_type,
-              std::map<std::string, float>& config, Queue<Container>& q);
+              std::map<std::string, float>& config, Queue<Container>& q, std::string name);
 
     virtual void colision(ZanahoriaEnvenenada& ze) override;
     virtual void colision(Objeto& o) override;

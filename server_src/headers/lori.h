@@ -15,7 +15,7 @@
 class Lori: public Personaje {
 
 public:
-    Lori(float x, float y, std::map<std::string, float>& config, Queue<Container>& q);
+    Lori(float x, float y, std::map<std::string, float>& config, Queue<Container>& q, std::string name);
     virtual void special_action() override;
     virtual void check_special_action(bool col_x, bool col_y) override;
 };

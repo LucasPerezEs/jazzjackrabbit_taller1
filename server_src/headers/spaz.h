@@ -22,7 +22,7 @@ private:
     virtual void check_special_action(bool col_x, bool col_y) override;
 
 public:
-    Spaz(float x, float y, std::map<std::string, float>& config, Queue<Container>& q);
+    Spaz(float x, float y, std::map<std::string, float>& config, Queue<Container>& q, std::string name);
     virtual void special_action() override;
 };
 

@@ -6,7 +6,7 @@ Broadcaster::Broadcaster(Monitor_clients& clients, Queue<Container>& stateQueue,
 
 void Broadcaster::run() {
     Container c(0, 0, 0, 0, 0, 0, 0, AnimationType::NONE_ANIMATION, EntityType::NONE_ENTITY, 0, 0,
-                 0);
+                 0, "");
 
     while (_keep_running) {
 

@@ -18,8 +18,8 @@ int main(int argc, char* argv[]) {
 
         AppMenu appMenu;
 
-        QObject::connect(&appMenu, &AppMenu::createMapRequested, [&](const QString& mapName, const int& widthMap,
-                            const int& heightMap) {
+        QObject::connect(&appMenu, &AppMenu::createMapRequested, [&](const QString& mapName, const double& widthMap,
+                            const double& heightMap) {
             try {
                 //appMenu.hide();
                 MapCreator map(mapName.toStdString(), widthMap, heightMap, false);

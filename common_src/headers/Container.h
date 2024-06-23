@@ -34,7 +34,10 @@ public:
 class GameContainer {
 public:
     GameContainer(uint32_t msg_code, int id, float x, float y, float w, float h, int direction,
-                  AnimationType an_type, EntityType en_type, int health, int ammo, int score);
+                  AnimationType an_type, EntityType en_type, int health, int ammo, int score, std::string name);
+    
+//GameContainer(uint32_t msg_code, std::vector<std::uint32_t> score, std::vector<std::string> names);
+
     uint32_t msg_code;
     int id;
     float x, y, w, h;
@@ -44,7 +47,10 @@ public:
     int health;
     int ammo;
     int score;
+    std::string name;
 };
+
+
 
 class SoundContainer {
 public:
@@ -61,7 +67,9 @@ public:
 
     // Game container constructor
     Container(uint32_t msg_code, int id, float x, float y, float w, float h, int direction,
-              AnimationType an_type, EntityType en_type, int health, int ammo, int score);
+              AnimationType an_type, EntityType en_type, int health, int ammo, int score, std::string name);
+
+    //Container(uint32_t msg_code, std::vector<std::uint32_t> score, std::vector<std::string> names);
 
     // Setup container constructor
     Container(Setup::ActionType setupType, const std::string& gameId, uint32_t maxPlayers,

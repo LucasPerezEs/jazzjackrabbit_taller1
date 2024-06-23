@@ -58,7 +58,9 @@ public:
     void run() override;
     void stop() override;
 
-    void addPlayer(uint32_t clientId, uint32_t character);
+    void addPlayer(uint32_t clientId, uint32_t character, std::string name);
+
+    void send_score();
 
     bool is_running() { return _is_alive; }
 
@@ -70,7 +72,6 @@ private:
     std::unordered_map<uint32_t, Personaje*> clientCharacters;
     ListaObjetos objetos;
     std::vector<Ente*> entes;
-    std::map<uint32_t, uint32_t> elecciones;
 
     Queue<Message>& actionQueue;
     Queue<Container>& stateQueue;

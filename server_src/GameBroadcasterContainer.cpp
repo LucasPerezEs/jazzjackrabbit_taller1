@@ -13,7 +13,7 @@ void GameBroadcasterContainer::addPlayer(ClientHandler* client, uint32_t charact
     if (canAddPlayer()) {
         client->setReceiverQueue(&actionQueue);
         clients.add_client(client);
-        game.addPlayer(client->getId(), character);
+        game.addPlayer(client->getId(), character, client->getName());
         if (number_of_players() == max_players()) {
             gameStarted = true;
             start();

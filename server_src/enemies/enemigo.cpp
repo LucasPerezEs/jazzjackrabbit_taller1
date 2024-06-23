@@ -64,7 +64,7 @@ void Enemigo::drop_item(ListaObjetos& objetos, Queue<Container>& q) {
 
     objetos.agregar_objeto(static_cast<Pickup*>(drop));
     Container c(0, drop->id, drop->x, drop->y, drop->width, drop->height, 0, drop->an_type,
-                drop->en_type, 0, 0, 0);
+                drop->en_type, 0, 0, 0, "");
     q.try_push(c);
 }
 

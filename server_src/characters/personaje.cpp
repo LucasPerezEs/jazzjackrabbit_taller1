@@ -9,14 +9,16 @@
 #include "../headers/rocket.h"
 
 Personaje::Personaje(float x, float y, float w, float h, EntityType en_type, AnimationType an_type,
-                     std::map<std::string, float>& config, Queue<Container>& q):
+                     // cppcheck-suppress passedByValue
+                     std::map<std::string, float>& config, Queue<Container>& q, std::string name):
         Ente(x, y, w, h, config["player_life"], en_type, an_type),
         tiempo(std::chrono::system_clock::now()),
         last_hurt(std::chrono::system_clock::now()),
         config(config),
         arma(config),
         state(PlayerState::NORMAL),
-        q(q) {
+        q(q),
+        name(name) {
     velx = config["player_speed"];
     jump_speed = config["player_jump"];
     danio_ataque_especial = config["player_special_attack_dmg"];
@@ -320,7 +322,8 @@ void Personaje::update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) {
     check_colisions(m, aux_x, aux_y);
 
     Container c(3, this->id, this->x, this->y, this->width, this->height, this->direccion,
-                this->an_type, this->en_type, this->vida, this->arma.remaining_ammo(), this->score);
+                this->an_type, this->en_type, this->vida, this->arma.remaining_ammo(), this->score,
+                this->name);
     q.try_push(c);
 }
 
@@ -347,7 +350,8 @@ void Personaje::update_vivo(ListaObjetos& objetos, Queue<Container>& q,
             objetos.agregar_objeto(this);
             contador = -1;
             Container c(3, this->id, this->x, this->y, this->width, this->height, this->direccion,
-                        this->an_type, this->en_type, this->vida, this->municion, this->score);
+                        this->an_type, this->en_type, this->vida, this->municion, this->score,
+                        this->name);
             q.try_push(c);
         }
         contador++;

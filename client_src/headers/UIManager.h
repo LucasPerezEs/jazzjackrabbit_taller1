@@ -17,7 +17,7 @@ private:
     Fuente fuente;
     std::map<int, SdlTexture*> texturas_ui;
     int clock;
-
+    TTF_Font* chica;
 
     bool player_alive(int id_cliente);
 
