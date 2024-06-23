@@ -13,7 +13,6 @@ void MapCreator::save_map(std::string& filename, bool& is_already_create) {
 
     std::string path = path_maps + newFilename;
     std::ofstream file(path);
-    //int fila_anterior = -1;
 
     if (file.is_open()) {
         
@@ -110,11 +109,12 @@ std::map<std::tuple<int, int>, Tile> MapCreator::loadCSV(const std::string& file
     if (file.is_open()) {
         std::string line;
         int row = 0;
+        int column = 0;
         while (std::getline(file, line)) {
 
             std::istringstream iss(line);
             std::string value;
-            int column = 20;
+            column = 20;
 
             while (std::getline(iss, value, ',')) {
 
@@ -127,9 +127,10 @@ std::map<std::tuple<int, int>, Tile> MapCreator::loadCSV(const std::string& file
                 mapTiles[posicion] = tile;
                 column++;
             }
-            column = 20;
             row++;
         }
+        mapHeight = row;
+        mapWidth = column;
         file.close();
     } else {
         std::cerr << "No se pudo abrir el archivo." << std::endl;
