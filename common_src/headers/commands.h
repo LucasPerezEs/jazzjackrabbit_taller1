@@ -23,6 +23,7 @@ struct Command {
         STOPFIRE = 0x11,
         SPECIAL = 0x12,
         QUIT = 0x13,
+        CHANGE_AMMO = 0x14
     };
     ActionType action;
 

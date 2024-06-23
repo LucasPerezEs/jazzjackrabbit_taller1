@@ -3,7 +3,8 @@
 Ghost::Ghost(float x, float y, std::map<std::string, float>& config):
         Enemigo(x, y, 2, 4, config["ghost_life"], config["ghost_speed"], config["ghost_damage"],
                 config["ghost_prob_carrot"], config["ghost_prob_ammo"],
-                config["ghost_prob_goldcoin"], EntityType::GHOST, AnimationType::WALK, config) {
+                config["ghost_prob_goldcoin"], config["ghost_prob_rocket"], EntityType::GHOST,
+                AnimationType::WALK, config) {
     lim_x_der = x + 20;  // cuanto se va a mover de izquierda a derecha
     lim_x_izq = x - 20;
     lim_y = y + 0;  // por si lo queremos hacer volador

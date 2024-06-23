@@ -31,6 +31,7 @@ std::map<std::string, float> load_config_YAML(const std::string& path) {
     config["ghost_prob_carrot"] = yaml["ghost"]["prob_carrot"].as<float>();
     config["ghost_prob_ammo"] = yaml["ghost"]["prob_ammo"].as<float>();
     config["ghost_prob_goldcoin"] = yaml["ghost"]["prob_goldcoin"].as<float>();
+    config["ghost_prob_rocket"] = yaml["ghost"]["prob_rocket"].as<float>();
 
     // Bat
     config["bat_life"] = yaml["bat"]["life"].as<float>();
@@ -39,6 +40,7 @@ std::map<std::string, float> load_config_YAML(const std::string& path) {
     config["bat_prob_carrot"] = yaml["bat"]["prob_carrot"].as<float>();
     config["bat_prob_ammo"] = yaml["bat"]["prob_ammo"].as<float>();
     config["bat_prob_goldcoin"] = yaml["bat"]["prob_goldcoin"].as<float>();
+    config["bat_prob_rocket"] = yaml["bat"]["prob_rocket"].as<float>();
 
     // Monkey
     config["monkey_life"] = yaml["monkey"]["life"].as<float>();
@@ -47,19 +49,25 @@ std::map<std::string, float> load_config_YAML(const std::string& path) {
     config["monkey_prob_carrot"] = yaml["monkey"]["prob_carrot"].as<float>();
     config["monkey_prob_ammo"] = yaml["monkey"]["prob_ammo"].as<float>();
     config["monkey_prob_goldcoin"] = yaml["monkey"]["prob_goldcoin"].as<float>();
+    config["monkey_prob_rocket"] = yaml["monkey"]["prob_rocket"].as<float>();
 
     // Pickups
     config["goldcoin_addscore"] = yaml["goldcoin"]["add_score"].as<float>();
     config["carrot_addlife"] = yaml["carrot"]["add_life"].as<float>();
     config["ammo_addammo"] = yaml["ammo"]["add_ammo"].as<float>();
+    config["rocket_pickup_addammo"] = yaml["rocket_pickup"]["add_ammo"].as<float>();
 
-    // Weapon
-    config["weapon_firerate"] = yaml["weapon"]["fire_rate"].as<float>();
-    config["weapon_initial_ammo"] = yaml["weapon"]["initial_ammo"].as<float>();
 
     // Bullets
     config["bullet_speed"] = yaml["bullet"]["speed"].as<float>();
     config["bullet_damage"] = yaml["bullet"]["damage"].as<float>();
+    config["bullet_firerate"] = yaml["bullet"]["fire_rate"].as<float>();
+    config["bullet_initial_ammo"] = yaml["bullet"]["initial_ammo"].as<float>();
+
+    config["rocket_speed"] = yaml["rocket"]["speed"].as<float>();
+    config["rocket_damage"] = yaml["rocket"]["damage"].as<float>();
+    config["rocket_firerate"] = yaml["rocket"]["fire_rate"].as<float>();
+    config["rocket_initial_ammo"] = yaml["rocket"]["initial_ammo"].as<float>();
 
     config["banana_speed"] = yaml["banana"]["speed"].as<float>();
     config["banana_damage"] = yaml["banana"]["damage"].as<float>();
@@ -85,7 +93,7 @@ bool GamesManager::createGame(std::string gameId, uint32_t maxPlayers,
 
         if (newGame != nullptr) {
             games[gameId] = newGame;
-            //newGame->start();
+            // newGame->start();
             return true;
         }
         std::cout << "error en new game broadcaster\n";
@@ -94,7 +102,9 @@ bool GamesManager::createGame(std::string gameId, uint32_t maxPlayers,
     return false;
 }
 
-bool GamesManager::createMap(std::string& mapName, std::vector<std::vector<std::string>>& mapReceived){
+// cppcheck-suppress constParameter
+bool GamesManager::createMap(std::string& mapName,
+                             std::vector<std::vector<std::string>>& mapReceived) {
 
     std::string path;
     path = "../server_src/maps/" + mapName;
@@ -121,30 +131,32 @@ bool GamesManager::createMap(std::string& mapName, std::vector<std::vector<std::
     return true;
 }
 
-bool GamesManager::savedMap(std::string& mapName, std::vector<std::vector<std::string>>& mapReceived){
+bool GamesManager::savedMap(std::string& mapName,
+                            // cppcheck-suppress constParameter
+                            std::vector<std::vector<std::string>>& mapReceived) {
 
-/*
-    std::ofstream outputFile(mapName);
+    /*
+        std::ofstream outputFile(mapName);
 
-    if (!outputFile.is_open()) {
-        std::cerr << "Error al abrir el archivo: " << mapName << std::endl;
-        return false;
-    }
-
-    for (const auto& row : mapReceived) {
-        for (const auto& element : row) {
-            outputFile << element << ",";
+        if (!outputFile.is_open()) {
+            std::cerr << "Error al abrir el archivo: " << mapName << std::endl;
+            return false;
         }
-        outputFile << std::endl;
-    }
 
-    outputFile.close();
-*/
+        for (const auto& row : mapReceived) {
+            for (const auto& element : row) {
+                outputFile << element << ",";
+            }
+            outputFile << std::endl;
+        }
+
+        outputFile.close();
+    */
     int fila = 0;
 
-    for(const auto& row : mapReceived){
+    for (const auto& row: mapReceived) {
         std::cout << fila << std::endl;
-        for (const auto& column : row){
+        for (const auto& column: row) {
             std::cout << column << ",";
         }
         fila++;
@@ -238,9 +250,8 @@ void GamesManager::activate_cheats(const std::vector<uint32_t>& cheats,
 
 void GamesManager::run() {
 
-    // cppcheck-suppress unreadVariable
     Message msg(Setup::ActionType::NONE);
-    //Container container({}, {}, {}, {}, {});
+    // Container container({}, {}, {}, {}, {});
     bool ok;
 
 
@@ -254,13 +265,13 @@ void GamesManager::run() {
         } catch (...) {
             break;
         }
-        
+
         uint32_t clientId = msg.id();
         switch (msg.setup.action) {
             case Setup::JOIN_GAME: {
                 ok = joinGame(msg.setup.gameId, clients[clientId], msg.setup.character);
-                Container container = Container(Setup::JOIN_GAME, msg.setup.gameId, msg.setup.maxPlayers,
-                                    msg.setup.cheats, ok);
+                Container container = Container(Setup::JOIN_GAME, msg.setup.gameId,
+                                                msg.setup.maxPlayers, msg.setup.cheats, ok);
                 clients[clientId]->pushState(container);
                 break;
             }
@@ -280,20 +291,20 @@ void GamesManager::run() {
                 clients[clientId]->pushState(container);
                 break;
             }
-            case Setup::CREATE_MAP:{
+            case Setup::CREATE_MAP: {
                 std::vector<std::vector<std::string>> mapReceived;
                 ok = createMap(msg.setup.mapName, mapReceived);
                 Container container = Container(Setup::CREATE_MAP, mapReceived, ok);
                 clients[clientId]->pushState(container);
                 break;
             }
-            case Setup::SAVE_MAP:{
+            case Setup::SAVE_MAP: {
                 ok = savedMap(msg.setup.mapName, msg.setup.map);
                 Container container = Container(Setup::SAVE_MAP, ok);
                 clients[clientId]->pushState(container);
                 break;
             }
-            case Setup::SET_NAME:{
+            case Setup::SET_NAME: {
                 ok = setName(msg.setup.mapName, clientId);
                 Container container = Container(Setup::SET_NAME, ok);
                 clients[clientId]->pushState(container);
@@ -306,7 +317,7 @@ void GamesManager::run() {
         reap_offline_games();
     }
 
-    //stop();
+    // stop();
     _is_alive = false;
 }
 

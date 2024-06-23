@@ -90,6 +90,16 @@ void ModelUpdater::init_animations(SdlWindow& window) {
                                          Color{0x2C, 0x66, 0x96}),
                           10, AnimationSpeed::FAST);
 
+    this->animations[EntityType::ROCKET][AnimationType::WALK] =
+            new Animation(new SdlTexture("../client_src/assets/textures/rocket_shoot.png", window,
+                                         Color{0x2C, 0x66, 0x96}),
+                          3, AnimationSpeed::FAST);
+
+    this->animations[EntityType::ROCKET][AnimationType::PICKUP] =
+            new Animation(new SdlTexture("../client_src/assets/textures/rocket_pickup.png", window,
+                                         Color{0x2C, 0x66, 0x96}),
+                          10, AnimationSpeed::FAST);
+
     this->animations[EntityType::CARROT][AnimationType::PICKUP] =
             new Animation(new SdlTexture("../client_src/assets/textures/carrot_pickup.png", window,
                                          Color{0x2C, 0x66, 0x96}),

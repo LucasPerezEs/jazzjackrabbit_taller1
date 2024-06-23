@@ -4,7 +4,12 @@
 #include <iostream>
 #include <map>
 
+#include "../headers/bullet.h"
+#include "../headers/projectile.h"
+#include "../headers/rocket.h"
+
 Personaje::Personaje(float x, float y, float w, float h, EntityType en_type, AnimationType an_type,
+                     // cppcheck-suppress passedByValue
                      std::map<std::string, float>& config, Queue<Container>& q, std::string name):
         Ente(x, y, w, h, config["player_life"], en_type, an_type),
         tiempo(std::chrono::system_clock::now()),
@@ -317,7 +322,8 @@ void Personaje::update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) {
     check_colisions(m, aux_x, aux_y);
 
     Container c(3, this->id, this->x, this->y, this->width, this->height, this->direccion,
-                this->an_type, this->en_type, this->vida, this->municion, this->score, this->name);
+                this->an_type, this->en_type, this->vida, this->arma.remaining_ammo(), this->score,
+                this->name);
     q.try_push(c);
 }
 
@@ -344,7 +350,8 @@ void Personaje::update_vivo(ListaObjetos& objetos, Queue<Container>& q,
             objetos.agregar_objeto(e);
             contador = -1;
             Container c(3, this->id, this->x, this->y, this->width, this->height, this->direccion,
-                        this->an_type, this->en_type, this->vida, this->municion, this->score, this->name);
+                        this->an_type, this->en_type, this->vida, this->municion, this->score,
+                        this->name);
             q.try_push(c);
         }
         contador++;
@@ -401,7 +408,7 @@ void Personaje::colision(Banana& b) {  // Banana y Bala deberian pertenecer a cl
     }
 }
 
-void Personaje::colision(Bala& b) {
+void Personaje::colision(Projectile& b) {
     if (b.get_shooter_id() == this->id) {
         return;
     }
@@ -452,28 +459,107 @@ void Personaje::disparar(ListaObjetos& objetos) {
     if (state == PlayerState::INTOXICATED) {
         return;
     }
-    tiempo = std::chrono::system_clock::now();
-    arma.disparar(objetos, id, x, width, y, height, direccion, q);
-    if (!movingleft && !movingright) {
-        an_type = AnimationType::SHOOT;
+
+    if (arma.disparar(objetos, id, x, width, y, height, direccion, q)) {
+        tiempo = std::chrono::system_clock::now();
+        if (!movingleft && !movingright) {
+            an_type = AnimationType::SHOOT;
+        }
     }
 }
 
 void Personaje::set_id(uint32_t i) { id = i; }
 
-
-Arma::Arma(std::map<std::string, float>& config):
-        tiempo(std::chrono::system_clock::now()), config(config) {
-    espera = 1000 / config["weapon_firerate"];  // en milisegundos
-    municion = config["weapon_initial_ammo"];
+void Personaje::change_selected_ammo() {
+    if (arma.change_selected_ammo()) {
+        Container c(EntityType::NONE_ENTITY, SoundType::CHANGE_AMMO, id);
+        q.try_push(c);
+    } else {
+        Container c(EntityType::NONE_ENTITY, SoundType::NO_AMMO, id);
+        q.try_push(c);
+    }
 }
 
-void Arma::disparar(ListaObjetos& objetos, int shooter_id, float x, float w, float y, float h,
+void Personaje::add_ammo(EntityType ammo, int n) { arma.add_ammo(ammo, n); }
+
+
+Arma::Arma(std::map<std::string, float>& config):
+        config(config), tiempo(std::chrono::system_clock::now()), current_ammo(0) {
+    init_ammo();
+}
+
+void Arma::init_ammo() {
+    this->ammo_types.insert(ammo_types.end(), EntityType::BULLET);
+    this->ammo_types.insert(ammo_types.end(), EntityType::ROCKET);
+
+    this->ammo_inventory[EntityType::BULLET] = config["bullet_initial_ammo"];
+    this->ammo_inventory[EntityType::ROCKET] = config["rocket_initial_ammo"];
+
+    this->fire_rates[EntityType::BULLET] = 1000 / config["bullet_firerate"];
+    this->fire_rates[EntityType::ROCKET] = 1000 / config["rocket_firerate"];
+}
+
+void Arma::add_ammo(EntityType ammo, int n) { ammo_inventory[ammo] += n; }
+
+bool Arma::change_selected_ammo() {
+    bool changed_ammo = false;
+    int i = (current_ammo + 1) % ammo_types.size();
+    while (i != current_ammo) {
+
+        if (ammo_inventory[ammo_types[i]] > 0) {
+            current_ammo = i;
+            changed_ammo = true;
+            tiempo = std::chrono::system_clock::now();
+            break;
+        }
+
+        i = (i + 1) % ammo_types.size();
+    }
+
+    return changed_ammo;
+}
+
+int Arma::remaining_ammo() { return ammo_inventory[ammo_types[current_ammo]]; }
+
+void Arma::spawn_projectile(ListaObjetos& objetos, EntityType ammo, int x, int y, int d,
+                            int shooter_id, std::map<std::string, float>& config) {
+    switch (ammo) {
+        case BULLET: {
+            std::shared_ptr<Bullet> b (new Bullet(x, y, d, shooter_id, config));
+            objetos.agregar_objeto(b);
+            break;
+        }
+
+        case ROCKET: {
+            std::shared_ptr<Rocket> b (new Rocket(x, y, d, shooter_id, config));
+            objetos.agregar_objeto(b);
+            break;
+        }
+
+        default:
+            break;
+    }
+}
+
+bool Arma::disparar(ListaObjetos& objetos, int shooter_id, float x, float w, float y, float h,
                     int d, Queue<Container>& q) {
-    if (municion > 0 && std::chrono::duration_cast<std::chrono::milliseconds>(
-                                std::chrono::system_clock::now() - tiempo)
-                                        .count() > espera) {
+
+    EntityType current_ammo_type = ammo_types[current_ammo];
+    int current_firerate = fire_rates[current_ammo_type];
+
+
+    if (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() -
+                                                              tiempo)
+                .count() > current_firerate) {
+
         tiempo = std::chrono::system_clock::now();
+
+        if (ammo_inventory[current_ammo_type] <= 0) {
+            Container c(EntityType::NONE_ENTITY, SoundType::NO_AMMO, shooter_id);
+            q.try_push(c);
+            return false;
+        }
+
         int aux;
         if (d ==
             1) {  // Si se dispara mirando a la derecha la bala sale desde la derecha del objeto
@@ -482,51 +568,14 @@ void Arma::disparar(ListaObjetos& objetos, int shooter_id, float x, float w, flo
             aux = x;
         }
 
-        Container c(EntityType::BULLET, SoundType::SHOT_SOUND, shooter_id);
+        Container c(current_ammo_type, SoundType::SHOT_SOUND, shooter_id);
         q.try_push(c);
-        std::shared_ptr<Bala> b (new Bala(aux, y + h / 2, d, shooter_id, config));
-        objetos.agregar_objeto(b);  // Se agrega al vector de colisiones
-        // disminuir_municion();
+
+        spawn_projectile(objetos, current_ammo_type, aux, y + h / 2, d, shooter_id, config);
+
+        ammo_inventory[current_ammo_type] -= 1;
+        return true;
     }
+
+    return false;
 }
-
-void Arma::disminuir_municion() { municion--; }
-
-// cppcheck-suppress constParameter
-Bala::Bala(float x, float y, int d, int shooter_id, std::map<std::string, float>& config):
-        Objeto(x, y, 1, 1, EntityType::BULLET, AnimationType::WALK),
-        shooter_id(shooter_id) {  // se le pasa la direccion a la que va a salir la bala por
-                                  // parametro
-    vel = config["bullet_speed"] * d;
-    danio = config["bullet_damage"];
-}
-
-void Bala::colision(Objeto& o) {
-    if (check_colision(o)) {
-        o.colision(*this);
-    }
-}
-
-void Bala::colision(Enemigo& e) { e.colision(*this); }
-
-void Bala::colision(Personaje& p) { p.colision(*this); }
-
-
-void Bala::update(
-        Mapa& mapa, ListaObjetos& objetos,
-        Queue<Container>& q) {  // actualiza la posicion, si choca con el mapa se tiene que borrar
-    x += vel;
-    // width += vel;
-    if (mapa.CheckColision(x, y, width, height)) {
-        this->borrar = true;
-    }
-    Container c(0, this->id, this->x, this->y, this->width, this->height, 0, this->an_type,
-                this->en_type, 0, 0, 0, "");
-    q.try_push(c);
-}
-
-void Bala::eliminar() {  // Para los memory leaks
-    delete (this);
-}
-
-int Bala::get_shooter_id() { return this->shooter_id; }

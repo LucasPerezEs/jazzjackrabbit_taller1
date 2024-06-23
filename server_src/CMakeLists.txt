@@ -7,10 +7,14 @@ add_library(server_lib
     pickups/pickup.cpp
     pickups/zanahoria.cpp
     pickups/gold_coin.cpp
+    pickups/rocket_pickup.cpp
     characters/personaje.cpp
     characters/jazz.cpp
     characters/lori.cpp
     characters/spaz.cpp
+    projectiles/projectile.cpp
+    projectiles/bullet.cpp
+    projectiles/rocket.cpp
     game/game.cpp
     game/mapa.cpp
     game/objeto.cpp

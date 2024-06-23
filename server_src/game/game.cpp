@@ -1,9 +1,10 @@
 #include "../headers/game.h"
 
-#include "../headers/broadcaster.h"
-
 #include <algorithm>
 
+#include "../headers/broadcaster.h"
+
+// cppcheck-suppress uninitMemberVar
 Game::Game(Queue<Message>& actionQueue, Queue<Container>& stateQueue, uint32_t maxPlayers,
            // cppcheck-suppress passedByValue
            std::map<std::string, float> config, Broadcaster& broadcaster):
@@ -31,7 +32,6 @@ void Game::run() {
     objetos.agregar_objeto(monkey);
     entes.push_back(ghost);
     entes.push_back(bat);
-    // cppcheck-suppress danglingLifetime
     entes.push_back(monkey);
 
     clock.start();
@@ -76,8 +76,13 @@ void Game::run() {
                 case Command::ActionType::STOPFIRE:
                     personaje->disparando = false;
                     break;
+                case Command::ActionType::CHANGE_AMMO:
+                    personaje->change_selected_ammo();
+                    break;
                 case Command::ActionType::QUIT: {
-                    Container c(1, clientId, 0, 0, 0, 0, 0, AnimationType::NONE_ANIMATION, EntityType::NONE_ENTITY, 0, 0, 0, "");
+                    // cppcheck-suppress shadowVariable
+                    Container c(1, clientId, 0, 0, 0, 0, 0, AnimationType::NONE_ANIMATION,
+                                EntityType::NONE_ENTITY, 0, 0, 0, "");
                     stateQueue.push(c);
                     entes.erase(std::remove_if(entes.begin(), entes.end(), [&](std::shared_ptr<Ente> o){
                         if (o->id == (int)clientId) {

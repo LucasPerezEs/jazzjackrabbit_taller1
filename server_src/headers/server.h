@@ -28,9 +28,7 @@ private:
 public:
     explicit Server(const char* servname);
 
-    std::map<std::string, float> load_config(const std::string& path);
     void run();
-
 
     Server(const Server&) = delete;
     Server& operator=(const Server&) = delete;

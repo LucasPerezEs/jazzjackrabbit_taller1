@@ -33,6 +33,11 @@ void EventHandler::handle_keydown(const SDL_Event& event, Command& cmd) {
         case SDLK_k:
             cmd.action = Command::SPECIAL;
             break;
+        case SDLK_o:
+            if (event.key.repeat == 0) {
+                cmd.action = Command::CHANGE_AMMO;
+            }
+            break;
         case SDLK_UP:
             cmd.action = Command::NONE;
             camara->zoomIn();
@@ -65,6 +70,12 @@ void EventHandler::handle_keyup(const SDL_Event& event, Command& cmd) {
             break;
         case SDLK_LSHIFT:  // Suponiendo que SHIFT es el comando para correr
             cmd.action = Command::RUN;
+            break;
+        case SDLK_o:
+            cmd.action = Command::NONE;
+            break;
+        default:
+            cmd.action = Command::NONE;
             break;
     }
 }

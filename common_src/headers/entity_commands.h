@@ -14,7 +14,8 @@ enum EntityType {
     NONE_ENTITY = 0x09,
     BANANA = 0x10,
     MONKEY = 0x11,
-    INTOXICATED_CARROT = 0x12
+    INTOXICATED_CARROT = 0x12,
+    ROCKET = 0x13
 };
 
 enum AnimationType {

@@ -6,6 +6,7 @@
 #include "../headers/enemigo.h"
 #include "../headers/lista_objetos.h"
 #include "../headers/mapa.h"
+#include "../headers/projectile.h"
 
 int cant = 1;
 int num = 20;
@@ -36,7 +37,7 @@ bool Objeto::check_colision(Objeto& o) {
 void Objeto::colision(Personaje& o) {}  //       Por defecto los objetos no hacen nada
 void Objeto::colision(Enemigo& o) {
 }  //       Le decis vos que queres que hagan o con que pueden interacturar
-void Objeto::colision(Bala& o) {}
+void Objeto::colision(Projectile& o) {}
 void Objeto::colision(Pickup& o) {}
 void Objeto::colision(Municion& m) {}
 void Objeto::colision(Banana& b) {}
@@ -69,4 +70,3 @@ void Ente::update_vivo(ListaObjetos& objetos, Queue<Container>& q,
         contador++;
     }
 }
-
