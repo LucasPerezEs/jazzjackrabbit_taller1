@@ -38,48 +38,49 @@ void Enemigo::drop_item(ListaObjetos& objetos, Queue<Container>& q) {
     int random_int = rand() % 100 + 1;
 
     if (random_int < prob_goldcoin) {
-        std::shared_ptr<Gold_Coin> drop (new Gold_Coin(x + width / 2, y + height / 3, config, q));
+        std::shared_ptr<Gold_Coin> drop(new Gold_Coin(x + width / 2, y + height / 3, config, q));
         objetos.agregar_objeto(drop);
         Container c(0, drop->id, drop->x, drop->y, drop->width, drop->height, 0, drop->an_type,
-                    drop->en_type, 0, 0, 0, "");
+                    drop->en_type, 0, {EntityType::NONE_ENTITY, 0}, 0, "");
         q.try_push(c);
 
     } else if (random_int < prob_goldcoin + prob_carrot) {
         int random_carrot = rand() % 100 + 1;
 
         if (random_carrot < 15) {
-            std::shared_ptr<Zanahoria> drop (new Zanahoria(x + width / 2, y + height / 3, config, q));
+            std::shared_ptr<Zanahoria> drop(
+                    new Zanahoria(x + width / 2, y + height / 3, config, q));
             objetos.agregar_objeto(drop);
             Container c(0, drop->id, drop->x, drop->y, drop->width, drop->height, 0, drop->an_type,
-                        drop->en_type, 0, 0, 0, "");
+                        drop->en_type, 0, {EntityType::NONE_ENTITY, 0}, 0, "");
             q.try_push(c);
         } else {
-            std::shared_ptr<ZanahoriaEnvenenada> drop (new ZanahoriaEnvenenada(x + width / 2, y + height / 3, config, q));
+            std::shared_ptr<ZanahoriaEnvenenada> drop(
+                    new ZanahoriaEnvenenada(x + width / 2, y + height / 3, config, q));
             objetos.agregar_objeto(drop);
             Container c(0, drop->id, drop->x, drop->y, drop->width, drop->height, 0, drop->an_type,
-                        drop->en_type, 0, 0, 0, "");
+                        drop->en_type, 0, {EntityType::NONE_ENTITY, 0}, 0, "");
             q.try_push(c);
         }
 
     } else if (random_int < prob_goldcoin + prob_carrot + prob_ammo) {
-        std::shared_ptr<Municion> drop (new Municion(x + width / 2, y + height / 3, config, q));
+        std::shared_ptr<Municion> drop(new Municion(x + width / 2, y + height / 3, config, q));
         objetos.agregar_objeto(drop);
         Container c(0, drop->id, drop->x, drop->y, drop->width, drop->height, 0, drop->an_type,
-                    drop->en_type, 0, 0, 0, "");
+                    drop->en_type, 0, {EntityType::NONE_ENTITY, 0}, 0, "");
         q.try_push(c);
 
     } else if (random_int < prob_goldcoin + prob_carrot + prob_ammo + prob_rocket) {
-        std::shared_ptr<RocketPickup> drop (new RocketPickup(x + width / 2, y + height / 3, config, q));
+        std::shared_ptr<RocketPickup> drop(
+                new RocketPickup(x + width / 2, y + height / 3, config, q));
         objetos.agregar_objeto(drop);
         Container c(0, drop->id, drop->x, drop->y, drop->width, drop->height, 0, drop->an_type,
-                    drop->en_type, 0, 0, 0, "");
+                    drop->en_type, 0, {EntityType::NONE_ENTITY, 0}, 0, "");
         q.try_push(c);
 
     } else {
         return;
     }
-
-
 }
 
 int Enemigo::get_damage() { return this->damage; }

@@ -3,6 +3,7 @@
 
 #include <chrono>
 #include <map>
+#include <memory>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -43,6 +44,7 @@ public:
                   Queue<Container>& q);
     bool change_selected_ammo();
     int remaining_ammo();
+    EntityType selected_ammo();
     void add_ammo(EntityType ammo, int n);
 };
 
@@ -111,8 +113,8 @@ public:
     void change_selected_ammo();
     virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) override;
     virtual void update_vivo(ListaObjetos& objetos, Queue<Container>& q,
-                             std::map<uint32_t, std::shared_ptr<Personaje>>& clientCharacters, std::shared_ptr<Ente> e) override;
-
+                             std::map<uint32_t, std::shared_ptr<Personaje>>& clientCharacters,
+                             std::shared_ptr<Ente> e) override;
 };
 
 #endif

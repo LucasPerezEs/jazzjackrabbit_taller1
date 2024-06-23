@@ -321,14 +321,16 @@ void Personaje::update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) {
 
     check_colisions(m, aux_x, aux_y);
 
+    AmmoData ammo = {this->arma.selected_ammo(), this->arma.remaining_ammo()};
+
     Container c(3, this->id, this->x, this->y, this->width, this->height, this->direccion,
-                this->an_type, this->en_type, this->vida, this->arma.remaining_ammo(), this->score,
-                this->name);
+                this->an_type, this->en_type, this->vida, ammo, this->score, this->name);
     q.try_push(c);
 }
 
 void Personaje::update_vivo(ListaObjetos& objetos, Queue<Container>& q,
-                            std::map<uint32_t, std::shared_ptr<Personaje>>& clientCharacters, std::shared_ptr<Ente> e) {
+                            std::map<uint32_t, std::shared_ptr<Personaje>>& clientCharacters,
+                            std::shared_ptr<Ente> e) {
     if (vida <= 0) {
         // Me acaban de matar
         if (contador == 0) {
@@ -349,9 +351,9 @@ void Personaje::update_vivo(ListaObjetos& objetos, Queue<Container>& q,
             score = 0;
             objetos.agregar_objeto(e);
             contador = -1;
+            AmmoData ammo = {this->arma.selected_ammo(), this->arma.remaining_ammo()};
             Container c(3, this->id, this->x, this->y, this->width, this->height, this->direccion,
-                        this->an_type, this->en_type, this->vida, this->municion, this->score,
-                        this->name);
+                        this->an_type, this->en_type, this->vida, ammo, this->score, this->name);
             q.try_push(c);
         }
         contador++;
@@ -519,19 +521,21 @@ bool Arma::change_selected_ammo() {
     return changed_ammo;
 }
 
+EntityType Arma::selected_ammo() { return ammo_types[current_ammo]; }
+
 int Arma::remaining_ammo() { return ammo_inventory[ammo_types[current_ammo]]; }
 
 void Arma::spawn_projectile(ListaObjetos& objetos, EntityType ammo, int x, int y, int d,
                             int shooter_id, std::map<std::string, float>& config) {
     switch (ammo) {
         case BULLET: {
-            std::shared_ptr<Bullet> b (new Bullet(x, y, d, shooter_id, config));
+            std::shared_ptr<Bullet> b(new Bullet(x, y, d, shooter_id, config));
             objetos.agregar_objeto(b);
             break;
         }
 
         case ROCKET: {
-            std::shared_ptr<Rocket> b (new Rocket(x, y, d, shooter_id, config));
+            std::shared_ptr<Rocket> b(new Rocket(x, y, d, shooter_id, config));
             objetos.agregar_objeto(b);
             break;
         }

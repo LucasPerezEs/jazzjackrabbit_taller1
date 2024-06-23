@@ -1,12 +1,13 @@
 #include "headers/broadcaster.h"
 
 
-Broadcaster::Broadcaster(Monitor_clients& clients, Queue<Container>& stateQueue, Queue<Message>& setupQueue):
+Broadcaster::Broadcaster(Monitor_clients& clients, Queue<Container>& stateQueue,
+                         Queue<Message>& setupQueue):
         clients(clients), stateQueue(stateQueue), setupQueue(setupQueue) {}
 
 void Broadcaster::run() {
-    Container c(0, 0, 0, 0, 0, 0, 0, AnimationType::NONE_ANIMATION, EntityType::NONE_ENTITY, 0, 0,
-                 0, "");
+    Container c(0, 0, 0, 0, 0, 0, 0, AnimationType::NONE_ANIMATION, EntityType::NONE_ENTITY, 0,
+                {EntityType::NONE_ENTITY, 0}, 0, "");
 
     while (_keep_running) {
 
@@ -21,8 +22,6 @@ void Broadcaster::run() {
     _is_alive = false;
 }
 
-void Broadcaster::erase_client(int id) {
-    clients.erase_client(id, &setupQueue);
-}
+void Broadcaster::erase_client(int id) { clients.erase_client(id, &setupQueue); }
 
 void Broadcaster::stop() { _keep_running = false; }
