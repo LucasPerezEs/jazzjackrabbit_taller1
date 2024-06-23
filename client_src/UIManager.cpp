@@ -49,10 +49,10 @@ UIManager::UIManager(std::map<int, Player*>& personajes, SdlWindow& window):
     mainMenu.y = 600/2  - 25;
     mainMenu.h = 35;
 
-    muteSound.x = 800/4 + 800/4 - 70;
-    muteSound.w = 140;
-    muteSound.y = 600/4 + 600/4 - 15;
-    muteSound.h = 30;
+    muteMusic.x = 800/4 + 800/4 - 70;
+    muteMusic.w = 140;
+    muteMusic.y = 600/4 + 600/4 - 15;
+    muteMusic.h = 30;
 
     this->texturas_ui[0] = new SdlTexture("../client_src/assets/textures/ui_vida.png", window,
                                           Color{0x2C, 0x66, 0x96});
@@ -140,6 +140,20 @@ void UIManager::render_UI(int id_cliente) {
     }
 }
 
+void UIManager::render_pause_menu() {
+    SDL_Color amarillo = {237, 206, 69, 255};
+
+    SDL_Rect button;
+    button.x = 800 / 2 - 140;
+    button.w = 280;
+    button.y = 600 / 2 - 25;
+    button.h = 50;
+    SDL_SetRenderDrawColor(window.getRenderer(), 0, 0, 0, 255);
+    SDL_RenderFillRect(window.getRenderer(), &button);
+
+    this->fuente.render(800 / 2 - 100, 600 / 2 - 25, "Pause   Music", window, amarillo);
+}
+
 void UIManager::renderLoadingText() {
     this->fuente.render(800 / 2 - 100, 600 / 2 + 120, "Waiting       players", window, {0, 0, 0});
 }
@@ -180,5 +194,7 @@ void UIManager::renderPauseMenu() {
         SDL_RenderFillRect(window.getRenderer(), &background);
 
         SDL_SetRenderDrawColor(window.getRenderer(), 255, 255, 255, 255);
-        SDL_RenderFillRect(window.getRenderer(), &muteSound);
+        SDL_RenderFillRect(window.getRenderer(), &muteMusic);
+
+        this->fuente.render(muteMusic.x+10, muteMusic.y+5, muteMusic.w-10, muteMusic.h-5, "Pause   Music", window, {0, 0, 0, 255});
 }

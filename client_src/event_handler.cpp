@@ -100,8 +100,8 @@ void EventHandler::run() {
                     }
                 }
                 else if (in_menu && event.button.button == SDL_BUTTON_LEFT) {
-                    if (uimanager.muteSound.x < event.button.x && event.button.x < uimanager.muteSound.x + uimanager.muteSound.w
-                     && uimanager.muteSound.y < event.button.y && event.button.y < uimanager.muteSound.y + uimanager.muteSound.h) {
+                    if (uimanager.muteMusic.x < event.button.x && event.button.x < uimanager.muteMusic.x + uimanager.muteMusic.w
+                     && uimanager.muteMusic.y < event.button.y && event.button.y < uimanager.muteMusic.y + uimanager.muteMusic.h) {
                         sound_manager.change_music_volume();
                     }
                 }
