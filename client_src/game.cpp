@@ -12,7 +12,7 @@ Game::Game(Client& client):
         gameEnded(false),
         in_menu(false),
         sound_manager(client.get_id()),
-        event_handler(client.get_protocol(), in_menu, gameEnded, sound_manager),
+        event_handler(client.get_protocol(), in_menu, gameEnded, sound_manager, ui_manager),
         updater(client.get_protocol(), window, entidades, receiverQueue, personajes, ui_manager, client.get_id(), sound_manager, gameStarted, gameEnded) {
 
     //Este asset tambien deberia de pedirselo al map creator y que este le devuelva ya la textura.
@@ -101,14 +101,7 @@ void Game::render() {
     this->window.fill();
 
     if (gameEnded) {
-        window.fill(70, 130, 180, 255);
-        SDL_Rect button;
-        button.x = 800/2 - 100;
-        button.w = 200;
-        button.y = 600/2  - 25;
-        button.h = 50;
-        SDL_SetRenderDrawColor(window.getRenderer(), 255, 255, 255, 255);
-        SDL_RenderFillRect(window.getRenderer(), &button);
+        ui_manager.renderEndGame(this->client.get_id());
     }
     else if (!gameStarted) {
         SDL_RenderCopy(window.getRenderer(), loadingImage, NULL, NULL);
@@ -147,21 +140,7 @@ void Game::render() {
     ui_manager.render_UI(this->client.get_id());
 
     if (in_menu) {
-        SDL_Rect background;
-        background.x = 800/4;
-        background.w = 800*2/4;
-        background.y = 600/4;
-        background.h = 600*2/4;
-        SDL_SetRenderDrawColor(window.getRenderer(), 70, 130, 180, 255);
-        SDL_RenderFillRect(window.getRenderer(), &background);
-
-        SDL_Rect button;
-        button.x = 800/4 + 800/4 - 70;
-        button.w = 140;
-        button.y = 600/4 + 600/4 - 15;
-        button.h = 30;
-        SDL_SetRenderDrawColor(window.getRenderer(), 255, 255, 255, 255);
-        SDL_RenderFillRect(window.getRenderer(), &button);
+        ui_manager.renderPauseMenu();
     }
 
     this->window.render();

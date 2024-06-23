@@ -14,6 +14,7 @@
 #include "camara.h"
 #include "protocol.h"
 #include "SoundManager.h"
+#include "UIManager.h"
 
 //#define FRAME_RATE 1000000.0f / 20.0f
 
@@ -32,12 +33,14 @@ private:
 
     SoundManager& sound_manager;
 
+    UIManager& uimanager;
+
     void handle_keydown(const SDL_Event& event, Command& cmd);
 
     void handle_keyup(const SDL_Event& event, Command& cmd);
 
 public:
-    explicit EventHandler(ClientProtocol& protocol, bool& menu, bool& gameEnded, SoundManager& sound_manager);
+    explicit EventHandler(ClientProtocol& protocol, bool& menu, bool& gameEnded, SoundManager& sound_manager, UIManager& uimanager);
 
     virtual void run() override;
 
