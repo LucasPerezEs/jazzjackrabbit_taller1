@@ -25,10 +25,14 @@ class MapCreator {
     int mapHeight;
     SdlWindow window;
     bool is_already_create;
+    std::string path_maps = "../server_src/maps/";
     std::map<std::tuple<int, int>, Tile> mapTiles;
 
+    std::map<std::tuple<int, int>, Tile> loadEmptyCSV();
+    std::map<std::tuple<int, int>, Tile> loadCSV(const std::string&filename);
+
     void saveMapToCSV(std::string& filename, bool& is_already_create);
-    void save_values(Tile& selectedTile, const double& minX, const double& maxX, const double& minY, const double& maxY,
+    void set_values(Tile& selectedTile, const double& minX, const double& maxX, const double& minY, const double& maxY,
                      SDL_Event& event);
 
 public:
@@ -36,8 +40,6 @@ public:
 
     void select_map();
     void create_map(std::string& filename, bool& is_already_create);
-
-    std::map<std::tuple<int, int>, Tile> loadCSV(const std::string&filename);
 
     MapCreator(const MapCreator&) = delete;
     MapCreator& operator=(const MapCreator&) = delete;
