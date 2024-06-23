@@ -1,26 +1,27 @@
 #include <exception>
-#include <fstream>
 #include <iostream>
 
 #include "SDL2/SDL_mixer.h"
-#include "SDL2/SDL_ttf.h"
-#include "headers/SdlTexture.h"
 #include "headers/map_creator.h"
-#include "headers/UIManager.h"
-#include "headers/entity.h"
 #include "headers/game.h"
 #include "headers/player.h"
-#include "setupscreen/SetupScreen.h"
+#include <QApplication>
+#include <QVBoxLayout>
+
+
+#include "setupscreen/ConnectMenu.h"
+#include "setupscreen/MultiplayerMenu.h"
 
 int main(int argc, char* argv[]) {
 
     try {
         QApplication app(argc, argv);
 
-        SetupScreen setup;
-        setup.ShowConnectMenu();
+        ConnectMenu connectMenu;
+        connectMenu.show();
 
-        if (setup.AcceptedConnection()) {
+
+        if (connectMenu.exec() == QDialog::Accepted) {
 
             if (TTF_Init() < 0) {
                 throw std::runtime_error(std::string("Error al iniciar TTF: ") + TTF_GetError());
