@@ -27,11 +27,13 @@ class MapCreator {
     bool is_already_create;
     std::string path_maps = "../server_src/maps/";
     std::map<std::tuple<int, int>, Tile> mapTiles;
+    std::map<std::tuple<int, int>, Tile> mapSpawn;
 
     std::map<std::tuple<int, int>, Tile> loadEmptyCSV();
     std::map<std::tuple<int, int>, Tile> loadCSV(const std::string&filename);
 
     void save_map(std::string& filename, bool& is_already_create);
+    void save_spawns(std::string& filename, bool& is_already_create);
     void set_values(Tile& selectedTile, const double& minX, const double& maxX, const double& minY, const double& maxY,
                      SDL_Event& event);
 

@@ -9,32 +9,61 @@ void MapCreator::save_map(std::string& filename, bool& is_already_create) {
 
     std::string newFilename = filename;
     if (is_already_create)
-        newFilename = filename + "_modified";
+        newFilename = newFilename + "_modified";
 
     std::string path = path_maps + newFilename;
     std::ofstream file(path);
+        int fila_anterior = -1;
 
-    if (file.is_open()) {
-        
-        for (int fila = 0; fila < mapHeight; ++fila) {
-    for (int columna = 0; columna < mapWidth; ++columna) {
-        const Tile& value = mapTiles[{fila, columna}];
+        if (file.is_open()) {
+            for (const auto& pair : mapTiles) {
+                const std::tuple<int, int>& key = pair.first;
+                const Tile& value = pair.second;
+                int fila_actual = std::get<0>(key);
 
-        if (columna > 0) {
-            file << ",";
-        }
-        file << value.id;
-    }
-    file << "\n";
-}
-
-        file.close();
-    
+                if (fila_actual != fila_anterior) {
+                    if (fila_anterior != -1) {
+                        file << "\n";
+                    }
+                    fila_anterior = fila_actual;
+                } else {
+                    file << ",";
+                }
+                file << value.id;
+            }
+            file.close();
     } else {
         std::cerr << "No se pudo abrir el archivo y por lo tanto no se creó el mapa." << std::endl;
     }
 }
 
+
+//Pre: -
+//Post: Formato de guardado: [ID_DE_TIPO_DE_SPAWN(int),FILA(int),COLUMNA(int),ID_elemento_en_tileset(int)]\n
+void MapCreator::save_spawns(std::string& filename, bool& is_already_create){
+
+    std::string newFilename = filename + "_spawns";
+
+    if (is_already_create)
+        newFilename = newFilename + "_modified";
+    
+    std::string path = path_maps + newFilename;
+
+    std::ofstream file(path);
+    if (file.is_open()) {
+        for (const auto& value : mapSpawn) {
+            
+            const Tile& tile = value.second;
+            int row = std::get<0>(value.first);
+            int column = std::get<1>(value.first) - (TILESET_WIDTH*TILE_MAP_ASSETS);
+                
+            file << tile.type << "," << row << "," << column << "," << tile.id << "\n";
+        }
+        file.close();
+    } else {
+        std::cerr << "No se pudo abrir el archivo y por lo tanto no se creó el mapa." << std::endl;
+    }
+}
 
 //Pre: -
 //Post: Guarda en mi matriz mapTile los valores que selecciono de mi paleta de assets para poder crear el mapa.
@@ -44,41 +73,45 @@ void MapCreator::set_values(Tile& selectedTile, const double& minX, const double
     double newY = event.button.y;
                         
     // Me aseguro de que newX está por fuera de la imagen del asset y dentro de la ventana en X.
-    if (newX < minX || newX > maxX)
+    if (newX < minX || newX >= maxX)
         return;
 
     // Me aseguro de que newY está dentro de la ventana en Y
-    if (newY < maxY || newY > minY)
+    if (newY < maxY || newY >= minY)
         return;
 
-    int multiploX = std::floor(newX / TILE_MAP_CREATED) * TILE_MAP_CREATED;
-    int multiploY = std::floor(newY / TILE_MAP_CREATED) * TILE_MAP_CREATED;
+    int fila = std::floor(newY / TILE_MAP_CREATED) * TILE_MAP_CREATED;
+    int columna = std::floor(newX / TILE_MAP_CREATED) * TILE_MAP_CREATED;
 
-    std::tuple<int,int> posicion = std::make_tuple(multiploY, multiploX);
-    selectedTile.destRect = { multiploX, multiploY, TILE_MAP_CREATED, TILE_MAP_CREATED };
 
-    //
-    if (mapTiles.find(posicion) != mapTiles.end()) {
+    std::tuple<int,int> posicion = std::make_tuple(fila/TILE_MAP_CREATED, (columna-TILESET_WIDTH*TILE_MAP_ASSETS)/TILE_MAP_CREATED);
+    std::cout << "Fila: " << fila/TILE_MAP_CREATED << " / Columna: " << (columna-TILESET_WIDTH*TILE_MAP_ASSETS)/TILE_MAP_CREATED << std::endl;
 
-        const Tile& tile_found = mapTiles[posicion];
-        if(selectedTile.id == 48 || selectedTile.id == 49 || selectedTile.id == 58 || selectedTile.id == 59)
-            selectedTile.id = tile_found.id;
+    selectedTile.destRect = { columna, fila, TILE_MAP_CREATED, TILE_MAP_CREATED };
 
-        if(selectedTile.id == 68 || selectedTile.id == 69 || selectedTile.id == 78 || selectedTile.id == 79)
-            selectedTile.id = tile_found.id;
+    int PlayerSpawn = 0;
+    int EnemySpawn = 1;
 
-        //48,49,58,59 es para posicion del jugador.
-        //68,69,78,79 es para los spawn points.
-
-    } else {
-        
-        //No puedo colocar un spawn point en un sector no inicializado del mapa.
-        if(selectedTile.id == 48 || selectedTile.id == 49 || selectedTile.id == 58 || selectedTile.id == 59)
-            return;
+    //SPAWN JUGADOR
+    if(selectedTile.id == 48 || selectedTile.id == 49 || selectedTile.id == 58 || selectedTile.id == 59){
+        selectedTile.type = PlayerSpawn;
+        mapSpawn[posicion] = selectedTile;
+        return;
     }
 
+    //SPAWN ENEMIGO
+    if(selectedTile.id == 68 || selectedTile.id == 69 || selectedTile.id == 78 || selectedTile.id == 79){
+        selectedTile.type = EnemySpawn;
+        mapSpawn[posicion] = selectedTile;
+        return;
+    }
+
+    //Que pasas si quiero dibujar algo de mapa por sobre un spawn?
+    //Debo chequear si ese elemento esta en el spawn y si esta, lo borro.
+    if (mapSpawn.find(posicion) != mapSpawn.end())
+        mapSpawn.erase(posicion);
+
     mapTiles[posicion] = selectedTile;
-    //mapTiles[posicion] = selectedTile;
 }
 
 
@@ -110,7 +143,7 @@ std::map<std::tuple<int, int>, Tile> MapCreator::loadEmptyCSV() {
                 int tile_id = -1;
                 Tile tile;
                 tile.id = tile_id;
-                tile.srcRect = {0,0,TILE_MAP_ASSETS, TILE_MAP_ASSETS};
+                tile.srcRect = {0, 0, TILE_MAP_ASSETS, TILE_MAP_ASSETS};
                 tile.destRect = {(j*TILE_MAP_CREATED+TILESET_WIDTH*TILE_MAP_ASSETS), i*TILE_MAP_CREATED, TILE_MAP_CREATED, TILE_MAP_CREATED};
                 std::tuple<int,int> posicion = std::make_tuple(i, j);
                 mapTiles[posicion] = tile;
@@ -135,7 +168,7 @@ std::map<std::tuple<int, int>, Tile> MapCreator::loadCSV(const std::string& file
 
             std::istringstream iss(line);
             std::string value;
-            column = 20;
+            column = 0;
 
             while (std::getline(iss, value, ',')) {
 
@@ -143,7 +176,7 @@ std::map<std::tuple<int, int>, Tile> MapCreator::loadCSV(const std::string& file
                 Tile tile;
                 tile.id = tile_id;
                 tile.srcRect = {(tile_id % TILESET_WIDTH)*TILE_MAP_ASSETS, (tile_id / TILESET_WIDTH)*TILE_MAP_ASSETS, TILE_MAP_ASSETS, TILE_MAP_ASSETS};
-                tile.destRect = {column*TILE_MAP_CREATED, row*TILE_MAP_CREATED, TILE_MAP_CREATED, TILE_MAP_CREATED};
+                tile.destRect = {(column*TILE_MAP_CREATED)+TILESET_WIDTH*TILE_MAP_ASSETS, row*TILE_MAP_CREATED, TILE_MAP_CREATED, TILE_MAP_CREATED};
                 std::tuple<int,int> posicion = std::make_tuple(row, column);
                 mapTiles[posicion] = tile;
                 column++;
@@ -190,6 +223,8 @@ void MapCreator::create_map(std::string& filename, bool& is_already_create){
 
     int width_texture, height_texture;
     SDL_QueryTexture(assetTexture, NULL, NULL, &width_texture, &height_texture);
+
+    std::cout << width_texture << std::endl;
     
 
     //Renderizo la paleta de assets
@@ -264,14 +299,19 @@ void MapCreator::create_map(std::string& filename, bool& is_already_create){
 
                 case SDL_MOUSEMOTION: {
                     if(mouseHeldDown)
-                        //set_values(selectedTile, width_texture, (window_width*mapWidth/100), (window_height*mapHeight/100), 0, event);
                         set_values(selectedTile, width_texture, width_texture+mapWidth*TILE_MAP_CREATED, mapHeight*TILE_MAP_CREATED, 0, event);
                 }
             }
                 this->window.fill();
 
-            for (const auto& pair : mapTiles) {
-                const Tile& value = pair.second;
+            Tile value;
+            for (const auto& pairMap : mapTiles) {
+                value = pairMap.second;
+                SDL_RenderCopy(renderer, assetTexture, &(value.srcRect), &(value.destRect));
+            }
+
+            for (const auto& pairSpawn : mapSpawn) {
+                value = pairSpawn.second;
                 SDL_RenderCopy(renderer, assetTexture, &(value.srcRect), &(value.destRect));
             }
 
@@ -280,5 +320,6 @@ void MapCreator::create_map(std::string& filename, bool& is_already_create){
         }
     }
     save_map(filename, is_already_create);
+    save_spawns(filename, is_already_create);
     
 }
