@@ -3,14 +3,14 @@
 
 Drawer::Drawer(SdlWindow& windows): window(windows) {}
 
-void Drawer::draw_with_camara(const std::vector<std::vector<int>>& tilemap, SDL_Texture* tilesetTexture, Camara* camara) {
+void Drawer::draw_with_camara(const std::vector<std::vector<std::string>>& tilemap, SDL_Texture* tilesetTexture, Camara* camara) {
 
     // Ahora recorre solo los tiles que están dentro de la vista de la cámara
     for (long unsigned int y = 0; y < tilemap.size(); y++) {
         for (long unsigned int x = 0; x < tilemap[0].size(); x++) {
 
             // Obtiene el id del tile
-            int tileValue = tilemap[y][x];
+            int tileValue = std::stoi(tilemap[y][x]);
 
             // Calcula la posición del tile en píxeles
             int posX = x;

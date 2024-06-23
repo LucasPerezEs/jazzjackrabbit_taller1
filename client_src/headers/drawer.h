@@ -22,7 +22,7 @@ private:
 public:
     explicit Drawer(SdlWindow& window);
 
-    void draw_with_camara(const std::vector<std::vector<int>>& tilemap, SDL_Texture* tilesetTexture, Camara* camara);
+    void draw_with_camara(const std::vector<std::vector<std::string>>& tilemap, SDL_Texture* tilesetTexture, Camara* camara);
     void draw_map(std::map<std::tuple<int, int>, Tile>& tilemap, SDL_Texture* tilesetTexture, const int& size_src, const int& size_dest);
 
     Drawer(const Drawer&) = delete;

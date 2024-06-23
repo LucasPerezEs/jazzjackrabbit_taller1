@@ -1,4 +1,5 @@
 #include "headers/Container.h"
+
 #include <iostream>
 
 
@@ -14,6 +15,7 @@ SetupContainer::SetupContainer(Setup::ActionType setupType, std::vector<std::str
                                bool ok):
         setupType(setupType), gameList(gameList), ok(ok) {}
 
+// cppcheck-suppress uninitMemberVar
 SetupContainer::SetupContainer(Setup::ActionType setupType, bool ok):
         setupType(setupType), ok(ok) {}
 
@@ -22,14 +24,16 @@ SetupContainer::SetupContainer(Setup::ActionType setupType, uint32_t id, bool ok
         setupType(setupType), clientId(id), ok(ok) {}
 
 // cppcheck-suppress uninitMemberVar
-SetupContainer::SetupContainer(Setup::ActionType setupType, std::vector<std::vector<std::string>>& mapReceived, bool ok):
+SetupContainer::SetupContainer(Setup::ActionType setupType,
+                               std::vector<std::vector<std::string>>& mapReceived, bool ok):
         setupType(setupType), map(mapReceived), ok(ok) {}
 
 
 // GameContainer implementation
 GameContainer::GameContainer(uint32_t msg_code, int id, float x, float y, float w, float h,
                              int direction, AnimationType an_type, EntityType en_type, int health,
-                             int ammo, int score, std::string name):
+                             // cppcheck-suppress passedByValue
+                             AmmoData ammo, int score, std::string name):
         msg_code(msg_code),
         id(id),
         x(x),
@@ -44,14 +48,17 @@ GameContainer::GameContainer(uint32_t msg_code, int id, float x, float y, float 
         score(score),
         name(name) {}
 
-/*GameContainer::GameContainer(uint32_t msg_code, std::vector<std::uint32_t> score, std::vector<std::string> names): score(score), names(names) {}*/
+/*GameContainer::GameContainer(uint32_t msg_code, std::vector<std::uint32_t> score,
+ * std::vector<std::string> names): score(score), names(names) {}*/
 
 SoundContainer::SoundContainer(EntityType entity, SoundType sound, int id):
         entity(entity), sound(sound), id(id) {}
 
 // Container implementation
 Container::Container(uint32_t msg_code, int id, float x, float y, float w, float h, int direction,
-                     AnimationType an_type, EntityType en_type, int health, int ammo, int score, std::string name):
+                     AnimationType an_type, EntityType en_type, int health, AmmoData ammo,
+                     // cppcheck-suppress passedByValue
+                     int score, std::string name):
         setup_container(nullptr),
         game_container(new GameContainer(msg_code, id, x, y, w, h, direction, an_type, en_type,
                                          health, ammo, score, name)),
@@ -73,16 +80,13 @@ Container::Container(Setup::ActionType setupType, std::vector<std::string>& game
         _type(Type::SETUP) {}
 
 Container::Container(Setup::ActionType setupType, uint32_t id, bool ok):
-        // cppcheck-suppress noCopyConstructor
-        // cppcheck-suppress noOperatorEq
         setup_container(new SetupContainer(setupType, id, ok)),
         game_container(nullptr),
         sound_container(nullptr),
         _type(Type::SETUP) {}
 
-Container::Container(Setup::ActionType setupType, std::vector<std::vector<std::string>>& mapReceived, bool ok):
-        // cppcheck-suppress noCopyConstructor
-        // cppcheck-suppress noOperatorEq
+Container::Container(Setup::ActionType setupType,
+                     std::vector<std::vector<std::string>>& mapReceived, bool ok):
         setup_container(new SetupContainer(setupType, mapReceived, ok)),
         game_container(nullptr),
         sound_container(nullptr),
@@ -100,14 +104,14 @@ Container::Container(EntityType entity, SoundType sound, int id):
         sound_container(new SoundContainer(entity, sound, id)),
         _type(Type::SOUND) {}
 
-//Container::~Container() {
-       /* if (setup_container != nullptr) {
-                delete setup_container;
-        } 
-        if (game_container != nullptr) {
-                delete game_container;
-        } 
-        if (sound_container != nullptr) {
-                delete sound_container;
-        } */
+// Container::~Container() {
+/* if (setup_container != nullptr) {
+         delete setup_container;
+ }
+ if (game_container != nullptr) {
+         delete game_container;
+ }
+ if (sound_container != nullptr) {
+         delete sound_container;
+ } */
 //}

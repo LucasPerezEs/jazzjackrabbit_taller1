@@ -30,7 +30,7 @@ void Projectile::update(
         this->borrar = true;
     }
     Container c(0, this->id, this->x, this->y, this->width, this->height, this->d, this->an_type,
-                this->en_type, 0, 0, 0, "");
+                this->en_type, 0, {EntityType::NONE_ENTITY, 0}, 0, "");
     q.try_push(c);
 }
 

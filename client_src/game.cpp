@@ -43,8 +43,9 @@ Game::Game(Client& client):
 
     //Aca deberia ir un seleccionador de mapas pero todavia no se implementó (en proceso).
     MapCreator load_map(client);
-    tilemap = load_map.cargarCSV(
-            "../client_src/assets/background/castle_erlong_map/castle_earlong_mapa.csv");
+    //tilemap = load_map.cargarCSV(
+    //        "../client_src/assets/background/castle_erlong_map/castle_earlong_mapa.csv");
+    tilemap = client.getMap();
 
     // cppcheck-suppress noOperatorEq
     camara = new Camara(0, 0, 800, 600, tilemap[0].size(),tilemap.size());
@@ -61,6 +62,9 @@ void Game::run() {
     time1 = SDL_GetTicks();
 
     client.go_online();
+
+
+    //Si el client no tiene mapa(is empty) le pido que lo cargue.
 
     //std::cout << "Iniciando musica\n";
     /*Music musica("../client_src/assets/music/Its_Pizza_Time.wav");
@@ -125,7 +129,7 @@ void Game::render() {
     } else {
         camara->actualizar_pos(0, 0);
     }
-    
+
     Drawer drawer(this->window);
     drawer.draw_with_camara(tilemap, tilesetTexture, camara);
 

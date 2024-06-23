@@ -36,7 +36,8 @@ void Game::run() {
 
     clock.start();
 
-    Container c = Container(5, 0, 0, 0, 0, 0, 0, NONE_ANIMATION, NONE_ENTITY, 0, 0, 0, "");
+    Container c = Container(5, 0, 0, 0, 0, 0, 0, NONE_ANIMATION, NONE_ENTITY, 0,
+                            {EntityType::NONE_ENTITY, 0}, 0, "");
     stateQueue.push(c);
 
     while (_keep_running && !clock.times_up()) {
@@ -82,13 +83,15 @@ void Game::run() {
                 case Command::ActionType::QUIT: {
                     // cppcheck-suppress shadowVariable
                     Container c(1, clientId, 0, 0, 0, 0, 0, AnimationType::NONE_ANIMATION,
-                                EntityType::NONE_ENTITY, 0, 0, 0, "");
+                                EntityType::NONE_ENTITY, 0, {EntityType::NONE_ENTITY, 0}, 0, "");
                     stateQueue.push(c);
-                    entes.erase(std::remove_if(entes.begin(), entes.end(), [&](std::shared_ptr<Ente> o){
-                        if (o->id == (int)clientId) {
-                            return true;
-                        }
-                        return false;}));
+                    entes.erase(std::remove_if(entes.begin(), entes.end(),
+                                               [&](std::shared_ptr<Ente> o) {
+                                                   if (o->id == (int)clientId) {
+                                                       return true;
+                                                   }
+                                                   return false;
+                                               }));
                     clientCharacters.erase(clientId);
                     objetos.borrar(clientId);
                     broadcaster.erase_client(clientId);
@@ -110,11 +113,13 @@ void Game::run() {
         std::this_thread::sleep_for(std::chrono::milliseconds(17));
     }
     if (clock.times_up()) {
-        Container c(2, -1, 0, 0, 0, 0, 0, AnimationType::NONE_ANIMATION, EntityType::NONE_ENTITY, 0, 0, 0, "");
+        // cppcheck-suppress shadowVariable
+        Container c(2, -1, 0, 0, 0, 0, 0, AnimationType::NONE_ANIMATION, EntityType::NONE_ENTITY, 0,
+                    {EntityType::NONE_ENTITY, 0}, 0, "");
         stateQueue.push(c);
         for (auto client: clientCharacters) {
-            //clientCharacters.erase(client.first);
-            //objetos.borrar(client.first);
+            // clientCharacters.erase(client.first);
+            // objetos.borrar(client.first);
             broadcaster.erase_client(client.first);
         }
     }
@@ -123,21 +128,21 @@ void Game::run() {
 
 void Game::addPlayer(uint32_t clientId, uint32_t character, std::string name) {
     std::lock_guard<std::mutex> lock(clientCharactersMutex);
-    
+
     if (character == 0) {
-        std::shared_ptr<Jazz> personaje (new Jazz(20 + clientId, 10, config, stateQueue, name));
+        std::shared_ptr<Jazz> personaje(new Jazz(20 + clientId, 10, config, stateQueue, name));
         personaje->set_id(clientId);
         clientCharacters[clientId] = personaje;
         objetos.agregar_objeto(personaje);
         entes.push_back(personaje);
     } else if (character == 1) {
-        std::shared_ptr<Lori> personaje (new Lori(20 + clientId, 10, config, stateQueue, name));
+        std::shared_ptr<Lori> personaje(new Lori(20 + clientId, 10, config, stateQueue, name));
         personaje->set_id(clientId);
         clientCharacters[clientId] = personaje;
         objetos.agregar_objeto(personaje);
         entes.push_back(personaje);
     } else {
-        std::shared_ptr<Spaz> personaje (new Spaz(20 + clientId, 10, config, stateQueue, name));
+        std::shared_ptr<Spaz> personaje(new Spaz(20 + clientId, 10, config, stateQueue, name));
         personaje->set_id(clientId);
         clientCharacters[clientId] = personaje;
         objetos.agregar_objeto(personaje);

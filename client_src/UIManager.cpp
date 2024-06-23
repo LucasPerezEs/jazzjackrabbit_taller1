@@ -70,34 +70,39 @@ bool UIManager::player_alive(int id_cliente) { return personajes.count(id_client
 
 void UIManager::update_clock(int seconds) { this->clock = seconds; }
 
+void UIManager::render_top3() {
+    SDL_Color amarillo = {237, 206, 69, 255};
+    std::vector<std::pair<int, Player*>> score = orderedValues(personajes, false);
+    for (long unsigned int i = 0; i < score.size(); i++) {
+        std::string string =
+                score[i].second->get_name() + "  " + std::to_string(score[i].second->get_score());
+        SdlTexture* texture = new SdlTexture(chica, string, window, amarillo);
+
+        Area dst(640, 28 + 25 * (i + 1), string.size() * 9, 30);
+        texture->render(dst);
+        delete texture;
+    }
+}
+
 void UIManager::render_UI(int id_cliente) {
     SDL_Color amarillo = {237, 206, 69, 255};
     SDL_Color rojo = {252, 3, 3, 255};
 
     if (!player_alive(id_cliente)) {
         this->fuente.render(10, 10, "DEAD", window, rojo);
-        this->fuente.render(700, 15, std::to_string(this->clock), window, amarillo);
+        this->fuente.render(400 - 20, 15, std::to_string(this->clock), window, amarillo);
         return;
     }
 
     //   ScoreBoard
-    std::string string_board = "Score Board";
+    this->fuente.render(590, 5, "ScoreBoard", window, amarillo);
+    render_top3();
+    /*std::string string_board = "Score Board";
     SdlTexture* texture_c = new SdlTexture(chica, string_board, window, amarillo);
 
     Area dst_r(620, 5, string_board.size() * 9, 30);
     texture_c->render(dst_r);
-    delete texture_c;
-
-    std::vector<std::pair<int, Player*>> score = orderedValues(personajes, false);
-    for (long unsigned int i = 0; i < score.size(); i++) {
-        std::string string = std::to_string(i + 1) + "   " + score[i].second->get_name() + "  " +
-                             std::to_string(score[i].second->get_score());
-        SdlTexture* texture = new SdlTexture(chica, string, window, amarillo);
-
-        Area dst(600, 5 + 30 * (i + 1), string.size() * 9, 30);
-        texture->render(dst);
-        delete texture;
-    }
+    delete texture_c;*/
 
     Player* personaje = personajes[id_cliente];
 
@@ -107,7 +112,17 @@ void UIManager::render_UI(int id_cliente) {
     texturas_ui[0]->render(dst_v);
 
     Area dst_a(10, 10 + fixed_size, fixed_size, fixed_size);
-    texturas_ui[1]->render(dst_a);
+    switch (personaje->get_municion().ammo_type) {
+        case BULLET:
+            texturas_ui[3]->render(dst_a);
+            break;
+        case ROCKET:
+            texturas_ui[4]->render(dst_a);
+            break;
+        default:
+            break;
+    }
+
 
     Area dst_s(10, 10 + 2 * fixed_size, fixed_size, fixed_size);
     texturas_ui[2]->render(dst_s);
@@ -115,8 +130,8 @@ void UIManager::render_UI(int id_cliente) {
 
     this->fuente.render(10 + fixed_size, 15, std::to_string(personaje->get_vida()), window,
                         amarillo);
-    this->fuente.render(10 + fixed_size, 15 + fixed_size, std::to_string(personaje->get_municion()),
-                        window, amarillo);
+    this->fuente.render(10 + fixed_size, 15 + fixed_size,
+                        std::to_string(personaje->get_municion().ammo), window, amarillo);
     this->fuente.render(10 + fixed_size, 15 + 2 * fixed_size,
                         std::to_string(personaje->get_score()), window, amarillo);
 
@@ -126,7 +141,7 @@ void UIManager::render_UI(int id_cliente) {
 }
 
 void UIManager::renderLoadingText() {
-    this->fuente.render(800 / 2 - 140, 600 / 2 + 120, "Waiting       players", window, {0, 0, 0});
+    this->fuente.render(800 / 2 - 100, 600 / 2 + 120, "Waiting       players", window, {0, 0, 0});
 }
 
 void UIManager::renderEndGame(int id_cliente) {

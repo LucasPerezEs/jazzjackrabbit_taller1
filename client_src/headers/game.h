@@ -37,7 +37,7 @@ private:
 
     SDL_Texture* loadingImage;
     SDL_Texture* tilesetTexture;
-    std::vector<std::vector<int>> tilemap;
+    std::vector<std::vector<std::string>> tilemap;
     UIManager ui_manager;
 
     ClientReceiver client_receiver;
