@@ -7,7 +7,7 @@
 // cppcheck-suppress uninitMemberVar
 Game::Game(Queue<Message>& actionQueue, Queue<Container>& stateQueue, uint32_t maxPlayers, const std::string& mapName,
            // cppcheck-suppress passedByValue
-           std::map<std::string, float> config, Broadcaster& broadcaster):
+           std::map<std::string, float> config, Broadcaster& broadcaster, bool& gameStarted, bool& gameEnded):
         maxPlayers(maxPlayers),
         mapName(mapName),
         actionQueue(actionQueue),
@@ -16,15 +16,14 @@ Game::Game(Queue<Message>& actionQueue, Queue<Container>& stateQueue, uint32_t m
         broadcaster(broadcaster),
         clientCharactersMutex(),
         clock(config),
-        gameStarted(false) {}
+        gameStarted(gameStarted),
+        gameEnded(gameEnded) {}
 
 void Game::run() {
 
-    /*Jazz* personaje = new Jazz(20, 10, config, stateQueue);
-    objetos.agregar_objeto(personaje);
-    entes.push_back(personaje);
-    clientCharacters[personaje->id] = personaje;*/
+    gameStarted= true;
     Mapa m(mapName);
+
     std::shared_ptr<Ghost> ghost(new Ghost(50, 2, config));
     std::shared_ptr<Bat> bat(new Bat(75, 4, config));
     std::shared_ptr<Monkey> monkey(new Monkey(15, 1, config));
@@ -119,11 +118,10 @@ void Game::run() {
                     {EntityType::NONE_ENTITY, 0}, 0, "");
         stateQueue.push(c);
         for (auto client: clientCharacters) {
-            // clientCharacters.erase(client.first);
-            // objetos.borrar(client.first);
             broadcaster.erase_client(client.first);
         }
     }
+    gameEnded = true;
     _is_alive = false;
 }
 
@@ -154,10 +152,6 @@ void Game::addPlayer(uint32_t clientId, uint32_t character, std::string name) {
         entes.push_back(personaje);
     }
 
-    // Para mas adelante, el reloj deberia empezar cuando hay dos jugadores
-    /*if (clientCharacters.size() == 1) {
-        clock.start();
-    }*/
 }
 
 void Game::stop() {

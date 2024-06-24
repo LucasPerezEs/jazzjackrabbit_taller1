@@ -4,7 +4,6 @@ find_package(Qt5Widgets REQUIRED)
 
 set(HEADER_FILES
         ConnectMenu.h
-        SetupScreen.h
         MultiplayerMenu.h
         CreateGame.h
         JoinGame.h
@@ -14,7 +13,6 @@ set(HEADER_FILES
 
 set(SOURCE_FILES
         ConnectMenu.cpp
-        SetupScreen.cpp
         MultiplayerMenu.cpp
         CreateGame.cpp
         JoinGame.cpp

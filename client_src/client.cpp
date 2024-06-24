@@ -124,8 +124,11 @@ bool Client::refreshGameList(std::vector<std::string>& gameList) {
     Message msg(Setup::ActionType::GET_GAME_LIST);
     client_protocol.send_message(msg);
     // recibir gamelist
-
     Container container = client_protocol.receive_container();
+    while (container.setup_container.get() == NULL || container.setup_container->setupType != Setup::ActionType::GET_GAME_LIST) {
+        container = client_protocol.receive_container();
+    }
+
     gameList = container.setup_container->gameList;
 
     return container.setup_container->ok;

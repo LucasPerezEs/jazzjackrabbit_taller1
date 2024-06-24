@@ -52,8 +52,10 @@ class Broadcaster;
 
 class Game: public Thread {
 public:
+
     explicit Game(Queue<Message>& actionQueue, Queue<Container>& eventQueue, uint32_t maxPlayers, const std::string& mapName,
-                  std::map<std::string, float> config, Broadcaster& broadcaster);
+                  std::map<std::string, float> config, Broadcaster& broadcaster, bool& gameStarted, bool& gameEnded);
+
 
     void run() override;
     void stop() override;
@@ -85,7 +87,8 @@ private:
 
     std::mutex clientCharactersMutex;
     Clock clock;
-    bool gameStarted;
+    bool& gameStarted;
+    bool& gameEnded;
 };
 
 #endif  // SERVER_GAME_H
