@@ -108,21 +108,27 @@ void EventHandler::run() {
             case SDL_KEYDOWN: {
                 Command cmd;
                 this->handle_keydown(event, cmd);
-                Message msg(cmd.action);
-                this->protocol.send_message(msg);
+                if (!gameEnded && cmd.action != Command::NONE) {
+                    Message msg(cmd.action);
+                    this->protocol.send_message(msg);
+                }
                 break;
             }
             case SDL_KEYUP: {
                 Command cmd;
                 this->handle_keyup(event, cmd);
-                Message msg(cmd.action);
-                this->protocol.send_message(msg);
+                if (!gameEnded && cmd.action != Command::NONE) {
+                    Message msg(cmd.action);
+                    this->protocol.send_message(msg);
+                }
                 break;
             }
             case SDL_QUIT:
                 std::cout << "Ha salido del juego" << std::endl;
-                Message quitMessage(Command::QUIT);
-                this->protocol.send_message(quitMessage);
+                if (!gameEnded) {
+                    Message quitMessage(Command::QUIT);
+                    this->protocol.send_message(quitMessage);
+                }
                 this->was_closed = true;
                 break;
         }
