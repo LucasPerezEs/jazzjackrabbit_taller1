@@ -29,7 +29,9 @@ void Enemigo::colision(Objeto& o) {
 void Enemigo::colision(Personaje& p) { p.colision(*this); }
 
 void Enemigo::colision(Projectile& b) {
-    b.borrar = true;
+    if (b.en_type != EntityType::ROCKET) {
+        b.borrar = true;
+    }
     RecibirDanio(b.danio);
 }
 

@@ -10,7 +10,8 @@ enum SoundType {
     PICKUP_SOUND = 0x47,
     NONE_SOUND = 0x48,
     CHANGE_AMMO = 0x49,
-    NO_AMMO = 0x50
+    NO_AMMO = 0x50,
+    ROCKET_EXPLOSION = 0x51
 };
 
 #endif
