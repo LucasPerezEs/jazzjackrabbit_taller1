@@ -77,7 +77,7 @@ std::map<std::string, float> load_config_YAML(const std::string& path) {
 
 GamesManager::GamesManager(): setupQueue(), stateQueue() {}
 
-bool GamesManager::createGame(std::string gameId, uint32_t maxPlayers,
+bool GamesManager::createGame(std::string gameId, uint32_t maxPlayers, const std::string& mapName,
                               // cppcheck-suppress passedByValue
                               std::vector<uint32_t> cheats) {
     std::lock_guard<std::mutex> lock(gamesMutex);
@@ -89,7 +89,7 @@ bool GamesManager::createGame(std::string gameId, uint32_t maxPlayers,
         activate_cheats(cheats, config);
         std::cout << "Creando game broadcaster\n";
         GameBroadcasterContainer* newGame =
-                new GameBroadcasterContainer(std::move(config), maxPlayers, setupQueue);
+                new GameBroadcasterContainer(std::move(config), maxPlayers, mapName, setupQueue);
 
         if (newGame != nullptr) {
             games[gameId] = newGame;
@@ -135,23 +135,6 @@ bool GamesManager::savedMap(std::string& mapName,
                             // cppcheck-suppress constParameter
                             std::vector<std::vector<std::string>>& mapReceived) {
 
-    /*
-        std::ofstream outputFile(mapName);
-
-        if (!outputFile.is_open()) {
-            std::cerr << "Error al abrir el archivo: " << mapName << std::endl;
-            return false;
-        }
-
-        for (const auto& row : mapReceived) {
-            for (const auto& element : row) {
-                outputFile << element << ",";
-            }
-            outputFile << std::endl;
-        }
-
-        outputFile.close();
-    */
     int fila = 0;
 
     for (const auto& row: mapReceived) {
@@ -165,12 +148,13 @@ bool GamesManager::savedMap(std::string& mapName,
     return true;
 }
 
-bool GamesManager::joinGame(const std::string& gameId, ClientHandler* client, uint32_t character) {
+bool GamesManager::joinGame(const std::string& gameId, ClientHandler* client, uint32_t character, std::string& mapName) {
     std::lock_guard<std::mutex> lock(gamesMutex);
 
     auto it = games.find(gameId);
     if (it != games.end() && it->second->canAddPlayer()) {
         it->second->addPlayer(client, character);
+        it->second->getMapName(mapName);
         return true;
     }
 
@@ -269,15 +253,20 @@ void GamesManager::run() {
         uint32_t clientId = msg.id();
         switch (msg.setup.action) {
             case Setup::JOIN_GAME: {
-                ok = joinGame(msg.setup.gameId, clients[clientId], msg.setup.character);
-                Container container = Container(Setup::JOIN_GAME, msg.setup.gameId,
-                                                msg.setup.maxPlayers, msg.setup.cheats, ok);
+                std::string mapName;
+                std::vector<std::vector<std::string>> mapReceived;
+                ok = joinGame(msg.setup.gameId, clients[clientId], msg.setup.character, mapName);
+                std::cout << mapName << std::endl;
+                Container container = Container(Setup::JOIN_GAME, msg.setup.gameId, msg.setup.maxPlayers, mapName, msg.setup.cheats, ok);
                 clients[clientId]->pushState(container);
+                createMap(mapName, mapReceived);
+                Container container2 = Container(Setup::CREATE_MAP, mapReceived, ok);
+                clients[clientId]->pushState(container2);
                 break;
             }
             case Setup::CREATE_GAME: {
                 std::cout << "Creando game\n";
-                ok = createGame(msg.setup.gameId, msg.setup.maxPlayers, msg.setup.cheats);
+                ok = createGame(msg.setup.gameId, msg.setup.maxPlayers, msg.setup.mapName, msg.setup.cheats);
                 Container container = Container(Setup::CREATE_GAME, msg.setup.gameId, msg.setup.maxPlayers,
                                     msg.setup.cheats, ok);
                 clients[clientId]->pushState(container);

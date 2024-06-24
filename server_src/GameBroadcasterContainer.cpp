@@ -1,12 +1,12 @@
 #include "headers/GameBroadcasterContainer.h"
 
 GameBroadcasterContainer::GameBroadcasterContainer(std::map<std::string, float> config,
-                                                   uint32_t maxPlayers, Queue<Message>& setupQueue):
+                                                   uint32_t maxPlayers, const std::string& mapName, Queue<Message>& setupQueue):
         maxPlayers(maxPlayers),
         actionQueue(),
         stateQueue(),
         broadcaster(clients, stateQueue, setupQueue),
-        game(actionQueue, stateQueue, maxPlayers, std::move(config), broadcaster),
+        game(actionQueue, stateQueue, maxPlayers, mapName, std::move(config), broadcaster),
         gameStarted(false) {}
 
 void GameBroadcasterContainer::addPlayer(ClientHandler* client, uint32_t character) {
@@ -19,6 +19,10 @@ void GameBroadcasterContainer::addPlayer(ClientHandler* client, uint32_t charact
             start();
         }
     }
+}
+
+void GameBroadcasterContainer::getMapName(std::string& mapName) {
+    game.getMapName(mapName);
 }
 
 bool GameBroadcasterContainer::canAddPlayer() { return (uint32_t)clients.size() < maxPlayers; }

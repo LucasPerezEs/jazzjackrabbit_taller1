@@ -66,26 +66,6 @@ int main(int argc, char* argv[]) {
                 QObject::connect(&multiplayerMenu, &MultiplayerMenu::joinGameRequested,
                                  [&](const QString& gameID, const int& elegido) {
 
-
-                                    //Aca necesito recibir por parametro el nombre del mapa elegido:
-
-                                    /*
-
-                                    std::string mapName;
-    bool is_map_received = false;
-    bool is_already_create = false;
-    std::cout << "Por favor, ingresa el nombre del nuevo mapa: ";
-    //std::cin >> mapName;
-
-    //if (mapName == "1") {
-        //mapName = "castle_earlong";
-    //}else if(mapName == "2"){
-        mapName = "medivo";
-    //}
-
-    std::vector<std::vector<std::string>> mapReceived;
-    is_map_received = client.createMap(mapName, mapReceived);
-                                    */
                                      if (client.joinGame(gameID.toStdString(), elegido)) {
                                          try {
                                              multiplayerMenu.exit = 0;

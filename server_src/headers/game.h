@@ -52,13 +52,15 @@ class Broadcaster;
 
 class Game: public Thread {
 public:
-    explicit Game(Queue<Message>& actionQueue, Queue<Container>& eventQueue, uint32_t maxPlayers,
+    explicit Game(Queue<Message>& actionQueue, Queue<Container>& eventQueue, uint32_t maxPlayers, const std::string& mapName,
                   std::map<std::string, float> config, Broadcaster& broadcaster);
 
     void run() override;
     void stop() override;
 
     void addPlayer(uint32_t clientId, uint32_t character, std::string name);
+
+    void getMapName(std::string& mapName);
 
     void send_score();
 
@@ -69,6 +71,7 @@ public:
 private:
     Mapa* m;
     uint32_t maxPlayers;
+    const std::string mapName;
     std::map<uint32_t, std::shared_ptr<Personaje>> clientCharacters;
     ListaObjetos objetos;
     std::vector<std::shared_ptr<Ente>> entes;

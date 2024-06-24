@@ -5,10 +5,11 @@
 #include "../headers/broadcaster.h"
 
 // cppcheck-suppress uninitMemberVar
-Game::Game(Queue<Message>& actionQueue, Queue<Container>& stateQueue, uint32_t maxPlayers,
+Game::Game(Queue<Message>& actionQueue, Queue<Container>& stateQueue, uint32_t maxPlayers, const std::string& mapName,
            // cppcheck-suppress passedByValue
            std::map<std::string, float> config, Broadcaster& broadcaster):
         maxPlayers(maxPlayers),
+        mapName(mapName),
         actionQueue(actionQueue),
         stateQueue(stateQueue),
         config(config),
@@ -23,7 +24,7 @@ void Game::run() {
     objetos.agregar_objeto(personaje);
     entes.push_back(personaje);
     clientCharacters[personaje->id] = personaje;*/
-    Mapa m;
+    Mapa m(mapName);
     std::shared_ptr<Ghost> ghost(new Ghost(50, 2, config));
     std::shared_ptr<Bat> bat(new Bat(75, 4, config));
     std::shared_ptr<Monkey> monkey(new Monkey(15, 1, config));
@@ -124,6 +125,10 @@ void Game::run() {
         }
     }
     _is_alive = false;
+}
+
+void Game::getMapName(std::string& mapName){
+    mapName = this->mapName;
 }
 
 void Game::addPlayer(uint32_t clientId, uint32_t character, std::string name) {

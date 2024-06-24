@@ -20,7 +20,7 @@ private:
     void send_setup(const Setup& setup);
     void send_command(const Command& cmd);
     void send_join_game(const std::string& gameId, const int character);
-    void send_create_game(const std::string& gameId, const uint32_t& maxPlayers,
+    void send_create_game(const std::string& gameId, const uint32_t& maxPlayers, const std::string& mapName,
                           const std::vector<uint32_t>& cheats);
     void send_save_map(const std::string& mapName, const std::vector<std::vector<std::string>>& map);
     void send_create_map(const std::string& mapName);

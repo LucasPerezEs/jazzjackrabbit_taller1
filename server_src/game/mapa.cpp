@@ -61,15 +61,18 @@ std::vector<std::vector<int>> Mapa::cargarCSV(const std::string& ruta) {
             matriz.push_back(fila);
         }
         archivo.close();
+    } else {
+        std::cout << "No se pudo abrir el archivo en server" << std::endl;
     }
 
     return matriz;
 }
 
-Mapa::Mapa() {
+Mapa::Mapa(const std::string& mapName) {
 
-    std::vector<std::vector<int>> tilemap =
-            cargarCSV("../client_src/assets/background/castle_erlong_map/castle_earlong_mapa.csv");
+    std::string path = "../server_src/maps/" + mapName;
+    std::vector<std::vector<int>> tilemap = cargarCSV(path);
+            //cargarCSV("../client_src/assets/background/castle_erlong_map/castle_earlong_mapa.csv");
 
     for (std::vector<int>::size_type i = tilemap.size() - 1; i >= 1; --i) {
         for (std::vector<int>::size_type j = 0; j < tilemap[i].size(); j++) {
