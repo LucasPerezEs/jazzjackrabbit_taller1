@@ -41,8 +41,8 @@ void ClientProtocol::send_setup(const Setup& setup) {
         send_create_map(setup.mapName);
     }
 
-    if (setup.action == Setup::ActionType::SAVE_MAP) {
-        send_save_map(setup.mapName, setup.map);
+    if (setup.action == Setup::ActionType::GET_MAP_LIST) {
+        send_get_map_list();
     }
 
     if (setup.action == Setup::ActionType::SET_NAME) {
@@ -70,14 +70,6 @@ void ClientProtocol::send_create_game(const std::string& gameId, const uint32_t&
     }
 }
 
-void ClientProtocol::send_save_map(const std::string& mapName,
-                                   const std::vector<std::vector<std::string>>& map) {
-    sendUChar(static_cast<unsigned char>(Setup::SAVE_MAP));
-    sendString(mapName);
-    sendMap(map);
-
-    std::cout << "Mande el mapa creado" << std::endl;
-}
 
 void ClientProtocol::send_create_map(const std::string& mapName) {
     sendUChar(static_cast<unsigned char>(Setup::CREATE_MAP));
@@ -86,6 +78,10 @@ void ClientProtocol::send_create_map(const std::string& mapName) {
 
 void ClientProtocol::send_get_game_list() {
     sendUChar(static_cast<unsigned char>(Setup::GET_GAME_LIST));
+}
+
+void ClientProtocol::send_get_map_list() {
+    sendUChar(static_cast<unsigned char>(Setup::GET_MAP_LIST));
 }
 
 void ClientProtocol::send_set_name(const std::string& clientName) {
@@ -122,12 +118,12 @@ Container ClientProtocol::receive_setup_container() {
             return receive_join_game();
         case Setup::ActionType::GET_GAME_LIST:
             return receive_get_game_list();
+        case Setup::ActionType::GET_MAP_LIST:
+            return receive_get_map_list();
         case Setup::ActionType::CLIENT_ID:
             return receive_client_id();
         case Setup::ActionType::CREATE_MAP:
             return receive_create_map();
-        case Setup::ActionType::SAVE_MAP:
-            return receive_saved_map();
         case Setup::ActionType::SET_NAME:
             return receive_saved_name();
         default:
@@ -147,11 +143,6 @@ Container ClientProtocol::receive_create_game() {
     }
 
     return Container(Setup::ActionType::CREATE_GAME, gameId, maxPlayers, cheats, ok);
-}
-
-Container ClientProtocol::receive_saved_map() {
-    bool ok = receiveBool();
-    return Container(Setup::ActionType::SAVE_MAP, ok);
 }
 
 Container ClientProtocol::receive_saved_name() {
@@ -177,6 +168,12 @@ Container ClientProtocol::receive_get_game_list() {
     bool ok = receiveBool();
     std::vector<std::string> gameList = receiveVectorString();
     return Container(Setup::ActionType::GET_GAME_LIST, gameList, ok);
+}
+
+Container ClientProtocol::receive_get_map_list() {
+    bool ok = receiveBool();
+    std::vector<std::string> mapList = receiveVectorString();
+    return Container(Setup::ActionType::GET_MAP_LIST, mapList, ok);
 }
 
 Container ClientProtocol::receive_client_id() {

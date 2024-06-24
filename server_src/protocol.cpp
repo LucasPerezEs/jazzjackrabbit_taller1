@@ -39,18 +39,18 @@ void ServerProtocol::send_setup_container(const SetupContainer& setupContainer) 
         case Setup::ActionType::JOIN_GAME:
             sendBool(setupContainer.ok);
             sendString(setupContainer.gameId);
-            std::cout << "Envio el: 1" << std::endl;
             send32(setupContainer.maxPlayers);
-            std::cout << "Envio el: 2" << std::endl;
             sendString(setupContainer.mapName);
-            std::cout << "Envio el: 3" << std::endl;
             send32(setupContainer.cheats.size());
             for (uint32_t i = 0; i < setupContainer.cheats.size(); i++) {
                 send32(setupContainer.cheats[i]);
             }
-            std::cout << "Envio el: 4" << std::endl;
             break;
         case Setup::ActionType::GET_GAME_LIST:
+            sendBool(setupContainer.ok);
+            sendVectorString(setupContainer.gameList);
+            break;
+        case Setup::ActionType::GET_MAP_LIST:
             sendBool(setupContainer.ok);
             sendVectorString(setupContainer.gameList);
             break;
@@ -61,10 +61,6 @@ void ServerProtocol::send_setup_container(const SetupContainer& setupContainer) 
         case Setup::ActionType::CREATE_MAP:
             sendBool(setupContainer.ok);
             sendMap(setupContainer.map);
-            break;
-
-        case Setup::ActionType::SAVE_MAP:
-            sendBool(setupContainer.ok);
             break;
 
         case Setup::ActionType::SET_NAME:
@@ -134,8 +130,10 @@ Message ServerProtocol::receive_message() {
             return receive_setup_message();
         case Message::Type::COMMAND:
             return receive_command_message();
-        default:
+        default:{
+            std::cout << "No encuntro el comando en protopoco.cpp server" << std::endl;
             throw std::runtime_error("Unknown message type");
+        }
     }
 }
 
@@ -150,10 +148,10 @@ Message ServerProtocol::receive_setup_message() {
             return receive_join_game();
         case Setup::ActionType::GET_GAME_LIST:
             return receive_get_game_list();
+        case Setup::ActionType::GET_MAP_LIST:
+            return receive_get_map_list();
         case Setup::ActionType::CREATE_MAP:
             return receive_create_map();
-        case Setup::ActionType::SAVE_MAP:
-            return receive_save_map();
         case Setup::ActionType::SET_NAME:
             return receive_set_name();
         default:
@@ -189,14 +187,6 @@ Message ServerProtocol::receive_create_map() {
 }
 
 
-Message ServerProtocol::receive_save_map() {
-    std::cout << "Recibiendo mensaje de mapa guardado\n";
-    std::string mapName = receiveString();
-    std::vector<std::vector<std::string>> map = receiveMap();
-
-    return Message(Setup::ActionType::SAVE_MAP, mapName, map);
-}
-
 Message ServerProtocol::receive_set_name() {
     std::string ClientName = receiveString();
 
@@ -212,6 +202,11 @@ Message ServerProtocol::receive_join_game() {
 Message ServerProtocol::receive_get_game_list() {
     // No additional data needed for GET_GAME_LIST setup
     return Message(Setup::ActionType::GET_GAME_LIST);
+}
+
+Message ServerProtocol::receive_get_map_list() {
+    // No additional data needed for GET_GAME_LIST setup
+    return Message(Setup::ActionType::GET_MAP_LIST);
 }
 
 

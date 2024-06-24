@@ -39,7 +39,7 @@ struct Setup {
         GET_GAME_LIST = 0x33,
         CLIENT_ID = 0x34,
         CREATE_MAP = 0x35,
-        SAVE_MAP = 0x36,
+        GET_MAP_LIST = 0x36,
         SET_NAME = 0x37,
     };
     ActionType action;

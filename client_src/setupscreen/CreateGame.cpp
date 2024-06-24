@@ -1,6 +1,6 @@
 #include "CreateGame.h"
 
-CreateGame::CreateGame(QWidget* parent): QWidget(parent) { init(); }
+CreateGame::CreateGame(QWidget* parent): QWidget(parent) {}
 
 std::vector<uint32_t> CreateGame::saveCheats() {
     std::vector<uint32_t> cheatList;
@@ -38,11 +38,9 @@ void CreateGame::init() {
 
     //SeleccionarMapa
     mapNameLabel = new QLabel("Map Selected:", this);
-    std::string rutaCarpeta = "../server_src/maps"; //El nombre deberia pedirlo por socket.
-    std::vector<std::string> listaElementos = obtenerElementosEnCarpeta(rutaCarpeta);
+    
     QStringList gameOptions;
-    gameOptions << " ";
-    for (const auto& elemento : listaElementos) {
+    for (const auto& elemento : client->mapList) {
         if (elemento.find("spawn") == std::string::npos) {
             gameOptions << QString::fromStdString(elemento); 
         }
@@ -88,18 +86,8 @@ void CreateGame::init() {
     });
 }
 
-std::vector<std::string> CreateGame::obtenerElementosEnCarpeta(const std::string& ruta) {
-    std::vector<std::string> elementos;
-
-    try {
-        for (const auto& archivo : std::filesystem::directory_iterator(ruta)) {
-            elementos.push_back(archivo.path().filename().string());
-        }
-    } catch (const std::filesystem::filesystem_error& e) {
-        std::cerr << "Error al leer la carpeta: " << e.what() << std::endl;
-    }
-
-    return elementos;
+void CreateGame::setClient(Client* client){
+    this->client = client;
 }
 
 CreateGame::~CreateGame() {}
