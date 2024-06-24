@@ -50,6 +50,8 @@ public:
 
 class Ente: public Objeto {  // objetos con vida
 protected:
+    bool killed;
+    std::chrono::system_clock::time_point last_killed;
     int direccion;          // para donde se mueven
     unsigned int contador;  // se usa para llevar el tiempo de muerte y eso
 public:

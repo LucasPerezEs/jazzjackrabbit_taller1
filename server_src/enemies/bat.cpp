@@ -31,19 +31,24 @@ void Bat::update_vivo(ListaObjetos& objetos, Queue<Container>& q,
                       std::map<uint32_t, std::shared_ptr<Personaje>>& clientCharacters,
                       std::shared_ptr<Ente> e) {
     if (vida <= 0) {
-        if (contador == 1) {  // si acaba de morir dropea una municion o moneda o zanahoria
+        if (!killed) { // si acaba de morir dropea una municion o moneda o zanahoria
+            killed = true;
+            last_killed = std::chrono::system_clock::now();
             drop_item(objetos, q);
         }
-        if (contador == 240) {  // despues de un rato revive
+        else if (std::chrono::duration_cast<std::chrono::milliseconds>(
+            std::chrono::system_clock::now() - last_killed)
+            .count() >= 3000) {  // despues de un rato revive
+            killed = false;
             vida = max_life;
             borrar = false;
             objetos.agregar_objeto(e);
-            contador = 0;
+            //contador = 0;
             Container c(0, this->id, this->x, this->y, this->width, this->height, this->direccion,
                         AnimationType::FLY, EntityType::BAT, 0, {EntityType::NONE_ENTITY, 0}, 0,
                         "");
             q.try_push(c);
         }
-        contador++;
+        //contador++;
     }
 }

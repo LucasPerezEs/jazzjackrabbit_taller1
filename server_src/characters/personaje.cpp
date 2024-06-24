@@ -333,7 +333,9 @@ void Personaje::update_vivo(ListaObjetos& objetos, Queue<Container>& q,
                             std::shared_ptr<Ente> e) {
     if (vida <= 0) {
         // Me acaban de matar
-        if (contador == 0) {
+        if (!killed) {
+            killed = true;
+            last_killed = std::chrono::system_clock::now();
             if (killed_by_id != -1) {
                 std::shared_ptr<Personaje> killer = clientCharacters[killed_by_id];
                 if (killer.get()) {
@@ -342,21 +344,22 @@ void Personaje::update_vivo(ListaObjetos& objetos, Queue<Container>& q,
                 }
             }
         }
-
-        if (contador ==
-            240) {  // revive despues de tantos ciclos y lo agrego al vector de colisiones
+        else if (std::chrono::duration_cast<std::chrono::milliseconds>(
+            std::chrono::system_clock::now() - last_killed)
+            .count() >= 3000) {  // revive despues de tantos ciclos y lo agrego al vector de colisiones
+            killed = false;
             vida = config["player_life"];
             borrar = false;
             killed_by_id = -1;
             score = 0;
             objetos.agregar_objeto(e);
-            contador = -1;
+            //contador = -1;
             AmmoData ammo = {this->arma.selected_ammo(), this->arma.remaining_ammo()};
             Container c(3, this->id, this->x, this->y, this->width, this->height, this->direccion,
                         this->an_type, this->en_type, this->vida, ammo, this->score, this->name);
             q.try_push(c);
         }
-        contador++;
+        //contador++;
     }
 }
 
@@ -456,6 +459,10 @@ void Personaje::check_dead(int killer_id) {
         killed_by_id = killer_id;  // Me guardo el id de quien me mato
         std::cout << "Me mato: " << killed_by_id << std::endl;
     }
+}
+
+PlayerState Personaje::get_state() {
+    return state;
 }
 
 void Personaje::disparar(ListaObjetos& objetos) {
