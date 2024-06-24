@@ -1,13 +1,15 @@
 #include "headers/GameBroadcasterContainer.h"
 
 GameBroadcasterContainer::GameBroadcasterContainer(std::map<std::string, float> config,
-                                                   uint32_t maxPlayers, Queue<Message>& setupQueue):
+                                                   uint32_t maxPlayers, const std::string& mapName, Queue<Message>& setupQueue):
         maxPlayers(maxPlayers),
         actionQueue(),
         stateQueue(),
         broadcaster(clients, stateQueue, setupQueue),
-        game(actionQueue, stateQueue, maxPlayers, std::move(config), broadcaster),
-        gameStarted(false) {}
+        gameStarted(false),
+        gameEnded(false),
+        game(actionQueue, stateQueue, maxPlayers, mapName, std::move(config), broadcaster, gameStarted, gameEnded) {}
+
 
 void GameBroadcasterContainer::addPlayer(ClientHandler* client, uint32_t character) {
     if (canAddPlayer()) {
@@ -19,6 +21,10 @@ void GameBroadcasterContainer::addPlayer(ClientHandler* client, uint32_t charact
             start();
         }
     }
+}
+
+void GameBroadcasterContainer::getMapName(std::string& mapName) {
+    game.getMapName(mapName);
 }
 
 bool GameBroadcasterContainer::canAddPlayer() { return (uint32_t)clients.size() < maxPlayers; }
@@ -43,12 +49,19 @@ void GameBroadcasterContainer::join() {
 }
 
 bool GameBroadcasterContainer::is_running() {
+    if (gameEnded) {
+        return false;
+    }
     if (gameStarted) {
         return game.is_running();
     }
     return true;
 }
 
+
+bool GameBroadcasterContainer::game_started() {
+    return gameStarted;
+}
 
 int GameBroadcasterContainer::max_players() { return maxPlayers; }
 

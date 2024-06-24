@@ -20,12 +20,17 @@ public:
     SetupContainer(Setup::ActionType setupType, std::vector<std::string>& gameList, bool ok);
     SetupContainer(Setup::ActionType setupType, std::vector<std::vector<std::string>>& mapReceived,
                    bool ok);
+    
+    SetupContainer(Setup::ActionType setupType, const std::string& gameId, uint32_t maxPlayers, const std::string& mapName,
+                   std::vector<uint32_t> cheats, bool ok);
+
     SetupContainer(Setup::ActionType setupType, uint32_t id, bool ok);
     SetupContainer(Setup::ActionType setupType, bool ok);
 
     Setup::ActionType setupType;
     std::string gameId;
     uint32_t maxPlayers;
+    std::string mapName;
     std::vector<std::vector<std::string>> map;
     std::vector<uint32_t> cheats;
     std::vector<std::string> gameList;
@@ -88,6 +93,9 @@ public:
     // Setup map container
     Container(Setup::ActionType setupType, std::vector<std::vector<std::string>>& mapReceived,
               bool ok);
+
+    Container(Setup::ActionType setupType, const std::string& gameId, uint32_t maxPlayers, const std::string& mapName,
+                   std::vector<uint32_t> cheats, bool ok);
 
     // Setup confirmmation map saved
     Container(Setup::ActionType setupType, bool ok);

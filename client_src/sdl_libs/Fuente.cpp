@@ -37,4 +37,27 @@ void Fuente::render(float pos_x, float pos_y, const std::string& texto, const Sd
     texture->render(dst);
 }
 
+void Fuente::render(float pos_x, float pos_y, float width, float hight, const std::string& texto, const SdlWindow& window,
+                    SDL_Color color) {
+    SdlTexture* texture = new SdlTexture(this->fuente, texto, window, color);
+
+    int fixed_width = width;
+    int max_hight = 150;
+    int min_hight = 50;
+
+    float aspect_ratio = static_cast<float>(texture->getHeight() / texture->getWidth());
+    int scaled_hight = static_cast<int>(fixed_width * aspect_ratio);
+
+    if (scaled_hight > max_hight) {
+        scaled_hight = max_hight;
+    }
+
+    if (scaled_hight < min_hight) {
+        scaled_hight = min_hight;
+    }
+
+    Area dst(pos_x, pos_y, width, hight);
+    texture->render(dst);
+}
+
 TTF_Font* Fuente::get_font() const { return fuente; }

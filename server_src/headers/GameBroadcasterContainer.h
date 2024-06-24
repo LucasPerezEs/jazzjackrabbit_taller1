@@ -13,16 +13,18 @@
 
 class GameBroadcasterContainer {
 public:
-    GameBroadcasterContainer(std::map<std::string, float> config, uint32_t maxPlayers,
+    GameBroadcasterContainer(std::map<std::string, float> config, uint32_t maxPlayers, const std::string& mapName,
                              Queue<Message>& setupQueue);
 
     void addPlayer(ClientHandler* client, uint32_t character);
     bool canAddPlayer();
+    void getMapName(std::string& mapName);
 
     void start();
     void stop();
     void join();
     bool is_running();
+    bool game_started();
     int max_players();
     int number_of_players();
 
@@ -34,9 +36,9 @@ private:
     Queue<Container> stateQueue;
 
     Broadcaster broadcaster;
-    Game game;
     bool gameStarted;
     bool gameEnded;
+    Game game;
 };
 
 #endif  // GAMEBROADCASTERCONTAINER_H

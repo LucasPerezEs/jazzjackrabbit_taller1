@@ -26,7 +26,7 @@ void ClientProtocol::send_command(const Command& cmd) {
 void ClientProtocol::send_setup(const Setup& setup) {
 
     if (setup.action == Setup::ActionType::CREATE_GAME) {
-        send_create_game(setup.gameId, setup.maxPlayers, setup.cheats);
+        send_create_game(setup.gameId, setup.maxPlayers, setup.mapName, setup.cheats);
     }
 
     if (setup.action == Setup::ActionType::JOIN_GAME) {
@@ -58,11 +58,12 @@ void ClientProtocol::send_join_game(const std::string& gameId, const int charact
     send32(character);
 }
 
-void ClientProtocol::send_create_game(const std::string& gameId, const uint32_t& maxPlayers,
+void ClientProtocol::send_create_game(const std::string& gameId, const uint32_t& maxPlayers, const std::string& mapName,
                                       const std::vector<uint32_t>& cheats) {
     sendUChar(static_cast<unsigned char>(Setup::CREATE_GAME));
     sendString(gameId);
     send32(maxPlayers);
+    sendString(mapName);
     send32(cheats.size());
     for (uint32_t i = 0; i < cheats.size(); i++) {
         send32(cheats[i]);
@@ -162,13 +163,14 @@ Container ClientProtocol::receive_join_game() {
     bool ok = receiveBool();
     std::string gameId = receiveString();
     uint32_t maxPlayers = receiveUInt32();
+    std::string mapName = receiveString();
     uint32_t nCheats = receiveUInt32();
     std::vector<uint32_t> cheats;
     for (uint32_t i = 0; i < nCheats; i++) {
         cheats.insert(cheats.end(), receiveUInt32());
     }
-    std::cout << maxPlayers << std::endl;
-    return Container(Setup::ActionType::JOIN_GAME, gameId, maxPlayers, cheats, ok);
+    //std::cout << maxPlayers << std::endl;
+    return Container(Setup::ActionType::JOIN_GAME, gameId, maxPlayers, mapName, cheats, ok);
 }
 
 Container ClientProtocol::receive_get_game_list() {

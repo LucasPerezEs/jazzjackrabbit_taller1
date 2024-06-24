@@ -41,6 +41,7 @@ void CreateGame::init() {
     std::string rutaCarpeta = "../server_src/maps"; //El nombre deberia pedirlo por socket.
     std::vector<std::string> listaElementos = obtenerElementosEnCarpeta(rutaCarpeta);
     QStringList gameOptions;
+    gameOptions << " ";
     for (const auto& elemento : listaElementos) {
         if (elemento.find("spawn") == std::string::npos) {
             gameOptions << QString::fromStdString(elemento); 

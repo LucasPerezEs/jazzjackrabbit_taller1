@@ -19,6 +19,9 @@ public:
     void render(float pos_x, float pos_y, const std::string& texto, const SdlWindow& window,
                 SDL_Color color);
 
+    void render(float pos_x, float pos_y, float widht, float hight, const std::string& texto, const SdlWindow& window,
+                SDL_Color color);
+
     TTF_Font* get_font() const;
 
     ~Fuente();

@@ -46,7 +46,7 @@ std::vector<std::vector<std::string>> Client::getMap(){
 bool Client::createGame(const std::string& gameId, const std::string& mapName, const uint32_t maxPlayers,
                         const std::vector<uint32_t>& cheats) {
 
-    Message msg(Setup::ActionType::CREATE_GAME, gameId, maxPlayers, cheats);
+    Message msg(Setup::ActionType::CREATE_GAME, gameId, maxPlayers, mapName, cheats);
     client_protocol.send_message(msg);
     std::cout << "mando create game con nombre: " << gameId << "\n";
     Container container = client_protocol.receive_container();
@@ -54,25 +54,35 @@ bool Client::createGame(const std::string& gameId, const std::string& mapName, c
         container = client_protocol.receive_container();
     }
 
-    this->mapName = mapName;
-    createMap(mapName, map);
+    //Solicito el mapa.
+    //this->mapName = mapName;
+    //createMap(mapName, map);
 
     return container.setup_container->ok;
 }
 
 bool Client::joinGame(const std::string& gameId, const int character) {
 
+    //std::string mapName;
     Message msg(Setup::ActionType::JOIN_GAME, character, gameId);
     client_protocol.send_message(msg);
     // recibir confirmacion
 
+    std::cout << "Esperando container" << std::endl;
     Container container = client_protocol.receive_container();
+    std::cout << "El container es recibido" << std::endl;
 
+
+    Container container2 = client_protocol.receive_container();
     /*if (container.setup_container->ok){
         this->event_handler.start();
         this->updater.start();
         this->client_receiver.start();
     }*/
+    map = container2.setup_container->map;
+    //createMap(mapName, map);
+    std::cout << "El container recibido es:" << mapName << std::endl;
+
 
     return container.setup_container->ok;
 }
@@ -114,8 +124,11 @@ bool Client::refreshGameList(std::vector<std::string>& gameList) {
     Message msg(Setup::ActionType::GET_GAME_LIST);
     client_protocol.send_message(msg);
     // recibir gamelist
-
     Container container = client_protocol.receive_container();
+    while (container.setup_container.get() == NULL || container.setup_container->setupType != Setup::ActionType::GET_GAME_LIST) {
+        container = client_protocol.receive_container();
+    }
+
     gameList = container.setup_container->gameList;
 
     return container.setup_container->ok;

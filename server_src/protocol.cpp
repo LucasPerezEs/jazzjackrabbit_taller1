@@ -39,11 +39,16 @@ void ServerProtocol::send_setup_container(const SetupContainer& setupContainer) 
         case Setup::ActionType::JOIN_GAME:
             sendBool(setupContainer.ok);
             sendString(setupContainer.gameId);
+            std::cout << "Envio el: 1" << std::endl;
             send32(setupContainer.maxPlayers);
+            std::cout << "Envio el: 2" << std::endl;
+            sendString(setupContainer.mapName);
+            std::cout << "Envio el: 3" << std::endl;
             send32(setupContainer.cheats.size());
             for (uint32_t i = 0; i < setupContainer.cheats.size(); i++) {
                 send32(setupContainer.cheats[i]);
             }
+            std::cout << "Envio el: 4" << std::endl;
             break;
         case Setup::ActionType::GET_GAME_LIST:
             sendBool(setupContainer.ok);
@@ -167,12 +172,13 @@ Message ServerProtocol::receive_create_game() {
     std::cout << "Recibiendo mensaje de create game\n";
     std::string gameId = receiveString();
     uint32_t maxPlayers = receiveUInt32();
+    std::string mapName = receiveString();
     uint32_t nCheats = receiveUInt32();
     std::vector<uint32_t> cheats;
     for (uint32_t i = 0; i < nCheats; i++) {
         cheats.insert(cheats.end(), receiveUInt32());
     }
-    return Message(Setup::ActionType::CREATE_GAME, gameId, maxPlayers, cheats);
+    return Message(Setup::ActionType::CREATE_GAME, gameId, maxPlayers, mapName, cheats);
 }
 
 Message ServerProtocol::receive_create_map() {

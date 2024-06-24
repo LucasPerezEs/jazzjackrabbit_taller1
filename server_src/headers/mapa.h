@@ -43,7 +43,7 @@ public:
     std::vector<DiagonalIzquierda*> diagonalesIzq;
     std::vector<DiagonalDerecha*> diagonalesDer;
     std::vector<std::vector<int>> cargarCSV(const std::string& ruta);
-    Mapa();
+    Mapa(const std::string& mapName);
     bool CheckColision(float x, float y, float w, float h);
     ~Mapa();
 };

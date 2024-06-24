@@ -29,6 +29,13 @@ SetupContainer::SetupContainer(Setup::ActionType setupType,
         setupType(setupType), map(mapReceived), ok(ok) {}
 
 
+// cppcheck-suppress uninitMemberVar
+SetupContainer::SetupContainer(Setup::ActionType setupType, const std::string& gameId,
+                               // cppcheck-suppress passedByValue
+                               uint32_t maxPlayers, const std::string& mapName, std::vector<uint32_t> cheats, bool ok):
+        setupType(setupType), gameId(gameId), maxPlayers(maxPlayers), mapName(mapName), cheats(cheats), ok(ok) {}
+
+
 // GameContainer implementation
 GameContainer::GameContainer(uint32_t msg_code, int id, float x, float y, float w, float h,
                              int direction, AnimationType an_type, EntityType en_type, int health,
@@ -85,9 +92,18 @@ Container::Container(Setup::ActionType setupType, uint32_t id, bool ok):
         sound_container(nullptr),
         _type(Type::SETUP) {}
 
+
 Container::Container(Setup::ActionType setupType,
                      std::vector<std::vector<std::string>>& mapReceived, bool ok):
         setup_container(new SetupContainer(setupType, mapReceived, ok)),
+        game_container(nullptr),
+        sound_container(nullptr),
+        _type(Type::SETUP) {}
+
+Container::Container(Setup::ActionType setupType, const std::string& gameId, uint32_t maxPlayers, const std::string& mapName,
+                     // cppcheck-suppress passedByValue
+                     std::vector<uint32_t> cheats, bool ok):
+        setup_container(new SetupContainer(setupType, gameId, maxPlayers, mapName, cheats, ok)),
         game_container(nullptr),
         sound_container(nullptr),
         _type(Type::SETUP) {}
