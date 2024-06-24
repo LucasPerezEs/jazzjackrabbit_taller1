@@ -10,33 +10,14 @@ Client::Client(const std::string& hostname, const std::string& servername):
 void Client::go_online() {
 
     online = true;
-
-    // se inicia una vez entrado al juego
-    // this->event_handler.start();
-    // this->updater.start();
-    // this->client_receiver.start();
 }
 
 bool Client::is_online() { return online; }
-
-/*void Client::set_id(int i) {
-    id = i;
-    updater.set_clientId(i);
-}*/
 
 int Client::get_id() { return id; }
 
 void Client::close() {
     this->client_protocol.stop();
-
-    // this->event_handler.close();
-    // this->event_handler.join();
-
-    // this->client_receiver.close();
-    // this->client_receiver.join();
-
-    // this->updater.close();
-    // this->updater.join();
 }
 
 std::vector<std::vector<std::string>> Client::getMap(){
@@ -48,62 +29,30 @@ bool Client::createGame(const std::string& gameId, const std::string& mapName, c
 
     Message msg(Setup::ActionType::CREATE_GAME, gameId, maxPlayers, mapName, cheats);
     client_protocol.send_message(msg);
-    std::cout << "mando create game con nombre: " << gameId << "\n";
     Container container = client_protocol.receive_container();
     while (container.setup_container.get() == NULL || container.setup_container->setupType != Setup::ActionType::CREATE_GAME) {
         container = client_protocol.receive_container();
     }
-
-    //Solicito el mapa.
-    //this->mapName = mapName;
-    //createMap(mapName, map);
-
     return container.setup_container->ok;
 }
 
 bool Client::joinGame(const std::string& gameId, const int character) {
 
-    //std::string mapName;
     Message msg(Setup::ActionType::JOIN_GAME, character, gameId);
     client_protocol.send_message(msg);
-    // recibir confirmacion
 
-    std::cout << "Esperando container" << std::endl;
     Container container = client_protocol.receive_container();
-    std::cout << "El container es recibido" << std::endl;
-
+    map = container.setup_container->map;
 
     Container container2 = client_protocol.receive_container();
-    /*if (container.setup_container->ok){
-        this->event_handler.start();
-        this->updater.start();
-        this->client_receiver.start();
-    }*/
-    map = container2.setup_container->map;
-    //createMap(mapName, map);
-    std::cout << "El container recibido es:" << mapName << std::endl;
 
+    if(container.setup_container->ok == true && container2.setup_container->ok == true){
+        return true;
+    } else {
+        return false;
+    }
 
-    return container.setup_container->ok;
 }
-
-bool Client::createMap(const std::string& mapName, std::vector<std::vector<std::string>>& mapReceived){
-
-    std::cout << "Estoy en client createMap" << std::endl;
-
-    Message msg(Setup::ActionType::CREATE_MAP, mapName);
-    client_protocol.send_message(msg);
-
-    std::cout << "Esperando el container" << std::endl;
-
-    Container container = client_protocol.receive_container();
-
-    std::cout << "Cargando el container a mapReceived" << std::endl;
-    mapReceived = container.setup_container->map;
-    return container.setup_container->ok;
-}
-
-
 
 bool Client::saveMap(const std::string& mapName, std::vector<std::vector<std::string>>& mapSended){
 
@@ -142,7 +91,5 @@ bool Client::setName(const std::string& clientName) {
 
     return container.setup_container->ok;
 }
-
-// EventHandler* Client::get_EventHandler() { return &event_handler; }
 
 ClientProtocol& Client::get_protocol() { return client_protocol; }

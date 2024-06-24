@@ -126,7 +126,6 @@ bool GamesManager::createMap(std::string& mapName,
         fila.push_back(linea);
         mapReceived.push_back(fila);
     }
-
     archivo.close();
     return true;
 }
@@ -148,13 +147,12 @@ bool GamesManager::savedMap(std::string& mapName,
     return true;
 }
 
-bool GamesManager::joinGame(const std::string& gameId, ClientHandler* client, uint32_t character, std::string& mapName) {
+bool GamesManager::joinGame(const std::string& gameId, ClientHandler* client, uint32_t character) {
     std::lock_guard<std::mutex> lock(gamesMutex);
 
     auto it = games.find(gameId);
     if (it != games.end() && it->second->canAddPlayer()) {
         it->second->addPlayer(client, character);
-        it->second->getMapName(mapName);
         return true;
     }
 
@@ -256,15 +254,21 @@ void GamesManager::run() {
         uint32_t clientId = msg.id();
         switch (msg.setup.action) {
             case Setup::JOIN_GAME: {
+
                 std::string mapName;
                 std::vector<std::vector<std::string>> mapReceived;
-                ok = joinGame(msg.setup.gameId, clients[clientId], msg.setup.character, mapName);
-                std::cout << mapName << std::endl;
-                Container container = Container(Setup::JOIN_GAME, msg.setup.gameId, msg.setup.maxPlayers, mapName, msg.setup.cheats, ok);
-                clients[clientId]->pushState(container);
+
+                auto it = games.find(msg.setup.gameId);
+                it->second->getMapName(mapName);
                 createMap(mapName, mapReceived);
-                Container container2 = Container(Setup::CREATE_MAP, mapReceived, ok);
+                Container container = Container(Setup::CREATE_MAP, mapReceived, ok);
+                clients[clientId]->pushState(container);
+
+                ok = joinGame(msg.setup.gameId, clients[clientId], msg.setup.character);
+                Container container2 = Container(Setup::JOIN_GAME, msg.setup.gameId, msg.setup.maxPlayers, mapName, msg.setup.cheats, ok);
                 clients[clientId]->pushState(container2);
+                //std::cout << mapName << std::endl;
+
                 break;
             }
             case Setup::CREATE_GAME: {

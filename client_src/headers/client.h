@@ -15,7 +15,6 @@
 #include "model_updater.h"
 #include "player.h"
 #include "protocol.h"
-// #include "SdlWindow.h"
 
 
 class Client {
@@ -24,8 +23,6 @@ public:
 
     bool createGame(const std::string& gameId, const std::string& mapName, const uint32_t maxPlayers,
                     const std::vector<uint32_t>& cheats);
-
-    bool createMap(const std::string& mapName, std::vector<std::vector<std::string>>& mapReceived);
 
     bool saveMap(const std::string& mapName, std::vector<std::vector<std::string>>& mapSended);
 
@@ -42,7 +39,6 @@ public:
 
     std::vector<std::vector<std::string>> getMap();
 
-
     ClientProtocol& get_protocol();
     std::string mapName;
     std::vector<std::vector<std::string>> map;
@@ -51,13 +47,8 @@ public:
 
 private:
     ClientProtocol client_protocol;
-    // ClientReceiver client_receiver;
-    // EventHandler event_handler;  // eventos teclado (sender)
-    // ModelUpdater updater;        // actualizar modelos (receiver)
     bool online;
     int id;
-
-    // SdlWindow& window;
 };
 
 #endif

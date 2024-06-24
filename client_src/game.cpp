@@ -38,11 +38,6 @@ Game::Game(Client& client):
         std::cout << "Error al crear la textura: " << SDL_GetError() << std::endl;
     SDL_FreeSurface(loadingSurface);
 
-
-    // Aca deberia ir un seleccionador de mapas pero todavia no se implementó (en proceso).
-    MapCreator load_map(client);
-    // tilemap = load_map.cargarCSV(
-    //         "../client_src/assets/background/castle_erlong_map/castle_earlong_mapa.csv");
     tilemap = client.getMap();
 
     // cppcheck-suppress noOperatorEq

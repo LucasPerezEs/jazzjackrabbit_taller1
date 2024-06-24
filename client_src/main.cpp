@@ -2,12 +2,10 @@
 #include <iostream>
 
 #include "SDL2/SDL_mixer.h"
-#include "headers/map_creator.h"
 #include "headers/game.h"
 #include "headers/player.h"
 #include <QApplication>
 #include <QVBoxLayout>
-
 
 #include "setupscreen/ConnectMenu.h"
 #include "setupscreen/MultiplayerMenu.h"

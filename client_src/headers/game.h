@@ -23,7 +23,6 @@
 #include "entity.h"
 #include "event_handler.h"
 #include "model_updater.h"
-#include "map_creator.h"
 #include "drawer.h"
 #include "protocol.h"
 
