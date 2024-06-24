@@ -27,7 +27,9 @@ void Projectile::update(
     x += vel;
 
     if (mapa.CheckColision(x, y, width, height)) {
-        this->borrar = true;
+        if (en_type != EntityType::ROCKET) {
+            this->borrar = true;
+        }
     }
     Container c(0, this->id, this->x, this->y, this->width, this->height, this->d, this->an_type,
                 this->en_type, 0, {EntityType::NONE_ENTITY, 0}, 0, "");

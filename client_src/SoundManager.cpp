@@ -26,7 +26,6 @@ void SoundManager::init_sounds() {
     this->sounds[BULLET][SHOT_SOUND] = new Sound("../client_src/assets/music/bullet_sound.wav");
     this->sounds[ROCKET][SHOT_SOUND] = new Sound("../client_src/assets/music/rocket_sound.wav");
 
-
     this->sounds[GOLD_COIN][PICKUP_SOUND] =
             new Sound("../client_src/assets/music/goldcoin_sound.wav");
     this->sounds[BULLET][PICKUP_SOUND] = new Sound("../client_src/assets/music/ammo_sound.wav");

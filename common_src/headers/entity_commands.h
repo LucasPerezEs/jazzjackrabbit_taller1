@@ -34,7 +34,8 @@ enum AnimationType {
     SHOOT_IDLE = 0x22,
     FLY = 0x23,
     HURT = 0x24,
-    INTOXICATED_IDLE = 0x25
+    INTOXICATED_IDLE = 0x25,
+    EXPLOSION = 0x26
 };
 
 enum AnimationSpeed { FAST = 1, DEFAULT = 2, SLOW = 3 };

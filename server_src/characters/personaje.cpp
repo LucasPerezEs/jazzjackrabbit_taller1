@@ -427,7 +427,9 @@ void Personaje::colision(Projectile& b) {
         last_hurt = std::chrono::system_clock::now();
         tiempo = std::chrono::system_clock::now();
         RecibirDanio(b.danio);
-        b.borrar = true;
+        if (b.en_type != EntityType::ROCKET) {
+            b.borrar = true;
+        }
         Container c(en_type, SoundType::HURT1_SOUND, id);
         q.try_push(c);
     }

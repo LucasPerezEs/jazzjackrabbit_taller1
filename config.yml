@@ -40,7 +40,7 @@ monkey:
  life: 50
  damage: 5
  speed: 0
- prob_carrot: 25
+ prob_carrot: 0
  prob_ammo: 25
  prob_goldcoin: 25
  prob_rocket: 25
@@ -71,7 +71,7 @@ rocket:
   speed: 1
   damage: 50
   fire_rate: 1 # 4 tiros/seg (250ms de espera)
-  initial_ammo: 0
+  initial_ammo: 100
 
 banana:
   speed: 1
