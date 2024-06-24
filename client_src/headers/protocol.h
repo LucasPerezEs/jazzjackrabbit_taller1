@@ -25,6 +25,7 @@ private:
     void send_save_map(const std::string& mapName, const std::vector<std::vector<std::string>>& map);
     void send_create_map(const std::string& mapName);
     void send_get_game_list();
+    void send_get_map_list();
     void send_set_name(const std::string& clientName);
 
     Container receive_setup_container();
@@ -33,6 +34,7 @@ private:
     Container receive_create_game();
     Container receive_join_game();
     Container receive_get_game_list();
+    Container receive_get_map_list();
     Container receive_client_id();
     Container receive_create_map();
     Container receive_saved_map();

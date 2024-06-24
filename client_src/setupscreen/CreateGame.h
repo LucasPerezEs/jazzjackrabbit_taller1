@@ -9,10 +9,10 @@
 #include <QWidget>
 #include <vector>
 #include <iostream>
-#include <filesystem>
 #include <string>
 #include <QComboBox>
 
+#include "../headers/client.h"
 #include "../../common_src/headers/cheat_commands.h"
 
 class CreateGame: public QWidget {
@@ -22,11 +22,15 @@ public:
     explicit CreateGame(QWidget* parent = nullptr);
     virtual ~CreateGame();
 
+    void init();
+    void setClient(Client* client);
+
 signals:
     void createGameRequested(const QString& gameName, const std::string& map_selected, const uint32_t& maxPlayers,
                              const std::vector<uint32_t>& cheats);
 
 private:
+    Client* client;
     QLabel* mapNameLabel;
     QLabel* gameNameLabel;
     QLineEdit* gameNameInput;
@@ -42,11 +46,8 @@ private:
     QCheckBox* extraTimeCheckBox;
 
     QPushButton* createButton;
-
-    std::vector<std::string> obtenerElementosEnCarpeta(const std::string& ruta);
     QComboBox* mapComboBox;
 
-    void init();
     std::vector<uint32_t> saveCheats();
 };
 

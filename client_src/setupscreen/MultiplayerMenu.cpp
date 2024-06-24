@@ -1,16 +1,22 @@
 #include "MultiplayerMenu.h"
 
-MultiplayerMenu::MultiplayerMenu(QWidget* parent):
+MultiplayerMenu::MultiplayerMenu(QWidget* parent, Client* client):
         QDialog(parent),
         clientNameWidget(new ClientName()),
         createGameWidget(new CreateGame()),
         joinGameWidget(new JoinGame()),
         gameListWidget(new GameList()) {
     exit = 1;
+    createGameWidget->setClient(client);
+    createGameWidget->init();
     init();
 }
 
 void MultiplayerMenu::init() {
+
+    //createGameWidget->setClient(client);
+    //createGameWidget->init();
+
     QVBoxLayout* layout = new QVBoxLayout(this);
 
     createGameButton = new QPushButton("Create Game", this);
@@ -117,6 +123,11 @@ void MultiplayerMenu::onCreateMapClicked() {
     gameListWidget->hide();
     emit createMapRequested();
 }
+
+void MultiplayerMenu::setClient(Client* client){
+    createGameWidget->setClient(client);
+}
+
 
 void MultiplayerMenu::updateGameList(const std::vector<std::string>& gameList) {
     QStringList qStringList;

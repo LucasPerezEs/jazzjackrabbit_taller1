@@ -12,6 +12,7 @@
 #include <string>
 #include <vector>
 
+#include "../headers/client.h"
 #include "CreateGame.h"
 #include "CreateMap.h"
 #include "GameList.h"
@@ -23,13 +24,15 @@ class MultiplayerMenu: public QDialog {
 
 public:
     int exit;
-    explicit MultiplayerMenu(QWidget* parent = nullptr);
+    MultiplayerMenu(QWidget* parent, Client* client);
+    void init();
     void updateGameList(const std::vector<std::string>& gameList);
     void nameSet();
     void showGameCreatedMessage();
     void showGameCreationFailedMessage();
     void showJoinGameFailedMessage();
     void showSetNameFailedMessage();
+    void setClient(Client* client);
     virtual ~MultiplayerMenu();
 
 signals:
@@ -52,8 +55,8 @@ private:
     CreateGame* createGameWidget;
     JoinGame* joinGameWidget;
     GameList* gameListWidget;
+    Client* client;
 
-    void init();
     void onCreateGameClicked();
     void onJoinGameClicked();
     void onRefreshClicked();

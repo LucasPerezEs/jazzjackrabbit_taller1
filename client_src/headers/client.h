@@ -24,8 +24,6 @@ public:
     bool createGame(const std::string& gameId, const std::string& mapName, const uint32_t maxPlayers,
                     const std::vector<uint32_t>& cheats);
 
-    bool saveMap(const std::string& mapName, std::vector<std::vector<std::string>>& mapSended);
-
     bool joinGame(const std::string& gameId, const int elegido);
     bool refreshGameList(std::vector<std::string>& gameList);
 
@@ -41,6 +39,7 @@ public:
 
     ClientProtocol& get_protocol();
     std::string mapName;
+    std::vector<std::string> mapList;
     std::vector<std::vector<std::string>> map;
 
     void close();
@@ -49,6 +48,8 @@ private:
     ClientProtocol client_protocol;
     bool online;
     int id;
+
+    bool getMaps();
 };
 
 #endif

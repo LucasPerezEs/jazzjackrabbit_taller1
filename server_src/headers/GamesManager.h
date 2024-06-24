@@ -4,6 +4,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <filesystem>
 
 #include <yaml-cpp/yaml.h>
 
@@ -26,6 +27,7 @@ public:
     bool savedMap(std::string& mapName, std::vector<std::vector<std::string>>& mapReceived);
     bool createMap(std::string& mapName, std::vector<std::vector<std::string>>& mapReceived);
     bool setName(std::string& clientName, uint32_t id);
+    bool listMaps(std::vector<std::string>& mapList);
     virtual void run() override;
     virtual void stop() override;
 
