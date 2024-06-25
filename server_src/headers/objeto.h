@@ -56,7 +56,7 @@ protected:
     unsigned int contador;  // se usa para llevar el tiempo de muerte y eso
 public:
     int vida;
-
+    int spawn;
     Ente(float x, float y, float w, float h, int vida, EntityType en_type, AnimationType an_type);
     void RecibirDanio(int d);
     bool vivo();

@@ -19,6 +19,7 @@ Enemigo::Enemigo(float x, float y, float w, float h, float max_life, float speed
         config(config) {
     direccion = 1;
     contador = 0;
+    spawn = 1;
 }
 
 void Enemigo::colision(Objeto& o) {
