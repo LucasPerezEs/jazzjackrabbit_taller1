@@ -40,7 +40,7 @@ void SdlWindow::fill(int r, int g, int b, int alpha) {
 }
 
 
-void SdlWindow::fill() { this->fill(255, 255, 255, 255); }
+void SdlWindow::fill() { this->fill(0, 0, 0, 0); }
 
 void SdlWindow::render() { SDL_RenderPresent(this->renderer); }
 

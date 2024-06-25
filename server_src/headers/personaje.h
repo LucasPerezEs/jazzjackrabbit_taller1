@@ -24,6 +24,7 @@ class ListaObjetos;
 class Projectile;
 class Bullet;
 class Rocket;
+class IceBullet;
 
 class Arma {  // No se si es necesaria esta clase
 protected:
@@ -48,15 +49,17 @@ public:
     void add_ammo(EntityType ammo, int n);
 };
 
-enum PlayerState { INTOXICATED = 0x30, HURTED = 0x31, NORMAL = 0x32 };
+enum PlayerState { INTOXICATED = 0x30, HURTED = 0x31, NORMAL = 0x32, FROZEN = 0x33 };
 
 class Personaje: public Ente {
 protected:
     int espera_idle;
     int espera_shoot;
+    int espera_frozen;
     std::chrono::system_clock::time_point tiempo;
     std::chrono::system_clock::time_point last_hurt;
     std::chrono::system_clock::time_point intoxicated_start;
+    std::chrono::system_clock::time_point frozen_start;
     bool movingright;
     bool movingleft;
     bool jumping;
@@ -90,8 +93,7 @@ public:
     virtual void colision(Objeto& o) override;
     virtual void colision(Enemigo& e) override;
     virtual void colision(Municion& m) override;
-    virtual void colision(
-            Banana& b) override;  // Banana y Bala deberian pertenecer a una clase 'Proyectil'
+    virtual void colision(Banana& b) override;
     virtual void colision(Projectile& b) override;
     virtual void colision(Personaje& p) override;
 

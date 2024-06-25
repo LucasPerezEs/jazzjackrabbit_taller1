@@ -37,8 +37,7 @@ class MapCreator {
     bool render_assets();
     void save_map(std::string& filename, bool& is_already_create);
     void save_spawns(std::string& filename, bool& is_already_create);
-    void set_values(Tile& selectedTile, const double& minX, const double& maxX, const double& minY, const double& maxY,
-                     SDL_Event& event);
+
 
 public:
     explicit MapCreator(const std::string& mapName, const double& width, const double& height, const bool& is_already_create);

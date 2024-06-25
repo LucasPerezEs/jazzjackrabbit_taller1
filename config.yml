@@ -24,7 +24,8 @@ ghost:
   prob_ammo: 0 
   prob_goldcoin: 0 
   prob_rocket: 0
-  prob_gem: 100
+  prob_gem: 0
+  prob_icebullet: 100
 
 # Murcielago
 bat:
@@ -35,7 +36,8 @@ bat:
   prob_ammo: 0 
   prob_goldcoin: 0 
   prob_rocket: 0
-  prob_gem: 100
+  prob_gem: 0
+  prob_icebullet: 100
 
 # Mono
 monkey:
@@ -46,7 +48,8 @@ monkey:
   prob_ammo: 0 
   prob_goldcoin: 0 
   prob_rocket: 0
-  prob_gem: 100
+  prob_gem: 0
+  prob_icebullet: 100
 
 # GoldCoin
 goldcoin:
@@ -64,6 +67,10 @@ ammo:
 rocket_pickup:
   add_ammo: 10
 
+# IceBullet ammo
+ice_bullet_ammo:
+  add_ammo: 10
+
 # Gem
 gem:
   add_score: 25
@@ -72,14 +79,21 @@ gem:
 bullet:
   speed: 1.5
   damage: 10
-  fire_rate: 3 # 2 tiros/seg (500ms de espera)
+  fire_rate: 3 # 3 tiros/seg (333ms de espera)
   initial_ammo: 9999
 
 rocket:
   speed: 1
   damage: 50
-  fire_rate: 1 # 4 tiros/seg (250ms de espera)
+  fire_rate: 1 # 1 tiros/seg (1000ms de espera)
   initial_ammo: 100
+
+ice_bullet:
+  speed: 1
+  damage: 10
+  fire_rate: 1 # 1 tiros/seg (1000ms de espera)
+  initial_ammo: 100
+  frozen_time: 5 # en seg
 
 banana:
   speed: 1

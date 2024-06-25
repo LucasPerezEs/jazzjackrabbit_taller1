@@ -5,6 +5,7 @@
 #include <map>
 
 #include "../headers/bullet.h"
+#include "../headers/icebullet.h"
 #include "../headers/projectile.h"
 #include "../headers/rocket.h"
 
@@ -35,6 +36,7 @@ Personaje::Personaje(float x, float y, float w, float h, EntityType en_type, Ani
     espera_shoot = 250;  // Misma que la del arma
     espera_hurt =
             1000;  // Cuando el personaje es atacado, se debe esperar 1s para volver a recibir danio
+    espera_frozen = config["ice_bullet_frozen_time"];
     score = 0;
     direccion_movimientox = 1;
     direccion_movimientoy = 0;
@@ -43,7 +45,8 @@ Personaje::Personaje(float x, float y, float w, float h, EntityType en_type, Ani
 }
 
 void Personaje::moveRigth() {
-    if (special_action_active || state == PlayerState::HURTED) {
+    if (special_action_active || state == PlayerState::HURTED || state == PlayerState::FROZEN) {
+        std::cout << "No me puedo mover, estoy congelado!" << std::endl;
         return;
     }
 
@@ -59,7 +62,8 @@ void Personaje::moveRigth() {
     tiempo = std::chrono::system_clock::now();
 }
 void Personaje::moveLeft() {
-    if (special_action_active || state == PlayerState::HURTED) {
+    if (special_action_active || state == PlayerState::HURTED || state == PlayerState::FROZEN) {
+        std::cout << "No me puedo mover, estoy congelado!" << std::endl;
         return;
     }
     movingleft = true;
@@ -75,20 +79,22 @@ void Personaje::moveLeft() {
 }
 void Personaje::stopMovingRight() {
     movingright = false;
-    if (!jumping && !special_action_active && state == PlayerState::HURTED) {
+    if (!jumping && !special_action_active && state != PlayerState::HURTED &&
+        state != PlayerState::FROZEN) {
         an_type = AnimationType::SHOOT_IDLE;
     }
 }
 
 void Personaje::stopMovingLeft() {
     movingleft = false;
-    if (!jumping && !special_action_active && state == PlayerState::HURTED) {
+    if (!jumping && !special_action_active && state != PlayerState::HURTED &&
+        state != PlayerState::FROZEN) {
         an_type = AnimationType::SHOOT_IDLE;
     }
 }
 
 void Personaje::run() {
-    if (state == PlayerState::HURTED) {
+    if (state == PlayerState::HURTED || state == PlayerState::FROZEN) {
         return;
     }
 
@@ -96,19 +102,19 @@ void Personaje::run() {
     an_type = AnimationType::RUN;
     Container c(this->en_type, SoundType::RUN_SOUND, id);
     q.try_push(c);
-    // an_type = AnimationType::RUN;
 }
 
 void Personaje::stoprunning() {
     velx = config["player_speed"];
-    if (!jumping && !special_action_active && state == PlayerState::HURTED) {
+    if (!jumping && !special_action_active && state != PlayerState::HURTED &&
+        state != PlayerState::FROZEN) {
         an_type = AnimationType::SHOOT_IDLE;
     }
 }
 
 void Personaje::jump() {
-    if (!jumping && !special_action_active &&
-        state != PlayerState::HURTED) {  // Esto es para evitar que se pueda spamear el jump y volar
+    if (!jumping && !special_action_active && state != PlayerState::HURTED &&
+        state != PlayerState::FROZEN) {  // Esto es para evitar que se pueda spamear el jump y volar
         vely = config["player_jump"];
         jumping = true;
         an_type = AnimationType::JUMP;
@@ -133,6 +139,16 @@ void Personaje::check_idle() {
         auto duration =
                 std::chrono::duration_cast<std::chrono::seconds>(now - intoxicated_start).count();
 
+        if (duration >= 5) {
+            state = PlayerState::NORMAL;
+        }
+    }
+
+    if (state == PlayerState::FROZEN) {
+        auto now = std::chrono::system_clock::now();
+        auto duration =
+                std::chrono::duration_cast<std::chrono::seconds>(now - frozen_start).count();
+
         if (duration >= 10) {
             state = PlayerState::NORMAL;
         }
@@ -144,7 +160,8 @@ void Personaje::check_idle() {
         state = PlayerState::NORMAL;
     }
 
-    if (!movingleft && !movingright && !disparando && state != PlayerState::HURTED && !jumping &&
+    if (!movingleft && !movingright && !disparando && state != PlayerState::HURTED &&
+        state != PlayerState::FROZEN && !jumping &&
         std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() -
                                                               tiempo)
                         .count() > espera_idle) {
@@ -155,7 +172,8 @@ void Personaje::check_idle() {
             an_type = AnimationType::IDLE;
         }
 
-    } else if (!movingleft && !movingright && state != PlayerState::HURTED && !jumping &&
+    } else if (!movingleft && !movingright && state != PlayerState::HURTED &&
+               state != PlayerState::FROZEN && !jumping &&
                std::chrono::duration_cast<std::chrono::milliseconds>(
                        std::chrono::system_clock::now() - tiempo)
                                .count() > espera_shoot) {
@@ -344,23 +362,23 @@ void Personaje::update_vivo(ListaObjetos& objetos, Queue<Container>& q,
                     killer->add_score(this->score);
                 }
             }
-        }
-        else if (std::chrono::duration_cast<std::chrono::milliseconds>(
-            std::chrono::system_clock::now() - last_killed)
-            .count() >= 3000) {  // revive despues de tantos ciclos y lo agrego al vector de colisiones
+        } else if (std::chrono::duration_cast<std::chrono::milliseconds>(
+                           std::chrono::system_clock::now() - last_killed)
+                           .count() >=
+                   3000) {  // revive despues de tantos ciclos y lo agrego al vector de colisiones
             killed = false;
             vida = config["player_life"];
             borrar = false;
             killed_by_id = -1;
             score = 0;
             objetos.agregar_objeto(e);
-            //contador = -1;
+            // contador = -1;
             AmmoData ammo = {this->arma.selected_ammo(), this->arma.remaining_ammo()};
             Container c(3, this->id, this->x, this->y, this->width, this->height, this->direccion,
                         this->an_type, this->en_type, this->vida, ammo, this->score, this->name);
             q.try_push(c);
         }
-        //contador++;
+        // contador++;
     }
 }
 
@@ -370,7 +388,6 @@ void Personaje::colision(ZanahoriaEnvenenada& ze) {
     this->tiempo = std::chrono::system_clock::now();
     this->intoxicated_start = std::chrono::system_clock::now();
 }
-
 
 void Personaje::colision(Objeto& o) {
     if (check_colision(o)) {
@@ -423,11 +440,20 @@ void Personaje::colision(Projectile& b) {
                                                               last_hurt)
                 .count() > espera_hurt) {
 
-        if (state != PlayerState::INTOXICATED) {
+        if (state != PlayerState::INTOXICATED && state != PlayerState::FROZEN) {
             state = PlayerState::HURTED;
         }
 
-        an_type = AnimationType::HURT;
+        if (b.en_type == EntityType::ICE_BULLET) {
+            state = PlayerState::FROZEN;
+            frozen_start = std::chrono::system_clock::now();
+            movingleft = false;
+            movingright = false;
+            std::cout << "El estado es FROZEN!" << std::endl;
+        } else {
+            an_type = AnimationType::HURT;
+        }
+
         last_hurt = std::chrono::system_clock::now();
         tiempo = std::chrono::system_clock::now();
         RecibirDanio(b.danio);
@@ -462,13 +488,11 @@ void Personaje::check_dead(int killer_id) {
     }
 }
 
-PlayerState Personaje::get_state() {
-    return state;
-}
+PlayerState Personaje::get_state() { return state; }
 
 void Personaje::disparar(ListaObjetos& objetos) {
 
-    if (state == PlayerState::INTOXICATED) {
+    if (state == PlayerState::INTOXICATED || state == PlayerState::FROZEN) {
         return;
     }
 
@@ -503,12 +527,15 @@ Arma::Arma(std::map<std::string, float>& config):
 void Arma::init_ammo() {
     this->ammo_types.insert(ammo_types.end(), EntityType::BULLET);
     this->ammo_types.insert(ammo_types.end(), EntityType::ROCKET);
+    this->ammo_types.insert(ammo_types.end(), EntityType::ICE_BULLET);
 
     this->ammo_inventory[EntityType::BULLET] = config["bullet_initial_ammo"];
     this->ammo_inventory[EntityType::ROCKET] = config["rocket_initial_ammo"];
+    this->ammo_inventory[EntityType::ICE_BULLET] = config["ice_bullet_initial_ammo"];
 
     this->fire_rates[EntityType::BULLET] = 1000 / config["bullet_firerate"];
     this->fire_rates[EntityType::ROCKET] = 1000 / config["rocket_firerate"];
+    this->fire_rates[EntityType::ICE_BULLET] = 1000 / config["ice_bullet_firerate"];
 }
 
 void Arma::add_ammo(EntityType ammo, int n) { ammo_inventory[ammo] += n; }
@@ -546,6 +573,12 @@ void Arma::spawn_projectile(ListaObjetos& objetos, EntityType ammo, int x, int y
 
         case ROCKET: {
             std::shared_ptr<Rocket> b(new Rocket(x, y, d, shooter_id, config));
+            objetos.agregar_objeto(b);
+            break;
+        }
+
+        case ICE_BULLET: {
+            std::shared_ptr<IceBullet> b(new IceBullet(x, y, d, shooter_id, config));
             objetos.agregar_objeto(b);
             break;
         }

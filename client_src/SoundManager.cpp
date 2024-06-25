@@ -25,12 +25,15 @@ void SoundManager::init_sounds() {
 
     this->sounds[BULLET][SHOT_SOUND] = new Sound("../client_src/assets/music/bullet_sound.wav");
     this->sounds[ROCKET][SHOT_SOUND] = new Sound("../client_src/assets/music/rocket_sound.wav");
+    this->sounds[ICE_BULLET][SHOT_SOUND] =
+            new Sound("../client_src/assets/music/icebullet_sound.wav");
 
     this->sounds[GOLD_COIN][PICKUP_SOUND] =
             new Sound("../client_src/assets/music/goldcoin_sound.wav");
     this->sounds[GEM][PICKUP_SOUND] = new Sound("../client_src/assets/music/gem_sound.wav");
     this->sounds[BULLET][PICKUP_SOUND] = new Sound("../client_src/assets/music/ammo_sound.wav");
     this->sounds[ROCKET][PICKUP_SOUND] = new Sound("../client_src/assets/music/ammo_sound.wav");
+    this->sounds[ICE_BULLET][PICKUP_SOUND] = new Sound("../client_src/assets/music/ammo_sound.wav");
 
     this->sounds[NONE_ENTITY][NO_AMMO] = new Sound("../client_src/assets/music/no_ammo_sound.wav");
     this->sounds[NONE_ENTITY][CHANGE_AMMO] =

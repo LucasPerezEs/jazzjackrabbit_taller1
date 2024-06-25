@@ -66,8 +66,10 @@ UIManager::UIManager(std::map<int, Player*>& personajes, SdlWindow& window):
                                           Color{0x2C, 0x66, 0x96});
     this->texturas_ui[4] = new SdlTexture("../client_src/assets/textures/ui_rocket.png", window,
                                           Color{0x2C, 0x66, 0x96});
+    this->texturas_ui[5] = new SdlTexture("../client_src/assets/textures/ui_icebullet.png", window,
+                                          Color{0x2C, 0x66, 0x96});
 
-    this->texturas_ui[5] = new SdlTexture("../client_src/assets/loading/loading.png", window);
+    this->texturas_ui[6] = new SdlTexture("../client_src/assets/loading/loading.png", window);
 }
 
 bool UIManager::player_alive(int id_cliente) { return personajes.count(id_cliente) > 0; }
@@ -117,6 +119,9 @@ void UIManager::render_UI(int id_cliente) {
         case ROCKET:
             texturas_ui[4]->render(dst_a);
             break;
+        case ICE_BULLET:
+            texturas_ui[5]->render(dst_a);
+            break;
         default:
             break;
     }
@@ -159,7 +164,7 @@ void UIManager::renderLoadingText() {
 void UIManager::renderEndGame(int id_cliente) {
     // window.fill(70, 130, 180, 255);
     Area dst(0, 0, 800, 600);
-    texturas_ui[5]->render(dst);
+    texturas_ui[6]->render(dst);
 
     SDL_Rect buttonBorder;
     buttonBorder.x = 190;
