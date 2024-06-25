@@ -6,20 +6,17 @@
 class DrawerEditor: public Thread {
 
 private:
-
-    SdlWindow window;
-    SDL_Texture* assetTexture;
-    SDL_Rect& destRectAsset;
-    std::map<std::tuple<int, int>, Tile>& mapTiles;
-    std::map<std::tuple<int, int>, Tile>& mapSpawn;
-
-    std::mutex& mtx_map;
-    std::condition_variable& is_not_pointed_map;
+    std::vector<Tile>& tiles_asset;
     bool& running;
+    int width_texture;
+    int mapWidth;
+    int mapHeight;
+    int TILE_MAP_CREATED;
+    std::map<std::tuple<int, int>, Tile>& mapSpawn;
+    std::map<std::tuple<int, int>, Tile>& mapTiles;
 
 public:
-    DrawerEditor(SdlWindow& window, SDL_Texture* assetTexture, SDL_Rect& destRectAsset, std::map<std::tuple<int, int>, Tile>& mapTiles, std::map<std::tuple<int, int>, Tile>& mapSpawn,
-        std::mutex& mtx_map, std::condition_variable& is_not_pointed_map, bool& running);
+    DrawerEditor(bool& running, std::vector<Tile>& tiles_asset, int width_texture, int mapWidth, int mapHeight, int TILE_MAP_CREATED, std::map<std::tuple<int, int>, Tile>& mapSpawn, std::map<std::tuple<int, int>, Tile>& mapTiles);
 
     virtual void run() override;
 

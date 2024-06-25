@@ -179,6 +179,7 @@ void MapCreator::select_map() {
 
 bool MapCreator::render_assets(){
 
+
     int numTiles = (width_texture / TILE_MAP_ASSETS) * (height_texture / TILE_MAP_ASSETS);
     int tilesPerRow = (width_texture / TILE_MAP_ASSETS);
     
@@ -245,52 +246,33 @@ bool MapCreator::create_map(std::string& filename, bool& is_already_create){
 //Post: -
 void MapCreator::handle_draw(){
 
-    SDL_Event event;
-    Tile selectedTile;
-    SDL_Point mousePos;
-
     bool running = true;
-    bool mouseHeldDown = false;
-    selectedTile.selected = false;
-    DrawerEditor drawer(window, assetTexture, destRectAsset, mapTiles, mapSpawn, mtx_map, is_not_pointed_map, running);
+    DrawerEditor drawer(running, tiles_asset, width_texture, mapWidth, mapHeight, TILE_MAP_CREATED, mapSpawn, mapTiles);
     drawer.start();
 
+    while(running){
 
-    while (running) {
-       SDL_WaitEvent(&event);
-        switch (event.type) {
+        Tile value;
+        window.fill();
 
-            case SDL_QUIT: {
-                running = false;
-                break;
+        if(!mapTiles.empty()){
+            for (auto pairMap : mapTiles) {
+                value = pairMap.second;
+                SDL_RenderCopy(window.getRenderer(), assetTexture, &(value.srcRect), &(value.destRect));
             }
-            case SDL_MOUSEBUTTONDOWN: {
-                mousePos.x = event.button.x;
-                mousePos.y = event.button.y;
-                for (auto& tile : tiles_asset) {
-                    if (SDL_PointInRect(&mousePos, &tile.srcRect)) {
-                        selectedTile = tile;
-                        selectedTile.selected = true;
-                        break;
-                    }
-                }
-                if (!selectedTile.selected)
-                    break;
-                set_values(selectedTile, width_texture, width_texture+mapWidth*TILE_MAP_CREATED, mapHeight*TILE_MAP_CREATED, 0, event);
-                mouseHeldDown = true;
-                break;
-            }
-
-            case SDL_MOUSEBUTTONUP: {
-                mouseHeldDown = false;
-                break;
-            }
-
-            case SDL_MOUSEMOTION: {
-                if(mouseHeldDown)
-                    set_values(selectedTile, width_texture, width_texture+mapWidth*TILE_MAP_CREATED, mapHeight*TILE_MAP_CREATED, 0, event);
-                }
         }
+
+        if(!mapSpawn.empty()){
+            for (auto pairSpawn : mapSpawn) {
+                value = pairSpawn.second;
+                SDL_RenderCopy(window.getRenderer(), assetTexture, &(value.srcRect), &(value.destRect));
+            }
+        }
+
+        SDL_RenderCopy(window.getRenderer(), assetTexture, NULL, &destRectAsset);
+        window.render();
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(20));
     }
     drawer.join();
     save_map(mapName, is_already_create);
