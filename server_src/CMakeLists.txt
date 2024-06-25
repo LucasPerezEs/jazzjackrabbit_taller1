@@ -8,6 +8,7 @@ add_library(server_lib
     pickups/zanahoria.cpp
     pickups/gold_coin.cpp
     pickups/rocket_pickup.cpp
+    pickups/gem.cpp
     characters/personaje.cpp
     characters/jazz.cpp
     characters/lori.cpp
