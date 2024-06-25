@@ -296,5 +296,4 @@ void MapCreator::handle_draw(){
     save_spawns(mapName, is_already_create);
     mapTiles.clear();
     mapSpawn.clear();
-
 }

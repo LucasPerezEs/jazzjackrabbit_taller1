@@ -1,6 +1,5 @@
 
 #include "headers/drawer_editor.h"
-#include <chrono>
 
 // Pre: -
 // Post: -
@@ -34,6 +33,6 @@ void DrawerEditor::run(){
         SDL_RenderCopy(render, assetTexture, NULL, &destRectAsset);
         window.render();
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(17));
+        std::this_thread::sleep_for(std::chrono::milliseconds(20));
     }
 }
