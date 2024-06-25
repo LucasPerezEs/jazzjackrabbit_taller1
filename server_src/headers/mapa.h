@@ -43,9 +43,9 @@ class Mapa {
 private:
     std::vector<std::vector<int>> spawns;
     std::vector<std::vector<int>> spawnsPersonaje;
-    std::vector<std::vector<int>> spawnsEnemigo;
 
 public:
+    std::vector<std::vector<int>> spawnsOtros;
     std::vector<Piso*> objetos;
     std::vector<DiagonalIzquierda*> diagonalesIzq;
     std::vector<DiagonalDerecha*> diagonalesDer;
@@ -53,6 +53,7 @@ public:
     explicit Mapa(const std::string& mapName);
     bool CheckColision(float x, float y, float w, float h);
     std::vector<int> get_spawn(int type);
+    void spawn(ListaObjetos& objetos, std::vector<std::shared_ptr<Ente>>& entes, std::map<std::string, float> &config, Queue<Container>& q);
 
     ~Mapa();
 };
