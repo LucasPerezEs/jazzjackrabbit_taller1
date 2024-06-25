@@ -74,7 +74,7 @@ Mapa::Mapa(const std::string& mapName) {
     std::string path = "../server_src/maps/" + mapName;
     std::vector<std::vector<int>> tilemap = cargarCSV(path);
 
-    std::string spawn_path = "../server_src/maps/" + mapName + "_spawn";
+    std::string spawn_path = "../server_src/maps/" + mapName + "_spawns";
     spawns = cargarCSV(spawn_path);
 
 
