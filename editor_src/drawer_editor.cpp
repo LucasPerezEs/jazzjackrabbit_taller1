@@ -5,31 +5,16 @@
 void set_values(Tile& selectedTile, const double& minX, const double& maxX, const double& minY, const double& maxY,
  SDL_Event& event, int TILE_MAP_CREATED, int TILE_MAP_ASSETS, std::map<std::tuple<int, int>, Tile>& mapSpawn, std::map<std::tuple<int, int>, Tile>& mapTiles, int& x, int& y, int& increase, int mapWidth, int mapHeight){
 
-    //std::unique_lock<std::mutex> lock(mtx_map);
-
-
     int newX = (event.button.x - x - TILESET_WIDTH*TILE_MAP_ASSETS);
     int newY = (event.button.y - y);
-
-                        
-    if (newX < minX || newX >= maxX)
-        return;
-
-    if (newY < maxY || newY >= minY)
-        return;
 
     int fila = std::floor(newY / (TILE_MAP_CREATED*increase));
     int columna = std::floor(newX / (TILE_MAP_CREATED*increase));
 
-    std::cout << "hago click en " << columna << ", " << fila << "\n"; 
-
-
-    if (fila < 0 || fila > mapWidth-1 || columna < 0 || columna > mapHeight-1) {
+    if (fila < 0 || fila > mapWidth-1 || columna < 0 || columna > mapHeight-1)
         return;
-    }
 
     std::tuple<int,int> posicion = std::make_tuple(fila, columna);
-    //selectedTile.destRect = { columna, fila, TILE_MAP_CREATED, TILE_MAP_CREATED };
 
     int PlayerSpawn = 0;
     int EnemySpawn1 = 1;
@@ -119,19 +104,15 @@ void DrawerEditor::handle_keydown(const SDL_Event& event) {
     switch (keyEvent.keysym.sym) {
         case SDLK_w:
             y = y - increase*2;
-            //cmd.action = Command::UP;
             break;
         case SDLK_s:
             y = y + increase*2;
-            //cmd.action = Command::DOWN;
             break;
         case SDLK_a:
             x = x - increase*2;
-            //cmd.action = Command::LEFT;
             break;
         case SDLK_d:
             x = x + increase*2;
-            //cmd.action = Command::RIGHT;
             break;
 
         case SDLK_z:
@@ -143,9 +124,8 @@ void DrawerEditor::handle_keydown(const SDL_Event& event) {
                 increase--;
             }
             break;
-
-        }}
-        
+    }
+}
 
 
 void DrawerEditor::run() {
@@ -179,8 +159,6 @@ void DrawerEditor::run() {
                     }
                     if (!selectedTile.selected)
                         break;
-                    std::cout << mapWidth << "\n";
-                    std::cout << mapHeight << "\n";
                     set_values(selectedTile, width_texture, width_texture+mapWidth*TILE_MAP_CREATED, mapHeight*TILE_MAP_CREATED, 0, event, TILE_MAP_CREATED, 16, mapSpawn, mapTiles, x, y, increase, mapWidth, mapHeight);
                     mouseHeldDown = true;
                     break;
@@ -207,39 +185,8 @@ void DrawerEditor::run() {
             case SDL_KEYDOWN: {
                 handle_keydown(event);
                 break;
+            }
         }
+
     }
-
-
-
-
-
-
-
-    /*SDL_Renderer* render = window.getRenderer();
-    while(running){
-
-        Tile value;
-        window.fill();
-
-        if(!mapTiles.empty()){
-            for (auto pairMap : mapTiles) {
-                value = pairMap.second;
-                SDL_RenderCopy(render, assetTexture, &(value.srcRect), &(value.destRect));
-            }
-        }
-
-        if(!mapSpawn.empty()){
-            for (auto pairSpawn : mapSpawn) {
-                value = pairSpawn.second;
-                SDL_RenderCopy(render, assetTexture, &(value.srcRect), &(value.destRect));
-            }
-        }
-
-        SDL_RenderCopy(render, assetTexture, NULL, &destRectAsset);
-        window.render();
-
-        std::this_thread::sleep_for(std::chrono::milliseconds(20));
-    }*/
-}
 }

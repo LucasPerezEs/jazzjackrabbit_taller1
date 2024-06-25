@@ -49,7 +49,7 @@ void MapCreator::save_spawns(std::string& filename, bool& is_already_create){
             
             const Tile& tile = value.second;
             int row = std::get<0>(value.first);
-            int column = std::get<1>(value.first) - (TILESET_WIDTH*TILE_MAP_ASSETS);
+            int column = std::get<1>(value.first);
                 
             file << tile.type << "," << row << "," << column << "," << tile.id << "\n";
         }
@@ -118,51 +118,6 @@ std::map<std::tuple<int, int>, Tile> MapCreator::loadCSV(const std::string& file
 }
 
 
-//Pre: -
-//Post: Guarda en mi matriz mapTile los valores que selecciono de mi paleta de assets para poder crear el mapa.
-void MapCreator::set_values(Tile& selectedTile, const double& minX, const double& maxX, const double& minY, const double& maxY, SDL_Event& event){
-
-    std::unique_lock<std::mutex> lock(mtx_map);
-
-    double newX = event.button.x;
-    double newY = event.button.y;
-                        
-    if (newX < minX || newX >= maxX)
-        return;
-
-    if (newY < maxY || newY >= minY)
-        return;
-
-    int fila = std::floor(newY / TILE_MAP_CREATED) * TILE_MAP_CREATED;
-    int columna = std::floor(newX / TILE_MAP_CREATED) * TILE_MAP_CREATED;
-
-
-    std::tuple<int,int> posicion = std::make_tuple(fila/TILE_MAP_CREATED, (columna-TILESET_WIDTH*TILE_MAP_ASSETS)/TILE_MAP_CREATED);
-    selectedTile.destRect = { columna, fila, TILE_MAP_CREATED, TILE_MAP_CREATED };
-
-    int PlayerSpawn = 0;
-    int EnemySpawn = 1;
-
-    //SPAWN PLAYER
-    if(selectedTile.id == 48 || selectedTile.id == 49 || selectedTile.id == 58 || selectedTile.id == 59){
-        selectedTile.type = PlayerSpawn;
-        mapSpawn[posicion] = selectedTile;
-        return;
-
-    //SPAWN ENEMY
-    } else if(selectedTile.id == 68 || selectedTile.id == 69 || selectedTile.id == 78 || selectedTile.id == 79){
-        selectedTile.type = EnemySpawn;
-        mapSpawn[posicion] = selectedTile;
-        return;
-    } 
-
-    if (mapSpawn.count(posicion) > 0)
-        mapSpawn.erase(posicion);
-
-    mapTiles[posicion] = selectedTile;
-}
-
-
 // Pre: -
 // Post: Si el mapa seleccionado existe, se habre la opcion de modificarlo, y si no existe se puede crear uno nuevo desde cero.
 void MapCreator::select_map() {
@@ -179,7 +134,6 @@ void MapCreator::select_map() {
 
 
 bool MapCreator::render_assets(){
-
 
     int numTiles = (width_texture / TILE_MAP_ASSETS) * (height_texture / TILE_MAP_ASSETS);
     int tilesPerRow = (width_texture / TILE_MAP_ASSETS);
@@ -261,8 +215,6 @@ void MapCreator::handle_draw(){
 
         Tile value;
         window.fill();
-        //std::cout << "mi x es " << x << "\n";
-        //std::cout << "mi y es " << y << "\n";
         if(!mapTiles.empty()){
             for (auto pairMap : mapTiles) {
                 value = pairMap.second;
@@ -270,17 +222,9 @@ void MapCreator::handle_draw(){
                 int pos_y = std::get<0>(pos);
                 int pos_x = std::get<1>(pos);
                 SDL_Rect resct_new = {(pos_x*8*increase + (int)x) + TILESET_WIDTH*TILE_MAP_ASSETS, (pos_y*8*increase + (int)y), 8*increase , 8*increase };
-                //Aca edito el desRect:
-                /*value.destRect.x = (value.destRect.x *increase + (int)x);
-                value.destRect.y = (value.destRect.y *increase + (int)y);
-                value.destRect.w = value.destRect.w *increase;
-                value.destRect.h = value.destRect.h *increase;*/
-                //SDL_Rect resct_new = {(value.destRect.x *increase + (int)x), (value.destRect.y *increase + (int)y), value.destRect.w *increase, value.destRect.h *increase};
-
                 SDL_RenderCopy(window.getRenderer(), assetTexture, &(value.srcRect), &(resct_new));
             }
         }
-
         if(!mapSpawn.empty()){
             for (auto pairSpawn : mapSpawn) {
                 value = pairSpawn.second;
@@ -291,7 +235,6 @@ void MapCreator::handle_draw(){
                 SDL_RenderCopy(window.getRenderer(), assetTexture, &(value.srcRect), &(resct_new));
             }
         }
-
         SDL_RenderCopy(window.getRenderer(), assetTexture, NULL, &destRectAsset);
         window.render();
 
