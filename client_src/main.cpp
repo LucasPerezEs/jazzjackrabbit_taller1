@@ -20,7 +20,6 @@ int main(int argc, char* argv[]) {
 
 
         if (connectMenu.exec() == QDialog::Accepted) {
-
             if (TTF_Init() < 0) {
                 throw std::runtime_error(std::string("Error al iniciar TTF: ") + TTF_GetError());
             }

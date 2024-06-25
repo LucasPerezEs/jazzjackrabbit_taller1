@@ -75,10 +75,16 @@ void Game::run() {
         else if (objeto[0] == 4) {
             std::shared_ptr<Gem> b (new Gem(objeto[1], objeto[2], config, stateQueue));
             objetos.agregar_objeto(b);
+            Container c(0, b->id, b->x, b->y, b->width, b->height, 0, b->an_type,
+                        b->en_type, 0, {EntityType::NONE_ENTITY, 0}, 0, "");
+            stateQueue.push(c);
         }
         else if (objeto[0] == 5) {
             std::shared_ptr<Gold_Coin> b (new Gold_Coin(objeto[1], objeto[2], config, stateQueue));
             objetos.agregar_objeto(b);
+            Container c(0, b->id, b->x, b->y, b->width, b->height, 0, b->an_type,
+            b->en_type, 0, {EntityType::NONE_ENTITY, 0}, 0, "");
+            stateQueue.push(c);
         }
     }
 
