@@ -3,7 +3,7 @@
 
 
 void set_values(Tile& selectedTile, const double& minX, const double& maxX, const double& minY, const double& maxY,
- SDL_Event& event, int TILE_MAP_CREATED, int TILE_MAP_ASSETS, std::map<std::tuple<int, int>, Tile>& mapSpawn, std::map<std::tuple<int, int>, Tile>& mapTiles, int& x, int& y, int& increase){
+ SDL_Event& event, int TILE_MAP_CREATED, int TILE_MAP_ASSETS, std::map<std::tuple<int, int>, Tile>& mapSpawn, std::map<std::tuple<int, int>, Tile>& mapTiles, int& x, int& y, int& increase, int mapWidth, int mapHeight){
 
     //std::unique_lock<std::mutex> lock(mtx_map);
 
@@ -21,7 +21,7 @@ void set_values(Tile& selectedTile, const double& minX, const double& maxX, cons
 
     std::cout << "hago click en " << columna << ", " << fila << "\n"; 
 
-    if (fila < 0 || fila > 39 || columna < 0 || columna > 79) {
+    if (fila < 0 || fila > mapWidth-1 || columna < 0 || columna > mapHeight-1) {
         return;
     }
 
@@ -50,6 +50,21 @@ void set_values(Tile& selectedTile, const double& minX, const double& maxX, cons
     mapTiles[posicion] = selectedTile;
 }
 
+void delete_spawn(SDL_Event event, std::map<std::tuple<int, int>, Tile>& mapSpawn, int TILE_MAP_CREATED, int TILE_MAP_ASSETS, int& x, int& y, int increase) {
+
+    int newX = (event.button.x - x - TILESET_WIDTH*TILE_MAP_ASSETS);
+    int newY = (event.button.y - y);
+
+    int fila = std::floor(newY / (TILE_MAP_CREATED*increase));
+    int columna = std::floor(newX / (TILE_MAP_CREATED*increase));
+
+    for (auto spawn: mapSpawn) {
+        if (fila == std::get<0>(spawn.first) && columna == std::get<1>(spawn.first)) {
+            mapSpawn.erase(spawn.first);
+            break;
+        }
+    }
+}
 
 // Pre: -
 // Post: -
@@ -118,20 +133,27 @@ void DrawerEditor::run() {
                 break;
             }
             case SDL_MOUSEBUTTONDOWN: {
-                mousePos.x = event.button.x;
-                mousePos.y = event.button.y;
-                for (auto& tile : tiles_asset) {
-                    if (SDL_PointInRect(&mousePos, &tile.srcRect)) {
-                        selectedTile = tile;
-                        selectedTile.selected = true;
-                        break;
+                if (event.button.button == SDL_BUTTON_LEFT) {
+                    mousePos.x = event.button.x;
+                    mousePos.y = event.button.y;
+                    for (auto& tile : tiles_asset) {
+                        if (SDL_PointInRect(&mousePos, &tile.srcRect)) {
+                            selectedTile = tile;
+                            selectedTile.selected = true;
+                            break;
+                        }
                     }
-                }
-                if (!selectedTile.selected)
+                    if (!selectedTile.selected)
+                        break;
+                    std::cout << mapWidth << "\n";
+                    std::cout << mapHeight << "\n";
+                    set_values(selectedTile, width_texture, width_texture+mapWidth*TILE_MAP_CREATED, mapHeight*TILE_MAP_CREATED, 0, event, TILE_MAP_CREATED, 16, mapSpawn, mapTiles, x, y, increase, mapWidth, mapHeight);
+                    mouseHeldDown = true;
                     break;
-                set_values(selectedTile, width_texture, width_texture+mapWidth*TILE_MAP_CREATED, mapHeight*TILE_MAP_CREATED, 0, event, TILE_MAP_CREATED, 16, mapSpawn, mapTiles, x, y, increase);
-                mouseHeldDown = true;
-                break;
+                }
+                else if (event.button.button == SDL_BUTTON_RIGHT) {
+                    delete_spawn(event, mapSpawn, TILE_MAP_CREATED, 16, x, y, increase);
+                }
             }
 
             case SDL_MOUSEBUTTONUP: {
@@ -140,10 +162,11 @@ void DrawerEditor::run() {
             }
 
             case SDL_MOUSEMOTION: {
-                if (event.button.x > width_texture) {
-                    if(mouseHeldDown && selectedTile.selected)
-                        set_values(selectedTile, width_texture, width_texture+mapWidth*TILE_MAP_CREATED, mapHeight*TILE_MAP_CREATED, 0, event, TILE_MAP_CREATED, 16, mapSpawn, mapTiles, x, y, increase);
-                    }
+                if (event.button.x <= width_texture) {
+                    break;
+                }
+                if(mouseHeldDown)
+                    set_values(selectedTile, width_texture, width_texture+mapWidth*TILE_MAP_CREATED, mapHeight*TILE_MAP_CREATED, 0, event, TILE_MAP_CREATED, 16, mapSpawn, mapTiles, x, y, increase, mapWidth, mapHeight);
                 }
 
             case SDL_KEYDOWN: {
