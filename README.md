@@ -9,8 +9,8 @@ Trabajo Practico final para la materia Taller de Programacion I - FIUBA
 
 ## Documentacion del proyecto
 * [Manual de Instalacion](manuales/ManualDeInstalacion.txt)
-* [Manual de Proyecto](manuales/ManualDeProyecto.txt)
-* [Manual Tecnico](manuales/ManualTecnico.txt)
+* [Manual de Proyecto](manuales/ManualDeProyecto.pdf)
+* [Manual Tecnico](manuales/ManualTecnico.pdf)
 
 ## Ejecución para el Cliente y Servidor
 Servidor:
