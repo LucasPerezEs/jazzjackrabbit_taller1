@@ -20,36 +20,36 @@ ghost:
   life: 50
   damage: 10
   speed: 0.25
-  prob_carrot: 0 # sobre 100
-  prob_ammo: 0 
-  prob_goldcoin: 0 
-  prob_rocket: 0
-  prob_gem: 0
-  prob_icebullet: 100
+  prob_carrot: 10 # sobre 100
+  prob_ammo: 10 
+  prob_goldcoin: 20 
+  prob_rocket: 10
+  prob_gem: 10
+  prob_icebullet: 20
 
 # Murcielago
 bat:
   life: 20
   damage: 20
   speed: 0.25
-  prob_carrot: 0 # sobre 100
+  prob_carrot: 20 # sobre 100
   prob_ammo: 0 
-  prob_goldcoin: 0 
-  prob_rocket: 0
-  prob_gem: 0
-  prob_icebullet: 100
+  prob_goldcoin: 10 
+  prob_rocket: 10
+  prob_gem: 40
+  prob_icebullet: 10
 
 # Mono
 monkey:
   life: 50
   damage: 5
   speed: 0
-  prob_carrot: 0 # sobre 100
+  prob_carrot: 30 # sobre 100
   prob_ammo: 0 
-  prob_goldcoin: 0 
-  prob_rocket: 0
-  prob_gem: 0
-  prob_icebullet: 100
+  prob_goldcoin: 10 
+  prob_rocket: 40
+  prob_gem: 10
+  prob_icebullet: 10
 
 # GoldCoin
 goldcoin:
@@ -86,13 +86,13 @@ rocket:
   speed: 1
   damage: 50
   fire_rate: 1 # 1 tiros/seg (1000ms de espera)
-  initial_ammo: 100
+  initial_ammo: 0
 
 ice_bullet:
   speed: 1
   damage: 10
   fire_rate: 1 # 1 tiros/seg (1000ms de espera)
-  initial_ammo: 100
+  initial_ammo: 0
   frozen_time: 5 # en seg
 
 banana:

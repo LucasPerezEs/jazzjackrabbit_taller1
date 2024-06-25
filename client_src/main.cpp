@@ -1,12 +1,11 @@
+#include <QApplication>
+#include <QVBoxLayout>
 #include <exception>
 #include <iostream>
 
 #include "SDL2/SDL_mixer.h"
 #include "headers/game.h"
 #include "headers/player.h"
-#include <QApplication>
-#include <QVBoxLayout>
-
 #include "setupscreen/ConnectMenu.h"
 #include "setupscreen/MultiplayerMenu.h"
 
@@ -37,7 +36,7 @@ int main(int argc, char* argv[]) {
             }
 
             // Deberia enviarse ip y port (respectivamente);
-            Client client("127.0.1", "8080");
+            Client client(connectMenu.getIp().toStdString(), connectMenu.getPort().toStdString());
             client.go_online();
             if (client.is_online()) {
                 MultiplayerMenu multiplayerMenu(nullptr, &client);
@@ -51,12 +50,14 @@ int main(int argc, char* argv[]) {
 
                 QObject::connect(
                         &multiplayerMenu, &MultiplayerMenu::createGameRequested,
-                        [&](const QString& gameID, const std::string& map_selected, const uint32_t& maxPlayers,
-                            const std::vector<uint32_t>& cheats) {
-                            std::cout << "Enviando creacion con nombre: " << gameID.toStdString() << "\n";
-                            if (client.createGame(gameID.toStdString(), map_selected, maxPlayers, cheats)) {
+                        [&](const QString& gameID, const std::string& map_selected,
+                            const uint32_t& maxPlayers, const std::vector<uint32_t>& cheats) {
+                            std::cout << "Enviando creacion con nombre: " << gameID.toStdString()
+                                      << "\n";
+                            if (client.createGame(gameID.toStdString(), map_selected, maxPlayers,
+                                                  cheats)) {
                                 std::cout << "Game creado\n",
-                                multiplayerMenu.showGameCreatedMessage();
+                                        multiplayerMenu.showGameCreatedMessage();
                             } else {
                                 multiplayerMenu.showGameCreationFailedMessage();
                             }
@@ -64,7 +65,6 @@ int main(int argc, char* argv[]) {
 
                 QObject::connect(&multiplayerMenu, &MultiplayerMenu::joinGameRequested,
                                  [&](const QString& gameID, const int& elegido) {
-
                                      if (client.joinGame(gameID.toStdString(), elegido)) {
                                          try {
                                              multiplayerMenu.exit = 0;
@@ -85,13 +85,14 @@ int main(int argc, char* argv[]) {
                                      }
                                  });
 
-                QObject::connect(&multiplayerMenu, &MultiplayerMenu::ClientNameRequested, [&](const QString& clientName) {
-                    if (!client.setName(clientName.toStdString())) {
-                        multiplayerMenu.showSetNameFailedMessage();
-                    } else {
-                        multiplayerMenu.nameSet();
-                    }
-                });
+                QObject::connect(&multiplayerMenu, &MultiplayerMenu::ClientNameRequested,
+                                 [&](const QString& clientName) {
+                                     if (!client.setName(clientName.toStdString())) {
+                                         multiplayerMenu.showSetNameFailedMessage();
+                                     } else {
+                                         multiplayerMenu.nameSet();
+                                     }
+                                 });
 
                 QObject::connect(&multiplayerMenu, &MultiplayerMenu::refreshRequested, [&]() {
                     std::vector<std::string> gameList;
