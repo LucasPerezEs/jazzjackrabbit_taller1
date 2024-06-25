@@ -242,12 +242,17 @@ bool MapCreator::create_map(std::string& filename, bool& is_already_create){
     return false;
 }
 
+
+
 //Pre: -
 //Post: -
 void MapCreator::handle_draw(){
 
+    float x = 0;
+    float y = 0;
+
     bool running = true;
-    DrawerEditor drawer(running, tiles_asset, width_texture, mapWidth, mapHeight, TILE_MAP_CREATED, mapSpawn, mapTiles);
+    DrawerEditor drawer(running, tiles_asset, width_texture, mapWidth, mapHeight, TILE_MAP_CREATED, mapSpawn, mapTiles, x, y);
     drawer.start();
 
     while(running){
@@ -258,7 +263,11 @@ void MapCreator::handle_draw(){
         if(!mapTiles.empty()){
             for (auto pairMap : mapTiles) {
                 value = pairMap.second;
-                SDL_RenderCopy(window.getRenderer(), assetTexture, &(value.srcRect), &(value.destRect));
+
+                //Aca edito el desRect:
+                SDL_Rect resct_new = {value.destRect.x + (int)x, value.destRect.y - (int)y, 8, 8};
+
+                SDL_RenderCopy(window.getRenderer(), assetTexture, &(value.srcRect), &(resct_new));
             }
         }
 
