@@ -16,8 +16,8 @@
 #include "tile.h"
 #include "SdlWindow.h"
 
-#define TILE_MAP_ASSETS 16  // Tamaño en el que se ve el asset al crear.
-#define TILE_MAP_CREATED 8  // Tamaño en el que se ve el mapa al crearlo.
+#define TILE_MAP_ASSETS 48  // Tamaño en el que se ve el asset al crear.
+#define TILE_MAP_CREATED 48  // Tamaño en el que se ve el mapa al crearlo.
 
 class MapCreator {
     std::string mapName;

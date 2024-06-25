@@ -1,7 +1,7 @@
 #include "headers/protocol.h"
 
 #include <utility>
-
+#include <arpa/inet.h>
 #include "headers/desconection.h"
 #include "headers/liberror.h"
 
@@ -186,6 +186,52 @@ void Protocol::sendVectorUint32(const std::vector<std::uint32_t>& vec){
         send32(str);
     }
 }
+
+
+void Protocol::sendGameData(const GameData& data) {
+    send32(data.id);
+    send32(data.x);
+    send32(data.y);
+    send32(data.width);
+    send32(data.height);
+    send32(data.direction);
+    send32(data.an);
+    send32(data.en);
+    send32(data.health);
+    send32(data.ammo.ammo_type);
+    send32(data.ammo.ammo);
+    send32(data.score);
+}
+
+
+GameData Protocol::receiveGameData() {
+    bool was_closed;
+    GameData data;
+
+    socket.recvall(&data, sizeof(data), &was_closed);
+
+    return data;
+}
+
+
+void Protocol::sendSoundData(const SoundData& data) {
+    bool was_closed;
+    EntityType entity = data.entity;
+    SoundType sound = data.sound;
+    int id = data.id;
+    socket.sendall(&entity, sizeof(entity), &was_closed);
+    socket.sendall(&sound, sizeof(sound), &was_closed);
+    socket.sendall(&id, sizeof(id), &was_closed);
+
+}
+
+SoundData Protocol::receiveSoundData() {
+    bool was_closed;
+    SoundData data;
+    socket.recvall(&data, sizeof(data), &was_closed);
+    return data;
+}
+
 
 
 void Protocol::close() { socket.close(); }
