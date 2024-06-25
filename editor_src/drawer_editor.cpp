@@ -32,17 +32,48 @@ void set_values(Tile& selectedTile, const double& minX, const double& maxX, cons
     //selectedTile.destRect = { columna, fila, TILE_MAP_CREATED, TILE_MAP_CREATED };
 
     int PlayerSpawn = 0;
-    int EnemySpawn = 1;
+    int EnemySpawn1 = 1;
+    int EnemySpawn2 = 2;
+    int EnemySpawn3 = 3;
+    int GemSpawn = 4;
+    int CoinSpawn = 5;
 
     //SPAWN PLAYER
-    if(selectedTile.id == 48 || selectedTile.id == 49 || selectedTile.id == 58 || selectedTile.id == 59){
+    if(selectedTile.id == 178 || selectedTile.id == 179 || selectedTile.id == 188 || selectedTile.id == 189){
         selectedTile.type = PlayerSpawn;
         mapSpawn[posicion] = selectedTile;
         return;
 
-    //SPAWN ENEMY
-    } else if(selectedTile.id == 68 || selectedTile.id == 69 || selectedTile.id == 78 || selectedTile.id == 79){
-        selectedTile.type = EnemySpawn;
+    //SPAWN ENEMY1
+    } else if(selectedTile.id == 198 || selectedTile.id == 199 || selectedTile.id == 208 || selectedTile.id == 209){
+        selectedTile.type = EnemySpawn1;
+        mapSpawn[posicion] = selectedTile;
+        return;
+    } 
+
+    //SPAWN ENEMY2
+     else if(selectedTile.id == 238 || selectedTile.id == 239 || selectedTile.id == 248 || selectedTile.id == 249){
+        selectedTile.type = EnemySpawn2;
+        mapSpawn[posicion] = selectedTile;
+        return;
+    }
+
+    //SPAWN ENEMY3
+     else if(selectedTile.id == 258 || selectedTile.id == 259 || selectedTile.id == 268 || selectedTile.id == 269){
+        selectedTile.type = EnemySpawn3;
+        mapSpawn[posicion] = selectedTile;
+        return;
+    } 
+
+    //GEMA
+    else if(selectedTile.id == 218 || selectedTile.id == 219 || selectedTile.id == 228 || selectedTile.id == 229){
+        selectedTile.type = GemSpawn;
+        mapSpawn[posicion] = selectedTile;
+        return;
+    } 
+    //COIN
+    else if(selectedTile.id == 158 || selectedTile.id == 159 || selectedTile.id == 168 || selectedTile.id == 169){
+        selectedTile.type = CoinSpawn;
         mapSpawn[posicion] = selectedTile;
         return;
     } 
@@ -164,22 +195,14 @@ void DrawerEditor::run() {
                 break;
             }
 
-            case SDL_MOUSEMOTION: {
-<<<<<<< HEAD
+                case SDL_MOUSEMOTION: {
                 if(event.button.x <= width_texture)
                     break;
                 
                 if(mouseHeldDown)
-                    set_values(selectedTile, width_texture, width_texture+mapWidth*TILE_MAP_CREATED, mapHeight*TILE_MAP_CREATED, 0, event, TILE_MAP_CREATED, 16, mapSpawn, mapTiles, x, y, increase);
-            }
-=======
-                if (event.button.x <= width_texture) {
-                    break;
-                }
-                if(mouseHeldDown)
                     set_values(selectedTile, width_texture, width_texture+mapWidth*TILE_MAP_CREATED, mapHeight*TILE_MAP_CREATED, 0, event, TILE_MAP_CREATED, 16, mapSpawn, mapTiles, x, y, increase, mapWidth, mapHeight);
-                }
->>>>>>> 7ef62553da87d6ce22daf8f76c42c7dbcb494523
+            }
+
 
             case SDL_KEYDOWN: {
                 handle_keydown(event);
