@@ -1,5 +1,6 @@
 add_library(editor_lib
     map_creator.cpp
+    drawer_editor.cpp
     sdl_libs/Animation.cpp
     sdl_libs/Area.cpp
     sdl_libs/Exception.cpp

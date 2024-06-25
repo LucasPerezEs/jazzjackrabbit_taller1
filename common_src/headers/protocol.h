@@ -80,6 +80,11 @@ public:
     std::vector<std::uint32_t> receiveVectorUint32();
     void sendVectorUint32(const std::vector<std::uint32_t>& vec);
 
+    void sendGameData(const GameData& data);
+    GameData receiveGameData();
+
+    void sendSoundData(const SoundData& data);
+    SoundData receiveSoundData();
 
     Protocol(const Protocol&) = delete;
 
