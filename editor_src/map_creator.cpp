@@ -58,59 +58,6 @@ void MapCreator::save_spawns(std::string& filename, bool& is_already_create){
     }
 }
 
-//Pre: -
-//Post: Guarda en mi matriz mapTile los valores que selecciono de mi paleta de assets para poder crear el mapa.
-void MapCreator::set_values(Tile& selectedTile, const double& minX, const double& maxX, const double& minY, const double& maxY, SDL_Event& event){
-
-    double newX = event.button.x;
-    double newY = event.button.y;
-                        
-    // Me aseguro de que newX está por fuera de la imagen del asset y dentro de la ventana en X.
-    if (newX < minX || newX >= maxX)
-        return;
-
-    // Me aseguro de que newY está dentro de la ventana en Y
-    if (newY < maxY || newY >= minY)
-        return;
-
-    int fila = std::floor(newY / TILE_MAP_CREATED) * TILE_MAP_CREATED;
-    int columna = std::floor(newX / TILE_MAP_CREATED) * TILE_MAP_CREATED;
-
-
-    std::tuple<int,int> posicion = std::make_tuple(fila/TILE_MAP_CREATED, (columna-TILESET_WIDTH*TILE_MAP_ASSETS)/TILE_MAP_CREATED);
-    selectedTile.destRect = { columna, fila, TILE_MAP_CREATED, TILE_MAP_CREATED };
-
-    int PlayerSpawn = 0;
-    int EnemySpawn = 1;
-
-    //SPAWN JUGADOR
-    if(selectedTile.id == 48 || selectedTile.id == 49 || selectedTile.id == 58 || selectedTile.id == 59){
-        selectedTile.type = PlayerSpawn;
-        mapSpawn[posicion] = selectedTile;
-        return;
-
-    //SPAWN ENEMIGO
-    } else if(selectedTile.id == 68 || selectedTile.id == 69 || selectedTile.id == 78 || selectedTile.id == 79){
-        selectedTile.type = EnemySpawn;
-        mapSpawn[posicion] = selectedTile;
-        return;
-    } 
-
-    //Que pasas si quiero dibujar algo de mapa por sobre un spawn?
-    //Debo chequear si ese elemento esta en el spawn y si esta, lo borro.
-    if (mapSpawn.count(posicion) > 0)
-        mapSpawn.erase(posicion);
-
-    mapTiles[posicion] = selectedTile;
-}
-
-
-
-// Pre: -
-// Post: Si el mapa seleccionado existe, se habre la opcion de modificarlo, y si no existe se puede crear uno nuevo desde cero.
-void MapCreator::select_map() {
-    create_map(mapName, is_already_create);
-}
 
 //Pre: -
 //Post: Carga las posiciones vacias del mapa en un mapa del juego.
@@ -144,13 +91,11 @@ std::map<std::tuple<int, int>, Tile> MapCreator::loadCSV(const std::string& file
         int row = 0;
         int column = 0;
         while (std::getline(file, line)) {
-
             std::istringstream iss(line);
             std::string value;
             column = 0;
 
             while (std::getline(iss, value, ',')) {
-
                 int tile_id = std::stoi(value);
                 Tile tile;
                 tile.id = tile_id;
@@ -168,45 +113,74 @@ std::map<std::tuple<int, int>, Tile> MapCreator::loadCSV(const std::string& file
     } else {
         std::cerr << "No se pudo abrir el archivo." << std::endl;
     }
-
     return mapTiles;
 }
 
 
 //Pre: -
-//Post: -
-void MapCreator::create_map(std::string& filename, bool& is_already_create){
+//Post: Guarda en mi matriz mapTile los valores que selecciono de mi paleta de assets para poder crear el mapa.
+void MapCreator::set_values(Tile& selectedTile, const double& minX, const double& maxX, const double& minY, const double& maxY, SDL_Event& event){
 
-    mapTiles.clear();
-    std::vector<Tile> tiles_asset;
-    std::tuple<int, int> posicion;
-    SDL_Renderer* renderer = this->window.getRenderer();
-
-    SDL_Surface* tilesetSurface = IMG_Load("../editor_src/assets/ASSETS_GENERALES.png");
-    if (tilesetSurface == nullptr) {
-        std::cout << "Error al cargar la imagen: " << IMG_GetError() << std::endl;
+    double newX = event.button.x;
+    double newY = event.button.y;
+                        
+    if (newX < minX || newX >= maxX)
         return;
+
+    if (newY < maxY || newY >= minY)
+        return;
+
+    int fila = std::floor(newY / TILE_MAP_CREATED) * TILE_MAP_CREATED;
+    int columna = std::floor(newX / TILE_MAP_CREATED) * TILE_MAP_CREATED;
+
+
+    std::tuple<int,int> posicion = std::make_tuple(fila/TILE_MAP_CREATED, (columna-TILESET_WIDTH*TILE_MAP_ASSETS)/TILE_MAP_CREATED);
+    selectedTile.destRect = { columna, fila, TILE_MAP_CREATED, TILE_MAP_CREATED };
+
+    int PlayerSpawn = 0;
+    int EnemySpawn = 1;
+
+    std::unique_lock<std::mutex> lock(mtx_map);
+
+    //SPAWN PLAYER
+    if(selectedTile.id == 48 || selectedTile.id == 49 || selectedTile.id == 58 || selectedTile.id == 59){
+        selectedTile.type = PlayerSpawn;
+        mapSpawn[posicion] = selectedTile;
+        return;
+
+    //SPAWN ENEMY
+    } else if(selectedTile.id == 68 || selectedTile.id == 69 || selectedTile.id == 78 || selectedTile.id == 79){
+        selectedTile.type = EnemySpawn;
+        mapSpawn[posicion] = selectedTile;
+        return;
+    } 
+
+    if (mapSpawn.count(posicion) > 0)
+        mapSpawn.erase(posicion);
+
+    mapTiles[posicion] = selectedTile;
+
+    is_not_pointed_map.notify_all();
+}
+
+
+// Pre: -
+// Post: Si el mapa seleccionado existe, se habre la opcion de modificarlo, y si no existe se puede crear uno nuevo desde cero.
+void MapCreator::select_map() {
+    bool map_created = false;
+
+    map_created = create_map(mapName, is_already_create);
+
+    if(map_created){
+        handle_draw();
+    } else {
+        std::cout << "Se produjo un error en la creacion del mapa" << std::endl;
     }
-    SDL_SetColorKey(tilesetSurface, SDL_TRUE, SDL_MapRGB(tilesetSurface->format, 87, 0, 203));
+}
 
-    SDL_Texture* assetTexture = SDL_CreateTextureFromSurface(renderer, tilesetSurface);
 
-    if (assetTexture == nullptr)
-        std::cout << "Error al crear la textura: " << SDL_GetError() << std::endl;
+bool MapCreator::render_assets(){
 
-    SDL_FreeSurface(tilesetSurface);
-    SDL_SetTextureBlendMode(assetTexture, SDL_BLENDMODE_BLEND);
-
-    int window_width, window_height;
-    SDL_GetRendererOutputSize(renderer, &window_width, &window_height);
-
-    int width_texture, height_texture;
-    SDL_QueryTexture(assetTexture, NULL, NULL, &width_texture, &height_texture);
-
-    std::cout << width_texture << std::endl;
-    
-
-    //Renderizo la paleta de assets
     int numTiles = (width_texture / TILE_MAP_ASSETS) * (height_texture / TILE_MAP_ASSETS);
     int tilesPerRow = (width_texture / TILE_MAP_ASSETS);
     
@@ -218,87 +192,113 @@ void MapCreator::create_map(std::string& filename, bool& is_already_create){
         // cppcheck-suppress uninitStructMember
         tiles_asset.push_back(tile);
     }
-    SDL_Rect destRectAsset = {0, 0, width_texture, height_texture};
+    destRectAsset = {0, 0, width_texture, height_texture};
     SDL_RenderCopy(renderer, assetTexture, NULL, &destRectAsset);
-    this->window.render();
+    window.render();
 
     if(is_already_create){
-        mapTiles = loadCSV(filename);
+        mapTiles = loadCSV(mapName);
         for (const auto& pair : mapTiles) {
             const Tile& value = pair.second;
             SDL_RenderCopy(renderer, assetTexture, &(value.srcRect), &(value.destRect));
         }
-        this->window.render();
+        window.render();
     } else {
         mapTiles = loadEmptyCSV();
         for (const auto& pair : mapTiles) {
             const Tile& value = pair.second;
             SDL_RenderCopy(renderer, assetTexture, &(value.srcRect), &(value.destRect));
         }
-        this->window.render();
+        window.render();
     }
+    return true;
+}
 
-    SDL_Point mousePos;
+//Pre: -
+//Post: -
+bool MapCreator::create_map(std::string& filename, bool& is_already_create){
+
+    renderer = window.getRenderer();
+
+    SDL_Surface* tilesetSurface = IMG_Load("../editor_src/assets/ASSETS_GENERALES.png");
+    if (tilesetSurface == nullptr) {
+        std::cout << "Error al cargar la imagen: " << IMG_GetError() << std::endl;
+        return false;
+    }
+    SDL_SetColorKey(tilesetSurface, SDL_TRUE, SDL_MapRGB(tilesetSurface->format, 87, 0, 203));
+    assetTexture = SDL_CreateTextureFromSurface(renderer, tilesetSurface);
+
+    if (assetTexture == nullptr){
+        std::cout << "Error al crear la textura: " << SDL_GetError() << std::endl;
+        return false;
+    }
+    SDL_FreeSurface(tilesetSurface);
+    SDL_SetTextureBlendMode(assetTexture, SDL_BLENDMODE_BLEND);
+    SDL_GetRendererOutputSize(renderer, &window_width, &window_height);
+    SDL_QueryTexture(assetTexture, NULL, NULL, &width_texture, &height_texture);
+
+    if(render_assets())
+        return true;
+
+    return false;
+}
+
+
+void MapCreator::handle_draw(){
+
+    SDL_Event event;
     Tile selectedTile;
+    SDL_Point mousePos;
 
     bool running = true;
     bool mouseHeldDown = false;
     selectedTile.selected = false;
+    DrawerEditor drawer(window, assetTexture, destRectAsset, mapTiles, mapSpawn, mtx_map, is_not_pointed_map, running);
+    drawer.start();
 
     while (running) {
-        SDL_Event event;
-        while (SDL_PollEvent(&event)) {
-            switch (event.type) {
+       
+       SDL_WaitEvent(&event);
+        switch (event.type) {
 
-                case SDL_QUIT:
-                    running = false;
-                    break;
+            case SDL_QUIT:
+                running = false;
+                break;
 
-                case SDL_MOUSEBUTTONDOWN: {
-                    mousePos.x = event.button.x;
-                    mousePos.y = event.button.y;
-                    for (auto& tile : tiles_asset) {
-                        if (SDL_PointInRect(&mousePos, &tile.srcRect)) {
-                            selectedTile = tile;
-                            selectedTile.selected = true;
-                            break;
-                        }
-                    }
-                    if (!selectedTile.selected)
+            case SDL_MOUSEBUTTONDOWN: {
+                mousePos.x = event.button.x;
+                mousePos.y = event.button.y;
+                for (auto& tile : tiles_asset) {
+                    if (SDL_PointInRect(&mousePos, &tile.srcRect)) {
+                        selectedTile = tile;
+                        selectedTile.selected = true;
                         break;
+                    }
+                }
+                if (!selectedTile.selected)
+                    break;
+                set_values(selectedTile, width_texture, width_texture+mapWidth*TILE_MAP_CREATED, mapHeight*TILE_MAP_CREATED, 0, event);
+                mouseHeldDown = true;
+                break;
+            }
+
+            case SDL_MOUSEBUTTONUP: {
+                mouseHeldDown = false;
+                break;
+            }
+
+            case SDL_MOUSEMOTION: {
+                if(mouseHeldDown)
                     set_values(selectedTile, width_texture, width_texture+mapWidth*TILE_MAP_CREATED, mapHeight*TILE_MAP_CREATED, 0, event);
-                    mouseHeldDown = true;
-                    break;
                 }
-
-                case SDL_MOUSEBUTTONUP: {
-                    mouseHeldDown = false;
-                    break;
-                }
-
-                case SDL_MOUSEMOTION: {
-                    if(mouseHeldDown)
-                        set_values(selectedTile, width_texture, width_texture+mapWidth*TILE_MAP_CREATED, mapHeight*TILE_MAP_CREATED, 0, event);
-                }
-            }
-                this->window.fill();
-
-            Tile value;
-            for (const auto& pairMap : mapTiles) {
-                value = pairMap.second;
-                SDL_RenderCopy(renderer, assetTexture, &(value.srcRect), &(value.destRect));
-            }
-
-            for (const auto& pairSpawn : mapSpawn) {
-                value = pairSpawn.second;
-                SDL_RenderCopy(renderer, assetTexture, &(value.srcRect), &(value.destRect));
-            }
-
-            SDL_RenderCopy(renderer, assetTexture, NULL, &destRectAsset);
-            this->window.render();
         }
     }
-    save_map(filename, is_already_create);
-    save_spawns(filename, is_already_create);
-    
+    is_not_pointed_map.notify_all();
+    drawer.join();
+
+    save_map(mapName, is_already_create);
+    save_spawns(mapName, is_already_create);
+    mapTiles.clear();
+    mapSpawn.clear();
+
 }
