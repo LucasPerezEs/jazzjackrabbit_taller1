@@ -210,11 +210,6 @@ Message ServerProtocol::receive_get_map_list() {
 }
 
 
-void ServerProtocol::send_games_ids(const std::vector<std::string>& gameIDs) {
-    // send_vector_string(gameIDs);
-}
-
-
 void ServerProtocol::stop() { Protocol::stop(); }
 
 void ServerProtocol::close() { Protocol::close(); }

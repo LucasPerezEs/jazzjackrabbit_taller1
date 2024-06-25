@@ -13,9 +13,8 @@
 #include "../../common_src/headers/socket.h"
 
 
-class ServerProtocol: private Protocol {
+class ServerProtocol: public Protocol {
 private:
-    Command::ActionType receive_command();
     Message receive_setup_message();
     Message receive_command_message();
     Message receive_create_game();
@@ -35,13 +34,6 @@ public:
 
     Message receive_message();
     void send_container(const Container& container);
-
-
-    std::string receive_game_id();
-    uint32_t receive_max_players();
-
-    void send_games_ids(const std::vector<std::string>& gameIDs);
-
 
     ServerProtocol(const ServerProtocol&) = delete;
     ServerProtocol& operator=(const ServerProtocol&) = delete;

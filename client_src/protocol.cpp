@@ -225,3 +225,7 @@ Container ClientProtocol::receive_create_map() {
 }
 
 void ClientProtocol::stop() { Protocol::stop(); }
+
+void ClientProtocol::close() { Protocol::close(); }
+
+

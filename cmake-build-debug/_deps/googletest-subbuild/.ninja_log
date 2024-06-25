@@ -1,0 +1,23 @@
+# ninja log v6
+0	4	1719270212067056968	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-mkdir	5aa8629447691548
+0	4	1719270212067056968	/home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-mkdir	5aa8629447691548
+4	1994	1719270214057059331	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-download	c5314d12a0558705
+4	1994	1719270214057059331	googletest-populate-prefix/src/5376968f6948923e2411081fd9372e71a59d8e77.zip	c5314d12a0558705
+4	1994	1719270214057059331	/home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-download	c5314d12a0558705
+4	1994	1719270214057059331	/home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/5376968f6948923e2411081fd9372e71a59d8e77.zip	c5314d12a0558705
+1994	1997	1719270214059060300	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-update	fc620aedca85150
+1994	1997	1719270214059060300	/home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-update	fc620aedca85150
+1997	1999	1719270214061061268	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-patch	33f7b2828fb9f992
+1997	1999	1719270214061061268	/home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-patch	33f7b2828fb9f992
+1999	2001	1719270214063062237	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-configure	22f78a222f3561fd
+1999	2001	1719270214063062237	/home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-configure	22f78a222f3561fd
+2001	2003	1719270214065063205	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-build	640acdaaed6d43c
+2001	2003	1719270214065063205	/home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-build	640acdaaed6d43c
+2003	2005	1719270214067064174	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-install	bf114699890128b5
+2003	2005	1719270214067064174	/home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-install	bf114699890128b5
+2005	2007	1719270214069065142	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-test	a3b64de502c85928
+2005	2007	1719270214069065142	/home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-test	a3b64de502c85928
+2007	2010	1719270214072066595	CMakeFiles/googletest-populate-complete	e679e53b449a786a
+2007	2010	1719270214072066595	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-done	e679e53b449a786a
+2007	2010	1719270214072066595	/home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/_deps/googletest-subbuild/CMakeFiles/googletest-populate-complete	e679e53b449a786a
+2007	2010	1719270214072066595	/home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-done	e679e53b449a786a

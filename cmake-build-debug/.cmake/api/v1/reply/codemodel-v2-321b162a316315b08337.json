@@ -1,0 +1,367 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						4,
+						5,
+						6,
+						7,
+						8
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.12"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						2,
+						8,
+						9
+					]
+				},
+				{
+					"build" : "_deps/googletest-build",
+					"childIndexes" : 
+					[
+						2
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-_deps.googletest-build-Debug-fa1b18db30f420365ea4.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "cmake-build-debug/_deps/googletest-src"
+				},
+				{
+					"build" : "_deps/googletest-build/googlemock",
+					"childIndexes" : 
+					[
+						3
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-_deps.googletest-build.googlemock-Debug-dd69cfcb75bda9d0e30b.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 2,
+					"source" : "cmake-build-debug/_deps/googletest-src/googlemock",
+					"targetIndexes" : 
+					[
+						4,
+						5
+					]
+				},
+				{
+					"build" : "_deps/googletest-build/googletest",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-_deps.googletest-build.googletest-Debug-b00fc1cce06f010d36ac.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 3,
+					"source" : "cmake-build-debug/_deps/googletest-src/googletest",
+					"targetIndexes" : 
+					[
+						6,
+						7
+					]
+				},
+				{
+					"build" : "client_src",
+					"jsonFile" : "directory-client_src-Debug-179201f71f9f693dff96.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.12"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "client_src",
+					"targetIndexes" : 
+					[
+						1
+					]
+				},
+				{
+					"build" : "server_src",
+					"jsonFile" : "directory-server_src-Debug-42873fb438c2fb44b4f4.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.12"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "server_src",
+					"targetIndexes" : 
+					[
+						10
+					]
+				},
+				{
+					"build" : "editor_src",
+					"jsonFile" : "directory-editor_src-Debug-241c395bf62efd692310.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.12"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "editor_src",
+					"targetIndexes" : 
+					[
+						3
+					]
+				},
+				{
+					"build" : "client_src/setupscreen",
+					"jsonFile" : "directory-client_src.setupscreen-Debug-cd6e2e7b37527981a326.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.12"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 4,
+					"source" : "client_src/setupscreen",
+					"targetIndexes" : 
+					[
+						11
+					]
+				},
+				{
+					"build" : "editor_src/setupscreen_editor",
+					"jsonFile" : "directory-editor_src.setupscreen_editor-Debug-893b12e43f4e04c15e19.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.12"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 5,
+					"source" : "editor_src/setupscreen_editor",
+					"targetIndexes" : 
+					[
+						12
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1,
+						4,
+						5
+					],
+					"directoryIndexes" : 
+					[
+						0,
+						4,
+						5,
+						6
+					],
+					"name" : "jazzjackrabbit",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						8,
+						9,
+						10
+					]
+				},
+				{
+					"childIndexes" : 
+					[
+						2
+					],
+					"directoryIndexes" : 
+					[
+						1
+					],
+					"name" : "googletest-distribution",
+					"parentIndex" : 0
+				},
+				{
+					"childIndexes" : 
+					[
+						3
+					],
+					"directoryIndexes" : 
+					[
+						2
+					],
+					"name" : "gmock",
+					"parentIndex" : 1,
+					"targetIndexes" : 
+					[
+						4,
+						5
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						3
+					],
+					"name" : "gtest",
+					"parentIndex" : 2,
+					"targetIndexes" : 
+					[
+						6,
+						7
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						7
+					],
+					"name" : "setupscreen",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						11
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						8
+					],
+					"name" : "setupscreen_editor",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						12
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "client::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-client-Debug-e9d610e87a2ef270c4a6.json",
+					"name" : "client",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "client_lib::@eafd6e3045e1d2452d18",
+					"jsonFile" : "target-client_lib-Debug-824d6e0a3489dbd5b219.json",
+					"name" : "client_lib",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "editor::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-editor-Debug-f5076107e8046cfd2a41.json",
+					"name" : "editor",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 6,
+					"id" : "editor_lib::@abafdd155b76fd456a60",
+					"jsonFile" : "target-editor_lib-Debug-27f15649c09a9b9cef31.json",
+					"name" : "editor_lib",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "gmock::@0f7bb11d64f3678238c7",
+					"jsonFile" : "target-gmock-Debug-d70a0aa844d1e55a81b1.json",
+					"name" : "gmock",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "gmock_main::@0f7bb11d64f3678238c7",
+					"jsonFile" : "target-gmock_main-Debug-5d450d0b619bf1b03aaa.json",
+					"name" : "gmock_main",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "gtest::@1ea2dfc0605fe3ab2a3f",
+					"jsonFile" : "target-gtest-Debug-6e6fac415558993c7ad0.json",
+					"name" : "gtest",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "gtest_main::@1ea2dfc0605fe3ab2a3f",
+					"jsonFile" : "target-gtest_main-Debug-e84d8d4ac4665651cd77.json",
+					"name" : "gtest_main",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "prueba::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-prueba-Debug-b0b8bd618e653b173f81.json",
+					"name" : "prueba",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "server::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-server-Debug-04dce8c00bafb1416dae.json",
+					"name" : "server",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "server_lib::@afa1b295bad524b51d90",
+					"jsonFile" : "target-server_lib-Debug-2872f28b09f929d4c05a.json",
+					"name" : "server_lib",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 7,
+					"id" : "setupscreen::@5facb4b79328fbd2ad45",
+					"jsonFile" : "target-setupscreen-Debug-7999c6e12a8e691512f4.json",
+					"name" : "setupscreen",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 8,
+					"id" : "setupscreen_editor::@05bd44e40baf4b22388e",
+					"jsonFile" : "target-setupscreen_editor-Debug-479b58e3e09605f0fee6.json",
+					"name" : "setupscreen_editor",
+					"projectIndex" : 5
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug",
+		"source" : "/home/moko/Escritorio/jazzjackrabbit_taller1"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}
