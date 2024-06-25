@@ -7,14 +7,14 @@ void set_values(Tile& selectedTile, const double& minX, const double& maxX, cons
 
     //std::unique_lock<std::mutex> lock(mtx_map);
 
-    double newX = (event.button.x + x);
-    double newY = (event.button.y - y);
+    double newX = (event.button.x / increase + x);
+    double newY = (event.button.y / increase - y);
                         
-    //if (newX < minX || newX >= maxX)
-      //  return;
+    if (newX < minX || newX >= maxX)
+        return;
 
-    //if (newY < maxY || newY >= minY)
-      //  return;
+    if (newY < maxY || newY >= minY)
+        return;
 
     int fila = std::floor(newY / (TILE_MAP_CREATED)) * (TILE_MAP_CREATED);
     int columna = std::floor(newX / (TILE_MAP_CREATED)) * (TILE_MAP_CREATED);
