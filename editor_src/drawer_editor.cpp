@@ -23,9 +23,9 @@ void set_values(Tile& selectedTile, const double& minX, const double& maxX, cons
 
     std::cout << "hago click en " << columna << ", " << fila << "\n"; 
 
-    if (fila < 0 || fila > 39 || columna < 0 || columna > 79) {
-        return;
-    }
+    //if (fila < 0 || fila > 39 || columna < 0 || columna > 79) {
+      //  return;
+    //}
 
     std::tuple<int,int> posicion = std::make_tuple(fila, columna);
     //selectedTile.destRect = { columna, fila, TILE_MAP_CREATED, TILE_MAP_CREATED };
@@ -142,11 +142,12 @@ void DrawerEditor::run() {
             }
 
             case SDL_MOUSEMOTION: {
-                if (event.button.x > width_texture) {
-                    if(mouseHeldDown && selectedTile.selected)
-                        set_values(selectedTile, width_texture, width_texture+mapWidth*TILE_MAP_CREATED, mapHeight*TILE_MAP_CREATED, 0, event, TILE_MAP_CREATED, 16, mapSpawn, mapTiles, x, y, increase);
-                    }
-                }
+                if(event.button.x <= width_texture)
+                    break;
+                
+                if(mouseHeldDown)
+                    set_values(selectedTile, width_texture, width_texture+mapWidth*TILE_MAP_CREATED, mapHeight*TILE_MAP_CREATED, 0, event, TILE_MAP_CREATED, 16, mapSpawn, mapTiles, x, y, increase);
+            }
 
             case SDL_KEYDOWN: {
                 handle_keydown(event);
