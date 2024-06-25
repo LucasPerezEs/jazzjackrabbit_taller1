@@ -7,8 +7,10 @@ Trabajo Practico final para la materia Taller de Programacion I - FIUBA
 * [Pablo Mokorel](https://github.com/pablomoko)
 * [Lucas Perez Esnaola](https://github.com/LucasPerezEs)
 
-## Instalacion del proyecto
-* [Instalacion](MANUAL_DE_INSTALACION.txt)
+## Documentacion del proyecto
+* [Manual de Instalacion](manuales/ManualDeInstalacion.txt)
+* [Manual de Proyecto](manuales/ManualDeProyecto.txt)
+* [Manual Tecnico](manuales/ManualTecnico.txt)
 
 ## Ejecución para el Cliente y Servidor
 Servidor:
@@ -20,10 +22,8 @@ Cliente:
 2. Ejecute el comando `./client` para iniciar el cliente.
 
 3. Coloque la dirección IP y el puerto del servidor para conectarse.  
-![ConnectMenu](doc/port-ip.jpeg)
 
-4. Haga clic en "Join" para unirse a una partida.  
-![JoinMenu](doc/join.jpeg)
+4. Haga clic en "Connect" para unirse a una partida.  
 
 ## Controles
 * Mover izquierda: `A`
@@ -31,41 +31,11 @@ Cliente:
 * Disparar: `F`
 * Saltar: `Barra espaciadora`
 * Golpe especial: `K`
+* Cambio de arma: `O`
 * Sprint: `LSHIFT`
 * Zoom in: `Flecha hacia arriba`
 * Zoom out: `Flecha hacia abajo`
-
-## Documentacion primera entrega
-### Lo que ya tenemos
-* Aplicacion Cliente y Servidor con correcta comunicacion mediante protocolos definidos
-* Jugabilidad basica (movimiento, colisiones, respawns, sistema de puntos, etc)
-* Fisica de los objetos
-* Partidas multijugador
-* Un escenario
-* Animaciones para el personaje Jazz, un enemigo y drops.
-* Interfaz de usuario basica
-* Camara con seguimiento al jugador
-* Musica de fondo y algunos efectos de sonido
-* Interfaz de menu principal basica
-* Archivo Vagrant para la instalacion
-* Primera version de reloj de partida
-
-### Lo que nos falta por hacer
-* Server con varias partidas en simultaneo
-* Logica de eleccion de personaje (Interfaz, animaciones, golpes especiales, etc)
-* Personajes intoxicados
-* Sistema de armas y municiones
-* Daño entre jugadores
-* Mas formas de ganar puntos (Gemas, matando jugadores, etc)
-* Un escenario
-* Menu principal mas desarrollado
-* Mas efectos de sonido
-* Animaciones para explosiones
-* Logica finalizacion de partida
-* Pantalla final con el Scoreboard
-* Editor de mapas
-* Testing
-* Cheats
+* Menu de musica: `ESC`
 
 ## Licencia y Referencias
 Este repositorio se encuentra bajo la Licencia MIT  
