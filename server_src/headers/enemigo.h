@@ -10,13 +10,13 @@
 
 #include "gem.h"
 #include "gold_coin.h"
+#include "icebullet_ammo.h"
 #include "lista_objetos.h"
 #include "municion.h"
 #include "objeto.h"
 #include "personaje.h"
 #include "rocket_pickup.h"
 #include "zanahoria.h"
-
 
 class Projectile;
 class ListaObjetos;
@@ -31,12 +31,18 @@ protected:
     float prob_goldcoin;
     float prob_rocket;
     float prob_gem;
+    float prob_icebullet;
+    bool frozen;
+    float frozen_time;
+    std::chrono::system_clock::time_point frozen_start;
     std::map<std::string, float>& config;
+
+    void check_frozen();
 
 public:
     Enemigo(float x, float y, float w, float h, float max_life, float speed, float damage,
             float prob_carrot, float prob_ammo, float prob_goldcoin, float prob_rocket,
-            float prob_gem, EntityType en_type, AnimationType an_type,
+            float prob_gem, float prob_icebullet, EntityType en_type, AnimationType an_type,
             std::map<std::string, float>& config);
     virtual void colision(Objeto& o) override;
     virtual void colision(Personaje& p) override;
