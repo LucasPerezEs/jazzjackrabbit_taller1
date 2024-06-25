@@ -1,5 +1,5 @@
 #include "../headers/mapa.h"
-
+#include <cstdlib>
 
 Piso::Piso(float posx, float posy, float width,
            float height) {  // Lo llame piso pero tambien puede ser una pared
@@ -76,10 +76,17 @@ Mapa::Mapa(const std::string& mapName) {
 
     std::string spawn_path = "../server_src/maps/" + mapName + "_spawns";
     spawns = cargarCSV(spawn_path);
+    for (auto spawn: spawns) {
+        if (spawn[0] == 0) {
+            spawnsPersonaje.emplace_back(spawn);
+        }
+        else {
+            spawnsEnemigo.emplace_back(spawn);
+        }
+    }
 
 
-
-    for (std::vector<int>::size_type i = tilemap.size() - 1; i >= 1; --i) {
+    for (std::vector<int>::size_type i = 0; i < tilemap.size(); i++) {
         for (std::vector<int>::size_type j = 0; j < tilemap[i].size(); j++) {
             if (tilemap[i][j] != -1) {
 
@@ -128,13 +135,21 @@ bool Mapa::CheckColision(
 
 std::vector<int> Mapa::get_spawn(int type) {
     std::vector<int> res;
-    for (auto spawn: spawns) {
-        if (spawn[0] == type) {
-            res.emplace_back(spawn[1]);
-            res.emplace_back(spawn[2]);
-            return res;
-        }
+    if (type == 0 && spawnsPersonaje.size() > 0) {
+
+        int i = rand()%spawnsPersonaje.size();
+        res.emplace_back(spawnsPersonaje[i][1]);
+        res.emplace_back(spawnsPersonaje[i][2]);
+        return res;
     }
+    else if (type == 1 && spawnsEnemigo.size() > 0) {
+
+        int i = rand()%spawnsEnemigo.size();
+        res.emplace_back(spawnsEnemigo[i][1]);
+        res.emplace_back(spawnsEnemigo[i][2]);
+        return res;
+    }
+
     res.emplace_back(-1);
     res.emplace_back(-1);
     return res;

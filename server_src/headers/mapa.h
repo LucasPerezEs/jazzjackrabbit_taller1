@@ -40,6 +40,8 @@ class DiagonalDerecha {
 class Mapa {
 private:
     std::vector<std::vector<int>> spawns;
+    std::vector<std::vector<int>> spawnsPersonaje;
+    std::vector<std::vector<int>> spawnsEnemigo;
 public:
     std::vector<Piso*> objetos;
     std::vector<DiagonalIzquierda*> diagonalesIzq;

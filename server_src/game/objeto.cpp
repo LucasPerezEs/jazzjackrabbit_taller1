@@ -18,7 +18,9 @@ Objeto::Objeto(float x, float y, float w, float h, EntityType en_type, Animation
 }
 
 Ente::Ente(float x, float y, float w, float h, int vida, EntityType en_type, AnimationType an_type):
-        Objeto(x, y, w, h, en_type, an_type), direccion(1), contador(0), vida(vida) {}
+        Objeto(x, y, w, h, en_type, an_type), direccion(1), contador(0), vida(vida) {
+            killed = false;
+        }
 
 
 void Objeto::update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) {}

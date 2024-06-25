@@ -35,7 +35,7 @@ void Game::run() {
     entes.push_back(bat);
     entes.push_back(monkey);
 
-    for (auto ente: entes) {
+    /*for (auto ente: entes) {
         std::vector<int> res = m.get_spawn(ente->spawn);
         
         if (res[0] == -1 && res[1] == 1) {
@@ -43,7 +43,7 @@ void Game::run() {
         }
         ente->x = res[0];
         ente->y = res[1];
-    }
+    }*/
 
     clock.start();
 
