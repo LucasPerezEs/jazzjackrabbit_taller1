@@ -1,52 +1,57 @@
 #include "MultiplayerMenu.h"
 
+#include <QApplication>
+#include <QFile>
+#include <QFont>
+#include <QFontDatabase>
+
 MultiplayerMenu::MultiplayerMenu(QWidget* parent):
         QDialog(parent),
         clientNameWidget(new ClientName()),
         createGameWidget(new CreateGame()),
-        joinGameWidget(new JoinGame()),
-        gameListWidget(new GameList()) {
+        joinGameWidget(new JoinGame()) {
+    int id = QFontDatabase::addApplicationFont("../client_src/assets/ARCADECLASSIC.TTF");
+    QString family = QFontDatabase::applicationFontFamilies(id).at(0);
+    QFont monospace(family);
+    this->setFixedSize(800, 600);
+    this->setObjectName("multiplayerMenu");
+
     exit = 1;
     init();
 }
 
 void MultiplayerMenu::init() {
-    QVBoxLayout* layout = new QVBoxLayout(this);
+    QHBoxLayout* layout = new QHBoxLayout(this);
 
     createGameButton = new QPushButton("Create Game", this);
-    joinGameButton = new QPushButton("Join", this);
-    refreshButton = new QPushButton("Refresh", this);
-    createMapButton = new QPushButton("CreatMap", this);
-    back = new QPushButton("Return", this);
+    createGameButton->setObjectName("createGameButton");
+    createGameButton->setFixedSize(150, 30);
 
-    // createGameButton->setEnabled(false);
-    // refreshButton->setEnabled(false);
+    joinGameButton = new QPushButton("Join", this);
+    joinGameButton->setObjectName("joinGameButton");
+    joinGameButton->setFixedSize(150, 30);
+
+    back = new QPushButton("Return", this);
+    back->setObjectName("returnButton");
+    back->setFixedSize(150, 30);
 
     layout->addWidget(createGameButton);
     layout->addWidget(joinGameButton);
-    layout->addWidget(createMapButton);
-    layout->addWidget(back);
-    // layout->addWidget(refreshButton);
-
     layout->addWidget(clientNameWidget);
     layout->addWidget(createGameWidget);
-    layout->addWidget(gameListWidget);
     layout->addWidget(joinGameWidget);
+
+    layout->setAlignment(Qt::AlignCenter | Qt::AlignBottom);
 
     createGameButton->hide();
     joinGameButton->hide();
-    createMapButton->hide();
-    refreshButton->hide();
     back->hide();
     createGameWidget->hide();
-    gameListWidget->hide();
     joinGameWidget->hide();
 
 
     connect(createGameButton, &QPushButton::clicked, this, &MultiplayerMenu::onCreateGameClicked);
     connect(joinGameButton, &QPushButton::clicked, this, &MultiplayerMenu::onJoinGameClicked);
-    connect(refreshButton, &QPushButton::clicked, this, &MultiplayerMenu::onRefreshClicked);
-    connect(createMapButton, &QPushButton::clicked, this, &MultiplayerMenu::onCreateMapClicked);
     connect(back, &QPushButton::clicked, this, &MultiplayerMenu::onReturnClicked);
 
     connect(clientNameWidget, &ClientName::ClientNameRequested, this,
@@ -55,16 +60,16 @@ void MultiplayerMenu::init() {
             &MultiplayerMenu::createGameRequested);
     connect(joinGameWidget, &JoinGame::joinGameRequested, this,
             &MultiplayerMenu::joinGameRequested);
-    connect(gameListWidget, &GameList::refreshRequested, this, &MultiplayerMenu::refreshRequested);
+    connect(joinGameWidget, &JoinGame::refreshRequested, this, &MultiplayerMenu::refreshRequested);
 
-    connect(gameListWidget, &GameList::gameSelected, joinGameWidget, &JoinGame::setGameId);
+    connect(joinGameWidget, &JoinGame::gameSelected, joinGameWidget, &JoinGame::setGameId);
 
+    loadStyleSheet();
 }
 
 void MultiplayerMenu::nameSet() {
     createGameButton->show();
     joinGameButton->show();
-    createMapButton->show();
 
     clientNameWidget->hide();
 }
@@ -72,13 +77,10 @@ void MultiplayerMenu::nameSet() {
 void MultiplayerMenu::onReturnClicked() {
     createGameButton->show();
     joinGameButton->show();
-    createMapButton->show();
 
     back->hide();
-    refreshButton->hide();
     createGameWidget->hide();
     joinGameWidget->hide();
-    gameListWidget->hide();
 }
 
 
@@ -88,42 +90,24 @@ void MultiplayerMenu::onCreateGameClicked() {
 
     createGameButton->hide();
     joinGameButton->hide();
-    createMapButton->hide();
-    // joinGameWidget->hide();
-    // gameListWidget->hide();
 }
 
 void MultiplayerMenu::onJoinGameClicked() {
     back->show();
-    // refreshButton->show();
-    gameListWidget->show();
     joinGameWidget->show();
 
     createGameButton->hide();
     joinGameButton->hide();
-    createMapButton->hide();
 }
 
-void MultiplayerMenu::onRefreshClicked() {
-    // createGameWidget->hide();
-    // joinGameWidget->hide();
-    // gameListWidget->show();
-    emit refreshRequested();
-}
-
-void MultiplayerMenu::onCreateMapClicked() {
-    createGameWidget->hide();
-    joinGameWidget->hide();
-    gameListWidget->hide();
-    emit createMapRequested();
-}
+void MultiplayerMenu::onRefreshClicked() { emit refreshRequested(); }
 
 void MultiplayerMenu::updateGameList(const std::vector<std::string>& gameList) {
     QStringList qStringList;
     for (const auto& str: gameList) {
         qStringList.append(QString::fromStdString(str));
     }
-    gameListWidget->updateGameList(qStringList);
+    joinGameWidget->updateGameList(qStringList);
 }
 
 void MultiplayerMenu::showGameCreatedMessage() {
@@ -140,6 +124,21 @@ void MultiplayerMenu::showJoinGameFailedMessage() {
 
 void MultiplayerMenu::showSetNameFailedMessage() {
     QMessageBox::critical(this, "Save Name Failed", "Name already in use.");
+}
+
+void MultiplayerMenu::loadStyleSheet() {
+    QFile file("../client_src/setupscreen/styles.qss");
+    if (!file.exists()) {
+        qDebug() << "Stylesheet doesn't exist.";
+    }
+
+    if (file.open(QFile::ReadOnly | QFile::Text)) {
+        QString stylesheet = QLatin1String(file.readAll());
+        qApp->setStyleSheet(stylesheet);
+        qDebug() << "Stylesheet applied successfully.";
+    } else {
+        qDebug() << "Failed to load stylesheet.";
+    }
 }
 
 MultiplayerMenu::~MultiplayerMenu() {}

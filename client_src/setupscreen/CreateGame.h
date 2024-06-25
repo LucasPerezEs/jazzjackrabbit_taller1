@@ -2,16 +2,18 @@
 #define CREATEGAME_H
 
 #include <QCheckBox>
+#include <QComboBox>
+#include <QGridLayout>
 #include <QLabel>
 #include <QLineEdit>
+#include <QListWidget>
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QWidget>
-#include <vector>
-#include <iostream>
 #include <filesystem>
+#include <iostream>
 #include <string>
-#include <QComboBox>
+#include <vector>
 
 #include "../../common_src/headers/cheat_commands.h"
 
@@ -23,23 +25,23 @@ public:
     virtual ~CreateGame();
 
 signals:
-    void createGameRequested(const QString& gameName, const std::string& map_selected, const uint32_t& maxPlayers,
-                             const std::vector<uint32_t>& cheats);
+    void createGameRequested(const QString& gameName, const std::string& map_selected,
+                             const uint32_t& maxPlayers, const std::vector<uint32_t>& cheats);
 
 private:
-    QLabel* mapNameLabel;
-    QLabel* gameNameLabel;
     QLineEdit* gameNameInput;
 
-    QLabel* maxPlayersLabel;
     QLineEdit* maxPlayersInput;
 
-    QLabel* cheatsLabel;
-    QCheckBox* inmortalCheckBox;
+    QListWidget* cheatList;
+
+    QPushButton* back;
+
+    /*QCheckBox* inmortalCheckBox;
     QCheckBox* oneShotOneKillCheckBox;
     QCheckBox* moonGravityCheckBox;
     QCheckBox* hardEnemiesCheckBox;
-    QCheckBox* extraTimeCheckBox;
+    QCheckBox* extraTimeCheckBox;*/
 
     QPushButton* createButton;
 
