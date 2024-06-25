@@ -13,7 +13,8 @@ Game::Game(Client& client):
         in_menu(false),
         sound_manager(client.get_id()),
         event_handler(client.get_protocol(), in_menu, gameEnded, sound_manager, ui_manager),
-        updater(client.get_protocol(), window, entidades, receiverQueue, personajes, ui_manager, client.get_id(), sound_manager, gameStarted, gameEnded) {
+        updater(client.get_protocol(), window, entidades, receiverQueue, personajes, ui_manager,
+                client.get_id(), sound_manager, gameStarted, gameEnded) {
 
     // Este asset tambien deberia de pedirselo al map creator y que este le devuelva ya la textura.
     SDL_Surface* tilesetSurface = IMG_Load("../client_src/assets/background/ASSETS_GENERALES.png");
@@ -56,14 +57,6 @@ void Game::run() {
 
     client.go_online();
 
-
-    // Si el client no tiene mapa(is empty) le pido que lo cargue.
-
-    // std::cout << "Iniciando musica\n";
-    /*Music musica("../client_src/assets/music/Its_Pizza_Time.wav");
-    musica.PlayMusic(-1);
-    musica.SetVolume(20);*/
-
     while (updater.is_running() && event_handler.is_running()) {
 
         SDL_RenderClear(window.getRenderer());
@@ -98,8 +91,7 @@ void Game::render() {
 
     if (gameEnded) {
         ui_manager.renderEndGame(this->client.get_id());
-    }
-    else if (!gameStarted) {
+    } else if (!gameStarted) {
         SDL_RenderCopy(window.getRenderer(), loadingImage, NULL, NULL);
         ui_manager.renderLoadingText();
     } else {
@@ -135,11 +127,11 @@ void Game::render() {
 
         ui_manager.render_UI(this->client.get_id());
 
-    if (in_menu) {
-        ui_manager.renderPauseMenu();
-    }
+        if (in_menu) {
+            ui_manager.renderPauseMenu();
+        }
 
-    this->window.render();
+        this->window.render();
     }
 }
 
