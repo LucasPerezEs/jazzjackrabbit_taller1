@@ -28,6 +28,7 @@ void SoundManager::init_sounds() {
 
     this->sounds[GOLD_COIN][PICKUP_SOUND] =
             new Sound("../client_src/assets/music/goldcoin_sound.wav");
+    this->sounds[GEM][PICKUP_SOUND] = new Sound("../client_src/assets/music/gem_sound.wav");
     this->sounds[BULLET][PICKUP_SOUND] = new Sound("../client_src/assets/music/ammo_sound.wav");
     this->sounds[ROCKET][PICKUP_SOUND] = new Sound("../client_src/assets/music/ammo_sound.wav");
 

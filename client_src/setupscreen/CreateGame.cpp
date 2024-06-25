@@ -46,8 +46,8 @@ void CreateGame::init() {
     }
     mapComboBox = new QComboBox(this);
     mapComboBox->setFixedSize(160, 25);
-    mapComboBox->setEditable(true);
-    mapComboBox->lineEdit()->setPlaceholderText("Select map:");
+    /*mapComboBox->setEditable(true);
+    mapComboBox->lineEdit()->setPlaceholderText("Select map:");*/
     mapComboBox->addItems(gameOptions);
     mapComboBox->setObjectName("mapComboBox");
 

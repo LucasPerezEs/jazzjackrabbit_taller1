@@ -32,6 +32,7 @@ std::map<std::string, float> load_config_YAML(const std::string& path) {
     config["ghost_prob_ammo"] = yaml["ghost"]["prob_ammo"].as<float>();
     config["ghost_prob_goldcoin"] = yaml["ghost"]["prob_goldcoin"].as<float>();
     config["ghost_prob_rocket"] = yaml["ghost"]["prob_rocket"].as<float>();
+    config["ghost_prob_gem"] = yaml["ghost"]["prob_gem"].as<float>();
 
     // Bat
     config["bat_life"] = yaml["bat"]["life"].as<float>();
@@ -41,6 +42,7 @@ std::map<std::string, float> load_config_YAML(const std::string& path) {
     config["bat_prob_ammo"] = yaml["bat"]["prob_ammo"].as<float>();
     config["bat_prob_goldcoin"] = yaml["bat"]["prob_goldcoin"].as<float>();
     config["bat_prob_rocket"] = yaml["bat"]["prob_rocket"].as<float>();
+    config["bat_prob_gem"] = yaml["bat"]["prob_gem"].as<float>();
 
     // Monkey
     config["monkey_life"] = yaml["monkey"]["life"].as<float>();
@@ -50,12 +52,14 @@ std::map<std::string, float> load_config_YAML(const std::string& path) {
     config["monkey_prob_ammo"] = yaml["monkey"]["prob_ammo"].as<float>();
     config["monkey_prob_goldcoin"] = yaml["monkey"]["prob_goldcoin"].as<float>();
     config["monkey_prob_rocket"] = yaml["monkey"]["prob_rocket"].as<float>();
+    config["monkey_prob_gem"] = yaml["monkey"]["prob_gem"].as<float>();
 
     // Pickups
     config["goldcoin_addscore"] = yaml["goldcoin"]["add_score"].as<float>();
     config["carrot_addlife"] = yaml["carrot"]["add_life"].as<float>();
     config["ammo_addammo"] = yaml["ammo"]["add_ammo"].as<float>();
     config["rocket_pickup_addammo"] = yaml["rocket_pickup"]["add_ammo"].as<float>();
+    config["gem_addscore"] = yaml["gem"]["add_score"].as<float>();
 
 
     // Bullets
@@ -146,7 +150,7 @@ bool GamesManager::listGames(std::vector<std::string>& gameList) {
     std::lock_guard<std::mutex> lock(gamesMutex);
 
     for (const auto& game: games) {
-        if (game.second->game_started()){
+        if (game.second->game_started()) {
             continue;
         }
         std::stringstream stm;
@@ -164,7 +168,8 @@ bool GamesManager::listGames(std::vector<std::string>& gameList) {
 
 bool GamesManager::listMaps(std::vector<std::string>& mapList) {
     try {
-        for (const auto& archivo : std::filesystem::directory_iterator("../server_src/maps"))
+        for (const auto& archivo: std::filesystem::directory_iterator("../server_src/maps"))
+            // cppcheck-suppress useStlAlgorithm
             mapList.push_back(archivo.path().filename().string());
 
     } catch (const std::filesystem::filesystem_error& e) {
@@ -260,17 +265,20 @@ void GamesManager::run() {
                 clients[clientId]->pushState(container);
 
                 ok = joinGame(msg.setup.gameId, clients[clientId], msg.setup.character);
-                Container container2 = Container(Setup::JOIN_GAME, msg.setup.gameId, msg.setup.maxPlayers, mapName, msg.setup.cheats, ok);
+                Container container2 =
+                        Container(Setup::JOIN_GAME, msg.setup.gameId, msg.setup.maxPlayers, mapName,
+                                  msg.setup.cheats, ok);
                 clients[clientId]->pushState(container2);
-                //std::cout << mapName << std::endl;
+                // std::cout << mapName << std::endl;
 
                 break;
             }
             case Setup::CREATE_GAME: {
                 std::cout << "Creando game\n";
-                ok = createGame(msg.setup.gameId, msg.setup.maxPlayers, msg.setup.mapName, msg.setup.cheats);
-                Container container = Container(Setup::CREATE_GAME, msg.setup.gameId, msg.setup.maxPlayers,
-                                    msg.setup.cheats, ok);
+                ok = createGame(msg.setup.gameId, msg.setup.maxPlayers, msg.setup.mapName,
+                                msg.setup.cheats);
+                Container container = Container(Setup::CREATE_GAME, msg.setup.gameId,
+                                                msg.setup.maxPlayers, msg.setup.cheats, ok);
                 clients[clientId]->pushState(container);
                 std::cout << "Pusheando cola de create a client\n";
                 break;

@@ -1,10 +1,12 @@
 #ifndef MAPA_H_
 #define MAPA_H_
 
-#include <vector>
-#include <sstream>
 #include <fstream>
 #include <iostream>
+#include <sstream>
+#include <string>
+#include <vector>
+
 #include "objeto.h"
 
 class Piso {
@@ -28,7 +30,7 @@ public:
 };
 
 class DiagonalDerecha {
-    public:
+public:
     float x;
     float y;
     float w;
@@ -42,12 +44,13 @@ private:
     std::vector<std::vector<int>> spawns;
     std::vector<std::vector<int>> spawnsPersonaje;
     std::vector<std::vector<int>> spawnsEnemigo;
+
 public:
     std::vector<Piso*> objetos;
     std::vector<DiagonalIzquierda*> diagonalesIzq;
     std::vector<DiagonalDerecha*> diagonalesDer;
     std::vector<std::vector<int>> cargarCSV(const std::string& ruta);
-    Mapa(const std::string& mapName);
+    explicit Mapa(const std::string& mapName);
     bool CheckColision(float x, float y, float w, float h);
     std::vector<int> get_spawn(int type);
 

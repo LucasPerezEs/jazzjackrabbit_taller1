@@ -13,7 +13,7 @@ void ClientName::init() {
     layout->setAlignment(clientNameInput, Qt::AlignHCenter);
     // layout->setAlignment(clientNameInput, Qt::AlignBottom);
 
-    sendButton = new QPushButton("Enter your name", this);
+    sendButton = new QPushButton("Submit name", this);
     sendButton->setObjectName("saveNameButton");
     sendButton->setFixedSize(200, 30);
     layout->addWidget(sendButton);

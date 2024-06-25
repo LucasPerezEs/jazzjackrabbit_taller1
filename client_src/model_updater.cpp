@@ -120,6 +120,11 @@ void ModelUpdater::init_animations(SdlWindow& window) {
                                          window, Color{0x2C, 0x66, 0x96}),
                           20, AnimationSpeed::FAST);
 
+    this->animations[EntityType::GEM][AnimationType::PICKUP] =
+            new Animation(new SdlTexture("../client_src/assets/textures/gem_pickup.png", window,
+                                         Color{0x2C, 0x66, 0x96}),
+                          8, AnimationSpeed::FAST);
+
     this->animations[EntityType::BAT][AnimationType::FLY] =
             new Animation(new SdlTexture("../client_src/assets/textures/bat_flying.png", window,
                                          Color{0x2C, 0x66, 0x96}),
