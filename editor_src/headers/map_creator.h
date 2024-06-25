@@ -3,8 +3,9 @@
 
 #include "drawer_editor.h"
 
-#define TILE_MAP_ASSETS 16  // Tamaño en el que se ve el asset al crear.
-#define TILE_MAP_CREATED 8  // Tamaño en el que se ve el mapa al crearlo.
+#define TILE_MAP_ASSETS 16 
+ 
+#define TILE_MAP_CREATED 8
 
 class MapCreator {
     std::string mapName;
@@ -21,6 +22,7 @@ class MapCreator {
     int height_texture;
     SDL_Rect destRectAsset;
 
+    int increase;
     std::mutex mtx_map;
     std::condition_variable is_not_pointed_map;
     std::string path_maps = "../server_src/maps/";

@@ -17,12 +17,13 @@ private:
     int scale_value;
     float& x;
     float& y;
+    int& increase;
 
     void handle_keydown(const SDL_Event& event);
 
 public:
     DrawerEditor(bool& running, std::vector<Tile>& tiles_asset, int width_texture, int mapWidth, 
-        int mapHeight, int TILE_MAP_CREATED, std::map<std::tuple<int, int>, Tile>& mapSpawn, std::map<std::tuple<int, int>, Tile>& mapTiles, float& x, float& y);
+        int mapHeight, int TILE_MAP_CREATED, std::map<std::tuple<int, int>, Tile>& mapSpawn, std::map<std::tuple<int, int>, Tile>& mapTiles, float& x, float& y, int& increase);
 
     virtual void run() override;
 

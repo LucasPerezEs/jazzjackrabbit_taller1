@@ -1,5 +1,6 @@
 #include "headers/map_creator.h"
 
+
 MapCreator::MapCreator(const std::string& mapName, const double& width, const double& height, const bool& is_already_create):
         mapName(mapName), mapWidth(width), mapHeight(height), window(800, 600), is_already_create(is_already_create) {}
 
@@ -250,22 +251,23 @@ void MapCreator::handle_draw(){
 
     float x = 0;
     float y = 0;
+    increase = 1;
 
     bool running = true;
-    DrawerEditor drawer(running, tiles_asset, width_texture, mapWidth, mapHeight, TILE_MAP_CREATED, mapSpawn, mapTiles, x, y);
+    DrawerEditor drawer(running, tiles_asset, width_texture, mapWidth, mapHeight, TILE_MAP_CREATED, mapSpawn, mapTiles, x, y, increase);
     drawer.start();
 
     while(running){
 
         Tile value;
-        window.fill();
+        //window.fill();
 
         if(!mapTiles.empty()){
             for (auto pairMap : mapTiles) {
                 value = pairMap.second;
 
                 //Aca edito el desRect:
-                SDL_Rect resct_new = {value.destRect.x + (int)x, value.destRect.y - (int)y, 8, 8};
+                SDL_Rect resct_new = {(value.destRect.x *increase + (int)x), (value.destRect.y *increase + (int)y), value.destRect.w *increase, value.destRect.h *increase};
 
                 SDL_RenderCopy(window.getRenderer(), assetTexture, &(value.srcRect), &(resct_new));
             }

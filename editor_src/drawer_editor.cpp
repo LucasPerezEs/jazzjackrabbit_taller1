@@ -3,24 +3,24 @@
 
 
 void set_values(Tile& selectedTile, const double& minX, const double& maxX, const double& minY, const double& maxY,
- SDL_Event& event, int TILE_MAP_CREATED, int TILE_MAP_ASSETS, std::map<std::tuple<int, int>, Tile>& mapSpawn, std::map<std::tuple<int, int>, Tile>& mapTiles, float& x, float& y){
+ SDL_Event& event, int TILE_MAP_CREATED, int TILE_MAP_ASSETS, std::map<std::tuple<int, int>, Tile>& mapSpawn, std::map<std::tuple<int, int>, Tile>& mapTiles, float& x, float& y, int& increase){
 
     //std::unique_lock<std::mutex> lock(mtx_map);
 
-    double newX = event.button.x - x;
-    double newY = event.button.y + y;
+    double newX = (event.button.x + x);
+    double newY = (event.button.y - y);
                         
-    if (newX < minX || newX >= maxX)
-        return;
+    //if (newX < minX || newX >= maxX)
+      //  return;
 
-    if (newY < maxY || newY >= minY)
-        return;
+    //if (newY < maxY || newY >= minY)
+      //  return;
 
-    int fila = std::floor(newY / TILE_MAP_CREATED) * TILE_MAP_CREATED;
-    int columna = std::floor(newX / TILE_MAP_CREATED) * TILE_MAP_CREATED;
+    int fila = std::floor(newY / (TILE_MAP_CREATED)) * (TILE_MAP_CREATED);
+    int columna = std::floor(newX / (TILE_MAP_CREATED)) * (TILE_MAP_CREATED);
 
 
-    std::tuple<int,int> posicion = std::make_tuple(fila/TILE_MAP_CREATED, (columna-TILESET_WIDTH*TILE_MAP_ASSETS)/TILE_MAP_CREATED);
+    std::tuple<int,int> posicion = std::make_tuple(fila/(TILE_MAP_CREATED), (columna-TILESET_WIDTH*TILE_MAP_ASSETS)/(TILE_MAP_CREATED));
     selectedTile.destRect = { columna, fila, TILE_MAP_CREATED, TILE_MAP_CREATED };
 
     int PlayerSpawn = 0;
@@ -48,8 +48,8 @@ void set_values(Tile& selectedTile, const double& minX, const double& maxX, cons
 
 // Pre: -
 // Post: -
-DrawerEditor::DrawerEditor(bool& running, std::vector<Tile>& tiles_asset, int width_texture, int mapWidth, int mapHeight, int TILE_MAP_CREATED, std::map<std::tuple<int, int>, Tile>& mapSpawn, std::map<std::tuple<int, int>, Tile>& mapTiles, float& x, float& y):
- tiles_asset(tiles_asset), running(running), mapSpawn(mapSpawn), mapTiles(mapTiles), x(x), y(y) {
+DrawerEditor::DrawerEditor(bool& running, std::vector<Tile>& tiles_asset, int width_texture, int mapWidth, int mapHeight, int TILE_MAP_CREATED, std::map<std::tuple<int, int>, Tile>& mapSpawn, std::map<std::tuple<int, int>, Tile>& mapTiles, float& x, float& y, int& increase):
+ tiles_asset(tiles_asset), running(running), mapSpawn(mapSpawn), mapTiles(mapTiles), x(x), y(y), increase(increase) {
     this->width_texture = width_texture;
     this->mapWidth = mapWidth;
     this->mapHeight = mapHeight;
@@ -64,11 +64,11 @@ void DrawerEditor::handle_keydown(const SDL_Event& event) {
 
     switch (keyEvent.keysym.sym) {
         case SDLK_w:
-            y++;
+            y--;
             //cmd.action = Command::UP;
             break;
         case SDLK_s:
-            y--;
+            y++;
             //cmd.action = Command::DOWN;
             break;
         case SDLK_a:
@@ -80,16 +80,16 @@ void DrawerEditor::handle_keydown(const SDL_Event& event) {
             //cmd.action = Command::RIGHT;
             break;
 
-        case SDLK_UP:{
-
-
-            scale_value++;
+        case SDLK_z:
+            increase++;
             break;
-}
-        case SDLK_DOWN:{
-            scale_value--;
+
+        case SDLK_x:
+            if(increase > 1){
+                increase--;
+            }
             break;
-}
+
         }}
         
 
@@ -124,7 +124,7 @@ void DrawerEditor::run() {
                 }
                 if (!selectedTile.selected)
                     break;
-                set_values(selectedTile, width_texture, width_texture+mapWidth*TILE_MAP_CREATED, mapHeight*TILE_MAP_CREATED, 0, event, TILE_MAP_CREATED, 16, mapSpawn, mapTiles, x, y);
+                set_values(selectedTile, width_texture, width_texture+mapWidth*TILE_MAP_CREATED, mapHeight*TILE_MAP_CREATED, 0, event, TILE_MAP_CREATED, 16, mapSpawn, mapTiles, x, y, increase);
                 mouseHeldDown = true;
                 break;
             }
@@ -136,7 +136,7 @@ void DrawerEditor::run() {
 
             case SDL_MOUSEMOTION: {
                 if(mouseHeldDown)
-                    set_values(selectedTile, width_texture, width_texture+mapWidth*TILE_MAP_CREATED, mapHeight*TILE_MAP_CREATED, 0, event, TILE_MAP_CREATED, 16, mapSpawn, mapTiles, x, y);
+                    set_values(selectedTile, width_texture, width_texture+mapWidth*TILE_MAP_CREATED, mapHeight*TILE_MAP_CREATED, 0, event, TILE_MAP_CREATED, 16, mapSpawn, mapTiles, x, y, increase);
                 }
             case SDL_KEYDOWN: {
                 handle_keydown(event);

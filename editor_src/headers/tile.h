@@ -20,6 +20,8 @@
 #include "SdlWindow.h"
 #include "../../common_src/headers/thread.h"
 
+
+
 const int TILESET_WIDTH = 10;
 
 struct Tile {
