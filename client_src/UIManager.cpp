@@ -5,8 +5,9 @@
 #include <string>
 #include <vector>
 
-std::vector<std::pair<int, Player*>> orderedValues(const std::map<int, Player*>& inputMap, bool all) {
-    
+std::vector<std::pair<int, Player*>> orderedValues(const std::map<int, Player*>& inputMap,
+                                                   bool all) {
+
     std::vector<std::pair<int, Player*>> mapVector(inputMap.begin(), inputMap.end());
 
     std::sort(mapVector.begin(), mapVector.end(),
@@ -18,10 +19,10 @@ std::vector<std::pair<int, Player*>> orderedValues(const std::map<int, Player*>&
 
     if (all) {
         for (const auto& elem: mapVector) {
+            // cppcheck-suppress useStlAlgorithm
             orderedValues.push_back(elem);
         }
-    }
-    else {
+    } else {
         int count = 0;
         for (const auto& elem: mapVector) {
             if (count < 3) {
@@ -43,16 +44,17 @@ UIManager::UIManager(std::map<int, Player*>& personajes, SdlWindow& window):
         fuente("../client_src/assets/ARCADECLASSIC.TTF", 32),
         clock(-1),
         chica(TTF_OpenFont("../client_src/assets/ARCADECLASSIC.TTF", 18)) {
-    
-    mainMenu.x = 800 - 200;
-    mainMenu.w = 150;
-    mainMenu.y = 600/2  - 25;
-    mainMenu.h = 35;
 
-    muteMusic.x = 800/4 + 800/4 - 70;
-    muteMusic.w = 140;
-    muteMusic.y = 600/4 + 600/4 - 15;
-    muteMusic.h = 30;
+    mainMenuBorder.x = 255;
+    mainMenuBorder.y = 480;
+    mainMenuBorder.w = 290;
+    mainMenuBorder.h = 50;
+
+    muteMusic.x = 800 / 2 - 140;
+    muteMusic.w = 280;
+    muteMusic.y = 600 / 2 - 25;
+    muteMusic.h = 50;
+
 
     this->texturas_ui[0] = new SdlTexture("../client_src/assets/textures/ui_vida.png", window,
                                           Color{0x2C, 0x66, 0x96});
@@ -64,6 +66,8 @@ UIManager::UIManager(std::map<int, Player*>& personajes, SdlWindow& window):
                                           Color{0x2C, 0x66, 0x96});
     this->texturas_ui[4] = new SdlTexture("../client_src/assets/textures/ui_rocket.png", window,
                                           Color{0x2C, 0x66, 0x96});
+
+    this->texturas_ui[5] = new SdlTexture("../client_src/assets/loading/loading.png", window);
 }
 
 bool UIManager::player_alive(int id_cliente) { return personajes.count(id_cliente) > 0; }
@@ -97,12 +101,6 @@ void UIManager::render_UI(int id_cliente) {
     //   ScoreBoard
     this->fuente.render(590, 5, "ScoreBoard", window, amarillo);
     render_top3();
-    /*std::string string_board = "Score Board";
-    SdlTexture* texture_c = new SdlTexture(chica, string_board, window, amarillo);
-
-    Area dst_r(620, 5, string_board.size() * 9, 30);
-    texture_c->render(dst_r);
-    delete texture_c;*/
 
     Player* personaje = personajes[id_cliente];
 
@@ -140,7 +138,7 @@ void UIManager::render_UI(int id_cliente) {
     }
 }
 
-void UIManager::render_pause_menu() {
+void UIManager::renderPauseMenu() {
     SDL_Color amarillo = {237, 206, 69, 255};
 
     SDL_Rect button;
@@ -159,42 +157,81 @@ void UIManager::renderLoadingText() {
 }
 
 void UIManager::renderEndGame(int id_cliente) {
-    window.fill(70, 130, 180, 255);
+    // window.fill(70, 130, 180, 255);
+    Area dst(0, 0, 800, 600);
+    texturas_ui[5]->render(dst);
 
-    std::vector<std::pair<int, Player*>> score = orderedValues(personajes, true);  
+    SDL_Rect buttonBorder;
+    buttonBorder.x = 190;
+    buttonBorder.y = 20;
+    buttonBorder.w = 420;
+    buttonBorder.h = 100;
+    SDL_SetRenderDrawColor(window.getRenderer(), 0, 0, 0, 255);
+    SDL_RenderFillRect(window.getRenderer(), &buttonBorder);
+
+    SDL_Rect button;
+    button.x = 200;
+    button.y = 30;
+    button.w = 400;
+    button.h = 80;
+    SDL_SetRenderDrawColor(window.getRenderer(), 55, 7, 51, 255);
+    SDL_RenderFillRect(window.getRenderer(), &button);
+
+
+    std::vector<std::pair<int, Player*>> score = orderedValues(personajes, true);
 
     if (score[0].second->get_name() == personajes[id_cliente]->get_name()) {
-        this->fuente.render(250, 50, 300, 50, "Winner      winner      chicken      dinner", window, {237, 206, 69, 255});
-    }  
-    else {
-        this->fuente.render(350, 50, 100, 50, "You      Lose", window, {237, 206, 69, 255});
+        this->fuente.render(225, 35, 350, 80, "Winner      winner      chicken      dinner", window,
+                            {237, 206, 69, 255});
+    } else {
+        this->fuente.render(225, 35, 350, 80, "You      Lose", window, {237, 206, 69, 255});
     }
 
-    this->fuente.render(250, 150, 100, 50, "Scoreboard", window, {0, 0, 0, 255});
+    SDL_Rect scoreBorder;
+    scoreBorder.x = 295;
+    scoreBorder.y = 110;
+    scoreBorder.w = 210;
+    scoreBorder.h = 50;
+    SDL_SetRenderDrawColor(window.getRenderer(), 0, 0, 0, 255);
+    SDL_RenderFillRect(window.getRenderer(), &scoreBorder);
+
+    SDL_Rect scoreFill;
+    scoreFill.x = 305;
+    scoreFill.y = 120;
+    scoreFill.w = 190;
+    scoreFill.h = 30;
+    SDL_SetRenderDrawColor(window.getRenderer(), 55, 7, 51, 255);
+    SDL_RenderFillRect(window.getRenderer(), &scoreFill);
+
+    this->fuente.render(310, 122, 180, 26, "Scoreboard", window, {237, 206, 69, 255});
+
+    float score_size_factor;
+    if (score.size() > 3) {
+        score_size_factor = 0.5;
+    } else {
+        score_size_factor = 1;
+    }
 
     for (long unsigned int i = 0; i < score.size(); i++) {
-        std::string string = std::to_string(i + 1) + "   " + score[i].second->get_name();
-        this->fuente.render(200, 200 + i*50, string.size()*10, 30, string, window, {237, 206, 69, 255});
 
-        this->fuente.render(400, 200 + i*50, std::to_string(score[i].second->get_score()).size()*10, 30, std::to_string(score[i].second->get_score()), window, {237, 206, 69, 255});
+        std::string string = std::to_string(i + 1) + "   " + score[i].second->get_name() +
+                             "                                                  " +
+                             std::to_string(score[i].second->get_score());
+        this->fuente.render(200, 325 + i * 50, 400 * score_size_factor, 50 * score_size_factor,
+                            string, window, {0, 0, 0, 255});
     }
 
-    SDL_SetRenderDrawColor(window.getRenderer(), 255, 255, 255, 255);
-    SDL_RenderFillRect(window.getRenderer(), &mainMenu);
-    this->fuente.render(mainMenu.x + 10, mainMenu.y+5, mainMenu.w - 10, mainMenu.h-5, "Main    Menu", window, {0, 0, 0, 255});
-}
+    SDL_SetRenderDrawColor(window.getRenderer(), 0, 0, 0, 255);
+    SDL_RenderFillRect(window.getRenderer(), &mainMenuBorder);
 
-void UIManager::renderPauseMenu() {
-        SDL_Rect background;
-        background.x = 800/4;
-        background.w = 800*2/4;
-        background.y = 600/4;
-        background.h = 600*2/4;
-        SDL_SetRenderDrawColor(window.getRenderer(), 70, 130, 180, 255);
-        SDL_RenderFillRect(window.getRenderer(), &background);
+    /*SDL_Rect mainMenuFill;
+    mainMenuFill.x = 265;
+    mainMenuFill.y = 500;
+    mainMenuFill.w = 270;
+    mainMenuFill.h = 30;
+    SDL_SetRenderDrawColor(window.getRenderer(), 55, 7, 51, 255);
+    SDL_RenderFillRect(window.getRenderer(), &mainMenuFill);*/
 
-        SDL_SetRenderDrawColor(window.getRenderer(), 255, 255, 255, 255);
-        SDL_RenderFillRect(window.getRenderer(), &muteMusic);
-
-        this->fuente.render(muteMusic.x+10, muteMusic.y+5, muteMusic.w-10, muteMusic.h-5, "Pause   Music", window, {0, 0, 0, 255});
+    this->fuente.render(mainMenuBorder.x + 25, mainMenuBorder.y + 15, mainMenuBorder.w - 50,
+                        mainMenuBorder.h - 30, "Main Menu", window, {237, 206, 69, 255});
 }

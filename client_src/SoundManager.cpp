@@ -36,17 +36,13 @@ void SoundManager::init_sounds() {
             new Sound("../client_src/assets/music/change_ammo_sound.wav");
 }
 
-// void SoundManager::set_clientId(int clientId) { this->clientId = clientId; }
-
 void SoundManager::play_sound(EntityType entity, SoundType sound, int playerId) {
-    std::cout << "entrando al sound manager\n";
-    if (playerId != clientId) {
-        return;  // En principio filtro todos los sonidos que no son del propio jugador.
+    if (playerId != clientId && sound != SoundType::SHOT_SOUND &&
+        sound != SoundType::ROCKET_EXPLOSION) {
+        return;
     }
 
-    std::cout << "el sonido es del cliente\n";
     sounds[entity][sound]->PlaySound();
-    std::cout << "reproduciendo sonido\n";
 }
 
 void SoundManager::init_music() {

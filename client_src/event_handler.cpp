@@ -3,8 +3,14 @@
 // Pre: -
 // Post: -
 // cppcheck-suppress uninitMemberVar
-EventHandler::EventHandler(ClientProtocol& protocol, bool& menu, bool& gameEnded, SoundManager& sound_manager, UIManager& uimanager):
-    protocol(protocol), was_closed(false), in_menu(menu), gameEnded(gameEnded), sound_manager(sound_manager), uimanager(uimanager) {}
+EventHandler::EventHandler(ClientProtocol& protocol, bool& menu, bool& gameEnded,
+                           SoundManager& sound_manager, UIManager& uimanager):
+        protocol(protocol),
+        was_closed(false),
+        in_menu(menu),
+        gameEnded(gameEnded),
+        sound_manager(sound_manager),
+        uimanager(uimanager) {}
 
 void EventHandler::handle_keydown(const SDL_Event& event, Command& cmd) {
     const SDL_KeyboardEvent& keyEvent = (SDL_KeyboardEvent&)event;
@@ -94,14 +100,17 @@ void EventHandler::run() {
         switch (event.type) {
             case SDL_MOUSEBUTTONDOWN:
                 if (gameEnded && event.button.button == SDL_BUTTON_LEFT) {
-                    if (uimanager.mainMenu.x < event.button.x && event.button.x < uimanager.mainMenu.x + uimanager.mainMenu.w
-                     && uimanager.mainMenu.y < event.button.y && event.button.y < uimanager.mainMenu.y + uimanager.mainMenu.h) {
+                    if (uimanager.mainMenuBorder.x < event.button.x &&
+                        event.button.x < uimanager.mainMenuBorder.x + uimanager.mainMenuBorder.w &&
+                        uimanager.mainMenuBorder.y < event.button.y &&
+                        event.button.y < uimanager.mainMenuBorder.y + uimanager.mainMenuBorder.h) {
                         this->was_closed = true;
                     }
-                }
-                else if (in_menu && event.button.button == SDL_BUTTON_LEFT) {
-                    if (uimanager.muteMusic.x < event.button.x && event.button.x < uimanager.muteMusic.x + uimanager.muteMusic.w
-                     && uimanager.muteMusic.y < event.button.y && event.button.y < uimanager.muteMusic.y + uimanager.muteMusic.h) {
+                } else if (in_menu && event.button.button == SDL_BUTTON_LEFT) {
+                    if (uimanager.muteMusic.x < event.button.x &&
+                        event.button.x < uimanager.muteMusic.x + uimanager.muteMusic.w &&
+                        uimanager.muteMusic.y < event.button.y &&
+                        event.button.y < uimanager.muteMusic.y + uimanager.muteMusic.h) {
                         sound_manager.change_music_volume();
                     }
                 }
