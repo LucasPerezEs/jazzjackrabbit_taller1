@@ -22,9 +22,7 @@ signals:
     void ClientNameRequested(const QString& clientName);
 
 private:
-    QLabel* clientNameLabel;
     QLineEdit* clientNameInput;
-
     QPushButton* sendButton;
 
     void init();

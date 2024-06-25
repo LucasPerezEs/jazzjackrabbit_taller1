@@ -7,7 +7,6 @@ set(HEADER_FILES
         MultiplayerMenu.h
         CreateGame.h
         JoinGame.h
-        GameList.h
         ClientName.h
 )
 
@@ -16,7 +15,6 @@ set(SOURCE_FILES
         MultiplayerMenu.cpp
         CreateGame.cpp
         JoinGame.cpp
-        GameList.cpp
         ClientName.cpp
 )
 

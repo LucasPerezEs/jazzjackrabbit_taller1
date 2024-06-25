@@ -1,5 +1,5 @@
-#ifndef PROTOCOL_H
-#define PROTOCOL_H
+#ifndef CLIENT_PROTOCOL_H
+#define CLIENT_PROTOCOL_H
 
 #include <map>
 #include <sstream>
@@ -22,7 +22,6 @@ private:
     void send_join_game(const std::string& gameId, const int character);
     void send_create_game(const std::string& gameId, const uint32_t& maxPlayers, const std::string& mapName,
                           const std::vector<uint32_t>& cheats);
-    void send_save_map(const std::string& mapName, const std::vector<std::vector<std::string>>& map);
     void send_create_map(const std::string& mapName);
     void send_get_game_list();
     void send_get_map_list();
@@ -37,7 +36,6 @@ private:
     Container receive_get_map_list();
     Container receive_client_id();
     Container receive_create_map();
-    Container receive_saved_map();
     Container receive_saved_name();
 
 public:
@@ -49,12 +47,10 @@ public:
     ClientProtocol(const ClientProtocol&) = delete;
     ClientProtocol& operator=(const ClientProtocol&) = delete;
 
-    ClientProtocol(ClientProtocol&&) = default;
-    ClientProtocol& operator=(ClientProtocol&&) = default;
-
     void stop() override;
+    void close() override;
 
     virtual ~ClientProtocol() = default;
 };
 
-#endif
+#endif // CLIENT_PROTOCOL_H
