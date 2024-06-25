@@ -1,5 +1,6 @@
 
 #include "headers/drawer_editor.h"
+#include <chrono>
 
 // Pre: -
 // Post: -
@@ -10,26 +11,29 @@ DrawerEditor::DrawerEditor(SdlWindow& window, SDL_Texture* assetTexture, SDL_Rec
 
 void DrawerEditor::run(){
 
+    SDL_Renderer* render = window.getRenderer();
     while(running){
-
-        std::unique_lock<std::mutex> lock(mtx_map);
 
         Tile value;
         window.fill();
 
-        for (const auto& pairMap : mapTiles) {
-            value = pairMap.second;
-            SDL_RenderCopy(window.getRenderer(), assetTexture, &(value.srcRect), &(value.destRect));
+        if(!mapTiles.empty()){
+            for (auto pairMap : mapTiles) {
+                value = pairMap.second;
+                SDL_RenderCopy(render, assetTexture, &(value.srcRect), &(value.destRect));
+            }
         }
 
-        for (const auto& pairSpawn : mapSpawn) {
-            value = pairSpawn.second;
-            SDL_RenderCopy(window.getRenderer(), assetTexture, &(value.srcRect), &(value.destRect));
+        if(!mapSpawn.empty()){
+            for (auto pairSpawn : mapSpawn) {
+                value = pairSpawn.second;
+                SDL_RenderCopy(render, assetTexture, &(value.srcRect), &(value.destRect));
+            }
         }
 
-        SDL_RenderCopy(window.getRenderer(), assetTexture, NULL, &destRectAsset);
+        SDL_RenderCopy(render, assetTexture, NULL, &destRectAsset);
         window.render();
 
-        is_not_pointed_map.wait(lock);
+        std::this_thread::sleep_for(std::chrono::milliseconds(17));
     }
 }

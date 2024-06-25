@@ -121,6 +121,8 @@ std::map<std::tuple<int, int>, Tile> MapCreator::loadCSV(const std::string& file
 //Post: Guarda en mi matriz mapTile los valores que selecciono de mi paleta de assets para poder crear el mapa.
 void MapCreator::set_values(Tile& selectedTile, const double& minX, const double& maxX, const double& minY, const double& maxY, SDL_Event& event){
 
+    std::unique_lock<std::mutex> lock(mtx_map);
+
     double newX = event.button.x;
     double newY = event.button.y;
                         
@@ -140,8 +142,6 @@ void MapCreator::set_values(Tile& selectedTile, const double& minX, const double
     int PlayerSpawn = 0;
     int EnemySpawn = 1;
 
-    std::unique_lock<std::mutex> lock(mtx_map);
-
     //SPAWN PLAYER
     if(selectedTile.id == 48 || selectedTile.id == 49 || selectedTile.id == 58 || selectedTile.id == 59){
         selectedTile.type = PlayerSpawn;
@@ -159,8 +159,6 @@ void MapCreator::set_values(Tile& selectedTile, const double& minX, const double
         mapSpawn.erase(posicion);
 
     mapTiles[posicion] = selectedTile;
-
-    is_not_pointed_map.notify_all();
 }
 
 
@@ -256,15 +254,15 @@ void MapCreator::handle_draw(){
     DrawerEditor drawer(window, assetTexture, destRectAsset, mapTiles, mapSpawn, mtx_map, is_not_pointed_map, running);
     drawer.start();
 
+
     while (running) {
-       
        SDL_WaitEvent(&event);
         switch (event.type) {
 
-            case SDL_QUIT:
+            case SDL_QUIT: {
                 running = false;
                 break;
-
+            }
             case SDL_MOUSEBUTTONDOWN: {
                 mousePos.x = event.button.x;
                 mousePos.y = event.button.y;
@@ -293,9 +291,7 @@ void MapCreator::handle_draw(){
                 }
         }
     }
-    is_not_pointed_map.notify_all();
     drawer.join();
-
     save_map(mapName, is_already_create);
     save_spawns(mapName, is_already_create);
     mapTiles.clear();

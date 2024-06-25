@@ -7,11 +7,11 @@ class DrawerEditor: public Thread {
 
 private:
 
-    SdlWindow& window;
+    SdlWindow window;
     SDL_Texture* assetTexture;
     SDL_Rect& destRectAsset;
-    std::map<std::tuple<int, int>, Tile> mapTiles;
-    std::map<std::tuple<int, int>, Tile> mapSpawn;
+    std::map<std::tuple<int, int>, Tile>& mapTiles;
+    std::map<std::tuple<int, int>, Tile>& mapSpawn;
 
     std::mutex& mtx_map;
     std::condition_variable& is_not_pointed_map;
