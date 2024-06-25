@@ -3,8 +3,8 @@
 Monkey::Monkey(float x, float y, std::map<std::string, float>& config):
         Enemigo(x, y, 4, 6, config["monkey_life"], config["monkey_speed"], config["monkey_damage"],
                 config["monkey_prob_carrot"], config["monkey_prob_ammo"],
-                config["monkey_prob_goldcoin"], config["ghost_prob_rocket"], EntityType::MONKEY,
-                AnimationType::IDLE, config),
+                config["monkey_prob_goldcoin"], config["monkey_prob_rocket"],
+                config["monkey_prob_gem"], EntityType::MONKEY, AnimationType::IDLE, config),
         tiempo(std::chrono::system_clock::now()) {
     wait_idle = 3000;  // 3 segs
     wait_throw = 1000;
@@ -37,25 +37,24 @@ void Monkey::update_vivo(ListaObjetos& objetos, Queue<Container>& q,
                          std::map<uint32_t, std::shared_ptr<Personaje>>& clientCharacters,
                          std::shared_ptr<Ente> e) {
     if (vida <= 0) {
-        if (!killed) { // si acaba de morir dropea una municion o moneda o zanahoria
+        if (!killed) {  // si acaba de morir dropea una municion o moneda o zanahoria
             killed = true;
             last_killed = std::chrono::system_clock::now();
             drop_item(objetos, q);
-        }
-        else if (std::chrono::duration_cast<std::chrono::milliseconds>(
-            std::chrono::system_clock::now() - last_killed)
-            .count() >= 3000) {  // despues de un rato revive
+        } else if (std::chrono::duration_cast<std::chrono::milliseconds>(
+                           std::chrono::system_clock::now() - last_killed)
+                           .count() >= 3000) {  // despues de un rato revive
             killed = false;
             vida = max_life;
             borrar = false;
             objetos.agregar_objeto(e);
-            //contador = 0;
+            // contador = 0;
             Container c(0, this->id, this->x, this->y, this->width, this->height, this->direccion,
                         AnimationType::IDLE, EntityType::MONKEY, 0, {EntityType::NONE_ENTITY, 0}, 0,
                         "");
             q.try_push(c);
         }
-        //contador++;
+        // contador++;
     }
 }
 
