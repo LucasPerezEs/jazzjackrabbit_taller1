@@ -249,8 +249,8 @@ bool MapCreator::create_map(std::string& filename, bool& is_already_create){
 //Post: -
 void MapCreator::handle_draw(){
 
-    float x = 0;
-    float y = 0;
+    int x = 0;
+    int y = 0;
     increase = 1;
 
     bool running = true;
@@ -260,14 +260,22 @@ void MapCreator::handle_draw(){
     while(running){
 
         Tile value;
-        //window.fill();
-
+        window.fill();
+        //std::cout << "mi x es " << x << "\n";
+        //std::cout << "mi y es " << y << "\n";
         if(!mapTiles.empty()){
             for (auto pairMap : mapTiles) {
                 value = pairMap.second;
-
+                std::tuple<int, int> pos = pairMap.first;
+                int pos_y = std::get<0>(pos);
+                int pos_x = std::get<1>(pos);
+                SDL_Rect resct_new = {(pos_x*8*increase + (int)x) + TILESET_WIDTH*TILE_MAP_ASSETS, (pos_y*8*increase + (int)y), 8*increase , 8*increase };
                 //Aca edito el desRect:
-                SDL_Rect resct_new = {(value.destRect.x *increase + (int)x), (value.destRect.y *increase + (int)y), value.destRect.w *increase, value.destRect.h *increase};
+                /*value.destRect.x = (value.destRect.x *increase + (int)x);
+                value.destRect.y = (value.destRect.y *increase + (int)y);
+                value.destRect.w = value.destRect.w *increase;
+                value.destRect.h = value.destRect.h *increase;*/
+                //SDL_Rect resct_new = {(value.destRect.x *increase + (int)x), (value.destRect.y *increase + (int)y), value.destRect.w *increase, value.destRect.h *increase};
 
                 SDL_RenderCopy(window.getRenderer(), assetTexture, &(value.srcRect), &(resct_new));
             }
@@ -276,7 +284,11 @@ void MapCreator::handle_draw(){
         if(!mapSpawn.empty()){
             for (auto pairSpawn : mapSpawn) {
                 value = pairSpawn.second;
-                SDL_RenderCopy(window.getRenderer(), assetTexture, &(value.srcRect), &(value.destRect));
+                std::tuple<int, int> pos = pairSpawn.first;
+                int pos_y = std::get<0>(pos);
+                int pos_x = std::get<1>(pos);
+                SDL_Rect resct_new = {(pos_x*8*increase + (int)x) + TILESET_WIDTH*TILE_MAP_ASSETS, (pos_y*8*increase + (int)y), 8*increase , 8*increase };
+                SDL_RenderCopy(window.getRenderer(), assetTexture, &(value.srcRect), &(resct_new));
             }
         }
 

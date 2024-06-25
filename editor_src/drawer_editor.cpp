@@ -3,12 +3,12 @@
 
 
 void set_values(Tile& selectedTile, const double& minX, const double& maxX, const double& minY, const double& maxY,
- SDL_Event& event, int TILE_MAP_CREATED, int TILE_MAP_ASSETS, std::map<std::tuple<int, int>, Tile>& mapSpawn, std::map<std::tuple<int, int>, Tile>& mapTiles, float& x, float& y, int& increase){
+ SDL_Event& event, int TILE_MAP_CREATED, int TILE_MAP_ASSETS, std::map<std::tuple<int, int>, Tile>& mapSpawn, std::map<std::tuple<int, int>, Tile>& mapTiles, int& x, int& y, int& increase){
 
     //std::unique_lock<std::mutex> lock(mtx_map);
 
-    double newX = (event.button.x + x);
-    double newY = (event.button.y - y);
+    int newX = (event.button.x - x - TILESET_WIDTH*TILE_MAP_ASSETS);
+    int newY = (event.button.y - y);
                         
     //if (newX < minX || newX >= maxX)
       //  return;
@@ -16,12 +16,17 @@ void set_values(Tile& selectedTile, const double& minX, const double& maxX, cons
     //if (newY < maxY || newY >= minY)
       //  return;
 
-    int fila = std::floor(newY / (TILE_MAP_CREATED)) * (TILE_MAP_CREATED);
-    int columna = std::floor(newX / (TILE_MAP_CREATED)) * (TILE_MAP_CREATED);
+    int fila = std::floor(newY / (TILE_MAP_CREATED*increase));
+    int columna = std::floor(newX / (TILE_MAP_CREATED*increase));
 
+    std::cout << "hago click en " << columna << ", " << fila << "\n"; 
 
-    std::tuple<int,int> posicion = std::make_tuple(fila/(TILE_MAP_CREATED), (columna-TILESET_WIDTH*TILE_MAP_ASSETS)/(TILE_MAP_CREATED));
-    selectedTile.destRect = { columna, fila, TILE_MAP_CREATED, TILE_MAP_CREATED };
+    if (fila < 0 || fila > 39 || columna < 0 || columna > 79) {
+        return;
+    }
+
+    std::tuple<int,int> posicion = std::make_tuple(fila, columna);
+    //selectedTile.destRect = { columna, fila, TILE_MAP_CREATED, TILE_MAP_CREATED };
 
     int PlayerSpawn = 0;
     int EnemySpawn = 1;
@@ -48,7 +53,7 @@ void set_values(Tile& selectedTile, const double& minX, const double& maxX, cons
 
 // Pre: -
 // Post: -
-DrawerEditor::DrawerEditor(bool& running, std::vector<Tile>& tiles_asset, int width_texture, int mapWidth, int mapHeight, int TILE_MAP_CREATED, std::map<std::tuple<int, int>, Tile>& mapSpawn, std::map<std::tuple<int, int>, Tile>& mapTiles, float& x, float& y, int& increase):
+DrawerEditor::DrawerEditor(bool& running, std::vector<Tile>& tiles_asset, int width_texture, int mapWidth, int mapHeight, int TILE_MAP_CREATED, std::map<std::tuple<int, int>, Tile>& mapSpawn, std::map<std::tuple<int, int>, Tile>& mapTiles, int& x, int& y, int& increase):
  tiles_asset(tiles_asset), running(running), mapSpawn(mapSpawn), mapTiles(mapTiles), x(x), y(y), increase(increase) {
     this->width_texture = width_texture;
     this->mapWidth = mapWidth;
@@ -64,19 +69,19 @@ void DrawerEditor::handle_keydown(const SDL_Event& event) {
 
     switch (keyEvent.keysym.sym) {
         case SDLK_w:
-            y--;
+            y = y - increase*2;
             //cmd.action = Command::UP;
             break;
         case SDLK_s:
-            y++;
+            y = y + increase*2;
             //cmd.action = Command::DOWN;
             break;
         case SDLK_a:
-            x--;
+            x = x - increase*2;
             //cmd.action = Command::LEFT;
             break;
         case SDLK_d:
-            x++;
+            x = x + increase*2;
             //cmd.action = Command::RIGHT;
             break;
 
@@ -135,9 +140,12 @@ void DrawerEditor::run() {
             }
 
             case SDL_MOUSEMOTION: {
-                if(mouseHeldDown)
-                    set_values(selectedTile, width_texture, width_texture+mapWidth*TILE_MAP_CREATED, mapHeight*TILE_MAP_CREATED, 0, event, TILE_MAP_CREATED, 16, mapSpawn, mapTiles, x, y, increase);
+                if (event.button.x > width_texture) {
+                    if(mouseHeldDown && selectedTile.selected)
+                        set_values(selectedTile, width_texture, width_texture+mapWidth*TILE_MAP_CREATED, mapHeight*TILE_MAP_CREATED, 0, event, TILE_MAP_CREATED, 16, mapSpawn, mapTiles, x, y, increase);
+                    }
                 }
+
             case SDL_KEYDOWN: {
                 handle_keydown(event);
                 break;
