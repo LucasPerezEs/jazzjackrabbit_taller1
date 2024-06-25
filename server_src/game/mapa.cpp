@@ -1,5 +1,11 @@
 #include "../headers/mapa.h"
 #include <cstdlib>
+#include "../headers/monkey.h"
+#include "../headers/ghost.h"
+#include "../headers/bat.h"
+#include "../headers/bat.h"
+#include "../headers/gem.h"
+#include "../headers/gold_coin.h"
 
 Piso::Piso(float posx, float posy, float width,
            float height) {  // Lo llame piso pero tambien puede ser una pared
@@ -81,7 +87,7 @@ Mapa::Mapa(const std::string& mapName) {
             spawnsPersonaje.emplace_back(spawn);
         }
         else {
-            spawnsEnemigo.emplace_back(spawn);
+            spawnsOtros.emplace_back(spawn);
         }
     }
 
@@ -90,16 +96,17 @@ Mapa::Mapa(const std::string& mapName) {
         for (std::vector<int>::size_type j = 0; j < tilemap[i].size(); j++) {
             if (tilemap[i][j] != -1) {
 
-                if (tilemap[i][j] == 147) {
+                if (tilemap[i][j] == 18 || tilemap[i][j] == 29 || tilemap[i][j] == 47 || tilemap[i][j] == 58) {
                     DiagonalIzquierda* diagonal =
                             new DiagonalIzquierda(j, (tilemap.size() - 1 - i), 1, 1);
+                    std::cout << "hay diagonal en " << j << ", " << (tilemap.size() - 1 - i) << "\n";
                     diagonalesIzq.push_back(diagonal);
-                } else if (tilemap[i][j] == 142) {
+                } else if (tilemap[i][j] == 13 || tilemap[i][j] == 22 || tilemap[i][j] == 44 || tilemap[i][j] == 53) {
                     DiagonalDerecha* diagonal =
                             new DiagonalDerecha(j, (tilemap.size() - 1 - i), 1, 1);
+                    std::cout << "hay diagonal en " << j << ", " << (tilemap.size() - 1 - i) << "\n";
                     diagonalesDer.push_back(diagonal);
-                } else if ((tilemap[i][j] < 40 && tilemap[i][j] > 0) ||
-                           (tilemap[i][j] >= 140 && tilemap[i][j] < 200)) {
+                } else if ((tilemap[i][j] < 70 && tilemap[i][j] > 0)) {
                     Piso* piso =
                             new Piso(j, (tilemap.size() - 1 - i), 1,
                                      1);  // cada numero en la matriz representa un espacio de 1x1
@@ -142,19 +149,40 @@ std::vector<int> Mapa::get_spawn(int type) {
         res.emplace_back(spawnsPersonaje[i][2]);
         return res;
     }
-    else if (type == 1 && spawnsEnemigo.size() > 0) {
-
-        int i = rand()%spawnsEnemigo.size();
-        res.emplace_back(spawnsEnemigo[i][1]);
-        res.emplace_back(spawnsEnemigo[i][2]);
-        return res;
-    }
 
     res.emplace_back(-1);
     res.emplace_back(-1);
     return res;
 }
 
+void Mapa::spawn(ListaObjetos& objetos, std::vector<std::shared_ptr<Ente>>& entes, std::map<std::string, float> &config, Queue<Container>& q) {
+    for (auto objeto: spawnsOtros) {
+        //std::cout << "posicion es " << objeto[1] << ", " << objeto[2] << "\n";
+        if (objeto[0] == 1) {
+            std::shared_ptr<Monkey> m (new Monkey(objeto[1], objeto[2], config));
+            objetos.agregar_objeto(m);
+            entes.emplace_back(m);
+        }
+        else if (objeto[0] == 2) {
+            std::shared_ptr<Ghost> g (new Ghost(objeto[1], objeto[2], config));
+            objetos.agregar_objeto(g);
+            entes.emplace_back(g);
+        }
+        else if (objeto[0] == 3) {
+            std::shared_ptr<Bat> b (new Bat(objeto[1], objeto[2], config));
+            objetos.agregar_objeto(b);
+            entes.emplace_back(b);
+        }
+        else if (objeto[0] == 4) {
+            std::shared_ptr<Gem> b (new Gem(objeto[1], objeto[2], config, q));
+            objetos.agregar_objeto(b);
+        }
+        else if (objeto[0] == 5) {
+            std::shared_ptr<Gold_Coin> b (new Gold_Coin(objeto[1], objeto[2], config, q));
+            objetos.agregar_objeto(b);
+        }
+    }
+}
 
 Mapa::~Mapa() {
     for (auto o: objetos) {

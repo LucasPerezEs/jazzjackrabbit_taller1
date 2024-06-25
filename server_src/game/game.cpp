@@ -25,7 +25,7 @@ void Game::run() {
     gameStarted= true;
     Mapa m(mapName);
 
-    std::shared_ptr<Ghost> ghost(new Ghost(50, 2, config));
+    /*std::shared_ptr<Ghost> ghost(new Ghost(50, 2, config));
     std::shared_ptr<Bat> bat(new Bat(75, 4, config));
     std::shared_ptr<Monkey> monkey(new Monkey(15, 1, config));
     objetos.agregar_objeto(ghost);
@@ -33,12 +33,15 @@ void Game::run() {
     objetos.agregar_objeto(monkey);
     entes.push_back(ghost);
     entes.push_back(bat);
-    entes.push_back(monkey);
+    entes.push_back(monkey);*/
+
+    //m.spawn(objetos, entes, config, stateQueue);
+
 
     /*for (auto ente: entes) {
         std::vector<int> res = m.get_spawn(ente->spawn);
         
-        if (res[0] == -1 && res[1] == 1) {
+        if (res[0] == -1 && res[1] == -1) {
             continue;
         }
         ente->x = res[0];
@@ -50,6 +53,34 @@ void Game::run() {
     Container c = Container(5, 0, 0, 0, 0, 0, 0, NONE_ANIMATION, NONE_ENTITY, 0,
                             {EntityType::NONE_ENTITY, 0}, 0, "");
     stateQueue.push(c);
+
+
+    for (auto objeto: m.spawnsOtros) {
+        std::cout << "posicion es " << objeto[1] << ", " << objeto[2] << "\n";
+        if (objeto[0] == 1) {
+            std::shared_ptr<Monkey> m (new Monkey(objeto[1], objeto[2], config));
+            objetos.agregar_objeto(m);
+            entes.emplace_back(m);
+        }
+        else if (objeto[0] == 2) {
+            std::shared_ptr<Ghost> g (new Ghost(objeto[1], objeto[2], config));
+            objetos.agregar_objeto(g);
+            entes.emplace_back(g);
+        }
+        else if (objeto[0] == 3) {
+            std::shared_ptr<Bat> b (new Bat(objeto[1], objeto[2], config));
+            objetos.agregar_objeto(b);
+            entes.emplace_back(b);
+        }
+        else if (objeto[0] == 4) {
+            std::shared_ptr<Gem> b (new Gem(objeto[1], objeto[2], config, stateQueue));
+            objetos.agregar_objeto(b);
+        }
+        else if (objeto[0] == 5) {
+            std::shared_ptr<Gold_Coin> b (new Gold_Coin(objeto[1], objeto[2], config, stateQueue));
+            objetos.agregar_objeto(b);
+        }
+    }
 
     while (_keep_running && !clock.times_up()) {
         Message msg(Command::ActionType::NONE);
@@ -144,19 +175,19 @@ void Game::addPlayer(uint32_t clientId, uint32_t character, std::string name) {
     std::lock_guard<std::mutex> lock(clientCharactersMutex);
 
     if (character == 0) {
-        std::shared_ptr<Jazz> personaje(new Jazz(20 + clientId, 10, config, stateQueue, name));
+        std::shared_ptr<Jazz> personaje(new Jazz(5, 20, config, stateQueue, name));
         personaje->set_id(clientId);
         clientCharacters[clientId] = personaje;
         objetos.agregar_objeto(personaje);
         entes.push_back(personaje);
     } else if (character == 1) {
-        std::shared_ptr<Lori> personaje(new Lori(20 + clientId, 10, config, stateQueue, name));
+        std::shared_ptr<Lori> personaje(new Lori(5, 20, config, stateQueue, name));
         personaje->set_id(clientId);
         clientCharacters[clientId] = personaje;
         objetos.agregar_objeto(personaje);
         entes.push_back(personaje);
     } else {
-        std::shared_ptr<Spaz> personaje(new Spaz(20 + clientId, 10, config, stateQueue, name));
+        std::shared_ptr<Spaz> personaje(new Spaz(5, 20, config, stateQueue, name));
         personaje->set_id(clientId);
         clientCharacters[clientId] = personaje;
         objetos.agregar_objeto(personaje);
