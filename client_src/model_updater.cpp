@@ -80,7 +80,7 @@ void ModelUpdater::init_animations(SdlWindow& window) {
                                          window, Color{0x2C, 0x66, 0x96}),
                           5, AnimationSpeed::FAST);
 
-    this->animations[EntityType::BULLET][AnimationType::WALK] =
+    this->animations[EntityType::BULLET][AnimationType::SHOOT] =
             new Animation(new SdlTexture("../client_src/assets/textures/bullet_shoot.png", window,
                                          Color{0x2C, 0x66, 0x96}),
                           6, AnimationSpeed::FAST);
@@ -90,7 +90,7 @@ void ModelUpdater::init_animations(SdlWindow& window) {
                                          Color{0x2C, 0x66, 0x96}),
                           10, AnimationSpeed::FAST);
 
-    this->animations[EntityType::ROCKET][AnimationType::WALK] =
+    this->animations[EntityType::ROCKET][AnimationType::SHOOT] =
             new Animation(new SdlTexture("../client_src/assets/textures/rocket_shoot.png", window,
                                          Color{0x2C, 0x66, 0x96}),
                           3, AnimationSpeed::FAST);
@@ -104,6 +104,16 @@ void ModelUpdater::init_animations(SdlWindow& window) {
             new Animation(new SdlTexture("../client_src/assets/textures/rocket_explosion.png",
                                          window, Color{0x2C, 0x66, 0x96}),
                           11, AnimationSpeed::FAST);
+
+    this->animations[EntityType::ICE_BULLET][AnimationType::SHOOT] =
+            new Animation(new SdlTexture("../client_src/assets/textures/rocket_explosion.png",
+                                         window, Color{0x2C, 0x66, 0x96}),
+                          11, AnimationSpeed::FAST);
+
+    this->animations[EntityType::ICE_BULLET][AnimationType::PICKUP] =
+            new Animation(new SdlTexture("../client_src/assets/textures/ice_bullet_pickup.png",
+                                         window, Color{0x2C, 0x66, 0x96}),
+                          5, AnimationSpeed::FAST);
 
     this->animations[EntityType::CARROT][AnimationType::PICKUP] =
             new Animation(new SdlTexture("../client_src/assets/textures/carrot_pickup.png", window,

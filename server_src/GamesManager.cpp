@@ -33,6 +33,7 @@ std::map<std::string, float> load_config_YAML(const std::string& path) {
     config["ghost_prob_goldcoin"] = yaml["ghost"]["prob_goldcoin"].as<float>();
     config["ghost_prob_rocket"] = yaml["ghost"]["prob_rocket"].as<float>();
     config["ghost_prob_gem"] = yaml["ghost"]["prob_gem"].as<float>();
+    config["ghost_prob_icebullet"] = yaml["ghost"]["prob_icebullet"].as<float>();
 
     // Bat
     config["bat_life"] = yaml["bat"]["life"].as<float>();
@@ -43,6 +44,7 @@ std::map<std::string, float> load_config_YAML(const std::string& path) {
     config["bat_prob_goldcoin"] = yaml["bat"]["prob_goldcoin"].as<float>();
     config["bat_prob_rocket"] = yaml["bat"]["prob_rocket"].as<float>();
     config["bat_prob_gem"] = yaml["bat"]["prob_gem"].as<float>();
+    config["bat_prob_icebullet"] = yaml["bat"]["prob_icebullet"].as<float>();
 
     // Monkey
     config["monkey_life"] = yaml["monkey"]["life"].as<float>();
@@ -53,6 +55,7 @@ std::map<std::string, float> load_config_YAML(const std::string& path) {
     config["monkey_prob_goldcoin"] = yaml["monkey"]["prob_goldcoin"].as<float>();
     config["monkey_prob_rocket"] = yaml["monkey"]["prob_rocket"].as<float>();
     config["monkey_prob_gem"] = yaml["monkey"]["prob_gem"].as<float>();
+    config["monkey_prob_icebullet"] = yaml["monkey"]["prob_icebullet"].as<float>();
 
     // Pickups
     config["goldcoin_addscore"] = yaml["goldcoin"]["add_score"].as<float>();
@@ -60,6 +63,7 @@ std::map<std::string, float> load_config_YAML(const std::string& path) {
     config["ammo_addammo"] = yaml["ammo"]["add_ammo"].as<float>();
     config["rocket_pickup_addammo"] = yaml["rocket_pickup"]["add_ammo"].as<float>();
     config["gem_addscore"] = yaml["gem"]["add_score"].as<float>();
+    config["icebullet_addammo"] = yaml["ice_bullet_ammo"]["add_ammo"].as<float>();
 
 
     // Bullets
@@ -72,6 +76,12 @@ std::map<std::string, float> load_config_YAML(const std::string& path) {
     config["rocket_damage"] = yaml["rocket"]["damage"].as<float>();
     config["rocket_firerate"] = yaml["rocket"]["fire_rate"].as<float>();
     config["rocket_initial_ammo"] = yaml["rocket"]["initial_ammo"].as<float>();
+
+    config["ice_bullet_speed"] = yaml["ice_bullet"]["speed"].as<float>();
+    config["ice_bullet_damage"] = yaml["ice_bullet"]["damage"].as<float>();
+    config["ice_bullet_firerate"] = yaml["ice_bullet"]["fire_rate"].as<float>();
+    config["ice_bullet_initial_ammo"] = yaml["ice_bullet"]["initial_ammo"].as<float>();
+    config["ice_bullet_frozen_time"] = yaml["ice_bullet"]["frozen_time"].as<float>();
 
     config["banana_speed"] = yaml["banana"]["speed"].as<float>();
     config["banana_damage"] = yaml["banana"]["damage"].as<float>();

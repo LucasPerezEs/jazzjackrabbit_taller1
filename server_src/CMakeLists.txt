@@ -9,6 +9,7 @@ add_library(server_lib
     pickups/gold_coin.cpp
     pickups/rocket_pickup.cpp
     pickups/gem.cpp
+    pickups/icebullet_ammo.cpp
     characters/personaje.cpp
     characters/jazz.cpp
     characters/lori.cpp
@@ -16,6 +17,7 @@ add_library(server_lib
     projectiles/projectile.cpp
     projectiles/bullet.cpp
     projectiles/rocket.cpp
+    projectiles/icebullet.cpp
     game/game.cpp
     game/mapa.cpp
     game/objeto.cpp

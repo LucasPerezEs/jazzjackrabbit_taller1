@@ -4,7 +4,8 @@ Monkey::Monkey(float x, float y, std::map<std::string, float>& config):
         Enemigo(x, y, 4, 6, config["monkey_life"], config["monkey_speed"], config["monkey_damage"],
                 config["monkey_prob_carrot"], config["monkey_prob_ammo"],
                 config["monkey_prob_goldcoin"], config["monkey_prob_rocket"],
-                config["monkey_prob_gem"], EntityType::MONKEY, AnimationType::IDLE, config),
+                config["monkey_prob_gem"], config["monkey_prob_icebullet"], EntityType::MONKEY,
+                AnimationType::IDLE, config),
         tiempo(std::chrono::system_clock::now()) {
     wait_idle = 3000;  // 3 segs
     wait_throw = 1000;
@@ -13,6 +14,12 @@ Monkey::Monkey(float x, float y, std::map<std::string, float>& config):
 }
 
 void Monkey::update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) {
+
+    check_frozen();
+
+    if (frozen) {
+        return;
+    }
 
     if (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() -
                                                               tiempo)
@@ -47,6 +54,7 @@ void Monkey::update_vivo(ListaObjetos& objetos, Queue<Container>& q,
             killed = false;
             vida = max_life;
             borrar = false;
+            frozen = false;
             objetos.agregar_objeto(e);
             // contador = 0;
             Container c(0, this->id, this->x, this->y, this->width, this->height, this->direccion,

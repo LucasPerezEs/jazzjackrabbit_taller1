@@ -3,8 +3,8 @@
 Bat::Bat(float x, float y, std::map<std::string, float>& config):
         Enemigo(x, y, 2, 2, config["bat_life"], config["bat_speed"], config["bat_damage"],
                 config["bat_prob_carrot"], config["bat_prob_ammo"], config["bat_prob_goldcoin"],
-                config["bat_prob_rocket"], config["bat_prob_gem"], EntityType::BAT,
-                AnimationType::FLY, config) {
+                config["bat_prob_rocket"], config["bat_prob_gem"], config["bat_prob_icebullet"],
+                EntityType::BAT, AnimationType::FLY, config) {
     lim_y_sup = y + 20;  // cuanto se va a mover de izquierda a derecha
     lim_y_inf = y - 20;
 }
@@ -13,6 +13,12 @@ void Bat::update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) {
     float auxx = x;
     float auxy = y;  // se guarda la posicion actual
     bool colisiony;
+
+    check_frozen();
+
+    if (frozen) {
+        return;
+    }
 
     y += speed * direccion;
 
@@ -42,6 +48,7 @@ void Bat::update_vivo(ListaObjetos& objetos, Queue<Container>& q,
             killed = false;
             vida = max_life;
             borrar = false;
+            frozen = false;
             objetos.agregar_objeto(e);
             // contador = 0;
             Container c(0, this->id, this->x, this->y, this->width, this->height, this->direccion,
