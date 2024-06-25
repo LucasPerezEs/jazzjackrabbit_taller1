@@ -209,10 +209,9 @@ Container ClientProtocol::receive_game_container() {
 }
 
 Container ClientProtocol::receive_sound_container() {
-    bool was_closed;
-    SoundData data;
 
-    socket.recvall(&data, sizeof(data), &was_closed);
+    SoundData data = receiveSoundData();
+
     Container c(data.entity, data.sound, data.id);
     return c;
 }
@@ -224,4 +223,9 @@ Container ClientProtocol::receive_create_map() {
     return Container(Setup::ActionType::CREATE_MAP, mapReceived, ok);
 }
 
+
 void ClientProtocol::stop() { Protocol::stop(); }
+
+void ClientProtocol::close() { Protocol::close(); }
+
+

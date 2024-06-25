@@ -39,6 +39,7 @@ Personaje::Personaje(float x, float y, float w, float h, EntityType en_type, Ani
     direccion_movimientox = 1;
     direccion_movimientoy = 0;
     killed_by_id = -1;
+    spawn = 0;
 }
 
 void Personaje::moveRigth() {

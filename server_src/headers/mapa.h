@@ -38,6 +38,8 @@ class DiagonalDerecha {
 };
 
 class Mapa {
+private:
+    std::vector<std::vector<int>> spawns;
 public:
     std::vector<Piso*> objetos;
     std::vector<DiagonalIzquierda*> diagonalesIzq;
@@ -45,6 +47,8 @@ public:
     std::vector<std::vector<int>> cargarCSV(const std::string& ruta);
     Mapa(const std::string& mapName);
     bool CheckColision(float x, float y, float w, float h);
+    std::vector<int> get_spawn(int type);
+
     ~Mapa();
 };
 

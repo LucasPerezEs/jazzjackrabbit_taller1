@@ -1,5 +1,6 @@
 #include "../headers/mapa.h"
 
+
 Piso::Piso(float posx, float posy, float width,
            float height) {  // Lo llame piso pero tambien puede ser una pared
     x = posx;
@@ -72,21 +73,16 @@ Mapa::Mapa(const std::string& mapName) {
 
     std::string path = "../server_src/maps/" + mapName;
     std::vector<std::vector<int>> tilemap = cargarCSV(path);
-            //cargarCSV("../client_src/assets/background/castle_erlong_map/castle_earlong_mapa.csv");
+
+    std::string spawn_path = "../server_src/maps/" + mapName + "_spawns";
+    spawns = cargarCSV(spawn_path);
+
+
 
     for (std::vector<int>::size_type i = tilemap.size() - 1; i >= 1; --i) {
         for (std::vector<int>::size_type j = 0; j < tilemap[i].size(); j++) {
             if (tilemap[i][j] != -1) {
 
-                /*if (tilemap[i][j] == 20000) {
-                    DiagonalIzquierda* diagonal = new DiagonalIzquierda(j, (tilemap.size()-1-i), 1,
-                1); diagonalesIzq.push_back(diagonal);
-                }
-                else if (tilemap[i][j] == 22000) {
-                    DiagonalDerecha* diagonal = new DiagonalDerecha(j, (tilemap.size()-1-i), 1, 1);
-                    diagonalesDer.push_back(diagonal);
-                }
-                */
                 if (tilemap[i][j] == 147) {
                     DiagonalIzquierda* diagonal =
                             new DiagonalIzquierda(j, (tilemap.size() - 1 - i), 1, 1);
@@ -129,6 +125,21 @@ bool Mapa::CheckColision(
     }
     return false;
 }
+
+std::vector<int> Mapa::get_spawn(int type) {
+    std::vector<int> res;
+    for (auto spawn: spawns) {
+        if (spawn[0] == type) {
+            res.emplace_back(spawn[1]);
+            res.emplace_back(spawn[2]);
+            return res;
+        }
+    }
+    res.emplace_back(-1);
+    res.emplace_back(-1);
+    return res;
+}
+
 
 Mapa::~Mapa() {
     for (auto o: objetos) {

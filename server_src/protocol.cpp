@@ -108,13 +108,13 @@ void ServerProtocol::send_game_container(const GameContainer& gameContainer) {
 }
 
 void ServerProtocol::send_sound_container(const SoundContainer& soundContainer) {
-    bool was_closed;
-    EntityType entity = soundContainer.entity;
-    SoundType sound = soundContainer.sound;
-    int id = soundContainer.id;
-    socket.sendall(&entity, sizeof(entity), &was_closed);
-    socket.sendall(&sound, sizeof(sound), &was_closed);
-    socket.sendall(&id, sizeof(id), &was_closed);
+    SoundData data;
+    data.entity = soundContainer.entity;
+    data.sound = soundContainer.sound;
+    data.id = soundContainer.id;
+
+    sendSoundData(data);
+
 }
 
 
@@ -207,11 +207,6 @@ Message ServerProtocol::receive_get_game_list() {
 Message ServerProtocol::receive_get_map_list() {
     // No additional data needed for GET_GAME_LIST setup
     return Message(Setup::ActionType::GET_MAP_LIST);
-}
-
-
-void ServerProtocol::send_games_ids(const std::vector<std::string>& gameIDs) {
-    // send_vector_string(gameIDs);
 }
 
 

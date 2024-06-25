@@ -1,0 +1,5 @@
+if(EXISTS "/home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/tests[1]_tests.cmake")
+  include("/home/moko/Escritorio/jazzjackrabbit_taller1/cmake-build-debug/tests[1]_tests.cmake")
+else()
+  add_test(tests_NOT_BUILT tests_NOT_BUILT)
+endif()
