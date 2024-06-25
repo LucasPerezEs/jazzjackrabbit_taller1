@@ -6,6 +6,7 @@ ConnectMenu::ConnectMenu(QWidget* parent): QDialog(parent) {
     QString family = QFontDatabase::applicationFontFamilies(id).at(0);
     QFont monospace(family);
     this->setFixedSize(800, 600);
+    this->setWindowTitle("Jazz Jackrabbit 2");
     init();
 }
 

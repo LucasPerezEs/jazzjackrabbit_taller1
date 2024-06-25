@@ -14,9 +14,10 @@
 class Zanahoria: public Pickup {
 private:
     std::map<std::string, float>& config;
-    float life;
+    
 
 public:
+    float life;
     Zanahoria(float x, float y, std::map<std::string, float>& config, Queue<Container>& q);
 
     virtual void colision(Personaje& p) override;

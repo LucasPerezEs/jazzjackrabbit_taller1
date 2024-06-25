@@ -41,7 +41,10 @@ int main(int argc, char* argv[]) {
             Client client("127.0.1", "8080");
             client.go_online();
             if (client.is_online()) {
-                MultiplayerMenu multiplayerMenu;
+                MultiplayerMenu multiplayerMenu(nullptr, &client);
+                //multiplayerMenu.setClient(&client);
+                //multiplayerMenu.init();
+
                 QObject::connect(&multiplayerMenu, &MultiplayerMenu::refreshRequested, [&]() {
                     std::vector<std::string> gameList;
                     if (client.refreshGameList(gameList)) {

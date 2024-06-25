@@ -130,23 +130,6 @@ bool GamesManager::createMap(std::string& mapName,
     return true;
 }
 
-bool GamesManager::savedMap(std::string& mapName,
-                            // cppcheck-suppress constParameter
-                            std::vector<std::vector<std::string>>& mapReceived) {
-
-    int fila = 0;
-
-    for (const auto& row: mapReceived) {
-        std::cout << fila << std::endl;
-        for (const auto& column: row) {
-            std::cout << column << ",";
-        }
-        fila++;
-        std::cout << "\n";
-    }
-    return true;
-}
-
 bool GamesManager::joinGame(const std::string& gameId, ClientHandler* client, uint32_t character) {
     std::lock_guard<std::mutex> lock(gamesMutex);
 
@@ -177,6 +160,18 @@ bool GamesManager::listGames(std::vector<std::string>& gameList) {
     }
 
     return false;
+}
+
+bool GamesManager::listMaps(std::vector<std::string>& mapList) {
+    try {
+        for (const auto& archivo : std::filesystem::directory_iterator("../server_src/maps"))
+            mapList.push_back(archivo.path().filename().string());
+
+    } catch (const std::filesystem::filesystem_error& e) {
+        std::cerr << "Error al leer la carpeta: " << e.what() << std::endl;
+        return false;
+    }
+    return true;
 }
 
 bool GamesManager::setName(std::string& clientName, uint32_t id) {
@@ -287,6 +282,15 @@ void GamesManager::run() {
                 clients[clientId]->pushState(container);
                 break;
             }
+            case Setup::GET_MAP_LIST: {
+                std::vector<std::string> mapList;
+                ok = listMaps(mapList);
+                std::cout << "Llego al game manager" << std::endl;
+                Container container = Container(Setup::GET_MAP_LIST, mapList, ok);
+                clients[clientId]->pushState(container);
+                break;
+            }
+
             case Setup::CREATE_MAP: {
                 std::vector<std::vector<std::string>> mapReceived;
                 ok = createMap(msg.setup.mapName, mapReceived);
@@ -294,12 +298,7 @@ void GamesManager::run() {
                 clients[clientId]->pushState(container);
                 break;
             }
-            case Setup::SAVE_MAP: {
-                ok = savedMap(msg.setup.mapName, msg.setup.map);
-                Container container = Container(Setup::SAVE_MAP, ok);
-                clients[clientId]->pushState(container);
-                break;
-            }
+
             case Setup::SET_NAME: {
                 ok = setName(msg.setup.mapName, clientId);
                 Container container = Container(Setup::SET_NAME, ok);

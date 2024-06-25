@@ -54,15 +54,12 @@ class Personaje: public Ente {
 protected:
     int espera_idle;
     int espera_shoot;
-    int espera_hurt;
     std::chrono::system_clock::time_point tiempo;
     std::chrono::system_clock::time_point last_hurt;
     std::chrono::system_clock::time_point intoxicated_start;
     bool movingright;
     bool movingleft;
     bool jumping;
-    float velx;
-    float vely;
     bool special_action_active;
     float direccion_movimientox;
     float direccion_movimientoy;
@@ -74,7 +71,6 @@ protected:
     Queue<Container>& q;
 
     void check_idle();
-    virtual void update_position();
     void check_colisions(Mapa& m, float aux_x, float aux_y);
     virtual void check_special_action(bool col_x, bool col_y) = 0;
 
@@ -84,6 +80,9 @@ public:
     int danio_ataque_especial;
     int municion;
     bool disparando;
+    int espera_hurt;
+    float velx;
+    float vely;
     Personaje(float x, float y, float w, float h, EntityType en_type, AnimationType an_type,
               std::map<std::string, float>& config, Queue<Container>& q, std::string name);
 
@@ -115,6 +114,8 @@ public:
     virtual void update_vivo(ListaObjetos& objetos, Queue<Container>& q,
                              std::map<uint32_t, std::shared_ptr<Personaje>>& clientCharacters,
                              std::shared_ptr<Ente> e) override;
+    virtual void update_position();
+    PlayerState get_state();
 };
 
 #endif

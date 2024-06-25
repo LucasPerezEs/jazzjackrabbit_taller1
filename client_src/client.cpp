@@ -4,12 +4,23 @@ Client::Client(const std::string& hostname, const std::string& servername):
         client_protocol(hostname.c_str(), servername.c_str()), online(false) {
     Container c = client_protocol.receive_container();
     id = c.setup_container->clientId;
-    std::cout << "Se esta seteando el id del cliente que es: " << id << "\n";
+    getMaps();
 }
 
 void Client::go_online() {
 
     online = true;
+}
+
+bool Client::getMaps(){
+
+    Message msg(Setup::ActionType::GET_MAP_LIST);
+    client_protocol.send_message(msg);
+
+    Container container = client_protocol.receive_container();
+    mapList = container.setup_container->gameList;
+
+    return container.setup_container->ok;
 }
 
 bool Client::is_online() { return online; }
@@ -54,25 +65,10 @@ bool Client::joinGame(const std::string& gameId, const int character) {
 
 }
 
-bool Client::saveMap(const std::string& mapName, std::vector<std::vector<std::string>>& mapSended){
-
-    std::cout << "Estoy en client createMap para guardar el mapa" << std::endl;
-
-    Message msg(Setup::ActionType::SAVE_MAP, mapName, mapSended);
-    client_protocol.send_message(msg);
-
-    std::cout << "Se envio el mensaje de guardado" << std::endl;
-    Container container = client_protocol.receive_container();
-
-    std::cout << "Se recibe el container de envios?" << std::endl;
-
-    return container.setup_container->ok;
-}
-
 bool Client::refreshGameList(std::vector<std::string>& gameList) {
     Message msg(Setup::ActionType::GET_GAME_LIST);
     client_protocol.send_message(msg);
-    // recibir gamelist
+
     Container container = client_protocol.receive_container();
     while (container.setup_container.get() == NULL || container.setup_container->setupType != Setup::ActionType::GET_GAME_LIST) {
         container = client_protocol.receive_container();

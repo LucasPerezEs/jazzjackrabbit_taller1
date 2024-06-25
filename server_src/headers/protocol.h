@@ -22,8 +22,8 @@ private:
     Message receive_join_game();
     Message receive_get_game_list();
     Message receive_create_map();
-    Message receive_save_map();
     Message receive_set_name();
+    Message receive_get_map_list();
 
     void send_setup_container(const SetupContainer& setupContainer);
     void send_game_container(const GameContainer& gameContainer);

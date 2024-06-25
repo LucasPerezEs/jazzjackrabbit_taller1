@@ -58,16 +58,23 @@ void Ente::update_vivo(ListaObjetos& objetos, Queue<Container>& q,
                        std::map<uint32_t, std::shared_ptr<Personaje>>& clientCharacters,
                        std::shared_ptr<Ente> e) {
     if (vida <= 0) {
-        if (contador ==
-            240) {  // revive despues de tantos ciclos y lo agrego al vector de colisiones
+        if (!killed) {
+            killed = true;
+            last_killed = std::chrono::system_clock::now();
+        }
+        else if (std::chrono::duration_cast<std::chrono::milliseconds>(
+            std::chrono::system_clock::now() - last_killed)
+            .count() >= 3000) {  // revive despues de 3 segundos y lo agrego al vector de colisiones
+            killed = false;
             vida = 100;
             borrar = false;
             objetos.agregar_objeto(e);
-            contador = 0;
+            //contador = 0;
             Container c(0, this->id, this->x, this->y, this->width, this->height, this->direccion,
                         this->an_type, this->en_type, 0, {EntityType::NONE_ENTITY, 0}, 0, "");
             q.try_push(c);
         }
-        contador++;
+        //contador++;
     }
 }
+

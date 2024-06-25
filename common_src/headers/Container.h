@@ -106,8 +106,6 @@ public:
     std::shared_ptr<SetupContainer> setup_container;
     std::shared_ptr<GameContainer> game_container;
     std::shared_ptr<SoundContainer> sound_container;
-    // GameContainer* game_container;
-    // SoundContainer* sound_container;
 
 private:
     Type _type;

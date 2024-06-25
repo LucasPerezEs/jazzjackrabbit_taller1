@@ -15,5 +15,5 @@ void Zanahoria::colision(Personaje& p) {
         p.vida = config["player_life"];
     }
 
-    std::cout << "Vida: " << p.vida << "\n";
+    //std::cout << "Vida: " << p.vida << "\n";
 }

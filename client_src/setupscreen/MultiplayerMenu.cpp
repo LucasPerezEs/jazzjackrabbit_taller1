@@ -5,7 +5,7 @@
 #include <QFont>
 #include <QFontDatabase>
 
-MultiplayerMenu::MultiplayerMenu(QWidget* parent):
+MultiplayerMenu::MultiplayerMenu(QWidget* parent, Client* client):
         QDialog(parent),
         clientNameWidget(new ClientName()),
         createGameWidget(new CreateGame()),
@@ -15,8 +15,11 @@ MultiplayerMenu::MultiplayerMenu(QWidget* parent):
     QFont monospace(family);
     this->setFixedSize(800, 600);
     this->setObjectName("multiplayerMenu");
+    this->setWindowTitle("Jazz JackRabbit2");
 
     exit = 1;
+    createGameWidget->setClient(client);
+    createGameWidget->init();
     init();
 }
 
@@ -101,6 +104,9 @@ void MultiplayerMenu::onJoinGameClicked() {
 }
 
 void MultiplayerMenu::onRefreshClicked() { emit refreshRequested(); }
+
+void MultiplayerMenu::setClient(Client* client) { createGameWidget->setClient(client); }
+
 
 void MultiplayerMenu::updateGameList(const std::vector<std::string>& gameList) {
     QStringList qStringList;
