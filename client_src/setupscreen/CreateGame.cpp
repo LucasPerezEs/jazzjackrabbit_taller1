@@ -1,81 +1,87 @@
 #include "CreateGame.h"
 
+// cppcheck-suppress uninitMemberVar
 CreateGame::CreateGame(QWidget* parent): QWidget(parent) {}
 
 std::vector<uint32_t> CreateGame::saveCheats() {
-    std::vector<uint32_t> cheatList;
+    std::vector<uint32_t> cheatVector;
+    QList<QListWidgetItem*> selectedItems = cheatList->selectedItems();
+    QString selectedCheat;
 
-    if (inmortalCheckBox->isChecked()) {
-        cheatList.insert(cheatList.end(), INMORTAL);
+    for (QListWidgetItem* item: selectedItems) {
+        selectedCheat = item->text();
+
+        if (selectedCheat == "Inmortal players") {
+            cheatVector.insert(cheatVector.end(), INMORTAL);
+        } else if (selectedCheat == "One Shot One Kill") {
+            cheatVector.insert(cheatVector.end(), ONE_SHOT_ONE_KILL);
+        } else if (selectedCheat == "Moon Gravity") {
+            cheatVector.insert(cheatVector.end(), MOON_GRAVITY);
+        } else if (selectedCheat == "Hard Enemies") {
+            cheatVector.insert(cheatVector.end(), HARD_ENEMIES);
+        } else if (selectedCheat == "Extra Time") {
+            cheatVector.insert(cheatVector.end(), EXTRA_TIME);
+        }
     }
 
-    if (oneShotOneKillCheckBox->isChecked()) {
-        cheatList.insert(cheatList.end(), ONE_SHOT_ONE_KILL);
-    }
-
-    if (moonGravityCheckBox->isChecked()) {
-        cheatList.insert(cheatList.end(), MOON_GRAVITY);
-    }
-
-    if (hardEnemiesCheckBox->isChecked()) {
-        cheatList.insert(cheatList.end(), HARD_ENEMIES);
-    }
-
-    if (extraTimeCheckBox->isChecked()) {
-        cheatList.insert(cheatList.end(), EXTRA_TIME);
-    }
-
-    return cheatList;
+    return cheatVector;
 }
 
 void CreateGame::init() {
-    QVBoxLayout* layout = new QVBoxLayout(this);
+    QGridLayout* gridLayout = new QGridLayout(this);
 
-    gameNameLabel = new QLabel("Game Name:", this);
-    layout->addWidget(gameNameLabel);
     gameNameInput = new QLineEdit(this);
-    layout->addWidget(gameNameInput);
+    gameNameInput->setFixedSize(160, 25);
+    gameNameInput->setPlaceholderText("Insert game name:");
+    gameNameInput->setObjectName("gameNameInput");
 
-    //SeleccionarMapa
+    // SeleccionarMapa
     mapNameLabel = new QLabel("Map Selected:", this);
-    
+
     QStringList gameOptions;
-    for (const auto& elemento : client->mapList) {
+    for (const auto& elemento: client->mapList) {
         if (elemento.find("spawn") == std::string::npos) {
-            gameOptions << QString::fromStdString(elemento); 
+            gameOptions << QString::fromStdString(elemento);
         }
     }
-    layout->addWidget(mapNameLabel);
     mapComboBox = new QComboBox(this);
+    mapComboBox->setFixedSize(160, 25);
+    mapComboBox->setEditable(true);
+    mapComboBox->lineEdit()->setPlaceholderText("Select map:");
     mapComboBox->addItems(gameOptions);
-    layout->addWidget(mapComboBox);
+    mapComboBox->setObjectName("mapComboBox");
 
 
-    maxPlayersLabel = new QLabel("Max Players:", this);
-    layout->addWidget(maxPlayersLabel);
     maxPlayersInput = new QLineEdit(this);
-    layout->addWidget(maxPlayersInput);
+    maxPlayersInput->setFixedSize(160, 25);
+    maxPlayersInput->setPlaceholderText("Insert max players:");
+    maxPlayersInput->setObjectName("maxPlayersInput");
 
-    cheatsLabel = new QLabel("Cheats:", this);
-    layout->addWidget(cheatsLabel);
+    cheatList = new QListWidget(this);
+    cheatList->addItems({"Inmortal players", "One Shot One Kill", "Moon Gravity", "Hard Enemies",
+                         "Extra Time"});
+    cheatList->setSelectionMode(QAbstractItemView::MultiSelection);
+    cheatList->setFixedSize(140, 80);
+    cheatList->setObjectName("cheatList");
 
-    inmortalCheckBox = new QCheckBox("Inmortal players", this);
-    layout->addWidget(inmortalCheckBox);
-
-    oneShotOneKillCheckBox = new QCheckBox("One Shot, One Kill", this);
-    layout->addWidget(oneShotOneKillCheckBox);
-
-    moonGravityCheckBox = new QCheckBox("Moon gravity", this);
-    layout->addWidget(moonGravityCheckBox);
-
-    hardEnemiesCheckBox = new QCheckBox("Hard enemies", this);
-    layout->addWidget(hardEnemiesCheckBox);
-
-    extraTimeCheckBox = new QCheckBox("Extra time", this);
-    layout->addWidget(extraTimeCheckBox);
 
     createButton = new QPushButton("Create Game", this);
-    layout->addWidget(createButton);
+    createButton->setFixedSize(100, 30);
+    createButton->setObjectName("sendCreateGameButton");
+
+
+    gridLayout->addWidget(gameNameInput, 0, 0);
+    gridLayout->addWidget(mapComboBox, 1, 0);
+    gridLayout->addWidget(maxPlayersInput, 2, 0);
+
+    gridLayout->addWidget(cheatList, 0, 1, 3, 1);
+
+    gridLayout->addWidget(createButton, 0, 2, 3, 1);
+
+    gridLayout->setSpacing(20);
+    gridLayout->setVerticalSpacing(2);
+    gridLayout->setAlignment(Qt::AlignBottom);
+    gridLayout->setAlignment(Qt::AlignHCenter);
 
     connect(createButton, &QPushButton::clicked, this, [this]() {
         std::vector<uint32_t> cheatList = saveCheats();
@@ -86,8 +92,6 @@ void CreateGame::init() {
     });
 }
 
-void CreateGame::setClient(Client* client){
-    this->client = client;
-}
+void CreateGame::setClient(Client* client) { this->client = client; }
 
 CreateGame::~CreateGame() {}

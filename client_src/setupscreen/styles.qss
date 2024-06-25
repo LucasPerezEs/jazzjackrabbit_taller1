@@ -1,0 +1,250 @@
+#connectMenu {
+    border-image:url(../client_src/assets/loading/menu.png) 0 0 0 0 stretch stretch;
+}
+
+#multiplayerMenu {
+    border-image:url(../client_src/assets/loading/menu.png) 0 0 0 0 stretch stretch;
+}
+
+#ipEdit {
+    font-family: monospace;
+    background-color: #e4d0e8;
+    border: 1px solid #4CAF50;
+    border-radius: 4px;
+    padding: 5px;
+    color: #000000;
+    text-align: center;
+    selection-background-color: #e2c6e7
+}
+
+#portEdit {
+    font-family: monospace;
+    background-color: #e4d0e8;
+    border: 1px solid #4CAF50;
+    border-radius: 4px;
+    padding: 5px;
+    color: #000000;
+    text-align: center;
+    selection-background-color: #e2c6e7
+}
+
+#connectButton {
+    font-family: monospace;
+    font-weight: bold;
+    background-color: #7e00ad;
+    border: 1px solid #4CAF50;
+    border-radius: 4px;
+    padding: 5px;
+    color: #ffffff;
+    text-align: center;
+    selection-background-color: #b100d8 
+}
+
+#cancelButton {
+    font-family: monospace;
+    font-weight: bold;
+    background-color: #7e00ad;
+    border: 1px solid #4CAF50;
+    border-radius: 4px;
+    padding: 5px;
+    color: #ffffff;
+    text-align: center;
+    selection-background-color: #b100d8
+}
+
+#createGameButton {
+    font-family: monospace;
+    font-weight: bold;
+    background-color: #7e00ad;
+    border: 1px solid #4CAF50;
+    border-radius: 4px;
+    padding: 5px;
+    color: #ffffff;
+    text-align: center;
+    selection-background-color: #b100d8
+}
+
+#joinGameButton {
+    font-family: monospace;
+    font-weight: bold;
+    background-color: #7e00ad;
+    border: 1px solid #4CAF50;
+    border-radius: 4px;
+    padding: 5px;
+    color: #ffffff;
+    text-align: center;
+    selection-background-color: #b100d8
+}
+
+#createMapButton {
+    font-family: monospace;
+    font-weight: bold;
+    background-color: #7e00ad;
+    border: 1px solid #4CAF50;
+    border-radius: 4px;
+    padding: 5px;
+    color: #ffffff;
+    text-align: center;
+    selection-background-color: #b100d8
+}
+
+#returnButton {
+    background-color: #3e3e3e;
+    font-weight: bold;
+    border: 1px solid #4CAF50;
+    border-radius: 4px;
+    padding: 5px;
+    color: #ffffff;
+}
+
+#saveNameButton {
+    font-family: monospace;
+    font-weight: bold;
+    background-color: #7e00ad;
+    border: 1px solid #4CAF50;
+    border-radius: 4px;
+    padding: 5px;
+    color: #ffffff;
+    text-align: center;
+    selection-background-color: #b100d8;
+}
+
+#clientNameInput {
+    font-family: monospace;
+    background-color: #e4d0e8;
+    border: 1px solid #4CAF50;
+    border-radius: 4px;
+    padding: 5px;
+    color: #000000;
+    text-align: center;
+    selection-background-color: #e2c6e7;
+}
+
+#gameNameInput {
+    font-family: monospace;
+    background-color: #e4d0e8;
+    border: 1px solid #4CAF50;
+    border-radius: 4px;
+    padding: 5px;
+    color: #000000;
+    text-align: center;
+    selection-background-color: #e2c6e7;
+}
+
+#mapComboBox {
+    font-family: monospace;
+    background-color: #e4d0e8;
+    border: 1px solid #4CAF50;
+    border-radius: 4px;
+    padding: 5px;
+    color: #000000;
+    text-align: center;
+    selection-background-color: #e2c6e7;
+}
+
+#maxPlayersInput {
+    font-family: monospace;
+    background-color: #e4d0e8;
+    border: 1px solid #4CAF50;
+    border-radius: 4px;
+    padding: 5px;
+    color: #000000;
+    text-align: center;
+    selection-background-color: #e2c6e7;
+}
+
+#cheatList {
+    font-family: monospace;
+    font-size: 10px;
+    background-color: #7e00ad;
+    border: 1px solid #4CAF50;
+    border-radius: 4px;
+    padding: 5px;
+    color: #ffffff;
+    text-align: center;
+    selection-background-color: #b100d8;
+}
+
+#sendCreateGameButton {
+    font-family: monospace;
+    background-color: #7e00ad;
+    border: 1px solid #4CAF50;
+    border-radius: 4px;
+    padding: 5px;
+    color: #ffffff;
+    text-align: center;
+    selection-background-color: #b100d8;
+}
+
+#sendJoinGameButton {
+    font-family: monospace;
+    font-weight: bold;
+    background-color: #7e00ad;
+    border: 1px solid #4CAF50;
+    border-radius: 4px;
+    padding: 5px;
+    color: #ffffff;
+    text-align: center;
+    selection-background-color: #b100d8;
+}
+
+#jazzButton {
+    font-family: monospace;
+    font-weight: bold;
+    background-color: #7e00ad;
+    border: 1px solid #4CAF50;
+    border-radius: 4px;
+    padding: 5px;
+    color: #ffffff;
+    text-align: center;
+    selection-background-color: #b100d8;
+}
+
+#loriButton {
+    font-family: monospace;
+    font-weight: bold;
+    background-color: #7e00ad;
+    border: 1px solid #4CAF50;
+    border-radius: 4px;
+    padding: 5px;
+    color: #ffffff;
+    text-align: center;
+    selection-background-color: #b100d8;
+}
+
+#spazButton {
+    font-family: monospace;
+    font-weight: bold;
+    background-color: #7e00ad;
+    border: 1px solid #4CAF50;
+    border-radius: 4px;
+    padding: 5px;
+    color: #ffffff;
+    text-align: center;
+    selection-background-color: #b100d8;
+}
+
+#refreshGamesButton {
+    font-family: monospace;
+    font-weight: bold;
+    background-color: #7e00ad;
+    border: 1px solid #4CAF50;
+    border-radius: 4px;
+    padding: 5px;
+    color: #ffffff;
+    text-align: center;
+    selection-background-color: #b100d8;
+}
+
+#gameListButton {
+    font-family: monospace;
+    font-size: 10px;
+    background-color: #e4d0e8;
+    border: 1px solid #4CAF50;
+    border-radius: 4px;
+    padding: 5px;
+    color: #000000;
+    text-align: center;
+    selection-background-color: #e2c6e7;
+}
+
