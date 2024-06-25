@@ -241,7 +241,8 @@ bool MapCreator::create_map(std::string& filename, bool& is_already_create){
     return false;
 }
 
-
+//Pre: -
+//Post: -
 void MapCreator::handle_draw(){
 
     SDL_Event event;
