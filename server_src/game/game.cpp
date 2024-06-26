@@ -88,6 +88,16 @@ void Game::run() {
         }
     }
 
+    for(auto ente: entes){
+
+        std::vector<int> vector_spawn = m.get_spawn(ente->spawn);
+        if(vector_spawn[0] == -1){
+            continue;
+        }
+        ente->x = vector_spawn[0];
+        ente->y = vector_spawn[1];
+    }
+
     while (_keep_running && !clock.times_up()) {
         Message msg(Command::ActionType::NONE);
         while (actionQueue.try_pop(msg)) {

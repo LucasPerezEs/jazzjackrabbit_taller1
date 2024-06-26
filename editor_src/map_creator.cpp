@@ -84,7 +84,6 @@ std::map<std::tuple<int, int>, Tile> MapCreator::loadEmptyCSV() {
 std::map<std::tuple<int, int>, Tile> MapCreator::loadCSV(const std::string& filename) {
 
     std::string path = path_maps + filename;
-    std::cout << path << std::endl;
     std::map<std::tuple<int, int>, Tile> mapTiles;
     std::ifstream file(path);
     if (file.is_open()) {
@@ -115,6 +114,58 @@ std::map<std::tuple<int, int>, Tile> MapCreator::loadCSV(const std::string& file
         std::cerr << "No se pudo abrir el archivo." << std::endl;
     }
     return mapTiles;
+}
+
+
+//Pre: -
+//Post: Carga en un mapa todos los datos obtenidos del CSV que representa un mapa del juego.
+std::map<std::tuple<int, int>, Tile> MapCreator::load_spawns(const std::string& filename) {
+
+    std::string newFilename = filename + "_spawns";
+    std::string path = path_maps + newFilename;
+
+    std::map<std::tuple<int, int>, Tile> mapSpawnLoaded;
+    std::ifstream file(path);
+    if (file.is_open()) {
+        std::string line;
+
+        while (std::getline(file, line)) {
+            std::istringstream iss(line);
+            std::string value;
+            
+            Tile tile;
+            int row;
+            int column;
+        
+            int elemento = 0;
+            while (std::getline(iss, value, ',')) {
+                int intValue = std::stoi(value);
+                switch (elemento) {
+                    case 0:
+                        tile.type = intValue;
+                        break;
+                    case 1:
+                        row = intValue;
+                        break;
+                    case 2:
+                        column = intValue;
+                        break;
+                    case 3:
+                        tile.id = intValue;
+                        break;
+                }
+                elemento++;
+            }
+            tile.srcRect = {(tile.id % TILESET_WIDTH)*TILE_MAP_ASSETS, (tile.id / TILESET_WIDTH)*TILE_MAP_ASSETS, TILE_MAP_ASSETS, TILE_MAP_ASSETS};
+            tile.destRect = {(column*TILE_MAP_CREATED)+TILESET_WIDTH*TILE_MAP_ASSETS, row*TILE_MAP_CREATED, TILE_MAP_CREATED, TILE_MAP_CREATED};
+            std::tuple<int,int> posicion = std::make_tuple(row, column);
+            mapSpawnLoaded[posicion] = tile;
+        }
+        file.close();
+    } else {
+        std::cerr << "No se encontraron spawns cargados" << std::endl;
+    }
+    return mapSpawnLoaded;
 }
 
 
@@ -165,6 +216,10 @@ bool MapCreator::render_assets(){
         }
         window.render();
     }
+
+    mapSpawn = load_spawns(mapName);
+    window.render();
+
     return true;
 }
 

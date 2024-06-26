@@ -33,6 +33,7 @@ class MapCreator {
 
     std::map<std::tuple<int, int>, Tile> loadEmptyCSV();
     std::map<std::tuple<int, int>, Tile> loadCSV(const std::string&filename);
+    std::map<std::tuple<int, int>, Tile> load_spawns(const std::string& filename);
 
     bool render_assets();
     void save_map(std::string& filename, bool& is_already_create);
