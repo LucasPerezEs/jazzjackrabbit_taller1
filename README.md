@@ -37,6 +37,16 @@ Cliente:
 * Zoom out: `Flecha hacia abajo`
 * Menu de musica: `ESC`
 
+##Controles editor
+* Mover mapa a la izquierda: 'A'
+* Mover mapa a la derecha: 'D'
+* Mover mapa hacia abajo: 'S'
+* Mover mapa hacia arriba: 'W'
+* Zoom in: 'Z'
+* Zoom out: 'X'
+* Seleccionar/dibujar textura: Left click
+* Dibujar multiples texturas: Hold left click
+
 ## Licencia y Referencias
 Este repositorio se encuentra bajo la Licencia MIT  
 Implementacion de Threads, Queues y Sockets brindada por Martin Di Paola.
