@@ -37,7 +37,7 @@ Cliente:
 * Zoom out: `Flecha hacia abajo`
 * Menu de musica: `ESC`
 
-##Controles editor
+## Controles editor
 * Mover mapa a la izquierda: 'A'
 * Mover mapa a la derecha: 'D'
 * Mover mapa hacia abajo: 'S'
