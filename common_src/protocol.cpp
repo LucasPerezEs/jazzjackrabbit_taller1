@@ -205,30 +205,49 @@ void Protocol::sendGameData(const GameData& data) {
 
 
 GameData Protocol::receiveGameData() {
-    bool was_closed;
+    //bool was_closed;
     GameData data;
 
-    socket.recvall(&data, sizeof(data), &was_closed);
+    data.id = receiveUInt32();
+    data.x = receiveUInt32();
+    data.y = receiveUInt32();
+    data.width = receiveUInt32();
+    data.height = receiveUInt32();
+    data.direction = receiveUInt32();
+    data.an = (AnimationType)receiveUInt32();
+    data.en = (EntityType)receiveUInt32();
+    data.health = receiveUInt32();
+    data.ammo.ammo_type = (EntityType)receiveUInt32();
+    data.ammo.ammo = receiveUInt32();
+    data.score = receiveUInt32();
+
+    //socket.recvall(&data, sizeof(data), &was_closed);
 
     return data;
 }
 
 
 void Protocol::sendSoundData(const SoundData& data) {
-    bool was_closed;
+    //bool was_closed;
     EntityType entity = data.entity;
     SoundType sound = data.sound;
     int id = data.id;
-    socket.sendall(&entity, sizeof(entity), &was_closed);
-    socket.sendall(&sound, sizeof(sound), &was_closed);
-    socket.sendall(&id, sizeof(id), &was_closed);
+    send32(entity);
+    send32(sound);
+    send32(id);
+    //socket.sendall(&entity, sizeof(entity), &was_closed);
+    //socket.sendall(&sound, sizeof(sound), &was_closed);
+    //socket.sendall(&id, sizeof(id), &was_closed);
 
 }
 
 SoundData Protocol::receiveSoundData() {
-    bool was_closed;
+    //bool was_closed;
     SoundData data;
-    socket.recvall(&data, sizeof(data), &was_closed);
+    data.entity = (EntityType)receiveUInt32();
+    data.sound = (SoundType)receiveUInt32();
+    data.id = receiveUInt32();
+    //socket.recvall(&data, sizeof(data), &was_closed);
     return data;
 }
 

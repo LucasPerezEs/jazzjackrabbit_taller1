@@ -184,22 +184,23 @@ Container ClientProtocol::receive_client_id() {
 
 
 Container ClientProtocol::receive_game_container() {
-    bool was_closed;
-    int msg_code;
+   //bool was_closed;
+    
 
-    socket.recvall(&msg_code, sizeof(msg_code), &was_closed);
-
+    //socket.recvall(&msg_code, sizeof(msg_code), &was_closed);
+    int msg_code = receiveUInt32();
     if (msg_code == 2) {
-        int id;
-        socket.recvall(&id, sizeof(id), &was_closed);
+        std::cout << "saliendo\n";
+        int id = receiveUInt32();
+        //socket.recvall(&id, sizeof(id), &was_closed);
         AmmoData data = {EntityType::NONE_ENTITY, 0};
         Container c(msg_code, id, 0, 0, 0, 0, 0, AnimationType::NONE_ANIMATION,
                     EntityType::NONE_ENTITY, 0, data, 0, "");
         return c;
     }
 
-    GameData data;
-    socket.recvall(&data, sizeof(data), &was_closed);
+    GameData data = receiveGameData();
+    //socket.recvall(&data, sizeof(data), &was_closed);
 
     std::string name = receiveString();
 

@@ -76,11 +76,13 @@ void ServerProtocol::send_setup_container(const SetupContainer& setupContainer) 
 void ServerProtocol::send_game_container(const GameContainer& gameContainer) {
 
     if (gameContainer.msg_code == 2) {
-        bool was_closed;
+       // bool was_closed;
         int msg_code = gameContainer.msg_code;
         int id = gameContainer.id;
-        socket.sendall(&msg_code, sizeof(msg_code), &was_closed);
-        socket.sendall(&id, sizeof(id), &was_closed);
+        send32(msg_code);
+        //socket.sendall(&msg_code, sizeof(msg_code), &was_closed);
+        //socket.sendall(&id, sizeof(id), &was_closed);
+        send32(id);
         std::cout << "enviando salida\n";
 
     } else {
@@ -98,11 +100,13 @@ void ServerProtocol::send_game_container(const GameContainer& gameContainer) {
             gameContainer.score,
         };
         
-        bool was_closed;
+        //bool was_closed;
         int msg_code = gameContainer.msg_code;
 
-        socket.sendall(&msg_code, sizeof(msg_code), &was_closed);
-        socket.sendall(&data, sizeof(data), &was_closed);
+        //socket.sendall(&msg_code, sizeof(msg_code), &was_closed);
+        send32(msg_code);
+        sendGameData(data);
+        //socket.sendall(&data, sizeof(data), &was_closed);
         sendString(gameContainer.name);
     }
 }
