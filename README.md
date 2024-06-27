@@ -46,7 +46,7 @@ Cliente:
 * Zoom out: `X`
 * Seleccionar/dibujar textura: `Left click`
 * Dibujar multiples texturas: `Hold left click`
-Durante el dibujado, el primer bloque de texturas son elementos solidos mientras que el segundo bloque (los inferiores) permiten al jugador traspasarlos (son decorativos).
+*Durante el dibujado, el primer bloque de texturas son elementos solidos mientras que el segundo bloque (los inferiores) permiten al jugador traspasarlos (son decorativos).
 
 ## Licencia y Referencias
 Este repositorio se encuentra bajo la Licencia MIT  
