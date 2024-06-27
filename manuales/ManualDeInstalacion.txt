@@ -6,20 +6,16 @@ Para utilizar vagrant es condicion necesaria tener descargado VirtualBox (prefer
 
 1) Descargue el instalador de la pagina: "https://developer.hashicorp.com/vagrant/install". Para este ejemplo se uso el instalador "I686" de windows.
 2) Al finalizar su instalacion, cree una carpeta llamada vagrant con una subcarpeta dentro llamada "vm1".
-3) Dentro de vm1, se debe de ejecutar el siguiente comando "vagrant box add ubuntu/bionic64".
-4) Una vez finalizada la descarga, se debe de ejecutar "vagrant init ubuntu/bionic64". (Esto nos generará un archivo VagrantFile)
+3) Dentro de vm1, se debe de ejecutar el siguiente comando "vagrant box add ubuntu/focal64".
+4) Una vez finalizada la descarga, se debe de ejecutar "vagrant init ubuntu/focal64". (Esto nos generará un archivo VagrantFile)
 5) A continuacion, se debe de ejecutar el comando "vagrant up" para poder levantar la maquina virtual.
 
 Como USAR vagrant?
 
-Forma 1:
+
 Luego de estos pasos, la VM deberia estar corriendo correctamente por lo que solo resta ir a la interfaz de VM en donde veremos que se ha creado una nueva VM llamada "vm1_default_..." en donde debemos seleccionarla y presionar en el boton de SHOW para poder iniciar la VM. El usuario es: "vagrant" y la contraseña es: "vagrant".
-Luego podemos navegar hasta la carpeta del proyecto con el comando "cd jazzjackrabbit_taller1".
 
-Forma 2:
-Vagrant cuenta con una opcion que se activa al utilizar el comando "vagrant ssh" que nos permite operar la vm directamente desde nuestra terminal sin necesidad de tener que abrir la VM desde la interfaz propuesta por VirtualBox. Desde allí podemos navegar hasta la carpeta del proyecto con el comando "cd jazzjackrabbit_taller1".
-
-En ambos casos, la ruta de navegacion es esta:
+Los comandos a escribir dentro de la consola de comandos una vez iniciada la navegacion en la VirtualBox son los siguientes:
 cd jazzjackrabbit_taller1
 sudo mkdir build
 cd build
@@ -27,5 +23,4 @@ sudo cmake ..
 sudo make
 Luego podemos ejecutar los correspondientes: ./server <puerto> para correr el servidor y ./client para correr el cliente.
 
-Para DETENER la maquina virtual corriendo con vagrant se debe de utilizar el comando "vagrant halt".
 Una vez realizados todos los pasos anteriores para la instalacion, si se quiere volver a iniciar la maquina solamente hace falta usar el comando "vagrand up". No se requiere de volver a realizar los comandos de init y anteriores.
