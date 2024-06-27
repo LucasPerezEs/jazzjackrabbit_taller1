@@ -99,12 +99,12 @@ Mapa::Mapa(const std::string& mapName) {
                 if (tilemap[i][j] == 18 || tilemap[i][j] == 29 || tilemap[i][j] == 47 || tilemap[i][j] == 58) {
                     DiagonalIzquierda* diagonal =
                             new DiagonalIzquierda(j, (tilemap.size() - 1 - i), 1, 1);
-                    std::cout << "hay diagonal en " << j << ", " << (tilemap.size() - 1 - i) << "\n";
+                    //std::cout << "hay diagonal en " << j << ", " << (tilemap.size() - 1 - i) << "\n";
                     diagonalesIzq.push_back(diagonal);
                 } else if (tilemap[i][j] == 13 || tilemap[i][j] == 22 || tilemap[i][j] == 44 || tilemap[i][j] == 53) {
                     DiagonalDerecha* diagonal =
                             new DiagonalDerecha(j, (tilemap.size() - 1 - i), 1, 1);
-                    std::cout << "hay diagonal en " << j << ", " << (tilemap.size() - 1 - i) << "\n";
+                    //std::cout << "hay diagonal en " << j << ", " << (tilemap.size() - 1 - i) << "\n";
                     diagonalesDer.push_back(diagonal);
                 } else if ((tilemap[i][j] < 70 && tilemap[i][j] > 0)) {
                     Piso* piso =
@@ -145,8 +145,8 @@ std::vector<int> Mapa::get_spawn(int type) {
     if (type == 0 && spawnsPersonaje.size() > 0) {
 
         int i = rand()%spawnsPersonaje.size();
-        res.emplace_back(spawnsPersonaje[i][1]);
         res.emplace_back(spawnsPersonaje[i][2]);
+        res.emplace_back(spawnsPersonaje[i][1]);
         return res;
     }
 
@@ -155,7 +155,7 @@ std::vector<int> Mapa::get_spawn(int type) {
     return res;
 }
 
-void Mapa::spawn(ListaObjetos& objetos, std::vector<std::shared_ptr<Ente>>& entes, std::map<std::string, float> &config, Queue<Container>& q) {
+/*void Mapa::spawn(ListaObjetos& objetos, std::vector<std::shared_ptr<Ente>>& entes, std::map<std::string, float> &config, Queue<Container>& q) {
     for (auto objeto: spawnsOtros) {
         //std::cout << "posicion es " << objeto[1] << ", " << objeto[2] << "\n";
         if (objeto[0] == 1) {
@@ -182,7 +182,7 @@ void Mapa::spawn(ListaObjetos& objetos, std::vector<std::shared_ptr<Ente>>& ente
             objetos.agregar_objeto(b);
         }
     }
-}
+}*/
 
 Mapa::~Mapa() {
     for (auto o: objetos) {

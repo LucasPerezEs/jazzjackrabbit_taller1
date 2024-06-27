@@ -56,31 +56,31 @@ void Game::run() {
 
 
     for (auto objeto: m.spawnsOtros) {
-        std::cout << "posicion es " << objeto[1] << ", " << objeto[2] << "\n";
+        std::cout << "posicion es " << objeto[2] << ", " << objeto[1] << "\n";
         if (objeto[0] == 1) {
-            std::shared_ptr<Monkey> m (new Monkey(objeto[1], objeto[2], config));
+            std::shared_ptr<Monkey> m (new Monkey(objeto[2], objeto[1], config));
             objetos.agregar_objeto(m);
             entes.emplace_back(m);
         }
         else if (objeto[0] == 2) {
-            std::shared_ptr<Ghost> g (new Ghost(objeto[1], objeto[2], config));
+            std::shared_ptr<Ghost> g (new Ghost(objeto[2], objeto[1], config));
             objetos.agregar_objeto(g);
             entes.emplace_back(g);
         }
         else if (objeto[0] == 3) {
-            std::shared_ptr<Bat> b (new Bat(objeto[1], objeto[2], config));
+            std::shared_ptr<Bat> b (new Bat(objeto[2], objeto[1], config));
             objetos.agregar_objeto(b);
             entes.emplace_back(b);
         }
         else if (objeto[0] == 4) {
-            std::shared_ptr<Gem> b (new Gem(objeto[1], objeto[2], config, stateQueue));
+            std::shared_ptr<Gem> b (new Gem(objeto[2], objeto[1], config, stateQueue));
             objetos.agregar_objeto(b);
             Container c(0, b->id, b->x, b->y, b->width, b->height, 0, b->an_type,
                         b->en_type, 0, {EntityType::NONE_ENTITY, 0}, 0, "");
             stateQueue.push(c);
         }
         else if (objeto[0] == 5) {
-            std::shared_ptr<Gold_Coin> b (new Gold_Coin(objeto[1], objeto[2], config, stateQueue));
+            std::shared_ptr<Gold_Coin> b (new Gold_Coin(objeto[2], objeto[1], config, stateQueue));
             objetos.agregar_objeto(b);
             Container c(0, b->id, b->x, b->y, b->width, b->height, 0, b->an_type,
             b->en_type, 0, {EntityType::NONE_ENTITY, 0}, 0, "");

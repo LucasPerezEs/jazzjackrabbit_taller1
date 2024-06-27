@@ -11,8 +11,10 @@ void set_values(Tile& selectedTile, const double& minX, const double& maxX, cons
     int fila = std::floor(newY / (TILE_MAP_CREATED*increase));
     int columna = std::floor(newX / (TILE_MAP_CREATED*increase));
 
-    if (fila < 0 || fila > mapWidth-1 || columna < 0 || columna > mapHeight-1)
+    if (fila < 0 || fila > mapHeight-1 || columna < 0 || columna > mapWidth-1) {
         return;
+    }
+        
 
     std::tuple<int,int> posicion = std::make_tuple(fila, columna);
 

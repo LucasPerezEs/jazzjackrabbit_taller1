@@ -48,7 +48,7 @@ void MapCreator::save_spawns(std::string& filename, bool& is_already_create){
         for (const auto& value : mapSpawn) {
             
             const Tile& tile = value.second;
-            int row = std::get<0>(value.first);
+            int row = mapHeight - 1 - std::get<0>(value.first);
             int column = std::get<1>(value.first);
                 
             file << tile.type << "," << row << "," << column << "," << tile.id << "\n";
@@ -145,7 +145,7 @@ std::map<std::tuple<int, int>, Tile> MapCreator::load_spawns(const std::string& 
                         tile.type = intValue;
                         break;
                     case 1:
-                        row = intValue;
+                        row = mapHeight - 1 - intValue;
                         break;
                     case 2:
                         column = intValue;
@@ -263,6 +263,8 @@ void MapCreator::handle_draw(){
     increase = 1;
 
     bool running = true;
+    std::cout << "el height es " << mapHeight << "\n";
+    std::cout << "el width es " << mapWidth << "\n";
     DrawerEditor drawer(running, tiles_asset, width_texture, mapWidth, mapHeight, TILE_MAP_CREATED, mapSpawn, mapTiles, x, y, increase);
     drawer.start();
 
