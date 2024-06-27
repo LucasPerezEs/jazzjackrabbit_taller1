@@ -49,6 +49,9 @@ Cliente:
 
 Durante el dibujado, el primer bloque de texturas son elementos solidos mientras que el segundo bloque (los inferiores) permiten al jugador traspasarlos (son decorativos).
 
+Para seleccionar donde colocar los spawns del jugador o de los enemigos se usan las siguientes texturas:
+![ImagenDelLosAssetsUsadosParaEditarSpawns](/doc/editor_spawns.png)
+
 ## Licencia y Referencias
 Este repositorio se encuentra bajo la Licencia MIT  
 Implementacion de Threads, Queues y Sockets brindada por Martin Di Paola.
