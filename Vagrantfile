@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
-  config.vm.box = "ubuntu/bionic64"
+  config.vm.box = "ubuntu/focal64"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -71,14 +71,10 @@ Vagrant.configure("2") do |config|
   # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
   # documentation for more information about their specific syntax and use.
    config.vm.provision "shell", inline: <<-SHELL
-    sudo apt-get update
-    apt-get install -y apache2
-    sudo apt-get update
-    sudo apt-get install -y git
-    sudo apt-get update
-    sudo apt-get install -y cmake
-    sudo apt-get update
-    sudo apt-get install -y libsdl2-dev libsdl2-ttf-dev qt5-default libsdl2-mixer-dev libsdl2-image-dev libyaml-cpp-dev
-    git clone https://github.com/LucasPerezEs/jazzjackrabbit_taller1.git
+	vb.gui = true
+	config.ssh.forward_x11 = true
+  sudo apt-get update
+  sudo apt-get install -y apache2 git cmake --no-install-recommends ubuntu-desktop libsdl2-dev g++ libsdl2-ttf-dev qt5-default libxcb-cursor0 libsdl2-mixer-dev libsdl2-image-dev libyaml-cpp-dev
+  git clone https://github.com/LucasPerezEs/jazzjackrabbit_taller1.git
    SHELL
 end
