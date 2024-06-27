@@ -50,6 +50,7 @@ Cliente:
 Durante el dibujado, el primer bloque de texturas son elementos solidos mientras que el segundo bloque (los inferiores) permiten al jugador traspasarlos (son decorativos).
 
 Para seleccionar donde colocar los spawns del jugador o de los enemigos se usan las siguientes texturas:
+
 ![ImagenDelLosAssetsUsadosParaEditarSpawns](/doc/editor_spawns.png)
 
 ## Licencia y Referencias
