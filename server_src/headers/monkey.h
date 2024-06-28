@@ -2,23 +2,24 @@
 #define MONKEY_H_
 
 #include <map>
+#include <memory>
 #include <string>
 #include <unordered_map>
 
 #include "../../common_src/headers/queue.h"
 
 #include "banana.h"
-#include "enemigo.h"
+#include "bullet_ammo.h"
+#include "carrot.h"
+#include "character.h"
+#include "enemy.h"
 #include "gold_coin.h"
-#include "lista_objetos.h"
-#include "municion.h"
-#include "objeto.h"
-#include "personaje.h"
-#include "zanahoria.h"
+#include "object.h"
+#include "object_list.h"
 
-class ListaObjetos;
+class ObjectList;
 
-class Monkey: public Enemigo {
+class Monkey: public Enemy {
 protected:
     int wait_idle;
     int wait_throw;
@@ -27,10 +28,11 @@ protected:
 
 public:
     Monkey(float x, float y, std::map<std::string, float>& config);
-    virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) override;
-    virtual void update_vivo(ListaObjetos& objetos, Queue<Container>& q,
-                             std::map<uint32_t, std::shared_ptr<Personaje>>& clientCharacters, std::shared_ptr<Ente> e) override;
-    void throw_banana(ListaObjetos& objetos);
+    virtual void update(Map& m, ObjectList& objetos, Queue<Container>& q) override;
+    virtual void update_vivo(ObjectList& objetos, Queue<Container>& q,
+                             std::map<uint32_t, std::shared_ptr<Character>>& clientCharacters,
+                             std::shared_ptr<Entity> e) override;
+    void throw_banana(ObjectList& objetos);
 };
 
 

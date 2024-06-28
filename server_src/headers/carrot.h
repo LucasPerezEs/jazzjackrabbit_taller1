@@ -8,19 +8,19 @@
 #include "../../common_src/headers/Container.h"
 #include "../../common_src/headers/sound_commands.h"
 
-#include "personaje.h"
+#include "character.h"
 #include "pickup.h"
 
-class Zanahoria: public Pickup {
+class Carrot: public Pickup {
 private:
     std::map<std::string, float>& config;
-    
+
 
 public:
     float life;
-    Zanahoria(float x, float y, std::map<std::string, float>& config, Queue<Container>& q);
+    Carrot(float x, float y, std::map<std::string, float>& config, Queue<Container>& q);
 
-    virtual void colision(Personaje& p) override;
+    virtual void colision(Character& p) override;
 };
 
 #endif

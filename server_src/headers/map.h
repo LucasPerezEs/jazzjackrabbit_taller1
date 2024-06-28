@@ -3,59 +3,62 @@
 
 #include <fstream>
 #include <iostream>
+#include <map>
+#include <memory>
 #include <sstream>
 #include <string>
 #include <vector>
 
-#include "objeto.h"
+#include "object.h"
 
-class Piso {
+class Floor {
 public:
     float x;
     float y;
     float w;
     float h;
-    Piso(float x, float y, float w, float h);
+    Floor(float x, float y, float w, float h);
     bool colision(float x, float y, float w, float h);
 };
 
-class DiagonalIzquierda {
+class LeftDiagonal {
 public:
     float x;
     float y;
     float w;
     float h;
-    DiagonalIzquierda(float x, float y, float w, float h);
+    LeftDiagonal(float x, float y, float w, float h);
     bool colision(float x, float y, float w, float h);
 };
 
-class DiagonalDerecha {
+class RightDiagonal {
 public:
     float x;
     float y;
     float w;
     float h;
-    DiagonalDerecha(float x, float y, float w, float h);
+    RightDiagonal(float x, float y, float w, float h);
     bool colision(float x, float y, float w, float h);
 };
 
-class Mapa {
+class Map {
 private:
     std::vector<std::vector<int>> spawns;
     std::vector<std::vector<int>> spawnsPersonaje;
 
 public:
     std::vector<std::vector<int>> spawnsOtros;
-    std::vector<Piso*> objetos;
-    std::vector<DiagonalIzquierda*> diagonalesIzq;
-    std::vector<DiagonalDerecha*> diagonalesDer;
+    std::vector<Floor*> objetos;
+    std::vector<LeftDiagonal*> diagonalesIzq;
+    std::vector<RightDiagonal*> diagonalesDer;
     std::vector<std::vector<int>> cargarCSV(const std::string& ruta);
-    explicit Mapa(const std::string& mapName);
+    explicit Map(const std::string& mapName);
     bool CheckColision(float x, float y, float w, float h);
     std::vector<int> get_spawn(int type);
-    void spawn(ListaObjetos& objetos, std::vector<std::shared_ptr<Ente>>& entes, std::map<std::string, float> &config, Queue<Container>& q);
+    void spawn(ObjectList& objetos, std::vector<std::shared_ptr<Entity>>& entes,
+               std::map<std::string, float>& config, Queue<Container>& q);
 
-    ~Mapa();
+    ~Map();
 };
 
 #endif

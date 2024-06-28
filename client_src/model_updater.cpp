@@ -310,11 +310,9 @@ void ModelUpdater::despawn_entity(Container& c) {
 void ModelUpdater::update(float dt) {
 
     try {
-        // std::cout << "Popeando container de la queue en updater\n";
         Container c = this->reciever_queue.pop();
 
         if (c.sound_container != nullptr) {
-            std::cout << "llego container de sonido\n";
             sound_manager.play_sound(c.sound_container->entity, c.sound_container->sound,
                                      c.sound_container->id);
             return;

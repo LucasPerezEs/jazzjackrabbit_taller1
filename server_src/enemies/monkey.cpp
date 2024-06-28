@@ -1,11 +1,11 @@
 #include "../headers/monkey.h"
 
 Monkey::Monkey(float x, float y, std::map<std::string, float>& config):
-        Enemigo(x, y, 4, 6, config["monkey_life"], config["monkey_speed"], config["monkey_damage"],
-                config["monkey_prob_carrot"], config["monkey_prob_ammo"],
-                config["monkey_prob_goldcoin"], config["monkey_prob_rocket"],
-                config["monkey_prob_gem"], config["monkey_prob_icebullet"], EntityType::MONKEY,
-                AnimationType::IDLE, config),
+        Enemy(x, y, 4, 6, config["monkey_life"], config["monkey_speed"], config["monkey_damage"],
+              config["monkey_prob_carrot"], config["monkey_prob_ammo"],
+              config["monkey_prob_goldcoin"], config["monkey_prob_rocket"],
+              config["monkey_prob_gem"], config["monkey_prob_icebullet"], EntityType::MONKEY,
+              AnimationType::IDLE, config),
         tiempo(std::chrono::system_clock::now()) {
     wait_idle = 3000;  // 3 segs
     wait_throw = 1000;
@@ -13,7 +13,7 @@ Monkey::Monkey(float x, float y, std::map<std::string, float>& config):
     direccion = -1;
 }
 
-void Monkey::update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) {
+void Monkey::update(Map& m, ObjectList& objetos, Queue<Container>& q) {
 
     check_frozen();
 
@@ -40,9 +40,9 @@ void Monkey::update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) {
     q.try_push(c);
 }
 
-void Monkey::update_vivo(ListaObjetos& objetos, Queue<Container>& q,
-                         std::map<uint32_t, std::shared_ptr<Personaje>>& clientCharacters,
-                         std::shared_ptr<Ente> e) {
+void Monkey::update_vivo(ObjectList& objetos, Queue<Container>& q,
+                         std::map<uint32_t, std::shared_ptr<Character>>& clientCharacters,
+                         std::shared_ptr<Entity> e) {
     if (vida <= 0) {
         if (!killed) {  // si acaba de morir dropea una municion o moneda o zanahoria
             killed = true;
@@ -66,7 +66,7 @@ void Monkey::update_vivo(ListaObjetos& objetos, Queue<Container>& q,
     }
 }
 
-void Monkey::throw_banana(ListaObjetos& objetos) {
+void Monkey::throw_banana(ObjectList& objetos) {
 
     tiempo = std::chrono::system_clock::now();
     this->an_type = AnimationType::IDLE;

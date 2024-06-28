@@ -4,7 +4,7 @@ Gold_Coin::Gold_Coin(float x, float y, std::map<std::string, float>& config, Que
         Pickup(x, y, 2, 2, EntityType::GOLD_COIN, AnimationType::PICKUP, q),
         score(config["goldcoin_addscore"]) {}
 
-void Gold_Coin::colision(Personaje& p) {
+void Gold_Coin::colision(Character& p) {
     borrar = true;
     p.add_score(score);
 

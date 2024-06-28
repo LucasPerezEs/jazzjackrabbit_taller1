@@ -1,7 +1,9 @@
 #include "../headers/spaz.h"
 
-Spaz::Spaz(float x, float y, std::map<std::string, float>& config, Queue<Container>& q, std::string name):
-        Personaje(x, y, 2, 4, EntityType::SPAZ, AnimationType::SHOOT_IDLE, config, q, name),
+Spaz::Spaz(float x, float y, std::map<std::string, float>& config, Queue<Container>& q,
+           // cppcheck-suppress passedByValue
+           std::string name):
+        Character(x, y, 2, 4, EntityType::SPAZ, AnimationType::SHOOT_IDLE, config, q, name),
         wait_sidekick(800) {}
 
 void Spaz::special_action() {

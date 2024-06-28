@@ -1,6 +1,7 @@
 #ifndef SERVER_CLIENT_H
 #define SERVER_CLIENT_H
 
+#include <string>
 #include <utility>
 
 #include <arpa/inet.h>
@@ -13,7 +14,6 @@
 #include "clientSender.h"
 #include "game.h"
 
-// AGREGA ID JUGADOR
 class ClientHandler {
 private:
     uint32_t id;
@@ -25,7 +25,7 @@ private:
     bool online;
 
 public:
-    ClientHandler(uint32_t id,Socket peer);
+    ClientHandler(uint32_t id, Socket peer);
     void setReceiverQueue(Queue<Message>* actionQueue);
     uint32_t getId();
     std::string getName();

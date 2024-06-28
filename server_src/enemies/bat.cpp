@@ -1,15 +1,15 @@
 #include "../headers/bat.h"
 
 Bat::Bat(float x, float y, std::map<std::string, float>& config):
-        Enemigo(x, y, 2, 2, config["bat_life"], config["bat_speed"], config["bat_damage"],
-                config["bat_prob_carrot"], config["bat_prob_ammo"], config["bat_prob_goldcoin"],
-                config["bat_prob_rocket"], config["bat_prob_gem"], config["bat_prob_icebullet"],
-                EntityType::BAT, AnimationType::FLY, config) {
+        Enemy(x, y, 2, 2, config["bat_life"], config["bat_speed"], config["bat_damage"],
+              config["bat_prob_carrot"], config["bat_prob_ammo"], config["bat_prob_goldcoin"],
+              config["bat_prob_rocket"], config["bat_prob_gem"], config["bat_prob_icebullet"],
+              EntityType::BAT, AnimationType::FLY, config) {
     lim_y_sup = y + 20;  // cuanto se va a mover de izquierda a derecha
     lim_y_inf = y - 20;
 }
 
-void Bat::update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) {
+void Bat::update(Map& m, ObjectList& objetos, Queue<Container>& q) {
     float auxx = x;
     float auxy = y;  // se guarda la posicion actual
     bool colisiony;
@@ -34,9 +34,9 @@ void Bat::update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) {
     q.try_push(c);
 }
 
-void Bat::update_vivo(ListaObjetos& objetos, Queue<Container>& q,
-                      std::map<uint32_t, std::shared_ptr<Personaje>>& clientCharacters,
-                      std::shared_ptr<Ente> e) {
+void Bat::update_vivo(ObjectList& objetos, Queue<Container>& q,
+                      std::map<uint32_t, std::shared_ptr<Character>>& clientCharacters,
+                      std::shared_ptr<Entity> e) {
     if (vida <= 0) {
         if (!killed) {  // si acaba de morir dropea una municion o moneda o zanahoria
             killed = true;
@@ -50,12 +50,10 @@ void Bat::update_vivo(ListaObjetos& objetos, Queue<Container>& q,
             borrar = false;
             frozen = false;
             objetos.agregar_objeto(e);
-            // contador = 0;
             Container c(0, this->id, this->x, this->y, this->width, this->height, this->direccion,
                         AnimationType::FLY, EntityType::BAT, 0, {EntityType::NONE_ENTITY, 0}, 0,
                         "");
             q.try_push(c);
         }
-        // contador++;
     }
 }

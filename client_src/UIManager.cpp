@@ -162,7 +162,6 @@ void UIManager::renderLoadingText() {
 }
 
 void UIManager::renderEndGame(int id_cliente) {
-    // window.fill(70, 130, 180, 255);
     Area dst(0, 0, 800, 600);
     texturas_ui[6]->render(dst);
 
@@ -228,14 +227,6 @@ void UIManager::renderEndGame(int id_cliente) {
 
     SDL_SetRenderDrawColor(window.getRenderer(), 0, 0, 0, 255);
     SDL_RenderFillRect(window.getRenderer(), &mainMenuBorder);
-
-    /*SDL_Rect mainMenuFill;
-    mainMenuFill.x = 265;
-    mainMenuFill.y = 500;
-    mainMenuFill.w = 270;
-    mainMenuFill.h = 30;
-    SDL_SetRenderDrawColor(window.getRenderer(), 55, 7, 51, 255);
-    SDL_RenderFillRect(window.getRenderer(), &mainMenuFill);*/
 
     this->fuente.render(mainMenuBorder.x + 25, mainMenuBorder.y + 15, mainMenuBorder.w - 50,
                         mainMenuBorder.h - 30, "Main Menu", window, {237, 206, 69, 255});

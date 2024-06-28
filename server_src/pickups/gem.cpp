@@ -4,7 +4,7 @@ Gem::Gem(float x, float y, std::map<std::string, float>& config, Queue<Container
         Pickup(x, y, 1.5, 1.5, EntityType::GEM, AnimationType::PICKUP, q),
         score(config["gem_addscore"]) {}
 
-void Gem::colision(Personaje& p) {
+void Gem::colision(Character& p) {
     borrar = true;
     p.add_score(score);
 

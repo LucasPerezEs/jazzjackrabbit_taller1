@@ -6,14 +6,14 @@
 
 #include "../../common_src/headers/queue.h"
 
-#include "enemigo.h"
-#include "lista_objetos.h"
-#include "mapa.h"
-#include "objeto.h"
+#include "enemy.h"
+#include "map.h"
+#include "object.h"
+#include "object_list.h"
 
 class Personaje;
 
-class Projectile: public Objeto {
+class Projectile: public Object {
 protected:
     float vel;
     int shooter_id;
@@ -23,10 +23,10 @@ public:
     int danio;
     Projectile(float x, float y, int d, int shooter_id, EntityType en_type, AnimationType an_type,
                int vel, int danio);
-    virtual void colision(Objeto& o) override;
-    virtual void colision(Enemigo& e) override;
-    virtual void colision(Personaje& p) override;
-    virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) override;
+    virtual void colision(Object& o) override;
+    virtual void colision(Enemy& e) override;
+    virtual void colision(Character& p) override;
+    virtual void update(Map& m, ObjectList& objetos, Queue<Container>& q) override;
     virtual void eliminar() override;
     int get_shooter_id();
 };

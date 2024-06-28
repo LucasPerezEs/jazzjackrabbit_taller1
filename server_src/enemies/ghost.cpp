@@ -1,21 +1,18 @@
 #include "../headers/ghost.h"
 
 Ghost::Ghost(float x, float y, std::map<std::string, float>& config):
-        Enemigo(x, y, 2, 4, config["ghost_life"], config["ghost_speed"], config["ghost_damage"],
-                config["ghost_prob_carrot"], config["ghost_prob_ammo"],
-                config["ghost_prob_goldcoin"], config["ghost_prob_rocket"],
-                config["ghost_prob_gem"], config["ghost_prob_icebullet"], EntityType::GHOST,
-                AnimationType::WALK, config) {
+        Enemy(x, y, 2, 4, config["ghost_life"], config["ghost_speed"], config["ghost_damage"],
+              config["ghost_prob_carrot"], config["ghost_prob_ammo"], config["ghost_prob_goldcoin"],
+              config["ghost_prob_rocket"], config["ghost_prob_gem"], config["ghost_prob_icebullet"],
+              EntityType::GHOST, AnimationType::WALK, config) {
     lim_x_der = x + 5;  // cuanto se va a mover de izquierda a derecha
     lim_x_izq = x - 5;
-    lim_y = y + 0;  // por si lo queremos hacer volador
+    lim_y = y + 0;
 }
 
-void Ghost::update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) {
+void Ghost::update(Map& m, ObjectList& objetos, Queue<Container>& q) {
     float auxx = x;
     float auxy = y;  // se guarda la posicion actual
-    // float auxw = width;
-    // float auxh = height;
     bool colisionx;
 
     check_frozen();
@@ -25,25 +22,23 @@ void Ghost::update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) {
     }
 
     x += speed * direccion;
-    // width += 0.25 * direccion;
 
     colisionx = m.CheckColision(x, auxy, width, height);
 
     if (colisionx || x > lim_x_der || x < lim_x_izq) {
         direccion = direccion * -1;  // si colisiona con la pos x actualizada
         x = auxx;                    // se pone la pos x anterior
-        // width = auxw;
     }
     Container c(0, this->id, this->x, this->y, this->width, this->height, this->direccion,
                 this->an_type, this->en_type, 0, {EntityType::NONE_ENTITY, 0}, 0, "");
     q.try_push(c);
 }
 
-void Ghost::update_vivo(ListaObjetos& objetos, Queue<Container>& q,
-                        std::map<uint32_t, std::shared_ptr<Personaje>>& clientCharacters,
-                        std::shared_ptr<Ente> e) {
+void Ghost::update_vivo(ObjectList& objetos, Queue<Container>& q,
+                        std::map<uint32_t, std::shared_ptr<Character>>& clientCharacters,
+                        std::shared_ptr<Entity> e) {
     if (vida <= 0) {
-        if (!killed) {  // si acaba de morir dropea una municion o moneda o zanahoria
+        if (!killed) {
             killed = true;
             last_killed = std::chrono::system_clock::now();
             drop_item(objetos, q);
@@ -55,12 +50,10 @@ void Ghost::update_vivo(ListaObjetos& objetos, Queue<Container>& q,
             borrar = false;
             frozen = false;
             objetos.agregar_objeto(e);
-            // contador = 0;
             Container c(0, this->id, this->x, this->y, this->width, this->height, this->direccion,
                         AnimationType::WALK, EntityType::GHOST, 0, {EntityType::NONE_ENTITY, 0}, 0,
                         "");
             q.try_push(c);
         }
-        // contador++;
     }
 }

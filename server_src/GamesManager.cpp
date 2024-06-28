@@ -110,7 +110,6 @@ bool GamesManager::createGame(std::string gameId, uint32_t maxPlayers, const std
             // newGame->start();
             return true;
         }
-        std::cout << "error en new game broadcaster\n";
     }
 
     return false;
@@ -246,11 +245,7 @@ void GamesManager::activate_cheats(const std::vector<uint32_t>& cheats,
 void GamesManager::run() {
 
     Message msg(Setup::ActionType::NONE);
-    // Container container({}, {}, {}, {}, {});
     bool ok;
-
-
-    // std::map<std::string, float> config = load_config_YAML("../config.yml");
 
     while (_keep_running) {
         try {
@@ -279,18 +274,15 @@ void GamesManager::run() {
                         Container(Setup::JOIN_GAME, msg.setup.gameId, msg.setup.maxPlayers, mapName,
                                   msg.setup.cheats, ok);
                 clients[clientId]->pushState(container2);
-                // std::cout << mapName << std::endl;
 
                 break;
             }
             case Setup::CREATE_GAME: {
-                std::cout << "Creando game\n";
                 ok = createGame(msg.setup.gameId, msg.setup.maxPlayers, msg.setup.mapName,
                                 msg.setup.cheats);
                 Container container = Container(Setup::CREATE_GAME, msg.setup.gameId,
                                                 msg.setup.maxPlayers, msg.setup.cheats, ok);
                 clients[clientId]->pushState(container);
-                std::cout << "Pusheando cola de create a client\n";
                 break;
             }
             case Setup::GET_GAME_LIST: {
@@ -303,7 +295,6 @@ void GamesManager::run() {
             case Setup::GET_MAP_LIST: {
                 std::vector<std::string> mapList;
                 ok = listMaps(mapList);
-                std::cout << "Llego al game manager" << std::endl;
                 Container container = Container(Setup::GET_MAP_LIST, mapList, ok);
                 clients[clientId]->pushState(container);
                 break;
@@ -330,7 +321,6 @@ void GamesManager::run() {
         reap_offline_games();
     }
 
-    // stop();
     _is_alive = false;
 }
 
@@ -342,7 +332,6 @@ void GamesManager::reap_offline_games() {
             it->second->join();
             delete it->second;
             it = games.erase(it);
-            std::cout << "Borrando game\n";
         } else {
             ++it;
         }
@@ -354,7 +343,6 @@ void GamesManager::kill_all_games() {
         gamePair.second->stop();
         gamePair.second->join();
         delete gamePair.second;
-        std::cout << "borrando game\n";
     }
     games.clear();
 }

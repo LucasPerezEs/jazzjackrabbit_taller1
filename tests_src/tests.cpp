@@ -1,26 +1,25 @@
-#include <gtest/gtest.h>
-#include <gmock/gmock.h>
-
-#include "../server_src/headers/jazz.h"
-#include "../server_src/headers/mapa.h"
-#include "../server_src/headers/lista_objetos.h"
-#include "../server_src/GamesManager.cpp"
-#include "../common_src/headers/queue.h"
-#include "../common_src/headers/Container.h"
-#include "../server_src/headers/ghost.h"
-#include "../server_src/headers/bullet.h"
-#include "../server_src/headers/zanahoria.h"
-#include "../server_src/headers/zanahoria_envenenada.h"
-
-#include <string>
-#include <map>
-#include <yaml-cpp/yaml.h>
 #include <iostream>
+#include <map>
 #include <memory>
+#include <string>
+
+#include <gmock/gmock.h>
+#include <gtest/gtest.h>
+#include <yaml-cpp/yaml.h>
+
+#include "../common_src/headers/Container.h"
+#include "../common_src/headers/queue.h"
+#include "../server_src/GamesManager.cpp"
+#include "../server_src/headers/bullet.h"
+#include "../server_src/headers/carrot.h"
+#include "../server_src/headers/ghost.h"
+#include "../server_src/headers/jazz.h"
+#include "../server_src/headers/map.h"
+#include "../server_src/headers/object_list.h"
+#include "../server_src/headers/poisoned_carrot.h"
 
 
-TEST(personaje, moverse_en_ambas_direcciones)
-{
+TEST(personaje, moverse_en_ambas_direcciones) {
     Queue<Container> q;
     std::map<std::string, float> config = load_config_YAML("../config.yml");
     Jazz jazz = Jazz(0, 0, config, q, "jazz");
@@ -40,22 +39,20 @@ TEST(personaje, moverse_en_ambas_direcciones)
 }
 
 
-TEST(personaje, recibe_danio_de_un_enemigo)
-{
+TEST(personaje, recibe_danio_de_un_enemigo) {
     Queue<Container> q;
     std::map<std::string, float> config = load_config_YAML("../config.yml");
     Jazz jazz = Jazz(0, 0, config, q, "jazz");
     jazz.espera_hurt = -1;
     int vida = jazz.vida;
     Ghost ghost = Ghost(0, 0, config);
-    
+
     jazz.colision(ghost);
 
     ASSERT_EQ(vida - ghost.get_damage(), jazz.vida);
 }
 
-TEST(personaje, con_accion_especial_activa_hace_danio_al_enemigo)
-{
+TEST(personaje, con_accion_especial_activa_hace_danio_al_enemigo) {
     Queue<Container> q;
     std::map<std::string, float> config = load_config_YAML("../config.yml");
     Jazz jazz = Jazz(0, 0, config, q, "jazz");
@@ -69,8 +66,7 @@ TEST(personaje, con_accion_especial_activa_hace_danio_al_enemigo)
     ASSERT_EQ(vida - jazz.danio_ataque_especial, ghost.vida);
 }
 
-TEST(personaje, recibe_danio_de_una_bala)
-{
+TEST(personaje, recibe_danio_de_una_bala) {
     Queue<Container> q;
     std::map<std::string, float> config = load_config_YAML("../config.yml");
     Jazz jazz = Jazz(0, 0, config, q, "jazz");
@@ -84,10 +80,9 @@ TEST(personaje, recibe_danio_de_una_bala)
     ASSERT_EQ(PlayerState::HURTED, jazz.get_state());
 }
 
-TEST(personaje, personaje_revive_despues_de_3_segundos)
-{
-    std::map<uint32_t, std::shared_ptr<Personaje>> m;
-    ListaObjetos lista;
+TEST(personaje, personaje_revive_despues_de_3_segundos) {
+    std::map<uint32_t, std::shared_ptr<Character>> m;
+    ObjectList lista;
     Queue<Container> q;
     std::map<std::string, float> config = load_config_YAML("../config.yml");
     std::shared_ptr<Jazz> jazz(new Jazz(0, 0, config, q, "jazz"));
@@ -100,26 +95,24 @@ TEST(personaje, personaje_revive_despues_de_3_segundos)
     ASSERT_EQ(100, jazz->vida);
 }
 
-TEST(personaje, si_persoanje_come_una_zanahoria_le_aumenta_la_vida)
-{
+TEST(personaje, si_persoanje_come_una_zanahoria_le_aumenta_la_vida) {
     Queue<Container> q;
     std::map<std::string, float> config = load_config_YAML("../config.yml");
     Jazz jazz = Jazz(0, 0, config, q, "jazz");
     jazz.vida = 1;
-    Zanahoria zanahoria = Zanahoria(0, 0, config, q);
+    Carrot zanahoria = Carrot(0, 0, config, q);
 
     jazz.colision(zanahoria);
 
     ASSERT_EQ(1 + zanahoria.life, jazz.vida);
 }
 
-TEST(personaje, si_personaje_come_una_zanahoria_envenenada_queda_en_estado_intoxicado)
-{
+TEST(personaje, si_personaje_come_una_zanahoria_envenenada_queda_en_estado_intoxicado) {
     Queue<Container> q;
     std::map<std::string, float> config = load_config_YAML("../config.yml");
     Jazz jazz = Jazz(0, 0, config, q, "jazz");
     jazz.vida = 1;
-    ZanahoriaEnvenenada zanahoriaEnvenenada = ZanahoriaEnvenenada(0, 0, config, q);
+    PoisonedCarrot zanahoriaEnvenenada = PoisonedCarrot(0, 0, config, q);
 
     jazz.colision(zanahoriaEnvenenada);
 

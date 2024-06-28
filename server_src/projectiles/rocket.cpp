@@ -6,7 +6,7 @@ Rocket::Rocket(float x, float y, int d, int shooter_id, std::map<std::string, fl
         wait_explosion(250),
         exploded(false) {}
 
-void Rocket::colision(Objeto& o) {
+void Rocket::colision(Object& o) {
     if (check_colision(o) && !exploded) {
         tiempo = std::chrono::system_clock::now();
         o.colision(*this);
@@ -15,7 +15,7 @@ void Rocket::colision(Objeto& o) {
     }
 }
 
-void Rocket::colision(Enemigo& e) {
+void Rocket::colision(Enemy& e) {
     tiempo = std::chrono::system_clock::now();
     e.colision(*this);
     exploded = true;
@@ -23,7 +23,7 @@ void Rocket::colision(Enemigo& e) {
     x += e.width / 2;
 }
 
-void Rocket::colision(Personaje& p) {
+void Rocket::colision(Character& p) {
     p.colision(*this);
     if (p.id != shooter_id) {
         tiempo = std::chrono::system_clock::now();
@@ -34,7 +34,7 @@ void Rocket::colision(Personaje& p) {
 }
 
 void Rocket::update(
-        Mapa& mapa, ListaObjetos& objetos,
+        Map& mapa, ObjectList& objetos,
         Queue<Container>& q) {  // actualiza la posicion, si choca con el mapa se tiene que borrar
 
     if (exploded && std::chrono::duration_cast<std::chrono::milliseconds>(

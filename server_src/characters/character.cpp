@@ -1,4 +1,4 @@
-#include "../headers/personaje.h"
+#include "../headers/character.h"
 
 #include <cmath>
 #include <iostream>
@@ -9,10 +9,10 @@
 #include "../headers/projectile.h"
 #include "../headers/rocket.h"
 
-Personaje::Personaje(float x, float y, float w, float h, EntityType en_type, AnimationType an_type,
+Character::Character(float x, float y, float w, float h, EntityType en_type, AnimationType an_type,
                      // cppcheck-suppress passedByValue
                      std::map<std::string, float>& config, Queue<Container>& q, std::string name):
-        Ente(x, y, w, h, config["player_life"], en_type, an_type),
+        Entity(x, y, w, h, config["player_life"], en_type, an_type),
         tiempo(std::chrono::system_clock::now()),
         last_hurt(std::chrono::system_clock::now()),
         config(config),
@@ -35,7 +35,7 @@ Personaje::Personaje(float x, float y, float w, float h, EntityType en_type, Ani
     espera_idle = 2000;  // en milisegundos
     espera_shoot = 250;  // Misma que la del arma
     espera_hurt =
-            1000;  // Cuando el personaje es atacado, se debe esperar 1s para volver a recibir danio
+            1000;  // Cuando el Character es atacado, se debe esperar 1s para volver a recibir danio
     espera_frozen = config["ice_bullet_frozen_time"];
     score = 0;
     direccion_movimientox = 1;
@@ -44,9 +44,8 @@ Personaje::Personaje(float x, float y, float w, float h, EntityType en_type, Ani
     spawn = 0;
 }
 
-void Personaje::moveRigth() {
+void Character::moveRigth() {
     if (special_action_active || state == PlayerState::HURTED || state == PlayerState::FROZEN) {
-        std::cout << "No me puedo mover, estoy congelado!" << std::endl;
         return;
     }
 
@@ -61,9 +60,8 @@ void Personaje::moveRigth() {
 
     tiempo = std::chrono::system_clock::now();
 }
-void Personaje::moveLeft() {
+void Character::moveLeft() {
     if (special_action_active || state == PlayerState::HURTED || state == PlayerState::FROZEN) {
-        std::cout << "No me puedo mover, estoy congelado!" << std::endl;
         return;
     }
     movingleft = true;
@@ -77,7 +75,7 @@ void Personaje::moveLeft() {
 
     tiempo = std::chrono::system_clock::now();
 }
-void Personaje::stopMovingRight() {
+void Character::stopMovingRight() {
     movingright = false;
     if (!jumping && !special_action_active && state != PlayerState::HURTED &&
         state != PlayerState::FROZEN) {
@@ -85,7 +83,7 @@ void Personaje::stopMovingRight() {
     }
 }
 
-void Personaje::stopMovingLeft() {
+void Character::stopMovingLeft() {
     movingleft = false;
     if (!jumping && !special_action_active && state != PlayerState::HURTED &&
         state != PlayerState::FROZEN) {
@@ -93,7 +91,7 @@ void Personaje::stopMovingLeft() {
     }
 }
 
-void Personaje::run() {
+void Character::run() {
     if (state == PlayerState::HURTED || state == PlayerState::FROZEN) {
         return;
     }
@@ -104,7 +102,7 @@ void Personaje::run() {
     q.try_push(c);
 }
 
-void Personaje::stoprunning() {
+void Character::stoprunning() {
     velx = config["player_speed"];
     if (!jumping && !special_action_active && state != PlayerState::HURTED &&
         state != PlayerState::FROZEN) {
@@ -112,7 +110,7 @@ void Personaje::stoprunning() {
     }
 }
 
-void Personaje::jump() {
+void Character::jump() {
     if (!jumping && !special_action_active && state != PlayerState::HURTED &&
         state != PlayerState::FROZEN) {  // Esto es para evitar que se pueda spamear el jump y volar
         vely = config["player_jump"];
@@ -125,14 +123,11 @@ void Personaje::jump() {
     }
 }
 
-bool Personaje::has_special_action_active() { return special_action_active; }
+bool Character::has_special_action_active() { return special_action_active; }
 
-void Personaje::add_score(int score) {
-    this->score += score;
-    std::cout << "Puntos: " << this->score << std::endl;
-}
+void Character::add_score(int score) { this->score += score; }
 
-void Personaje::check_idle() {
+void Character::check_idle() {
 
     if (state == PlayerState::INTOXICATED) {
         auto now = std::chrono::system_clock::now();
@@ -181,7 +176,7 @@ void Personaje::check_idle() {
     }
 }
 
-void Personaje::update_position() {
+void Character::update_position() {
 
     if (!(movingleft && movingright) &&
         (movingleft || movingright)) {  // mientras se este apretando una tecla de mover el jugador
@@ -195,18 +190,16 @@ void Personaje::update_position() {
         }
     }
     y += vely;
-    // height += vely;
     vely -= config["gravity"];  // esto es la aceleracion de la gravedad, se tiene que poner un
                                 // limite de vely
 }
 
-void Personaje::check_colisions(Mapa& m, float aux_x, float aux_y) {
+void Character::check_colisions(Map& m, float aux_x, float aux_y) {
 
     bool colisionx = false;
     bool colisiony = false;
     bool colisiondiagonal = false;
-    // float x_modificado = x;
-    // float y_modificado = y;
+
     for (auto diagonal: m.diagonalesDer) {
 
         if (diagonal->x <= x + width && x + width <= diagonal->x + diagonal->w &&
@@ -216,7 +209,6 @@ void Personaje::check_colisions(Mapa& m, float aux_x, float aux_y) {
             jumping = false;
             vely = 0;
             y = diagonal->y + diagonal->h - (diagonal->x + diagonal->w - (x + width));
-            // special_action_active = false;
             colisiony = true;
             colisionx = true;
             direccion_movimientox = sqrt(2) / 2;
@@ -227,7 +219,6 @@ void Personaje::check_colisions(Mapa& m, float aux_x, float aux_y) {
                 (y + 2 * height / 3) < diagonal->y && diagonal->y < y + height) {
                 vely = 0;
                 y = diagonal->y - height;
-                // special_action_active = false;
                 colisiony = true;
             }
             if (x < (diagonal->x + diagonal->w) && (diagonal->x + diagonal->w) < x + width / 2 &&
@@ -252,7 +243,6 @@ void Personaje::check_colisions(Mapa& m, float aux_x, float aux_y) {
             jumping = false;
             vely = 0;
             y = diagonal->y + diagonal->h - (x - diagonal->x);
-            // special_action_active = false;
             colisiony = true;
             colisionx = true;
             direccion_movimientox = sqrt(2) / 2;
@@ -263,7 +253,6 @@ void Personaje::check_colisions(Mapa& m, float aux_x, float aux_y) {
                 (y + 2 * height / 3) < diagonal->y && diagonal->y < y + height) {
                 vely = 0;
                 y = diagonal->y - height;
-                // special_action_active = false;
                 colisiony = true;
             }
             if (x + width / 2 < diagonal->x && diagonal->x < x + width &&
@@ -290,14 +279,12 @@ void Personaje::check_colisions(Mapa& m, float aux_x, float aux_y) {
             (y + 2 * height / 3) < (terreno->y + terreno->h) && (y + height) > terreno->y) {
             vely = 0;
             y = terreno->y - height;
-            // special_action_active = false;
             colisiony = true;
         } else if (aux_x < (terreno->x + terreno->w) && (aux_x + width) > terreno->x &&
                    y < (terreno->y + terreno->h) && (y + height / 4) > terreno->y) {
             jumping = false;
             vely = 0;
             y = terreno->y + terreno->h;
-            // special_action_active = false;
             colisiony = true;
         }
 
@@ -326,9 +313,9 @@ void Personaje::check_colisions(Mapa& m, float aux_x, float aux_y) {
     }
 }
 
-void Personaje::update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) {
+void Character::update(Map& m, ObjectList& objetos, Queue<Container>& q) {
     if (disparando) {
-        disparar(objetos);  // Creo que ahora con sender y receiver esto se puede poner afuera
+        disparar(objetos);
     }
 
     float aux_x = x;
@@ -347,18 +334,17 @@ void Personaje::update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) {
     q.try_push(c);
 }
 
-void Personaje::update_vivo(ListaObjetos& objetos, Queue<Container>& q,
-                            std::map<uint32_t, std::shared_ptr<Personaje>>& clientCharacters,
-                            std::shared_ptr<Ente> e) {
+void Character::update_vivo(ObjectList& objetos, Queue<Container>& q,
+                            std::map<uint32_t, std::shared_ptr<Character>>& clientCharacters,
+                            std::shared_ptr<Entity> e) {
     if (vida <= 0) {
         // Me acaban de matar
         if (!killed) {
             killed = true;
             last_killed = std::chrono::system_clock::now();
             if (killed_by_id != -1) {
-                std::shared_ptr<Personaje> killer = clientCharacters[killed_by_id];
+                std::shared_ptr<Character> killer = clientCharacters[killed_by_id];
                 if (killer.get()) {
-                    std::cout << "Killer id: " << killer->id << std::endl;
                     killer->add_score(this->score);
                 }
             }
@@ -372,29 +358,27 @@ void Personaje::update_vivo(ListaObjetos& objetos, Queue<Container>& q,
             killed_by_id = -1;
             score = 0;
             objetos.agregar_objeto(e);
-            // contador = -1;
             AmmoData ammo = {this->arma.selected_ammo(), this->arma.remaining_ammo()};
             Container c(3, this->id, this->x, this->y, this->width, this->height, this->direccion,
                         this->an_type, this->en_type, this->vida, ammo, this->score, this->name);
             q.try_push(c);
         }
-        // contador++;
     }
 }
 
-void Personaje::colision(ZanahoriaEnvenenada& ze) {
+void Character::colision(PoisonedCarrot& ze) {
 
     this->state = PlayerState::INTOXICATED;
     this->tiempo = std::chrono::system_clock::now();
     this->intoxicated_start = std::chrono::system_clock::now();
 }
 
-void Personaje::colision(Objeto& o) {
+void Character::colision(Object& o) {
     if (check_colision(o)) {
         o.colision(*this);
     }
 }
-void Personaje::colision(Enemigo& e) {
+void Character::colision(Enemy& e) {
     if (special_action_active) {
         e.RecibirDanio(danio_ataque_especial);
 
@@ -413,7 +397,7 @@ void Personaje::colision(Enemigo& e) {
     }
 }
 
-void Personaje::colision(Banana& b) {  // Banana y Bala deberian pertenecer a clase 'Proyectil'
+void Character::colision(Banana& b) {
     if (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() -
                                                               last_hurt)
                 .count() > espera_hurt) {
@@ -431,7 +415,7 @@ void Personaje::colision(Banana& b) {  // Banana y Bala deberian pertenecer a cl
     }
 }
 
-void Personaje::colision(Projectile& b) {
+void Character::colision(Projectile& b) {
     if (b.get_shooter_id() == this->id) {
         return;
     }
@@ -449,7 +433,6 @@ void Personaje::colision(Projectile& b) {
             frozen_start = std::chrono::system_clock::now();
             movingleft = false;
             movingright = false;
-            std::cout << "El estado es FROZEN!" << std::endl;
         } else {
             an_type = AnimationType::HURT;
         }
@@ -467,9 +450,9 @@ void Personaje::colision(Projectile& b) {
     check_dead(b.get_shooter_id());
 }
 
-void Personaje::colision(Municion& m) { m.colision(*this); }
+void Character::colision(BulletAmmo& m) { m.colision(*this); }
 
-void Personaje::colision(Personaje& p) {
+void Character::colision(Character& p) {
     if (p.has_special_action_active()) {
         RecibirDanio(p.danio_ataque_especial);
         Container c(en_type, SoundType::HURT2_SOUND, id);
@@ -481,16 +464,15 @@ void Personaje::colision(Personaje& p) {
     }
 }
 
-void Personaje::check_dead(int killer_id) {
+void Character::check_dead(int killer_id) {
     if (vida <= 0) {
         killed_by_id = killer_id;  // Me guardo el id de quien me mato
-        std::cout << "Me mato: " << killed_by_id << std::endl;
     }
 }
 
-PlayerState Personaje::get_state() { return state; }
+PlayerState Character::get_state() { return state; }
 
-void Personaje::disparar(ListaObjetos& objetos) {
+void Character::disparar(ObjectList& objetos) {
 
     if (state == PlayerState::INTOXICATED || state == PlayerState::FROZEN) {
         return;
@@ -504,9 +486,9 @@ void Personaje::disparar(ListaObjetos& objetos) {
     }
 }
 
-void Personaje::set_id(uint32_t i) { id = i; }
+void Character::set_id(uint32_t i) { id = i; }
 
-void Personaje::change_selected_ammo() {
+void Character::change_selected_ammo() {
     if (arma.change_selected_ammo()) {
         Container c(EntityType::NONE_ENTITY, SoundType::CHANGE_AMMO, id);
         q.try_push(c);
@@ -516,7 +498,7 @@ void Personaje::change_selected_ammo() {
     }
 }
 
-void Personaje::add_ammo(EntityType ammo, int n) { arma.add_ammo(ammo, n); }
+void Character::add_ammo(EntityType ammo, int n) { arma.add_ammo(ammo, n); }
 
 
 Arma::Arma(std::map<std::string, float>& config):
@@ -562,7 +544,7 @@ EntityType Arma::selected_ammo() { return ammo_types[current_ammo]; }
 
 int Arma::remaining_ammo() { return ammo_inventory[ammo_types[current_ammo]]; }
 
-void Arma::spawn_projectile(ListaObjetos& objetos, EntityType ammo, int x, int y, int d,
+void Arma::spawn_projectile(ObjectList& objetos, EntityType ammo, int x, int y, int d,
                             int shooter_id, std::map<std::string, float>& config) {
     switch (ammo) {
         case BULLET: {
@@ -588,8 +570,8 @@ void Arma::spawn_projectile(ListaObjetos& objetos, EntityType ammo, int x, int y
     }
 }
 
-bool Arma::disparar(ListaObjetos& objetos, int shooter_id, float x, float w, float y, float h,
-                    int d, Queue<Container>& q) {
+bool Arma::disparar(ObjectList& objetos, int shooter_id, float x, float w, float y, float h, int d,
+                    Queue<Container>& q) {
 
     EntityType current_ammo_type = ammo_types[current_ammo];
     int current_firerate = fire_rates[current_ammo_type];

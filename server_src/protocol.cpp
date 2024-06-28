@@ -76,37 +76,23 @@ void ServerProtocol::send_setup_container(const SetupContainer& setupContainer) 
 void ServerProtocol::send_game_container(const GameContainer& gameContainer) {
 
     if (gameContainer.msg_code == 2) {
-       // bool was_closed;
         int msg_code = gameContainer.msg_code;
         int id = gameContainer.id;
         send32(msg_code);
-        //socket.sendall(&msg_code, sizeof(msg_code), &was_closed);
-        //socket.sendall(&id, sizeof(id), &was_closed);
         send32(id);
-        std::cout << "enviando salida\n";
 
     } else {
-        GameData data {
-            gameContainer.id,
-            gameContainer.x,
-            gameContainer.y,
-            gameContainer.w,
-            gameContainer.h,
-            gameContainer.direction,
-            gameContainer.an_type,
-            gameContainer.en_type,
-            gameContainer.health,
-            gameContainer.ammo,
-            gameContainer.score,
+        GameData data{
+                gameContainer.id,      gameContainer.x,       gameContainer.y,
+                gameContainer.w,       gameContainer.h,       gameContainer.direction,
+                gameContainer.an_type, gameContainer.en_type, gameContainer.health,
+                gameContainer.ammo,    gameContainer.score,
         };
-        
-        //bool was_closed;
+
         int msg_code = gameContainer.msg_code;
 
-        //socket.sendall(&msg_code, sizeof(msg_code), &was_closed);
         send32(msg_code);
         sendGameData(data);
-        //socket.sendall(&data, sizeof(data), &was_closed);
         sendString(gameContainer.name);
     }
 }
@@ -118,7 +104,6 @@ void ServerProtocol::send_sound_container(const SoundContainer& soundContainer) 
     data.id = soundContainer.id;
 
     sendSoundData(data);
-
 }
 
 
@@ -134,8 +119,7 @@ Message ServerProtocol::receive_message() {
             return receive_setup_message();
         case Message::Type::COMMAND:
             return receive_command_message();
-        default:{
-            std::cout << "No encuntro el comando en protopoco.cpp server" << std::endl;
+        default: {
             throw std::runtime_error("Unknown message type");
         }
     }
@@ -144,7 +128,7 @@ Message ServerProtocol::receive_message() {
 Message ServerProtocol::receive_setup_message() {
     unsigned char setupType = receiveUChar();
     Setup::ActionType actionType = static_cast<Setup::ActionType>(setupType);
-    std::cout << actionType << std::endl;
+
     switch (actionType) {
         case Setup::ActionType::CREATE_GAME:
             return receive_create_game();
@@ -171,7 +155,6 @@ Message ServerProtocol::receive_command_message() {
 }
 
 Message ServerProtocol::receive_create_game() {
-    std::cout << "Recibiendo mensaje de create game\n";
     std::string gameId = receiveString();
     uint32_t maxPlayers = receiveUInt32();
     std::string mapName = receiveString();
@@ -184,7 +167,6 @@ Message ServerProtocol::receive_create_game() {
 }
 
 Message ServerProtocol::receive_create_map() {
-    std::cout << "Recibiendo mensaje de create map\n";
     std::string mapName = receiveString();
 
     return Message(Setup::ActionType::CREATE_MAP, mapName);

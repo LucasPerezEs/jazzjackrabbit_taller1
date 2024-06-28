@@ -1,16 +1,17 @@
 add_library(server_lib
-    enemies/enemigo.cpp
+    enemies/enemy.cpp
     enemies/bat.cpp
     enemies/ghost.cpp
     enemies/monkey.cpp
-    pickups/municion.cpp
+    pickups/bullet_ammo.cpp
     pickups/pickup.cpp
-    pickups/zanahoria.cpp
+    pickups/carrot.cpp
     pickups/gold_coin.cpp
-    pickups/rocket_pickup.cpp
+    pickups/rocket_ammo.cpp
     pickups/gem.cpp
     pickups/icebullet_ammo.cpp
-    characters/personaje.cpp
+    pickups/poisoned_carrot.cpp
+    characters/character.cpp
     characters/jazz.cpp
     characters/lori.cpp
     characters/spaz.cpp
@@ -19,9 +20,9 @@ add_library(server_lib
     projectiles/rocket.cpp
     projectiles/icebullet.cpp
     game/game.cpp
-    game/mapa.cpp
-    game/objeto.cpp
-    game/lista_objetos.cpp
+    game/map.cpp
+    game/object.cpp
+    game/object_list.cpp
     game/clock.cpp
     GamesManager.cpp
     GameBroadcasterContainer.cpp
@@ -33,15 +34,13 @@ add_library(server_lib
     acceptor.cpp
     server.cpp
     banana.cpp
+    monitor_clients.cpp
     ../common_src/Container.cpp
     ../common_src/liberror.cpp
     ../common_src/protocol.cpp
     ../common_src/resolver.cpp
     ../common_src/resolvererror.cpp
     ../common_src/socket.cpp
-    monitor_clients.cpp
-        pickups/zanahoria_envenenada.cpp
-        headers/zanahoria_envenenada.h
 )
 
 target_include_directories(server_lib PRIVATE headers/*)

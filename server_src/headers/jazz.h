@@ -8,14 +8,15 @@
 
 #include "../../common_src/headers/queue.h"
 
-#include "mapa.h"
-#include "objeto.h"
-#include "personaje.h"
+#include "character.h"
+#include "map.h"
+#include "object.h"
 
-class Jazz: public Personaje {
+class Jazz: public Character {
 
 public:
-    Jazz(float x, float y, std::map<std::string, float>& config, Queue<Container>& q, std::string name);
+    Jazz(float x, float y, std::map<std::string, float>& config, Queue<Container>& q,
+         std::string name);
     virtual void special_action() override;
     virtual void check_special_action(bool col_x, bool col_y) override;
 };

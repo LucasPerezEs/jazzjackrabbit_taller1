@@ -46,7 +46,6 @@ void ClientProtocol::send_setup(const Setup& setup) {
     }
 
     if (setup.action == Setup::ActionType::SET_NAME) {
-        std::cout << "Enviando set name\n";
         send_set_name(setup.mapName);
     }
 }
@@ -58,7 +57,8 @@ void ClientProtocol::send_join_game(const std::string& gameId, const int charact
     send32(character);
 }
 
-void ClientProtocol::send_create_game(const std::string& gameId, const uint32_t& maxPlayers, const std::string& mapName,
+void ClientProtocol::send_create_game(const std::string& gameId, const uint32_t& maxPlayers,
+                                      const std::string& mapName,
                                       const std::vector<uint32_t>& cheats) {
     sendUChar(static_cast<unsigned char>(Setup::CREATE_GAME));
     sendString(gameId);
@@ -133,7 +133,6 @@ Container ClientProtocol::receive_setup_container() {
 
 Container ClientProtocol::receive_create_game() {
     bool ok = receiveBool();
-    std::cout << "recibo en el protocolo create game con resultado " << ok << "\n";
     std::string gameId = receiveString();
     uint32_t maxPlayers = receiveUInt32();
     uint32_t nCheats = receiveUInt32();
@@ -160,7 +159,6 @@ Container ClientProtocol::receive_join_game() {
     for (uint32_t i = 0; i < nCheats; i++) {
         cheats.insert(cheats.end(), receiveUInt32());
     }
-    //std::cout << maxPlayers << std::endl;
     return Container(Setup::ActionType::JOIN_GAME, gameId, maxPlayers, mapName, cheats, ok);
 }
 
@@ -184,15 +182,9 @@ Container ClientProtocol::receive_client_id() {
 
 
 Container ClientProtocol::receive_game_container() {
-   //bool was_closed;
-    
-
-    //socket.recvall(&msg_code, sizeof(msg_code), &was_closed);
     int msg_code = receiveUInt32();
     if (msg_code == 2) {
-        std::cout << "saliendo\n";
         int id = receiveUInt32();
-        //socket.recvall(&id, sizeof(id), &was_closed);
         AmmoData data = {EntityType::NONE_ENTITY, 0};
         Container c(msg_code, id, 0, 0, 0, 0, 0, AnimationType::NONE_ANIMATION,
                     EntityType::NONE_ENTITY, 0, data, 0, "");
@@ -200,8 +192,6 @@ Container ClientProtocol::receive_game_container() {
     }
 
     GameData data = receiveGameData();
-    //socket.recvall(&data, sizeof(data), &was_closed);
-
     std::string name = receiveString();
 
     Container c(msg_code, data.id, data.x, data.y, data.width, data.height, data.direction, data.an,
@@ -228,5 +218,3 @@ Container ClientProtocol::receive_create_map() {
 void ClientProtocol::stop() { Protocol::stop(); }
 
 void ClientProtocol::close() { Protocol::close(); }
-
-

@@ -6,9 +6,11 @@
 #include "../headers/broadcaster.h"
 
 // cppcheck-suppress uninitMemberVar
-Game::Game(Queue<Message>& actionQueue, Queue<Container>& stateQueue, uint32_t maxPlayers, const std::string& mapName,
+Game::Game(Queue<Message>& actionQueue, Queue<Container>& stateQueue, uint32_t maxPlayers,
+           const std::string& mapName,
            // cppcheck-suppress passedByValue
-           std::map<std::string, float> config, Broadcaster& broadcaster, bool& gameStarted, bool& gameEnded):
+           std::map<std::string, float> config, Broadcaster& broadcaster, bool& gameStarted,
+           bool& gameEnded):
         maxPlayers(maxPlayers),
         mapName(mapName),
         actionQueue(actionQueue),
@@ -22,31 +24,8 @@ Game::Game(Queue<Message>& actionQueue, Queue<Container>& stateQueue, uint32_t m
 
 void Game::run() {
 
-    gameStarted= true;
-    Mapa m(mapName);
-
-    /*std::shared_ptr<Ghost> ghost(new Ghost(50, 2, config));
-    std::shared_ptr<Bat> bat(new Bat(75, 4, config));
-    std::shared_ptr<Monkey> monkey(new Monkey(15, 1, config));
-    objetos.agregar_objeto(ghost);
-    objetos.agregar_objeto(bat);
-    objetos.agregar_objeto(monkey);
-    entes.push_back(ghost);
-    entes.push_back(bat);
-    entes.push_back(monkey);*/
-
-    //m.spawn(objetos, entes, config, stateQueue);
-
-
-    /*for (auto ente: entes) {
-        std::vector<int> res = m.get_spawn(ente->spawn);
-        
-        if (res[0] == -1 && res[1] == -1) {
-            continue;
-        }
-        ente->x = res[0];
-        ente->y = res[1];
-    }*/
+    gameStarted = true;
+    Map m(mapName);
 
     clock.start();
 
@@ -56,42 +35,40 @@ void Game::run() {
 
 
     for (auto objeto: m.spawnsOtros) {
-        std::cout << "posicion es " << objeto[2] << ", " << objeto[1] << "\n";
         if (objeto[0] == 1) {
-            std::shared_ptr<Monkey> m (new Monkey(objeto[2], objeto[1], config));
+            // cppcheck-suppress shadowVariable
+            std::shared_ptr<Monkey> m(new Monkey(objeto[2], objeto[1], config));
             objetos.agregar_objeto(m);
             entes.emplace_back(m);
-        }
-        else if (objeto[0] == 2) {
-            std::shared_ptr<Ghost> g (new Ghost(objeto[2], objeto[1], config));
+        } else if (objeto[0] == 2) {
+            std::shared_ptr<Ghost> g(new Ghost(objeto[2], objeto[1], config));
             objetos.agregar_objeto(g);
             entes.emplace_back(g);
-        }
-        else if (objeto[0] == 3) {
-            std::shared_ptr<Bat> b (new Bat(objeto[2], objeto[1], config));
+        } else if (objeto[0] == 3) {
+            std::shared_ptr<Bat> b(new Bat(objeto[2], objeto[1], config));
             objetos.agregar_objeto(b);
             entes.emplace_back(b);
-        }
-        else if (objeto[0] == 4) {
-            std::shared_ptr<Gem> b (new Gem(objeto[2], objeto[1], config, stateQueue));
+        } else if (objeto[0] == 4) {
+            std::shared_ptr<Gem> b(new Gem(objeto[2], objeto[1], config, stateQueue));
             objetos.agregar_objeto(b);
-            Container c(0, b->id, b->x, b->y, b->width, b->height, 0, b->an_type,
-                        b->en_type, 0, {EntityType::NONE_ENTITY, 0}, 0, "");
+            // cppcheck-suppress shadowVariable
+            Container c(0, b->id, b->x, b->y, b->width, b->height, 0, b->an_type, b->en_type, 0,
+                        {EntityType::NONE_ENTITY, 0}, 0, "");
             stateQueue.push(c);
-        }
-        else if (objeto[0] == 5) {
-            std::shared_ptr<Gold_Coin> b (new Gold_Coin(objeto[2], objeto[1], config, stateQueue));
+        } else if (objeto[0] == 5) {
+            std::shared_ptr<Gold_Coin> b(new Gold_Coin(objeto[2], objeto[1], config, stateQueue));
             objetos.agregar_objeto(b);
-            Container c(0, b->id, b->x, b->y, b->width, b->height, 0, b->an_type,
-            b->en_type, 0, {EntityType::NONE_ENTITY, 0}, 0, "");
+            // cppcheck-suppress shadowVariable
+            Container c(0, b->id, b->x, b->y, b->width, b->height, 0, b->an_type, b->en_type, 0,
+                        {EntityType::NONE_ENTITY, 0}, 0, "");
             stateQueue.push(c);
         }
     }
 
-    for(auto ente: entes){
+    for (auto ente: entes) {
 
         std::vector<int> vector_spawn = m.get_spawn(ente->spawn);
-        if(vector_spawn[0] == -1){
+        if (vector_spawn[0] == -1) {
             continue;
         }
         ente->x = vector_spawn[0];
@@ -102,41 +79,41 @@ void Game::run() {
         Message msg(Command::ActionType::NONE);
         while (actionQueue.try_pop(msg)) {
             uint32_t clientId = msg.id();
-            std::shared_ptr<Personaje> personaje = clientCharacters[clientId];
+            std::shared_ptr<Character> character = clientCharacters[clientId];
 
             switch (msg.command.action) {
                 case Command::ActionType::LEFT:
-                    personaje->moveLeft();
+                    character->moveLeft();
                     break;
                 case Command::ActionType::RIGHT:
-                    personaje->moveRigth();
+                    character->moveRigth();
                     break;
                 case Command::ActionType::RUNFAST:
-                    personaje->run();
+                    character->run();
                     break;
                 case Command::ActionType::JUMP:
-                    personaje->jump();
+                    character->jump();
                     break;
                 case Command::ActionType::SPECIAL:
-                    personaje->special_action();
+                    character->special_action();
                     break;
                 case Command::ActionType::FIRE:
-                    personaje->disparando = true;
+                    character->disparando = true;
                     break;
                 case Command::ActionType::STOPLEFT:
-                    personaje->stopMovingLeft();
+                    character->stopMovingLeft();
                     break;
                 case Command::ActionType::STOPRIGHT:
-                    personaje->stopMovingRight();
+                    character->stopMovingRight();
                     break;
                 case Command::ActionType::RUN:
-                    personaje->stoprunning();
+                    character->stoprunning();
                     break;
                 case Command::ActionType::STOPFIRE:
-                    personaje->disparando = false;
+                    character->disparando = false;
                     break;
                 case Command::ActionType::CHANGE_AMMO:
-                    personaje->change_selected_ammo();
+                    character->change_selected_ammo();
                     break;
                 case Command::ActionType::QUIT: {
                     // cppcheck-suppress shadowVariable
@@ -144,7 +121,7 @@ void Game::run() {
                                 EntityType::NONE_ENTITY, 0, {EntityType::NONE_ENTITY, 0}, 0, "");
                     stateQueue.push(c);
                     entes.erase(std::remove_if(entes.begin(), entes.end(),
-                                               [&](std::shared_ptr<Ente> o) {
+                                               [&](std::shared_ptr<Entity> o) {
                                                    if (o->id == (int)clientId) {
                                                        return true;
                                                    }
@@ -183,33 +160,30 @@ void Game::run() {
     _is_alive = false;
 }
 
-void Game::getMapName(std::string& mapName){
-    mapName = this->mapName;
-}
+void Game::getMapName(std::string& mapName) { mapName = this->mapName; }
 
 void Game::addPlayer(uint32_t clientId, uint32_t character, std::string name) {
     std::lock_guard<std::mutex> lock(clientCharactersMutex);
 
     if (character == 0) {
-        std::shared_ptr<Jazz> personaje(new Jazz(5, 20, config, stateQueue, name));
-        personaje->set_id(clientId);
-        clientCharacters[clientId] = personaje;
-        objetos.agregar_objeto(personaje);
-        entes.push_back(personaje);
+        std::shared_ptr<Jazz> c(new Jazz(5, 20, config, stateQueue, name));
+        c->set_id(clientId);
+        clientCharacters[clientId] = c;
+        objetos.agregar_objeto(c);
+        entes.push_back(c);
     } else if (character == 1) {
-        std::shared_ptr<Lori> personaje(new Lori(5, 20, config, stateQueue, name));
-        personaje->set_id(clientId);
-        clientCharacters[clientId] = personaje;
-        objetos.agregar_objeto(personaje);
-        entes.push_back(personaje);
+        std::shared_ptr<Lori> c(new Lori(5, 20, config, stateQueue, name));
+        c->set_id(clientId);
+        clientCharacters[clientId] = c;
+        objetos.agregar_objeto(c);
+        entes.push_back(c);
     } else {
-        std::shared_ptr<Spaz> personaje(new Spaz(5, 20, config, stateQueue, name));
-        personaje->set_id(clientId);
-        clientCharacters[clientId] = personaje;
-        objetos.agregar_objeto(personaje);
-        entes.push_back(personaje);
+        std::shared_ptr<Spaz> c(new Spaz(5, 20, config, stateQueue, name));
+        c->set_id(clientId);
+        clientCharacters[clientId] = c;
+        objetos.agregar_objeto(c);
+        entes.push_back(c);
     }
-
 }
 
 void Game::stop() {

@@ -1,27 +1,3 @@
-//
-//#ifndef GAME_H
-//#define GAME_H
-//
-//#include <string>
-//
-//#include "aceptador.h"
-//#include "partida.h"
-//
-// class Game {
-// private:
-//    const std::string& servname;
-//
-// public:
-//    explicit Game(const std::string& servname);
-//
-//    void init_game();
-//
-//    Game(const Game&) = delete;
-//    Game& operator=(const Game&) = delete;
-//};
-//
-//#endif
-
 #ifndef SERVER_GAME_H
 #define SERVER_GAME_H
 #include <iostream>
@@ -39,22 +15,22 @@
 #include "../../common_src/headers/thread.h"
 
 #include "bat.h"
+#include "character.h"
 #include "clock.h"
 #include "ghost.h"
 #include "jazz.h"
-#include "lista_objetos.h"
 #include "lori.h"
 #include "monkey.h"
-#include "personaje.h"
+#include "object_list.h"
 #include "spaz.h"
 
 class Broadcaster;
 
 class Game: public Thread {
 public:
-
-    explicit Game(Queue<Message>& actionQueue, Queue<Container>& eventQueue, uint32_t maxPlayers, const std::string& mapName,
-                  std::map<std::string, float> config, Broadcaster& broadcaster, bool& gameStarted, bool& gameEnded);
+    explicit Game(Queue<Message>& actionQueue, Queue<Container>& eventQueue, uint32_t maxPlayers,
+                  const std::string& mapName, std::map<std::string, float> config,
+                  Broadcaster& broadcaster, bool& gameStarted, bool& gameEnded);
 
 
     void run() override;
@@ -71,12 +47,12 @@ public:
     ~Game();
 
 private:
-    Mapa* m;
+    Map* m;
     uint32_t maxPlayers;
     const std::string mapName;
-    std::map<uint32_t, std::shared_ptr<Personaje>> clientCharacters;
-    ListaObjetos objetos;
-    std::vector<std::shared_ptr<Ente>> entes;
+    std::map<uint32_t, std::shared_ptr<Character>> clientCharacters;
+    ObjectList objetos;
+    std::vector<std::shared_ptr<Entity>> entes;
 
     Queue<Message>& actionQueue;
     Queue<Container>& stateQueue;

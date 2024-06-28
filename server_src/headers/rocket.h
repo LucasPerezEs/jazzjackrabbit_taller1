@@ -14,10 +14,10 @@ private:
 
 public:
     Rocket(float x, float y, int d, int shooter_id, std::map<std::string, float>& config);
-    virtual void colision(Objeto& o) override;
-    virtual void colision(Enemigo& e) override;
-    virtual void colision(Personaje& p) override;
-    virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q) override;
+    virtual void colision(Object& o) override;
+    virtual void colision(Enemy& e) override;
+    virtual void colision(Character& p) override;
+    virtual void update(Map& m, ObjectList& objetos, Queue<Container>& q) override;
 };
 
 

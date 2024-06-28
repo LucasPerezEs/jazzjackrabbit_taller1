@@ -1,7 +1,9 @@
 #include "headers/protocol.h"
 
 #include <utility>
+
 #include <arpa/inet.h>
+
 #include "headers/desconection.h"
 #include "headers/liberror.h"
 
@@ -133,24 +135,24 @@ std::vector<std::string> Protocol::receiveVectorString() {
     return vec;
 }
 
-void Protocol::sendVectorString(const std::vector<std::string>& vec){
+void Protocol::sendVectorString(const std::vector<std::string>& vec) {
     send16(vec.size());
-    for (const auto& str : vec) {
+    for (const auto& str: vec) {
         sendString(str);
     }
 }
 
-void Protocol::sendMap(const std::vector<std::vector<std::string>>& map){
+void Protocol::sendMap(const std::vector<std::vector<std::string>>& map) {
     send16(map.size());
-    for (const auto& innerVec : map) {
-        send16(innerVec.size()); 
-        for (const auto& str : innerVec) {
+    for (const auto& innerVec: map) {
+        send16(innerVec.size());
+        for (const auto& str: innerVec) {
             sendString(str);
         }
     }
 }
 
-std::vector<std::vector<std::string>> Protocol::receiveMap(){
+std::vector<std::vector<std::string>> Protocol::receiveMap() {
 
     std::vector<std::vector<std::string>> mapReceived;
     uint16_t numRows = receive16();
@@ -180,9 +182,9 @@ std::vector<std::uint32_t> Protocol::receiveVectorUint32() {
     return vec;
 }
 
-void Protocol::sendVectorUint32(const std::vector<std::uint32_t>& vec){
+void Protocol::sendVectorUint32(const std::vector<std::uint32_t>& vec) {
     send16(vec.size());
-    for (const auto& str : vec) {
+    for (const auto& str: vec) {
         send32(str);
     }
 }
@@ -205,7 +207,6 @@ void Protocol::sendGameData(const GameData& data) {
 
 
 GameData Protocol::receiveGameData() {
-    //bool was_closed;
     GameData data;
 
     data.id = receiveUInt32();
@@ -221,36 +222,27 @@ GameData Protocol::receiveGameData() {
     data.ammo.ammo = receiveUInt32();
     data.score = receiveUInt32();
 
-    //socket.recvall(&data, sizeof(data), &was_closed);
-
     return data;
 }
 
 
 void Protocol::sendSoundData(const SoundData& data) {
-    //bool was_closed;
     EntityType entity = data.entity;
     SoundType sound = data.sound;
     int id = data.id;
     send32(entity);
     send32(sound);
     send32(id);
-    //socket.sendall(&entity, sizeof(entity), &was_closed);
-    //socket.sendall(&sound, sizeof(sound), &was_closed);
-    //socket.sendall(&id, sizeof(id), &was_closed);
-
 }
 
 SoundData Protocol::receiveSoundData() {
-    //bool was_closed;
     SoundData data;
     data.entity = (EntityType)receiveUInt32();
     data.sound = (SoundType)receiveUInt32();
     data.id = receiveUInt32();
-    //socket.recvall(&data, sizeof(data), &was_closed);
+
     return data;
 }
-
 
 
 void Protocol::close() { socket.close(); }

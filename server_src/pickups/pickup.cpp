@@ -2,13 +2,13 @@
 
 #include <iostream>
 
-#include "../headers/personaje.h"
+#include "../headers/character.h"
 
 Pickup::Pickup(float x, float y, float width, float height, EntityType entity_type,
                AnimationType animation_type, Queue<Container>& q):
-        Objeto(x, y, width, height, entity_type, animation_type), q(q) {}
+        Object(x, y, width, height, entity_type, animation_type), q(q) {}
 
-void Pickup::colision(Objeto& o) {
+void Pickup::colision(Object& o) {
     if (check_colision(o)) {
         o.colision(*this);
     }

@@ -1,28 +1,28 @@
 #include "../headers/projectile.h"
 
-#include "../headers/personaje.h"
+#include "../headers/character.h"
 
 Projectile::Projectile(float x, float y, int d, int shooter_id, EntityType en_type,
                        AnimationType an_type, int vel, int danio):
-        Objeto(x, y, 1, 1, en_type, an_type),
+        Object(x, y, 1, 1, en_type, an_type),
         vel(vel * d),
         shooter_id(shooter_id),
         d(d),
         danio(danio) {}
 
-void Projectile::colision(Objeto& o) {
+void Projectile::colision(Object& o) {
     if (check_colision(o)) {
         o.colision(*this);
     }
 }
 
-void Projectile::colision(Enemigo& e) { e.colision(*this); }
+void Projectile::colision(Enemy& e) { e.colision(*this); }
 
-void Projectile::colision(Personaje& p) { p.colision(*this); }
+void Projectile::colision(Character& p) { p.colision(*this); }
 
 
 void Projectile::update(
-        Mapa& mapa, ListaObjetos& objetos,
+        Map& mapa, ObjectList& objetos,
         Queue<Container>& q) {  // actualiza la posicion, si choca con el mapa se tiene que borrar
     x += vel;
 

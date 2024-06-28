@@ -10,9 +10,8 @@ void Monitor_clients::erase_client(int id, Queue<Message>* setupQueue) {
     // 2 es para salir de la partida
     list[id]->pushState(Container(2, id, 0, 0, 0, 0, 0, AnimationType::NONE_ANIMATION,
                                   EntityType::NONE_ENTITY, 0, {EntityType::NONE_ENTITY, 0}, 0, ""));
-    std::cout << "Poniendo queue de setup\n";
     list[id]->setReceiverQueue(setupQueue);
-    std::cout << "Queue cambiada\n";
+    std::cout << "Borrando Client\n";
     list.erase(id);
 }
 

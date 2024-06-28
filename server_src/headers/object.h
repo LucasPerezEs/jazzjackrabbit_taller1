@@ -2,6 +2,7 @@
 #define OBJETO_H_
 
 #include <map>
+#include <memory>
 #include <unordered_map>
 #include <vector>
 
@@ -10,17 +11,17 @@
 #include "../../common_src/headers/queue.h"
 
 
-class Enemigo;
-class Personaje;
+class Enemy;
+class Character;
 class Projectile;
 class Banana;
-class Mapa;
-class Municion;
-class ListaObjetos;
+class Map;
+class BulletAmmo;
+class ObjectList;
 class Pickup;
-class ZanahoriaEnvenenada;
+class PoisonedCarrot;
 
-class Objeto {
+class Object {
 public:
     int id;
     float x;  // estos atributos es la hitbox del objeto
@@ -32,23 +33,23 @@ public:
     AnimationType an_type;  // Tipo de animacion inicial del objeto.
 
 public:
-    Objeto(float x, float y, float w, float h, EntityType en_type, AnimationType an_type);
+    Object(float x, float y, float w, float h, EntityType en_type, AnimationType an_type);
 
-    virtual void update(Mapa& m, ListaObjetos& objetos, Queue<Container>& q);
+    virtual void update(Map& m, ObjectList& objetos, Queue<Container>& q);
     virtual void eliminar();
-    bool check_colision(Objeto& o);
-    virtual void colision(Objeto& o) = 0;
+    bool check_colision(Object& o);
+    virtual void colision(Object& o) = 0;
     virtual void colision(Pickup& o);
-    virtual void colision(Personaje& o);
-    virtual void colision(Enemigo& o);
+    virtual void colision(Character& o);
+    virtual void colision(Enemy& o);
     virtual void colision(Projectile& o);
     virtual void colision(Banana& o);
-    virtual void colision(Municion& m);
-    virtual void colision(ZanahoriaEnvenenada& ze);
-    virtual ~Objeto();
+    virtual void colision(BulletAmmo& m);
+    virtual void colision(PoisonedCarrot& ze);
+    virtual ~Object();
 };
 
-class Ente: public Objeto {  // objetos con vida
+class Entity: public Object {  // objetos con vida
 protected:
     bool killed;
     std::chrono::system_clock::time_point last_killed;
@@ -57,11 +58,12 @@ protected:
 public:
     int vida;
     int spawn;
-    Ente(float x, float y, float w, float h, int vida, EntityType en_type, AnimationType an_type);
+    Entity(float x, float y, float w, float h, int vida, EntityType en_type, AnimationType an_type);
     void RecibirDanio(int d);
     bool vivo();
-    virtual void update_vivo(ListaObjetos& objetos, Queue<Container>& q,
-            std::map<uint32_t, std::shared_ptr<Personaje>>& clientCharacters, std::shared_ptr<Ente> e);
+    virtual void update_vivo(ObjectList& objetos, Queue<Container>& q,
+                             std::map<uint32_t, std::shared_ptr<Character>>& clientCharacters,
+                             std::shared_ptr<Entity> e);
 };
 
 
