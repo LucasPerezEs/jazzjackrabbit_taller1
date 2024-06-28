@@ -94,7 +94,7 @@ void UIManager::render_UI(int id_cliente) {
     SDL_Color amarillo = {237, 206, 69, 255};
     SDL_Color rojo = {252, 3, 3, 255};
 
-    if (!player_alive(id_cliente)) {
+    if (personajes.count(id_cliente) > 0 && personajes[id_cliente]->get_dead()) {
         this->fuente.render(10, 10, "DEAD", window, rojo);
         this->fuente.render(400 - 20, 15, std::to_string(this->clock), window, amarillo);
         return;

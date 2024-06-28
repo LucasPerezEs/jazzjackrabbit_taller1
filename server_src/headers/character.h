@@ -96,6 +96,7 @@ public:
     virtual void colision(Banana& b) override;
     virtual void colision(Projectile& b) override;
     virtual void colision(Character& p) override;
+    virtual void colision(Pickup& p) override;
 
     void disparar(ObjectList& objetos);
     void moveRigth();

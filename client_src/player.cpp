@@ -8,7 +8,8 @@ Player::Player(int id, float x, float y, float width, float height, int direccio
         vida(vida),
         municion(municion),
         score(score),
-        name(name) {}
+        name(name),
+        dead(false) {}
 
 void Player::update_player_stats(float new_x, float new_y, float new_width, float new_height,
                                  int new_direccion, int new_vida, AmmoData new_municion,
@@ -28,3 +29,11 @@ AmmoData Player::get_municion() { return this->municion; }
 int Player::get_score() { return this->score; }
 
 std::string Player::get_name() { return this->name; }
+
+bool Player::get_dead() {
+    return dead;
+}
+
+void Player::set_dead(bool d) {
+    dead = d;
+}

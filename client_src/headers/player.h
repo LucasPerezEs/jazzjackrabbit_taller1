@@ -18,6 +18,7 @@ private:
     AmmoData municion;
     int score;
     std::string name;
+    bool dead;
 
 public:
     Player(int id, float x, float y, float width, float height, int direccion,
@@ -31,6 +32,8 @@ public:
     AmmoData get_municion();
     int get_score();
     std::string get_name();
+    bool get_dead();
+    void set_dead(bool d);
 
     Player(const Player&) = delete;
     Player& operator=(const Player&) = delete;

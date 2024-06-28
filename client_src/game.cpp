@@ -97,12 +97,18 @@ void Game::render() {
     } else {
 
         Entity* entidad = NULL;
-        if (personajes.find(client.get_id()) != personajes.end()) {
+        if (personajes.find(client.get_id()) != personajes.end() && !personajes[client.get_id()]->get_dead()) {
             entidad = static_cast<Entity*>(personajes[client.get_id()]);
         } else {
             if (personajes.size() > 0) {
-                entidad = static_cast<Entity*>(personajes.begin()->second);
-            } else if (entidades.size() > 0) {
+                for (auto personaje: personajes) {
+                    if (!personaje.second->get_dead()) {
+                        entidad = static_cast<Entity*>(personaje.second);
+                        break;
+                    }
+                }   
+            }
+            if (entidad == NULL && entidades.size() > 0) {
                 entidad = entidades.begin()->second;
             }
         }
@@ -122,7 +128,9 @@ void Game::render() {
 
         for (std::map<int, Player*>::iterator it = personajes.begin(); it != personajes.end();
              ++it) {
-            it->second->render(window, entidad, camara);
+            if (!it->second->get_dead()) {
+                it->second->render(window, entidad, camara);
+            }  
         }
 
         ui_manager.render_UI(this->client.get_id());

@@ -282,6 +282,7 @@ void ModelUpdater::update_entity(Container& c) {
 
 void ModelUpdater::update_player(Container& c) {
     if (personajes.count(c.game_container->id) > 0) {
+        personajes[c.game_container->id]->set_dead(false);
         personajes[c.game_container->id]->update_player_stats(
                 c.game_container->x, c.game_container->y, c.game_container->w, c.game_container->h,
                 c.game_container->direction, c.game_container->health, c.game_container->ammo,
@@ -301,7 +302,8 @@ void ModelUpdater::update_player(Container& c) {
 
 void ModelUpdater::despawn_entity(Container& c) {
     if (personajes.count(c.game_container->id) > 0) {
-        personajes.erase(c.game_container->id);
+        personajes[c.game_container->id]->set_dead(true);
+        //personajes.erase(c.game_container->id);
     } else {
         entidades.erase(c.game_container->id);
     }

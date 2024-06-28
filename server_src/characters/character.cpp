@@ -464,6 +464,8 @@ void Character::colision(Character& p) {
     }
 }
 
+void Character::colision(Pickup& p) { p.colision(*this); }
+
 void Character::check_dead(int killer_id) {
     if (vida <= 0) {
         killed_by_id = killer_id;  // Me guardo el id de quien me mato
